@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2015/03/11/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84RPC%E6%A1%86%E6%9E%B6/</loc>
+    <lastmod>2015-03-11T07:11:05.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2015/03/11/FastDFS%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2015-03-11T06:46:58.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2015-03-11T05:54:53.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2015/03/10/hello-world/</loc>
     <lastmod>2015-03-10T15:41:54.000Z</lastmod>
   </url>

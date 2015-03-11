@@ -81,28 +81,93 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/10/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2015/03/11/一个简陋的RPC框架/" title="一个简陋的RPC框架" itemprop="url">一个简陋的RPC框架</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://yoursite.com/about" title="feifei" target="_blank" itemprop="author">feifei</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-10T15:41:54.000Z" itemprop="datePublished"> 發表於 2015-03-10</time>
+    <time datetime="2015-03-11T07:03:28.000Z" itemprop="datePublished"> 發表於 2015-03-11</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>转自dubbo团队的梁飞</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line">import java.io.ObjectInputStream;  </span><br><span class="line">import java.io.ObjectOutputStream;  </span><br><span class="line">import java.lang.reflect.InvocationHandler;  </span><br><span class="line">import java.lang.reflect.Method;  </span><br><span class="line">import java.lang.reflect.Proxy;  </span><br><span class="line">import java.net.ServerSocket;  </span><br><span class="line">import java.net.Socket;  </span><br><span class="line">  </span><br><span class="line">/** </span><br><span class="line"> * RpcFramework  </span><br><span class="line"> */  </span><br><span class="line">public class RpcFramework &#123;  </span><br><span class="line">  </span><br><span class="line">    /** </span><br><span class="line">     * 暴露服务 </span><br><span class="line">     *  </span><br><span class="line">     * @param service 服务实现 </span><br><span class="line">     * @param port 服务端口 </span><br><span class="line">     * @throws Exception </span><br><span class="line">     */  </span><br><span class="line">    public static void <span class="built_in">export</span>(final Object service, int port) throws Exception &#123;  </span><br><span class="line">        <span class="keyword">if</span> (service == null)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"service instance == null"</span>);  </span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Invalid port "</span> + port);  </span><br><span class="line">        System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);  </span><br><span class="line">        ServerSocket server = new ServerSocket(port);  </span><br><span class="line">        <span class="keyword">for</span>(;;) &#123;  </span><br><span class="line">            try &#123;  </span><br><span class="line">                final Socket socket = server.accept();  </span><br><span class="line">                new Thread(new <span class="function"><span class="title">Runnable</span></span>() &#123;  </span><br><span class="line">                    @Override  </span><br><span class="line">                    public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">                        try &#123;  </span><br><span class="line">                            try &#123;  </span><br><span class="line">                                ObjectInputStream input = new ObjectInputStream(socket.getInputStream());  </span><br><span class="line">                                try &#123;  </span><br><span class="line">                                    String methodName = input.readUTF();  </span><br><span class="line">                                    Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[])input.readObject();  </span><br><span class="line">                                    Object[] arguments = (Object[])input.readObject();  </span><br><span class="line">                                    ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());  </span><br><span class="line">                                    try &#123;  </span><br><span class="line">                                        Method method = service.getClass().getMethod(methodName, parameterTypes);  </span><br><span class="line">                                        Object result = method.invoke(service, arguments);  </span><br><span class="line">                                        output.writeObject(result);  </span><br><span class="line">                                    &#125; catch (Throwable t) &#123;  </span><br><span class="line">                                        output.writeObject(t);  </span><br><span class="line">                                    &#125; finally &#123;  </span><br><span class="line">                                        output.close();  </span><br><span class="line">                                    &#125;  </span><br><span class="line">                                &#125; finally &#123;  </span><br><span class="line">                                    input.close();  </span><br><span class="line">                                &#125;  </span><br><span class="line">                            &#125; finally &#123;  </span><br><span class="line">                                socket.close();  </span><br><span class="line">                            &#125;  </span><br><span class="line">                        &#125; catch (Exception e) &#123;  </span><br><span class="line">                            e.printStackTrace();  </span><br><span class="line">                        &#125;  </span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;).start();  </span><br><span class="line">            &#125; catch (Exception e) &#123;  </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    /** </span><br><span class="line">     * 引用服务 </span><br><span class="line">     *  </span><br><span class="line">     * @param &lt;T&gt; 接口泛型 </span><br><span class="line">     * @param interfaceClass 接口类型 </span><br><span class="line">     * @param host 服务器主机名 </span><br><span class="line">     * @param port 服务器端口 </span><br><span class="line">     * @<span class="built_in">return</span> 远程服务 </span><br><span class="line">     * @throws Exception </span><br><span class="line">     */  </span><br><span class="line">    @SuppressWarnings(<span class="string">"unchecked"</span>)  </span><br><span class="line">    public static &lt;T&gt; T refer(final Class&lt;T&gt; interfaceClass, final String host, final int port) throws Exception &#123;  </span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == null)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Interface class == null"</span>);  </span><br><span class="line">        <span class="keyword">if</span> (! interfaceClass.isInterface())  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"The "</span> + interfaceClass.getName() + <span class="string">" must be interface class!"</span>);  </span><br><span class="line">        <span class="keyword">if</span> (host == null || host.length() == <span class="number">0</span>)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Host == null!"</span>);  </span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Invalid port "</span> + port);  </span><br><span class="line">        System.out.println(<span class="string">"Get remote service "</span> + interfaceClass.getName() + <span class="string">" from server "</span> + host + <span class="string">":"</span> + port);  </span><br><span class="line">        <span class="built_in">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class&lt;?&gt;[] &#123;interfaceClass&#125;, new <span class="function"><span class="title">InvocationHandler</span></span>() &#123;  </span><br><span class="line">            public Object invoke(Object proxy, Method method, Object[] arguments) throws Throwable &#123;  </span><br><span class="line">                Socket socket = new Socket(host, port);  </span><br><span class="line">                try &#123;  </span><br><span class="line">                    ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());  </span><br><span class="line">                    try &#123;  </span><br><span class="line">                        output.writeUTF(method.getName());  </span><br><span class="line">                        output.writeObject(method.getParameterTypes());  </span><br><span class="line">                        output.writeObject(arguments);  </span><br><span class="line">                        ObjectInputStream input = new ObjectInputStream(socket.getInputStream());  </span><br><span class="line">                        try &#123;  </span><br><span class="line">                            Object result = input.readObject();  </span><br><span class="line">                            <span class="keyword">if</span> (result instanceof Throwable) &#123;  </span><br><span class="line">                                throw (Throwable) result;  </span><br><span class="line">                            &#125;  </span><br><span class="line">                            <span class="built_in">return</span> result;  </span><br><span class="line">                        &#125; finally &#123;  </span><br><span class="line">                            input.close();  </span><br><span class="line">                        &#125;  </span><br><span class="line">                    &#125; finally &#123;  </span><br><span class="line">                        output.close();  </span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125; finally &#123;  </span><br><span class="line">                    socket.close();  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface HelloService &#123;  </span><br><span class="line">  </span><br><span class="line">    String hello(String name);  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class HelloServiceImpl implements HelloService &#123;  </span><br><span class="line">  </span><br><span class="line">    public String hello(String name) &#123;  </span><br><span class="line">        <span class="built_in">return</span> <span class="string">"Hello "</span> + name;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125; </span><br><span class="line">``` </span><br><span class="line">``` bash</span><br><span class="line">public class RpcProvider &#123;  </span><br><span class="line">  </span><br><span class="line">    public static void main(String[] args) throws Exception &#123;  </span><br><span class="line">        HelloService service = new HelloServiceImpl();  </span><br><span class="line">        RpcFramework.export(service, <span class="number">1234</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class RpcConsumer &#123;  </span><br><span class="line">      </span><br><span class="line">    public static void main(String[] args) throws Exception &#123;  </span><br><span class="line">        HelloService service = RpcFramework.refer(HelloService.class, <span class="string">"127.0.0.1"</span>, <span class="number">1234</span>);  </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; Integer.MAX_VALUE; i ++) &#123;  </span><br><span class="line">            String hello = service.hello(<span class="string">"World"</span> + i);  </span><br><span class="line">            System.out.println(hello);  </span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/RPC远程调用/">RPC远程调用</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/11/FastDFS常见命令/" title="redis基础命令" itemprop="url">redis基础命令</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="feifei" target="_blank" itemprop="author">feifei</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-11T06:20:08.000Z" itemprop="datePublished"> 發表於 2015-03-11</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
+<h3 id="关闭FastDFS">关闭FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_tracker</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_storage</span><br></pre></td></tr></table></figure>
+<p>或者 killall fdfs_trackered(storaged)  ——-注意，千万不要使用-9强行杀死进程。</p>
+<h3 id="重启FastDFS">重启FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_trackered</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_storaged</span><br></pre></td></tr></table></figure>
+<h3 id="查看集群情况">查看集群情况</h3><p>在任意一台storage(tracker也可以) </p>
+<pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf
+</code></pre>
+<h3 id="删除一个storage">删除一个storage</h3><p>在任意一台storage(tracker也可以) </p>
+<pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf delete group2 <span class="number">20.12</span>.<span class="number">1.73</span>
+</code></pre>
+<h3 id="CentOS_6-2下fastDFS的完整安装和配置步骤">CentOS 6.2下fastDFS的完整安装和配置步骤</h3><p><a href="http://www.linuxidc.com/Linux/2012-12/75989.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-12/75989.htm</a></p>
+<h3 id="FastDFS在Ubuntu下的安装，PHP客户端">FastDFS在Ubuntu下的安装，PHP客户端</h3><p><a href="http://www.linuxidc.com/Linux/2012-09/71459.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71459.htm</a></p>
+<h3 id="FastDFS分布式文件服务器安装，及配置，测试">FastDFS分布式文件服务器安装，及配置，测试</h3><p><a href="http://www.linuxidc.com/Linux/2012-09/71458.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71458.htm</a></p>
+<h3 id="FastDFS_整合Nginx问题整理">FastDFS 整合Nginx问题整理</h3><p><a href="http://www.linuxidc.com/Linux/2012-09/71232.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71232.htm</a></p>
+<h3 id="CentOS下搭建FastDFS">CentOS下搭建FastDFS</h3><p><a href="http://www.linuxidc.com/Linux/2012-09/70995.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/70995.htm</a></p>
+<h3 id="Ubuntu安装FastDFS全程记录">Ubuntu安装FastDFS全程记录</h3><p><a href="http://www.linuxidc.com/Linux/2012-03/56377.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-03/56377.htm</a></p>
 
         
         
@@ -113,6 +178,67 @@
     <footer class="article-footer clearfix">
 <div class="article-catetags">
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/fastdfs/">fastdfs</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/11/redis基础命令/" title="redis基础命令" itemprop="url">redis基础命令</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="feifei" target="_blank" itemprop="author">feifei</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-11T03:51:08.000Z" itemprop="datePublished"> 發表於 2015-03-11</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>连接操作相关的命令<br>quit：关闭连接（connection）<br>auth：简单密码认证<br>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/11/redis基础命令/#more">Read More</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/redis/">redis</a><a href="/tags/缓存/">缓存</a>
+  </div>
 
 </div>
 
@@ -134,6 +260,10 @@
 
 
 
+  <nav id="page-nav" class="clearfix">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+  </nav>
+
 </div>
       <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
@@ -144,6 +274,21 @@
   
 
   
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+		
+			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+		
+			<li><a href="/tags/缓存/" title="缓存">缓存<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
 
   <div class="linkslist">
   <p class="asidetitle">友情鏈接</p>

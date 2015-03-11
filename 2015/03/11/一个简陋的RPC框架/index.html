@@ -1,116 +1,415 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[feifei's blog]]></title>
-  <subtitle><![CDATA[才华配不上梦想这就是所谓的迷茫]]></subtitle>
-  <link href="/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
-  <updated>2015-03-11T07:11:05.000Z</updated>
-  <id>http://yoursite.com/</id>
+
+ <!DOCTYPE HTML>
+<html lang="cn_zh">
+<head>
+  <meta charset="UTF-8">
   
-  <author>
-    <name><![CDATA[feifei]]></name>
+    <title>一个简陋的RPC框架 | feifei&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-  </author>
+    <meta name="author" content="feifei">
+    
+    <meta name="description" content="转自dubbo团队的梁飞
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273">
+    
+    
+    <meta name="description" content="转自dubbo团队的梁飞
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个简陋的RPC框架">
+<meta property="og:url" content="http://yoursite.com/2015/03/11/一个简陋的RPC框架/index.html">
+<meta property="og:site_name" content="feifei's blog">
+<meta property="og:description" content="转自dubbo团队的梁飞
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个简陋的RPC框架">
+<meta name="twitter:description" content="转自dubbo团队的梁飞
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798">
+
+    
+    <link rel="alternative" href="/atom.xml" title="feifei&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="feifei&#39;s blog" title="feifei&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="feifei&#39;s blog">feifei&#39;s blog</a></h1>
+				<h2 class="blog-motto">才华配不上梦想这就是所谓的迷茫</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
   
-  <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title><![CDATA[一个简陋的RPC框架]]></title>
-    <link href="http://yoursite.com/2015/03/11/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84RPC%E6%A1%86%E6%9E%B6/"/>
-    <id>http://yoursite.com/2015/03/11/一个简陋的RPC框架/</id>
-    <published>2015-03-11T07:03:28.000Z</published>
-    <updated>2015-03-11T07:11:05.000Z</updated>
-    <content type="html"><![CDATA[<p>转自dubbo团队的梁飞</p>
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/11/一个简陋的RPC框架/" title="一个简陋的RPC框架" itemprop="url">一个简陋的RPC框架</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://yoursite.com/about" title="feifei" target="_blank" itemprop="author">feifei</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-11T07:03:28.000Z" itemprop="datePublished"> 發表於 2015-03-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			
+		
+		</div>
+		
+		<p>转自dubbo团队的梁飞</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line">import java.io.ObjectInputStream;  </span><br><span class="line">import java.io.ObjectOutputStream;  </span><br><span class="line">import java.lang.reflect.InvocationHandler;  </span><br><span class="line">import java.lang.reflect.Method;  </span><br><span class="line">import java.lang.reflect.Proxy;  </span><br><span class="line">import java.net.ServerSocket;  </span><br><span class="line">import java.net.Socket;  </span><br><span class="line">  </span><br><span class="line">/** </span><br><span class="line"> * RpcFramework  </span><br><span class="line"> */  </span><br><span class="line">public class RpcFramework &#123;  </span><br><span class="line">  </span><br><span class="line">    /** </span><br><span class="line">     * 暴露服务 </span><br><span class="line">     *  </span><br><span class="line">     * @param service 服务实现 </span><br><span class="line">     * @param port 服务端口 </span><br><span class="line">     * @throws Exception </span><br><span class="line">     */  </span><br><span class="line">    public static void <span class="built_in">export</span>(final Object service, int port) throws Exception &#123;  </span><br><span class="line">        <span class="keyword">if</span> (service == null)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"service instance == null"</span>);  </span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Invalid port "</span> + port);  </span><br><span class="line">        System.out.println(<span class="string">"Export service "</span> + service.getClass().getName() + <span class="string">" on port "</span> + port);  </span><br><span class="line">        ServerSocket server = new ServerSocket(port);  </span><br><span class="line">        <span class="keyword">for</span>(;;) &#123;  </span><br><span class="line">            try &#123;  </span><br><span class="line">                final Socket socket = server.accept();  </span><br><span class="line">                new Thread(new <span class="function"><span class="title">Runnable</span></span>() &#123;  </span><br><span class="line">                    @Override  </span><br><span class="line">                    public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">                        try &#123;  </span><br><span class="line">                            try &#123;  </span><br><span class="line">                                ObjectInputStream input = new ObjectInputStream(socket.getInputStream());  </span><br><span class="line">                                try &#123;  </span><br><span class="line">                                    String methodName = input.readUTF();  </span><br><span class="line">                                    Class&lt;?&gt;[] parameterTypes = (Class&lt;?&gt;[])input.readObject();  </span><br><span class="line">                                    Object[] arguments = (Object[])input.readObject();  </span><br><span class="line">                                    ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());  </span><br><span class="line">                                    try &#123;  </span><br><span class="line">                                        Method method = service.getClass().getMethod(methodName, parameterTypes);  </span><br><span class="line">                                        Object result = method.invoke(service, arguments);  </span><br><span class="line">                                        output.writeObject(result);  </span><br><span class="line">                                    &#125; catch (Throwable t) &#123;  </span><br><span class="line">                                        output.writeObject(t);  </span><br><span class="line">                                    &#125; finally &#123;  </span><br><span class="line">                                        output.close();  </span><br><span class="line">                                    &#125;  </span><br><span class="line">                                &#125; finally &#123;  </span><br><span class="line">                                    input.close();  </span><br><span class="line">                                &#125;  </span><br><span class="line">                            &#125; finally &#123;  </span><br><span class="line">                                socket.close();  </span><br><span class="line">                            &#125;  </span><br><span class="line">                        &#125; catch (Exception e) &#123;  </span><br><span class="line">                            e.printStackTrace();  </span><br><span class="line">                        &#125;  </span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;).start();  </span><br><span class="line">            &#125; catch (Exception e) &#123;  </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    /** </span><br><span class="line">     * 引用服务 </span><br><span class="line">     *  </span><br><span class="line">     * @param &lt;T&gt; 接口泛型 </span><br><span class="line">     * @param interfaceClass 接口类型 </span><br><span class="line">     * @param host 服务器主机名 </span><br><span class="line">     * @param port 服务器端口 </span><br><span class="line">     * @<span class="built_in">return</span> 远程服务 </span><br><span class="line">     * @throws Exception </span><br><span class="line">     */  </span><br><span class="line">    @SuppressWarnings(<span class="string">"unchecked"</span>)  </span><br><span class="line">    public static &lt;T&gt; T refer(final Class&lt;T&gt; interfaceClass, final String host, final int port) throws Exception &#123;  </span><br><span class="line">        <span class="keyword">if</span> (interfaceClass == null)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Interface class == null"</span>);  </span><br><span class="line">        <span class="keyword">if</span> (! interfaceClass.isInterface())  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"The "</span> + interfaceClass.getName() + <span class="string">" must be interface class!"</span>);  </span><br><span class="line">        <span class="keyword">if</span> (host == null || host.length() == <span class="number">0</span>)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Host == null!"</span>);  </span><br><span class="line">        <span class="keyword">if</span> (port &lt;= <span class="number">0</span> || port &gt; <span class="number">65535</span>)  </span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Invalid port "</span> + port);  </span><br><span class="line">        System.out.println(<span class="string">"Get remote service "</span> + interfaceClass.getName() + <span class="string">" from server "</span> + host + <span class="string">":"</span> + port);  </span><br><span class="line">        <span class="built_in">return</span> (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class&lt;?&gt;[] &#123;interfaceClass&#125;, new <span class="function"><span class="title">InvocationHandler</span></span>() &#123;  </span><br><span class="line">            public Object invoke(Object proxy, Method method, Object[] arguments) throws Throwable &#123;  </span><br><span class="line">                Socket socket = new Socket(host, port);  </span><br><span class="line">                try &#123;  </span><br><span class="line">                    ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());  </span><br><span class="line">                    try &#123;  </span><br><span class="line">                        output.writeUTF(method.getName());  </span><br><span class="line">                        output.writeObject(method.getParameterTypes());  </span><br><span class="line">                        output.writeObject(arguments);  </span><br><span class="line">                        ObjectInputStream input = new ObjectInputStream(socket.getInputStream());  </span><br><span class="line">                        try &#123;  </span><br><span class="line">                            Object result = input.readObject();  </span><br><span class="line">                            <span class="keyword">if</span> (result instanceof Throwable) &#123;  </span><br><span class="line">                                throw (Throwable) result;  </span><br><span class="line">                            &#125;  </span><br><span class="line">                            <span class="built_in">return</span> result;  </span><br><span class="line">                        &#125; finally &#123;  </span><br><span class="line">                            input.close();  </span><br><span class="line">                        &#125;  </span><br><span class="line">                    &#125; finally &#123;  </span><br><span class="line">                        output.close();  </span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125; finally &#123;  </span><br><span class="line">                    socket.close();  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface HelloService &#123;  </span><br><span class="line">  </span><br><span class="line">    String hello(String name);  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class HelloServiceImpl implements HelloService &#123;  </span><br><span class="line">  </span><br><span class="line">    public String hello(String name) &#123;  </span><br><span class="line">        <span class="built_in">return</span> <span class="string">"Hello "</span> + name;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125; </span><br><span class="line">``` </span><br><span class="line">``` bash</span><br><span class="line">public class RpcProvider &#123;  </span><br><span class="line">  </span><br><span class="line">    public static void main(String[] args) throws Exception &#123;  </span><br><span class="line">        HelloService service = new HelloServiceImpl();  </span><br><span class="line">        RpcFramework.export(service, <span class="number">1234</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class RpcConsumer &#123;  </span><br><span class="line">      </span><br><span class="line">    public static void main(String[] args) throws Exception &#123;  </span><br><span class="line">        HelloService service = RpcFramework.refer(HelloService.class, <span class="string">"127.0.0.1"</span>, <span class="number">1234</span>);  </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; Integer.MAX_VALUE; i ++) &#123;  </span><br><span class="line">            String hello = service.hello(<span class="string">"World"</span> + i);  </span><br><span class="line">            System.out.println(hello);  </span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    <summary type="html">
-    <![CDATA[<p>转自dubbo团队的梁飞</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</s]]>
-    </summary>
-    
-      <category term="RPC远程调用" scheme="http://yoursite.com/tags/RPC%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
-    
-  </entry>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class RpcConsumer &#123;  </span><br><span class="line">      </span><br><span class="line">    public static void main(String[] args) throws Exception &#123;  </span><br><span class="line">        HelloService service = RpcFramework.refer(HelloService.class, <span class="string">"127.0.0.1"</span>, <span class="number">1234</span>);  </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; Integer.MAX_VALUE; i ++) &#123;  </span><br><span class="line">            String hello = service.hello(<span class="string">"World"</span> + i);  </span><br><span class="line">            System.out.println(hello);  </span><br><span class="line">            Thread.sleep(<span class="number">1000</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
   
-  <entry>
-    <title><![CDATA[redis基础命令]]></title>
-    <link href="http://yoursite.com/2015/03/11/FastDFS%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2015/03/11/FastDFS常见命令/</id>
-    <published>2015-03-11T06:20:08.000Z</published>
-    <updated>2015-03-11T06:46:58.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
-<h3 id="关闭FastDFS">关闭FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_tracker</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_storage</span><br></pre></td></tr></table></figure>
-<p>或者 killall fdfs_trackered(storaged)  ——-注意，千万不要使用-9强行杀死进程。</p>
-<h3 id="重启FastDFS">重启FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_trackered</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_storaged</span><br></pre></td></tr></table></figure>
-<h3 id="查看集群情况">查看集群情况</h3><p>在任意一台storage(tracker也可以) </p>
-<pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf
-</code></pre>
-<h3 id="删除一个storage">删除一个storage</h3><p>在任意一台storage(tracker也可以) </p>
-<pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf delete group2 <span class="number">20.12</span>.<span class="number">1.73</span>
-</code></pre>
-<h3 id="CentOS_6-2下fastDFS的完整安装和配置步骤">CentOS 6.2下fastDFS的完整安装和配置步骤</h3><p><a href="http://www.linuxidc.com/Linux/2012-12/75989.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-12/75989.htm</a></p>
-<h3 id="FastDFS在Ubuntu下的安装，PHP客户端">FastDFS在Ubuntu下的安装，PHP客户端</h3><p><a href="http://www.linuxidc.com/Linux/2012-09/71459.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71459.htm</a></p>
-<h3 id="FastDFS分布式文件服务器安装，及配置，测试">FastDFS分布式文件服务器安装，及配置，测试</h3><p><a href="http://www.linuxidc.com/Linux/2012-09/71458.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71458.htm</a></p>
-<h3 id="FastDFS_整合Nginx问题整理">FastDFS 整合Nginx问题整理</h3><p><a href="http://www.linuxidc.com/Linux/2012-09/71232.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71232.htm</a></p>
-<h3 id="CentOS下搭建FastDFS">CentOS下搭建FastDFS</h3><p><a href="http://www.linuxidc.com/Linux/2012-09/70995.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/70995.htm</a></p>
-<h3 id="Ubuntu安装FastDFS全程记录">Ubuntu安装FastDFS全程记录</h3><p><a href="http://www.linuxidc.com/Linux/2012-03/56377.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-03/56377.htm</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span clas]]>
-    </summary>
-    
-      <category term="fastdfs" scheme="http://yoursite.com/tags/fastdfs/"/>
-    
-  </entry>
+  <span></span> <a href="/tags/RPC远程调用/">RPC远程调用</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/03/11/一个简陋的RPC框架/" data-title="一个简陋的RPC框架 | feifei&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/03/11/FastDFS常见命令/"  title="redis基础命令">
+ <strong>下一篇：</strong><br/> 
+ <span>redis基础命令
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
   
-  <entry>
-    <title><![CDATA[redis基础命令]]></title>
-    <link href="http://yoursite.com/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2015/03/11/redis基础命令/</id>
-    <published>2015-03-11T03:51:08.000Z</published>
-    <updated>2015-03-11T05:54:53.000Z</updated>
-    <content type="html"><![CDATA[<p>连接操作相关的命令<br>quit：关闭连接（connection）<br>auth：简单密码认证<br><a id="more"></a><br>连接操作相关的命令<br>quit：关闭连接（connection）<br>auth：简单密码认证</p>
-<p>持久化<br>save：将数据同步保存到磁盘<br>bgsave：将数据异步保存到磁盘<br>lastsave：返回上次成功将数据保存到磁盘的Unix时戳<br>shundown：将数据同步保存到磁盘，然后关闭服务</p>
-<p>远程服务控制<br>info：提供服务器的信息和统计<br>monitor：实时转储收到的请求<br>slaveof：改变复制策略设置<br>config：在运行时配置Redis服务器</p>
-<p>对value操作的命令<br>exists(key)：确认一个key是否存在<br>del(key)：删除一个key<br>type(key)：返回值的类型<br>keys(pattern)：返回满足给定pattern的所有key<br>randomkey：随机返回key空间的一个<br>keyrename(oldname, newname)：重命名key<br>dbsize：返回当前数据库中key的数目<br>expire：设定一个key的活动时间（s）<br>ttl：获得一个key的活动时间<br>select(index)：按索引查询<br>move(key, dbindex)：移动当前数据库中的key到dbindex数据库<br>flushdb：删除当前选择数据库中的所有key<br>flushall：删除所有数据库中的所有key</p>
-<p>对String操作的命令<br>set(key, value)：给数据库中名称为key的string赋予值value<br>get(key)：返回数据库中名称为key的string的value<br>getset(key, value)：给名称为key的string赋予上一次的value<br>mget(key1, key2,…, key N)：返回库中多个string的value<br>setnx(key, value)：添加string，名称为key，值为value<br>setex(key, time, value)：向库中添加string，设定过期时间time<br>mset(key N, value N)：批量设置多个string的值<br>msetnx(key N, value N)：如果所有名称为key i的string都不存在<br>incr(key)：名称为key的string增1操作<br>incrby(key, integer)：名称为key的string增加integer<br>decr(key)：名称为key的string减1操作<br>decrby(key, integer)：名称为key的string减少integer<br>append(key, value)：名称为key的string的值附加value<br>substr(key, start, end)：返回名称为key的string的value的子串</p>
-<p>对List操作的命令<br>rpush(key, value)：在名称为key的list尾添加一个值为value的元素<br>lpush(key, value)：在名称为key的list头添加一个值为value的 元素<br>llen(key)：返回名称为key的list的长度<br>lrange(key, start, end)：返回名称为key的list中start至end之间的元素<br>ltrim(key, start, end)：截取名称为key的list<br>lindex(key, index)：返回名称为key的list中index位置的元素<br>lset(key, index, value)：给名称为key的list中index位置的元素赋值<br>lrem(key, count, value)：删除count个key的list中值为value的元素<br>lpop(key)：返回并删除名称为key的list中的首元素<br>rpop(key)：返回并删除名称为key的list中的尾元素<br>blpop(key1, key2,… key N, timeout)：lpop命令的block版本。<br>brpop(key1, key2,… key N, timeout)：rpop的block版本。<br>rpoplpush(srckey, dstkey)：返回并删除名称为srckey的list的尾元素，并将该元素添加到名称为dstkey的list的头部</p>
-<p>对Set操作的命令<br>sadd(key, member)：向名称为key的set中添加元素member<br>srem(key, member) ：删除名称为key的set中的元素member<br>spop(key) ：随机返回并删除名称为key的set中一个元素<br>smove(srckey, dstkey, member) ：移到集合元素<br>scard(key) ：返回名称为key的set的基数<br>sismember(key, member) ：member是否是名称为key的set的元素<br>sinter(key1, key2,…key N) ：求交集<br>sinterstore(dstkey, (keys)) ：求交集并将交集保存到dstkey的集合<br>sunion(key1, (keys)) ：求并集<br>sunionstore(dstkey, (keys)) ：求并集并将并集保存到dstkey的集合<br>sdiff(key1, (keys)) ：求差集<br>sdiffstore(dstkey, (keys)) ：求差集并将差集保存到dstkey的集合<br>smembers(key) ：返回名称为key的set的所有元素<br>srandmember(key) ：随机返回名称为key的set的一个元素</p>
-<p>对Hash操作的命令<br>hset(key, field, value)：向名称为key的hash中添加元素field<br>hget(key, field)：返回名称为key的hash中field对应的value<br>hmget(key, (fields))：返回名称为key的hash中field i对应的value<br>hmset(key, (fields))：向名称为key的hash中添加元素field<br>hincrby(key, field, integer)：将名称为key的hash中field的value增加integer<br>hexists(key, field)：名称为key的hash中是否存在键为field的域<br>hdel(key, field)：删除名称为key的hash中键为field的域<br>hlen(key)：返回名称为key的hash中元素个数<br>hkeys(key)：返回名称为key的hash中所有键<br>hvals(key)：返回名称为key的hash中所有键对应的value<br>hgetall(key)：返回名称为key的hash中所有的键（field）及其对应的value</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>连接操作相关的命令<br>quit：关闭连接（connection）<br>auth：简单密码认证<br>]]>
-    
-    </summary>
-    
-      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
-    
-      <category term="缓存" scheme="http://yoursite.com/tags/%E7%BC%93%E5%AD%98/"/>
-    
-  </entry>
+
   
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <link href="http://yoursite.com/2015/03/10/hello-world/"/>
-    <id>http://yoursite.com/2015/03/10/hello-world/</id>
-    <published>2015-03-10T15:41:54.000Z</published>
-    <updated>2015-03-10T15:41:54.000Z</updated>
-    <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io]]>
-    </summary>
-    
-  </entry>
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+		
+			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+		
+			<li><a href="/tags/缓存/" title="缓存">缓存<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
   
-</feed>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://yoursite.com/about" target="_blank" title="feifei">feifei</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>
