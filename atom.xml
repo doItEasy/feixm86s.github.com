@@ -3,21 +3,21 @@
   <title><![CDATA[feifei's blog]]></title>
   <subtitle><![CDATA[才华配不上梦想这就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
+  <link href="http://www.52ff.cc/"/>
   <updated>2015-03-12T09:52:33.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://www.52ff.cc/</id>
   
   <author>
     <name><![CDATA[feifei]]></name>
-    
+    <email><![CDATA[bu.ru@qq.com]]></email>
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
     <title><![CDATA[Java编程中为了性能尽量要做到的一些地方]]></title>
-    <link href="http://yoursite.com/2015/03/12/Java%E7%BC%96%E7%A8%8B%E4%B8%AD%E4%B8%BA%E4%BA%86%E6%80%A7%E8%83%BD%E5%B0%BD%E9%87%8F%E8%A6%81%E5%81%9A%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9C%B0%E6%96%B9/"/>
-    <id>http://yoursite.com/2015/03/12/Java编程中为了性能尽量要做到的一些地方/</id>
+    <link href="http://www.52ff.cc/2015/03/12/Java%E7%BC%96%E7%A8%8B%E4%B8%AD%E4%B8%BA%E4%BA%86%E6%80%A7%E8%83%BD%E5%B0%BD%E9%87%8F%E8%A6%81%E5%81%9A%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9C%B0%E6%96%B9/"/>
+    <id>http://www.52ff.cc/2015/03/12/Java编程中为了性能尽量要做到的一些地方/</id>
     <published>2015-03-12T09:32:47.000Z</published>
     <updated>2015-03-12T09:52:33.000Z</updated>
     <content type="html"><![CDATA[<p>系统运行一段时间老是内存溢出，除了增加启动内存外，还应该好好review一下我们的代码，有很多代码编写过于随意化，这些不好的习惯或对程序语言的不了解是应该好好打压打压了。</p>
@@ -90,14 +90,14 @@ Obj=null;
     
     </summary>
     
-      <category term="java" scheme="http://yoursite.com/tags/java/"/>
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[一个简陋的RPC框架]]></title>
-    <link href="http://yoursite.com/2015/03/11/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84RPC%E6%A1%86%E6%9E%B6/"/>
-    <id>http://yoursite.com/2015/03/11/一个简陋的RPC框架/</id>
+    <link href="http://www.52ff.cc/2015/03/11/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84RPC%E6%A1%86%E6%9E%B6/"/>
+    <id>http://www.52ff.cc/2015/03/11/一个简陋的RPC框架/</id>
     <published>2015-03-11T07:03:28.000Z</published>
     <updated>2015-03-11T07:11:05.000Z</updated>
     <content type="html"><![CDATA[<p>转自dubbo团队的梁飞</p>
@@ -110,14 +110,14 @@ Obj=null;
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</s]]>
     </summary>
     
-      <category term="RPC远程调用" scheme="http://yoursite.com/tags/RPC%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
+      <category term="RPC远程调用" scheme="http://www.52ff.cc/tags/RPC%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[redis基础命令]]></title>
-    <link href="http://yoursite.com/2015/03/11/FastDFS%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2015/03/11/FastDFS常见命令/</id>
+    <link href="http://www.52ff.cc/2015/03/11/FastDFS%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/"/>
+    <id>http://www.52ff.cc/2015/03/11/FastDFS常见命令/</id>
     <published>2015-03-11T06:20:08.000Z</published>
     <updated>2015-03-11T06:46:58.000Z</updated>
     <content type="html"><![CDATA[<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
@@ -141,14 +141,14 @@ Obj=null;
     <![CDATA[<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span clas]]>
     </summary>
     
-      <category term="fastdfs" scheme="http://yoursite.com/tags/fastdfs/"/>
+      <category term="fastdfs" scheme="http://www.52ff.cc/tags/fastdfs/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[redis基础命令]]></title>
-    <link href="http://yoursite.com/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
-    <id>http://yoursite.com/2015/03/11/redis基础命令/</id>
+    <link href="http://www.52ff.cc/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
+    <id>http://www.52ff.cc/2015/03/11/redis基础命令/</id>
     <published>2015-03-11T03:51:08.000Z</published>
     <updated>2015-03-11T05:54:53.000Z</updated>
     <content type="html"><![CDATA[<p>连接操作相关的命令<br>quit：关闭连接（connection）<br>auth：简单密码认证<br><a id="more"></a><br>连接操作相关的命令<br>quit：关闭连接（connection）<br>auth：简单密码认证</p>
@@ -165,16 +165,16 @@ Obj=null;
     
     </summary>
     
-      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
+      <category term="redis" scheme="http://www.52ff.cc/tags/redis/"/>
     
-      <category term="缓存" scheme="http://yoursite.com/tags/%E7%BC%93%E5%AD%98/"/>
+      <category term="缓存" scheme="http://www.52ff.cc/tags/%E7%BC%93%E5%AD%98/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Hello World]]></title>
-    <link href="http://yoursite.com/2015/03/10/hello-world/"/>
-    <id>http://yoursite.com/2015/03/10/hello-world/</id>
+    <link href="http://www.52ff.cc/2015/03/10/hello-world/"/>
+    <id>http://www.52ff.cc/2015/03/10/hello-world/</id>
     <published>2015-03-10T15:41:54.000Z</published>
     <updated>2015-03-10T15:41:54.000Z</updated>
     <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
