@@ -9,22 +9,22 @@
     
     <meta name="author" content="feifei">
     
-    <meta name="description" content="启动FastDFS12tracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
-关闭FastDFS12tracke">
+    <meta name="description" content="启动FastDFStracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
+关闭FastDFStracker:/u">
     
     
-    <meta name="description" content="启动FastDFS12tracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
-关闭FastDFS12tracker:/usr/local/bin/stop.sh /usr/local/bin/fdfs_track">
+    <meta name="description" content="启动FastDFStracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
+关闭FastDFStracker:/usr/local/bin/stop.sh /usr/local/bin/fdfs_trackerst">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis基础命令">
 <meta property="og:url" content="http://www.52ff.cc/2015/03/11/FastDFS常见命令/index.html">
 <meta property="og:site_name" content="feifei's blog">
-<meta property="og:description" content="启动FastDFS12tracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
-关闭FastDFS12tracker:/usr/local/bin/stop.sh /usr/local/bin/fdfs_track">
+<meta property="og:description" content="启动FastDFStracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
+关闭FastDFStracker:/usr/local/bin/stop.sh /usr/local/bin/fdfs_trackerst">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis基础命令">
-<meta name="twitter:description" content="启动FastDFS12tracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
-关闭FastDFS12tracker:/usr/local/bin/stop.sh /usr/local/bin/fdfs_track">
+<meta name="twitter:description" content="启动FastDFStracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
+关闭FastDFStracker:/usr/local/bin/stop.sh /usr/local/bin/fdfs_trackerst">
 
     
     <link rel="alternative" href="/atom.xml" title="feifei&#39;s blog" type="application/atom+xml">
@@ -103,10 +103,10 @@
 		
 		</div>
 		
-		<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
-<h3 id="关闭FastDFS">关闭FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_tracker</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_storage</span><br></pre></td></tr></table></figure>
+		<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
+<h3 id="关闭FastDFS">关闭FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_tracker</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_storage</span><br></pre></td></tr></table></figure>
 <p>或者 killall fdfs_trackered(storaged)  ——-注意，千万不要使用-9强行杀死进程。</p>
-<h3 id="重启FastDFS">重启FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_trackered</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_storaged</span><br></pre></td></tr></table></figure>
+<h3 id="重启FastDFS">重启FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_trackered</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_storaged</span><br></pre></td></tr></table></figure>
 <h3 id="查看集群情况">查看集群情况</h3><p>在任意一台storage(tracker也可以) </p>
 <pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf
 </code></pre>
