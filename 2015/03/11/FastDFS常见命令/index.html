@@ -9,22 +9,22 @@
     
     <meta name="author" content="feifei">
     
-    <meta name="description" content="启动FastDFStracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
-关闭FastDFStracker:/u">
+    <meta name="description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
+它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。">
     
     
-    <meta name="description" content="启动FastDFStracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
-关闭FastDFStracker:/usr/local/bin/stop.sh /usr/local/bin/fdfs_trackerst">
+    <meta name="description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
+它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google F">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FAST基础命令安装配置">
 <meta property="og:url" content="http://www.52ff.cc/2015/03/11/FastDFS常见命令/index.html">
 <meta property="og:site_name" content="feifei's blog">
-<meta property="og:description" content="启动FastDFStracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
-关闭FastDFStracker:/usr/local/bin/stop.sh /usr/local/bin/fdfs_trackerst">
+<meta property="og:description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
+它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google F">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FAST基础命令安装配置">
-<meta name="twitter:description" content="启动FastDFStracker: /usr/local/bin/fdfs_trackered /etc/fdfs/tracker.confstorage: /usr/local/bin/fdfs_storaged /etc/fdfs/storage.conf
-关闭FastDFStracker:/usr/local/bin/stop.sh /usr/local/bin/fdfs_trackerst">
+<meta name="twitter:description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
+它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google F">
 
     
     <link rel="alternative" href="/atom.xml" title="feifei&#39;s blog" type="application/atom+xml">
@@ -51,7 +51,7 @@
 				<h1 class="site-name"><a href="/" title="feifei&#39;s blog">feifei&#39;s blog</a></h1>
 				<h2 class="blog-motto">才华配不上梦想这就是所谓的迷茫</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -60,6 +60,8 @@
 						<li><a href="/">主页</a></li>
 					
 						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="https://github.com/feixm86s">github</a></li>
 					
 						<li><a href="/about">关于</a></li>
 					
@@ -90,20 +92,22 @@
 		<a href="http://www.52ff.cc/about" title="feifei" target="_blank" itemprop="author">feifei</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-11T06:20:08.000Z" itemprop="datePublished"> 發表於 2015-03-11</time>
+    <time datetime="2015-03-11T06:20:08.000Z" itemprop="datePublished"> 发表于 2015-03-11</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">文章目录</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动FastDFS"><span class="toc-number">1.</span> <span class="toc-text">启动FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭FastDFS"><span class="toc-number">2.</span> <span class="toc-text">关闭FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启FastDFS"><span class="toc-number">3.</span> <span class="toc-text">重启FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看集群情况"><span class="toc-number">4.</span> <span class="toc-text">查看集群情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除一个storage"><span class="toc-number">5.</span> <span class="toc-text">删除一个storage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS_6-2下fastDFS的完整安装和配置步骤"><span class="toc-number">6.</span> <span class="toc-text">CentOS 6.2下fastDFS的完整安装和配置步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FastDFS在Ubuntu下的安装，PHP客户端"><span class="toc-number">7.</span> <span class="toc-text">FastDFS在Ubuntu下的安装，PHP客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FastDFS分布式文件服务器安装，及配置，测试"><span class="toc-number">8.</span> <span class="toc-text">FastDFS分布式文件服务器安装，及配置，测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FastDFS_整合Nginx问题整理"><span class="toc-number">9.</span> <span class="toc-text">FastDFS 整合Nginx问题整理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS下搭建FastDFS"><span class="toc-number">10.</span> <span class="toc-text">CentOS下搭建FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu安装FastDFS全程记录"><span class="toc-number">11.</span> <span class="toc-text">Ubuntu安装FastDFS全程记录</span></a></li></ol>
 		
 		</div>
 		
-		<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
+		<p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。</p>
+<p>它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。<br><a id="more"></a></p>
+<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
 <h3 id="关闭FastDFS">关闭FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_tracker</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_storage</span><br></pre></td></tr></table></figure>
 <p>或者 killall fdfs_trackered(storaged)  ——-注意，千万不要使用-9强行杀死进程。</p>
 <h3 id="重启FastDFS">重启FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_trackered</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_storaged</span><br></pre></td></tr></table></figure>
@@ -176,31 +180,35 @@
 	
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目錄</strong>
+  <strong class="toc-title">文章目录</strong>
  
  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动FastDFS"><span class="toc-number">1.</span> <span class="toc-text">启动FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭FastDFS"><span class="toc-number">2.</span> <span class="toc-text">关闭FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启FastDFS"><span class="toc-number">3.</span> <span class="toc-text">重启FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看集群情况"><span class="toc-number">4.</span> <span class="toc-text">查看集群情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除一个storage"><span class="toc-number">5.</span> <span class="toc-text">删除一个storage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS_6-2下fastDFS的完整安装和配置步骤"><span class="toc-number">6.</span> <span class="toc-text">CentOS 6.2下fastDFS的完整安装和配置步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FastDFS在Ubuntu下的安装，PHP客户端"><span class="toc-number">7.</span> <span class="toc-text">FastDFS在Ubuntu下的安装，PHP客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FastDFS分布式文件服务器安装，及配置，测试"><span class="toc-number">8.</span> <span class="toc-text">FastDFS分布式文件服务器安装，及配置，测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FastDFS_整合Nginx问题整理"><span class="toc-number">9.</span> <span class="toc-text">FastDFS 整合Nginx问题整理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS下搭建FastDFS"><span class="toc-number">10.</span> <span class="toc-text">CentOS下搭建FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ubuntu安装FastDFS全程记录"><span class="toc-number">11.</span> <span class="toc-text">Ubuntu安装FastDFS全程记录</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分類</p>
+	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/RPC/" title="RPC">RPC<sup>1</sup></a></li>
+			<li><a href="/categories/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/categories/java/" title="java">java<sup>1</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>3</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>1</sup></a></li>
 		
 			<li><a href="/categories/分布式文件存储/" title="分布式文件存储">分布式文件存储<sup>1</sup></a></li>
+		
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		
+			<li><a href="/categories/生活/" title="生活">生活<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -208,26 +216,46 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>3</sup></a></li>
 		
 			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
+			<li><a href="/tags/［宝宝］/" title="［宝宝］">［宝宝］<sup>1</sup></a></li>
+		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
 		
 			<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>1</sup></a></li>
 		
-			<li><a href="/tags/java/" title="java">java<sup>1</sup></a></li>
+			<li><a href="/tags/nio/" title="nio">nio<sup>1</sup></a></li>
 		
 		</ul>
 </div>
 
 
   <div class="linkslist">
-  <p class="asidetitle">友情鏈接</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
+        
+          <li>
+            
+            	<a href="http://dcloudio.github.io/mui/" target="_blank" title="MUI 接近原生的webapp框架">MUI 接近原生的webapp框架</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="www.jianshu.com" target="_blank" title="简书">简书</a>
+            
+          </li>
         
           <li>
             
@@ -260,7 +288,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
 </aside>
@@ -453,7 +481,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 

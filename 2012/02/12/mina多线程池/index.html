@@ -4,27 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>redis基础命令 | feifei&#39;s blog</title>
+    <title>mina多线程池 | feifei&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="feifei">
     
-    <meta name="description" content="Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。
-它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令">
+    <meta name="description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议； 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。">
     
     
-    <meta name="description" content="Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。
-它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我">
+    <meta name="description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
 <meta property="og:type" content="article">
-<meta property="og:title" content="redis基础命令">
-<meta property="og:url" content="http://www.52ff.cc/2015/03/11/redis基础命令/index.html">
+<meta property="og:title" content="mina多线程池">
+<meta property="og:url" content="http://www.52ff.cc/2012/02/12/mina多线程池/index.html">
 <meta property="og:site_name" content="feifei's blog">
-<meta property="og:description" content="Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。
-它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我">
+<meta property="og:description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redis基础命令">
-<meta name="twitter:description" content="Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。
-它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我">
+<meta name="twitter:title" content="mina多线程池">
+<meta name="twitter:description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
 
     
     <link rel="alternative" href="/atom.xml" title="feifei&#39;s blog" type="application/atom+xml">
@@ -85,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/11/redis基础命令/" title="redis基础命令" itemprop="url">redis基础命令</a>
+      <a href="/2012/02/12/mina多线程池/" title="mina多线程池" itemprop="url">mina多线程池</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="feifei" target="_blank" itemprop="author">feifei</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-11T03:51:08.000Z" itemprop="datePublished"> 发表于 2015-03-11</time>
+    <time datetime="2012-02-12T02:51:08.000Z" itemprop="datePublished"> 发表于 2012-02-12</time>
     
   </p>
 </header>
@@ -105,16 +101,12 @@
 		
 		</div>
 		
-		<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
-<p>它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令</p>
+		<p>mina服务端的通信过程如下<br> 1 、通过 SocketAcceptor 同客户端建立连接<br> 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的<br> 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议；<br> 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程<br> 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。</p>
 <a id="more"></a>
-<p>持久化<br>save：将数据同步保存到磁盘<br>bgsave：将数据异步保存到磁盘<br>lastsave：返回上次成功将数据保存到磁盘的Unix时戳<br>shundown：将数据同步保存到磁盘，然后关闭服务</p>
-<p>远程服务控制<br>info：提供服务器的信息和统计<br>monitor：实时转储收到的请求<br>slaveof：改变复制策略设置<br>config：在运行时配置Redis服务器</p>
-<p>对value操作的命令<br>exists(key)：确认一个key是否存在<br>del(key)：删除一个key<br>type(key)：返回值的类型<br>keys(pattern)：返回满足给定pattern的所有key<br>randomkey：随机返回key空间的一个<br>keyrename(oldname, newname)：重命名key<br>dbsize：返回当前数据库中key的数目<br>expire：设定一个key的活动时间（s）<br>ttl：获得一个key的活动时间<br>select(index)：按索引查询<br>move(key, dbindex)：移动当前数据库中的key到dbindex数据库<br>flushdb：删除当前选择数据库中的所有key<br>flushall：删除所有数据库中的所有key</p>
-<p>对String操作的命令<br>set(key, value)：给数据库中名称为key的string赋予值value<br>get(key)：返回数据库中名称为key的string的value<br>getset(key, value)：给名称为key的string赋予上一次的value<br>mget(key1, key2,…, key N)：返回库中多个string的value<br>setnx(key, value)：添加string，名称为key，值为value<br>setex(key, time, value)：向库中添加string，设定过期时间time<br>mset(key N, value N)：批量设置多个string的值<br>msetnx(key N, value N)：如果所有名称为key i的string都不存在<br>incr(key)：名称为key的string增1操作<br>incrby(key, integer)：名称为key的string增加integer<br>decr(key)：名称为key的string减1操作<br>decrby(key, integer)：名称为key的string减少integer<br>append(key, value)：名称为key的string的值附加value<br>substr(key, start, end)：返回名称为key的string的value的子串</p>
-<p>对List操作的命令<br>rpush(key, value)：在名称为key的list尾添加一个值为value的元素<br>lpush(key, value)：在名称为key的list头添加一个值为value的 元素<br>llen(key)：返回名称为key的list的长度<br>lrange(key, start, end)：返回名称为key的list中start至end之间的元素<br>ltrim(key, start, end)：截取名称为key的list<br>lindex(key, index)：返回名称为key的list中index位置的元素<br>lset(key, index, value)：给名称为key的list中index位置的元素赋值<br>lrem(key, count, value)：删除count个key的list中值为value的元素<br>lpop(key)：返回并删除名称为key的list中的首元素<br>rpop(key)：返回并删除名称为key的list中的尾元素<br>blpop(key1, key2,… key N, timeout)：lpop命令的block版本。<br>brpop(key1, key2,… key N, timeout)：rpop的block版本。<br>rpoplpush(srckey, dstkey)：返回并删除名称为srckey的list的尾元素，并将该元素添加到名称为dstkey的list的头部</p>
-<p>对Set操作的命令<br>sadd(key, member)：向名称为key的set中添加元素member<br>srem(key, member) ：删除名称为key的set中的元素member<br>spop(key) ：随机返回并删除名称为key的set中一个元素<br>smove(srckey, dstkey, member) ：移到集合元素<br>scard(key) ：返回名称为key的set的基数<br>sismember(key, member) ：member是否是名称为key的set的元素<br>sinter(key1, key2,…key N) ：求交集<br>sinterstore(dstkey, (keys)) ：求交集并将交集保存到dstkey的集合<br>sunion(key1, (keys)) ：求并集<br>sunionstore(dstkey, (keys)) ：求并集并将并集保存到dstkey的集合<br>sdiff(key1, (keys)) ：求差集<br>sdiffstore(dstkey, (keys)) ：求差集并将差集保存到dstkey的集合<br>smembers(key) ：返回名称为key的set的所有元素<br>srandmember(key) ：随机返回名称为key的set的一个元素</p>
-<p>对Hash操作的命令<br>hset(key, field, value)：向名称为key的hash中添加元素field<br>hget(key, field)：返回名称为key的hash中field对应的value<br>hmget(key, (fields))：返回名称为key的hash中field i对应的value<br>hmset(key, (fields))：向名称为key的hash中添加元素field<br>hincrby(key, field, integer)：将名称为key的hash中field的value增加integer<br>hexists(key, field)：名称为key的hash中是否存在键为field的域<br>hdel(key, field)：删除名称为key的hash中键为field的域<br>hlen(key)：返回名称为key的hash中元素个数<br>hkeys(key)：返回名称为key的hash中所有键<br>hvals(key)：返回名称为key的hash中所有键对应的value<br>hgetall(key)：返回名称为key的hash中所有的键（field）及其对应的value</p>
+<p>Mina 的多级线程池<br>在基于 SocketAcceptor 的应用程序中运行过程中 Mina 框架本身会有两种类型的线程在运行<br>一种是在SocketAcceptor 中创建的用于监听并接收来自客户端请求的线程。还有一类线程是处理客户端与服务器端 I/O 的线程即 Processor 的处理线程。后面还有第三类，就是过滤器层的线程。<br>这个多级的概念后面你会体会到Acceptor 是一级线程池而 Processor 的线程池主要通过 ExecutorFileter 进行添加当然可以添加多个层次的线程池。下面逐层进行讲解。</p>
+<p>第一类线程池<br>当调用 SocketAcceptor 的 bind 方法时默认会创建一个名称前缀为 SocketAcceptor 的线程该线程负责监听来自客户端的请求如果接收到客户端的请求它仅仅是为处理这个请求做好准备而把具体处理请求以及I/O 的任务代理给 SocketIoProcessor 让它去处理请求。这个准备过程主要是为接受到的请求创建一个   IoSession 并构建出 IoFilter 链然后把准备好的数据以及来自客户端的请求交给 SocketIoProcessor 处理。通常 这类线程会针对每一次的 bind 调用创建一个新的线程。 请注意 “通常 ” 二字使用这两个字说明上述的行为不是绝对的。的确这不是绝对的这取决于SocketAcceptor 的字段 executor 的实现可以通过构造方法来设置字段 executor 的值 executor 字段的类型为 java.util.concurrent.Executor 。 mina 默认是用 org.apache.mina.util.NewThreadExecutor 它会为每一个提交的任务创建一个新的线程。因为在 bind 方法中它会把实现监听客户端请求任务的 Runnable 提交到 executor中去执行。注意千万不要使用一个不创建新线程而是在原线程中执行的 Executor 这会使程序无法监听客户端的请求因为程序中的唯一线程会被 Selector.get() 方法所阻塞详情可以查看 SocketAcceptor 类的源代码。</p>
+<p>第二类线程池<br> 当 SocketAcceptor 收到了来自客户端的请求它就会把此请求丢给 SocketIoProcessor 去处理这会创建名称以 SocketAcceptorIoProcessor 为前缀的线程 mina 框架在这类线程中处理 I/O 发布并处理事件。这一类线程的数量可以通过 SocketAcceptor 的构造函数来设置。具体的值可以根据应用的具体需求来决定。 作为 I/O 真正处理的线程存在于服务器端和客户端用来处理 I/O 的读写操作线程的数量是可以配置的默认最大数量是 CPU 个数 +1 。 在服务器端中在创建 SocketAcceptor 的时候指定 ProcessorCount 。<br>SocketAcceptor acceptor = new SocketAcceptor(Runtime.getRuntime().availableProcessors() + 1, Executors.newCachedThreadPool()); NioProcessor 虽然是多线程但是对与一个连接的时候业务处理只会使用一个线程进行处理 Processor线程对于一个客户端连接只使用一个线程 NioProcessor-n 如果 handler 的业务比较耗时会导致NioProcessor 线程堵塞 在 2 个客户端同时连接上来的时候会创建第 2 个前提是第 1 个 NioProcessor 正在忙创建的最大数量由 Acceptor 构造方法的时候指定。如果一个客户端连接同服务器端有很多通信并且I/O 的开销不大但是 Handler 处理的业务时间比较长那么需要采用独立的线程模式在 FilterChain 的最后增加一个 ExecutorFitler 这个就是第三类线程池了。</p>
+<p>第三类线程池<br>上述的两类线程是 mina 框架本身所创建的如果你的应用每次处理请求的时间较长而又希望应用能够有较好的响应性那么最好是把处理业务逻辑的任务放到一个新的线程中去执行而不是在 mina 框架创建的线程中去执行。 mina 框架本身提供了一个过滤器 ExecutorFilter 来完成这样的任务它会把在此之后的过滤器以及IoHandler 中处理业务逻辑的代码放到一个新的线程中去执行。当 mina 框架中的第二类线程执行完此过滤器后就会立即返回可以用于处理新的请求。如果不想使用此过滤器还可以设置 mina 的线程模型来达到相同的效果其实线程模型也是使用 ExecutorFilter 实现的。但需要注意的是在 mina 2.0 版本中已经废弃了线程模型。 使用类这三次线程池性能可以得到保证了在本项目中主要配置了第二类线程池和第三类线程池。第二类线程池在新建 NioAcceptor 对象以建立 TCP 监听服务器为例时候在其构造函数中体现而这个数值需要多次测试来设定其测试方法在国外网站有完整表述请自行 Google 第三类线程池设定在 Apache Mina 的过滤器层一般而言只需要设置一层设置在最消耗时间的业务前面如比较复杂的解码或者是数据库访问模块。 关于共享线程池问题 Apache Mina 有个官方说法你可以想让 IoServices 和 ExecutorFilters 共享一个线程池而不是一家一个。这个是不禁止的但是会出现很多问题在这种情况下除非你为 IoServices 建立一个缓冲线程池。 本人尚未考究。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -122,13 +114,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/no-sql/">no-sql</a>
+  <a class="article-category-link" href="/categories/java/">java</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/redis/">redis</a><a href="/tags/缓存/">缓存</a>
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/nio/">nio</a>
   </div>
 
 </div>
@@ -137,7 +129,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/03/11/redis基础命令/" data-title="redis基础命令 | feifei&#39;s blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2012/02/12/mina多线程池/" data-title="mina多线程池 | feifei&#39;s blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -151,21 +143,13 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/03/11/FastDFS常见命令/" title="FAST基础命令安装配置">
+ <a href="/2012/03/12/重写hashcode()与equals()/" title="重写hashcode()与equals()">
   <strong>上一篇：</strong><br/>
   <span>
-  FAST基础命令安装配置</span>
+  重写hashcode()与equals()</span>
 </a>
 </div>
 
-
-<div class="next">
-<a href="/2015/03/08/hello-world/"  title="Java编程中为了性能尽量要做到的一些地方">
- <strong>下一篇：</strong><br/> 
- <span>Java编程中为了性能尽量要做到的一些地方
-</span>
-</a>
-</div>
 
 </nav>
 
