@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想这就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-03-12T17:26:17.000Z</updated>
+  <updated>2015-03-14T05:13:34.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://www.52ff.cc/2015/03/13/%E6%AF%9B%E6%AF%9B/"/>
     <id>http://www.52ff.cc/2015/03/13/毛毛/</id>
     <published>2015-03-12T16:49:36.000Z</published>
-    <updated>2015-03-12T17:26:17.000Z</updated>
+    <updated>2015-03-14T05:13:34.000Z</updated>
     <content type="html"><![CDATA[<p>多图预警，晒晒咱家宝贝的照片，😄😄</p>
 <a id="more"></a>
 <p><img src="http://a1.qpic.cn/psb?/V13e7Xsb3duNUs/8ZOurTlgn8RrbWoXS*BZX1J6IOluDKqIy5HvNrz*mRg!/b/dOpJsHBoEQAA&amp;bo=gAJVAwAAAAAFAPc!&amp;rf=viewer_4" alt=""></p>
@@ -43,7 +43,7 @@
     <link href="http://www.52ff.cc/2015/03/12/Java%E7%BC%96%E7%A8%8B%E4%B8%AD%E4%B8%BA%E4%BA%86%E6%80%A7%E8%83%BD%E5%B0%BD%E9%87%8F%E8%A6%81%E5%81%9A%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9C%B0%E6%96%B9/"/>
     <id>http://www.52ff.cc/2015/03/12/Java编程中为了性能尽量要做到的一些地方/</id>
     <published>2015-03-12T09:32:47.000Z</published>
-    <updated>2015-03-12T15:42:28.000Z</updated>
+    <updated>2015-03-14T05:07:29.000Z</updated>
     <content type="html"><![CDATA[<p>系统运行一段时间老是内存溢出，除了增加启动内存外，还应该好好review一下我们的代码，有很多代码编写过于随意化，这些不好的习惯或对程序语言的不了解是应该好好打压打压了。</p>
 <p>下面是参考网络资源总结的一些在Java编程中尽可能要做到的一些地方。<br><a id="more"></a></p>
 <h3 id="1-_尽量在合适的场合使用单例">1. 尽量在合适的场合使用单例</h3><p>使用单例可以减轻加载的负担，缩短加载的时间，提高加载的效率，但并不是所有地方都适用于单例，简单来说，单例主要适用于以下三个方面：<br>第一，控制资源的使用，通过线程同步来控制资源的并发访问；<br>第二，控制实例的产生，以达到节约资源的目的；<br>第三，控制数据共享，在不建立直接关联的条件下，让多个不相关的进程或线程之间实现通信。</p>
@@ -124,13 +124,13 @@ Obj=null;
     <link href="http://www.52ff.cc/2015/03/12/wap%E7%BD%91%E9%A1%B5css%E6%8A%80%E5%B7%A7%E7%AF%871/"/>
     <id>http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/</id>
     <published>2015-03-12T03:51:08.000Z</published>
-    <updated>2015-03-12T16:19:11.000Z</updated>
+    <updated>2015-03-14T05:08:33.000Z</updated>
     <content type="html"><![CDATA[<p>前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧</p>
 <a id="more"></a>
-<h3 id="元素的高度和宽度按比例设置">元素的高度和宽度按比例设置</h3><p>手机的wap网页尽量使用百分比<br>1.按一定的百分比设置宽度，如width：100%<br>2.高度设置成0，如height:0<br>3.设置高度是宽度的一定比例，假设60%，则：padding-bottom:60%</p>
-<h3 id="div设置图片背景">div设置图片背景</h3><p>示例：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#nav&#123; background:url("images/nav.png") no-repeat; width: 100%; padding-bottom: 38.194% ;height: 0; background-size :cover; &#125;</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="number">1</span>.图片设置成撑满整个div，使用</span><br><span class="line">``` bash</span><br><span class="line">background-size : cover;</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用百分比">使用百分比</h2><h3 id="元素的高度和宽度按比例设置">元素的高度和宽度按比例设置</h3><p>手机的wap网页尽量使用百分比<br>1.按一定的百分比设置宽度，如width：100%<br>2.高度设置成0，如height:0<br>3.设置高度是宽度的一定比例，假设60%，则：padding-bottom:60%</p>
+<h2 id="图片背景">图片背景</h2><h3 id="div设置图片背景">div设置图片背景</h3><p>示例：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#nav&#123; background:url("images/nav.png") no-repeat; width: 100%; padding-bottom: 38.194% ;height: 0; background-size :cover; &#125;</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="number">1</span>.图片设置成撑满整个div，使用</span><br><span class="line">``` bash</span><br><span class="line">background-size : cover;</span><br></pre></td></tr></table></figure></p>
 <p>2.图片在div中靠右显示，使用<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">background-position :right top;</span><br></pre></td></tr></table></figure></p>
-<h3 id="CSS样式优先级">CSS样式优先级</h3><p>一般情况下：<br>[1位重要标志位] &gt; [4位特殊性标志] &gt; 声明先后顺序</p>
+<h2 id="样式优先级">样式优先级</h2><h3 id="CSS样式优先级">CSS样式优先级</h3><p>一般情况下：<br>[1位重要标志位] &gt; [4位特殊性标志] &gt; 声明先后顺序</p>
 <p>!important &gt; [ id &gt; class &gt; tag ]  </p>
 <p>使用!important可以改变优先级别为最高，其次是style对象，然后是id &gt; class &gt;tag ，另外，另外在同级样式按照申明的顺序后出现的样式具有高优先级。</p>
 ]]></content>
@@ -179,7 +179,7 @@ Obj=null;
     <link href="http://www.52ff.cc/2015/03/11/FastDFS%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/"/>
     <id>http://www.52ff.cc/2015/03/11/FastDFS常见命令/</id>
     <published>2015-03-11T06:20:08.000Z</published>
-    <updated>2015-03-12T15:29:09.000Z</updated>
+    <updated>2015-03-14T04:57:52.000Z</updated>
     <content type="html"><![CDATA[<p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。</p>
 <p>它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。<br><a id="more"></a></p>
 <h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
@@ -216,7 +216,7 @@ Obj=null;
     <link href="http://www.52ff.cc/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
     <id>http://www.52ff.cc/2015/03/11/redis基础命令/</id>
     <published>2015-03-11T03:51:08.000Z</published>
-    <updated>2015-03-12T15:41:21.000Z</updated>
+    <updated>2015-03-14T05:07:47.000Z</updated>
     <content type="html"><![CDATA[<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
 <p>它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令</p>
 <a id="more"></a>
@@ -243,11 +243,11 @@ Obj=null;
   </entry>
   
   <entry>
-    <title><![CDATA[Java编程中为了性能尽量要做到的一些地方]]></title>
+    <title><![CDATA[hexo]]></title>
     <link href="http://www.52ff.cc/2015/03/08/hello-world/"/>
     <id>http://www.52ff.cc/2015/03/08/hello-world/</id>
     <published>2015-03-08T09:32:47.000Z</published>
-    <updated>2015-03-12T15:50:44.000Z</updated>
+    <updated>2015-03-14T05:09:19.000Z</updated>
     <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <a id="more"></a>
 <h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
@@ -271,7 +271,7 @@ Obj=null;
     <link href="http://www.52ff.cc/2012/03/12/%E9%87%8D%E5%86%99hashcode()%E4%B8%8Eequals()/"/>
     <id>http://www.52ff.cc/2012/03/12/重写hashcode()与equals()/</id>
     <published>2012-03-12T03:51:08.000Z</published>
-    <updated>2015-03-12T16:25:28.000Z</updated>
+    <updated>2015-03-14T05:08:52.000Z</updated>
     <content type="html"><![CDATA[<p>浅谈为何要重写 hashcode()与equals()<br>我们知道，如果不重写equals，那么比较的将是对象的引用是否指向同一块内存地址，重写之后目的是为了比较两个对象的value值是否相等。特别指出，此时，利用equals比较八大包装对象（如int，float等）和String类（因为该类已重写了equals和hashcode方法）对象时，默认比较的是值，在比较其它对象都是比较的引用地址。那产生了一个问题，为什么jdk中希望我们在重写equals时，非常有必要重写hashcode呢？</p>
 <a id="more"></a>
 <p>首先，这两个方法都来自于Object对象，根据API文档查看下原意。(1)public boolean equals(Object obj)，对于任何非空引用值 x 和 y，当且仅当 x 和 y 引用同一个对象时，此方法才返回 true；注意：当此方法被重写时，通常有必要重写 hashCode 方法，以维护 hashCode 方法的常规协定，该协定声明相等对象必须具有相等的哈希码。（2）public int hashCode() 返回该对象的哈希码值。支持该方法是为哈希表提供一些优点，例如，java.util.Hashtable 提供的哈希表。</p>
@@ -295,7 +295,7 @@ Obj=null;
     <link href="http://www.52ff.cc/2012/02/12/mina%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
     <id>http://www.52ff.cc/2012/02/12/mina多线程池/</id>
     <published>2012-02-12T02:51:08.000Z</published>
-    <updated>2015-03-12T16:31:15.000Z</updated>
+    <updated>2015-03-14T05:09:05.000Z</updated>
     <content type="html"><![CDATA[<p>mina服务端的通信过程如下<br> 1 、通过 SocketAcceptor 同客户端建立连接<br> 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的<br> 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议；<br> 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程<br> 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。</p>
 <a id="more"></a>
 <p>Mina 的多级线程池<br>在基于 SocketAcceptor 的应用程序中运行过程中 Mina 框架本身会有两种类型的线程在运行<br>一种是在SocketAcceptor 中创建的用于监听并接收来自客户端请求的线程。还有一类线程是处理客户端与服务器端 I/O 的线程即 Processor 的处理线程。后面还有第三类，就是过滤器层的线程。<br>这个多级的概念后面你会体会到Acceptor 是一级线程池而 Processor 的线程池主要通过 ExecutorFileter 进行添加当然可以添加多个层次的线程池。下面逐层进行讲解。</p>
