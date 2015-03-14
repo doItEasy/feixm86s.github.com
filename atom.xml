@@ -244,10 +244,10 @@ Obj=null;
   
   <entry>
     <title><![CDATA[hexo]]></title>
-    <link href="http://www.52ff.cc/2015/03/08/hello-world/"/>
-    <id>http://www.52ff.cc/2015/03/08/hello-world/</id>
-    <published>2015-03-08T09:32:47.000Z</published>
-    <updated>2015-03-14T05:09:19.000Z</updated>
+    <link href="http://www.52ff.cc/2015/03/06/hello-world/"/>
+    <id>http://www.52ff.cc/2015/03/06/hello-world/</id>
+    <published>2015-03-06T09:32:47.000Z</published>
+    <updated>2015-03-14T05:28:44.000Z</updated>
     <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <a id="more"></a>
 <h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
