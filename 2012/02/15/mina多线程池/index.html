@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>重写hashcode()与equals() | feifei&#39;s blog</title>
+    <title>mina多线程池 | feifei&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="feifei">
+    <meta name="author" content="ff">
     
-    <meta name="description" content="浅谈为何要重写 hashcode()与equals()我们知道，如果不重写equals，那么比较的将是对象的引用是否指向同一块内存地址，重写之后目的是为了比较两个对象的value值是否相等。特别指出，此时，利用equals比较八大包装对象（如int，float等）和String类（因为该类已重写了equals和hashcode方法）对象时，默认比较的是值，在比较其它对象都是比较的引用地址。那产生了一个问题，为什么jdk中希望我们在重写equals时，非常有必要重写hashcode呢？">
+    <meta name="description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议； 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。">
     
     
-    <meta name="description" content="浅谈为何要重写 hashcode()与equals()我们知道，如果不重写equals，那么比较的将是对象的引用是否指向同一块内存地址，重写之后目的是为了比较两个对象的value值是否相等。特别指出，此时，利用equals比较八大包装对象（如int，float等）和String类（因为该类已重写了equals和hashcode方法）对象时，默认比较的是值，在比较其它对象都是比较的引用地址。那产生了">
+    <meta name="description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
 <meta property="og:type" content="article">
-<meta property="og:title" content="重写hashcode()与equals()">
-<meta property="og:url" content="http://www.52ff.cc/2012/03/12/重写hashcode()与equals()/index.html">
+<meta property="og:title" content="mina多线程池">
+<meta property="og:url" content="http://www.52ff.cc/2012/02/15/mina多线程池/index.html">
 <meta property="og:site_name" content="feifei's blog">
-<meta property="og:description" content="浅谈为何要重写 hashcode()与equals()我们知道，如果不重写equals，那么比较的将是对象的引用是否指向同一块内存地址，重写之后目的是为了比较两个对象的value值是否相等。特别指出，此时，利用equals比较八大包装对象（如int，float等）和String类（因为该类已重写了equals和hashcode方法）对象时，默认比较的是值，在比较其它对象都是比较的引用地址。那产生了">
+<meta property="og:description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="重写hashcode()与equals()">
-<meta name="twitter:description" content="浅谈为何要重写 hashcode()与equals()我们知道，如果不重写equals，那么比较的将是对象的引用是否指向同一块内存地址，重写之后目的是为了比较两个对象的value值是否相等。特别指出，此时，利用equals比较八大包装对象（如int，float等）和String类（因为该类已重写了equals和hashcode方法）对象时，默认比较的是值，在比较其它对象都是比较的引用地址。那产生了">
+<meta name="twitter:title" content="mina多线程池">
+<meta name="twitter:description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
 
     
     <link rel="alternative" href="/atom.xml" title="feifei&#39;s blog" type="application/atom+xml">
@@ -45,7 +45,7 @@
 			
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="feifei&#39;s blog">feifei&#39;s blog</a></h1>
-				<h2 class="blog-motto">才华配不上梦想这就是所谓的迷茫</h2>
+				<h2 class="blog-motto">才华配不上梦想就是所谓的迷茫</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2012/03/12/重写hashcode()与equals()/" title="重写hashcode()与equals()" itemprop="url">重写hashcode()与equals()</a>
+      <a href="/2012/02/15/mina多线程池/" title="mina多线程池" itemprop="url">mina多线程池</a>
   </h1>
   <p class="article-author">By
        
-		<a href="http://www.52ff.cc/about" title="feifei" target="_blank" itemprop="author">feifei</a>
+		<a href="http://www.52ff.cc/about" title="ff" target="_blank" itemprop="author">ff</a>
 		
   <p class="article-time">
-    <time datetime="2012-03-12T03:51:08.000Z" itemprop="datePublished"> 发表于 2012-03-12</time>
+    <time datetime="2012-02-15T02:51:08.000Z" itemprop="datePublished"> 发表于 2012-02-15</time>
     
   </p>
 </header>
@@ -101,12 +101,12 @@
 		
 		</div>
 		
-		<p>浅谈为何要重写 hashcode()与equals()<br>我们知道，如果不重写equals，那么比较的将是对象的引用是否指向同一块内存地址，重写之后目的是为了比较两个对象的value值是否相等。特别指出，此时，利用equals比较八大包装对象（如int，float等）和String类（因为该类已重写了equals和hashcode方法）对象时，默认比较的是值，在比较其它对象都是比较的引用地址。那产生了一个问题，为什么jdk中希望我们在重写equals时，非常有必要重写hashcode呢？</p>
+		<p>mina服务端的通信过程如下<br> 1 、通过 SocketAcceptor 同客户端建立连接<br> 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的<br> 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议；<br> 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程<br> 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。</p>
 <a id="more"></a>
-<p>首先，这两个方法都来自于Object对象，根据API文档查看下原意。(1)public boolean equals(Object obj)，对于任何非空引用值 x 和 y，当且仅当 x 和 y 引用同一个对象时，此方法才返回 true；注意：当此方法被重写时，通常有必要重写 hashCode 方法，以维护 hashCode 方法的常规协定，该协定声明相等对象必须具有相等的哈希码。（2）public int hashCode() 返回该对象的哈希码值。支持该方法是为哈希表提供一些优点，例如，java.util.Hashtable 提供的哈希表。</p>
-<p>我的理解是hashcode是用于散列数据的快速存取，如利用HashSet/HashMap/Hashtable类来存储数据时，都是根据存储对象的hashcode值来进行判断是否相同的。这样如果我们对一个对象重写了euqals，意思是只要对象的成员变量值都相等那么euqals就等于true，但不重写hashcode，那么我们再new一个新的对象，当原对象.equals（新对象）等于true时，两者的hashcode却是不一样的，由此将产生了理解的不一致，如在存储散列集合时（如Set类），将会存储了两个值一样的对象，导致混淆，因此，就也需要重写hashcode。为了保证这种一致性，必须满足以下两个条件：</p>
-<p>(1)当obj1.equals(obj2)为true时，obj1.hashCode() == obj2.hashCode()必须为true<br>(2)当obj1.hashCode() == obj2.hashCode()为false时，obj1.equals(obj2)必须为false<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line">class BeanA &#123;</span><br><span class="line">private int i;</span><br><span class="line">public BeanA(int i) &#123;</span><br><span class="line">   this.i = i;</span><br><span class="line">&#125;</span><br><span class="line">public String <span class="function"><span class="title">toString</span></span>() &#123;</span><br><span class="line">   <span class="built_in">return</span> <span class="string">"   "</span> + i;</span><br><span class="line">&#125;</span><br><span class="line">public boolean equals(Object o) &#123;</span><br><span class="line">   BeanA a = (BeanA) o;</span><br><span class="line">   <span class="built_in">return</span> (a.i == i) ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line">public int <span class="function"><span class="title">hashCode</span></span>() &#123;</span><br><span class="line">   <span class="built_in">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">public class HashCodeTest &#123;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">   HashSet&lt;BeanA&gt; <span class="built_in">set</span> = new HashSet&lt;BeanA&gt;();</span><br><span class="line">   <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt;= <span class="number">3</span>; i++)&#123;</span><br><span class="line">    set.add(new BeanA(i));</span><br><span class="line">   &#125;</span><br><span class="line">   System.out.println(<span class="built_in">set</span>);</span><br><span class="line">   set.add(new BeanA(<span class="number">1</span>));</span><br><span class="line">   System.out.println(set.toString());</span><br><span class="line">   System.out.println(set.contains(new BeanA(<span class="number">0</span>)));</span><br><span class="line">   System.out.println(set.add(new BeanA(<span class="number">1</span>)));</span><br><span class="line">   System.out.println(set.add(new BeanA(<span class="number">4</span>)));</span><br><span class="line">   System.out.println(<span class="built_in">set</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们在类BeanA中重写了equals和hashcode方法，这样在存储到HashSet数据集中，将保证不会出现重复的数据；如果把这两个方法去掉后，那些重复的数据仍会存入HashSet中，这就与HashSet强调的元素唯一性相违背，大家可以把这两个方法注释掉再运行一下。<br>因此，我们就可以理解在一些java类中什么情况下需要重写equals和hashcode。比如：在hibernate的实体类中，往往通过一个主键（或唯一标识符）来判断数据库的某一行，这就需要重写这两个方法。因为，Hibernate保证，仅在特定会话范围内，持久化标识（数据库的行）和Java标识是等价的。因此，一旦我们混合了从不同会话中获取的实例，如果希望Set有明确的语义，就必 须实现equals() 和hashCode()。</p>
+<p>Mina 的多级线程池<br>在基于 SocketAcceptor 的应用程序中运行过程中 Mina 框架本身会有两种类型的线程在运行<br>一种是在SocketAcceptor 中创建的用于监听并接收来自客户端请求的线程。还有一类线程是处理客户端与服务器端 I/O 的线程即 Processor 的处理线程。后面还有第三类，就是过滤器层的线程。<br>这个多级的概念后面你会体会到Acceptor 是一级线程池而 Processor 的线程池主要通过 ExecutorFileter 进行添加当然可以添加多个层次的线程池。下面逐层进行讲解。</p>
+<p>第一类线程池<br>当调用 SocketAcceptor 的 bind 方法时默认会创建一个名称前缀为 SocketAcceptor 的线程该线程负责监听来自客户端的请求如果接收到客户端的请求它仅仅是为处理这个请求做好准备而把具体处理请求以及I/O 的任务代理给 SocketIoProcessor 让它去处理请求。这个准备过程主要是为接受到的请求创建一个   IoSession 并构建出 IoFilter 链然后把准备好的数据以及来自客户端的请求交给 SocketIoProcessor 处理。通常 这类线程会针对每一次的 bind 调用创建一个新的线程。 请注意 “通常 ” 二字使用这两个字说明上述的行为不是绝对的。的确这不是绝对的这取决于SocketAcceptor 的字段 executor 的实现可以通过构造方法来设置字段 executor 的值 executor 字段的类型为 java.util.concurrent.Executor 。 mina 默认是用 org.apache.mina.util.NewThreadExecutor 它会为每一个提交的任务创建一个新的线程。因为在 bind 方法中它会把实现监听客户端请求任务的 Runnable 提交到 executor中去执行。注意千万不要使用一个不创建新线程而是在原线程中执行的 Executor 这会使程序无法监听客户端的请求因为程序中的唯一线程会被 Selector.get() 方法所阻塞详情可以查看 SocketAcceptor 类的源代码。</p>
+<p>第二类线程池<br> 当 SocketAcceptor 收到了来自客户端的请求它就会把此请求丢给 SocketIoProcessor 去处理这会创建名称以 SocketAcceptorIoProcessor 为前缀的线程 mina 框架在这类线程中处理 I/O 发布并处理事件。这一类线程的数量可以通过 SocketAcceptor 的构造函数来设置。具体的值可以根据应用的具体需求来决定。 作为 I/O 真正处理的线程存在于服务器端和客户端用来处理 I/O 的读写操作线程的数量是可以配置的默认最大数量是 CPU 个数 +1 。 在服务器端中在创建 SocketAcceptor 的时候指定 ProcessorCount 。<br>SocketAcceptor acceptor = new SocketAcceptor(Runtime.getRuntime().availableProcessors() + 1, Executors.newCachedThreadPool()); NioProcessor 虽然是多线程但是对与一个连接的时候业务处理只会使用一个线程进行处理 Processor线程对于一个客户端连接只使用一个线程 NioProcessor-n 如果 handler 的业务比较耗时会导致NioProcessor 线程堵塞 在 2 个客户端同时连接上来的时候会创建第 2 个前提是第 1 个 NioProcessor 正在忙创建的最大数量由 Acceptor 构造方法的时候指定。如果一个客户端连接同服务器端有很多通信并且I/O 的开销不大但是 Handler 处理的业务时间比较长那么需要采用独立的线程模式在 FilterChain 的最后增加一个 ExecutorFitler 这个就是第三类线程池了。</p>
+<p>第三类线程池<br>上述的两类线程是 mina 框架本身所创建的如果你的应用每次处理请求的时间较长而又希望应用能够有较好的响应性那么最好是把处理业务逻辑的任务放到一个新的线程中去执行而不是在 mina 框架创建的线程中去执行。 mina 框架本身提供了一个过滤器 ExecutorFilter 来完成这样的任务它会把在此之后的过滤器以及IoHandler 中处理业务逻辑的代码放到一个新的线程中去执行。当 mina 框架中的第二类线程执行完此过滤器后就会立即返回可以用于处理新的请求。如果不想使用此过滤器还可以设置 mina 的线程模型来达到相同的效果其实线程模型也是使用 ExecutorFilter 实现的。但需要注意的是在 mina 2.0 版本中已经废弃了线程模型。 使用类这三次线程池性能可以得到保证了在本项目中主要配置了第二类线程池和第三类线程池。第二类线程池在新建 NioAcceptor 对象以建立 TCP 监听服务器为例时候在其构造函数中体现而这个数值需要多次测试来设定其测试方法在国外网站有完整表述请自行 Google 第三类线程池设定在 Apache Mina 的过滤器层一般而言只需要设置一层设置在最消耗时间的业务前面如比较复杂的解码或者是数据库访问模块。 关于共享线程池问题 Apache Mina 有个官方说法你可以想让 IoServices 和 ExecutorFilters 共享一个线程池而不是一家一个。这个是不禁止的但是会出现很多问题在这种情况下除非你为 IoServices 建立一个缓冲线程池。 本人尚未考究。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -120,7 +120,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/java/">java</a>
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/nio/">nio</a>
   </div>
 
 </div>
@@ -129,7 +129,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2012/03/12/重写hashcode()与equals()/" data-title="重写hashcode()与equals() | feifei&#39;s blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2012/02/15/mina多线程池/" data-title="mina多线程池 | feifei&#39;s blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -143,27 +143,19 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/03/06/hello-world/" title="hexo">
+ <a href="/2015/02/12/重写hashcode()与equals()/" title="重写hashcode()与equals()">
   <strong>上一篇：</strong><br/>
   <span>
-  hexo</span>
+  重写hashcode()与equals()</span>
 </a>
 </div>
 
-
-<div class="next">
-<a href="/2012/02/12/mina多线程池/"  title="mina多线程池">
- <strong>下一篇：</strong><br/> 
- <span>mina多线程池
-</span>
-</a>
-</div>
 
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2012/03/12/重写hashcode()与equals()/" data-title="重写hashcode()与equals()" data-url="http://www.52ff.cc/2012/03/12/重写hashcode()与equals()/"></div>
+	<div class="ds-thread" data-thread-key="2012/02/15/mina多线程池/" data-title="mina多线程池" data-url="http://www.52ff.cc/2012/02/15/mina多线程池/"></div>
 </section>
 
 
@@ -188,7 +180,7 @@
 		
 			<li><a href="/categories/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/categories/java/" title="java">java<sup>3</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>6</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>1</sup></a></li>
 		
@@ -207,23 +199,29 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/java/" title="java">java<sup>3</sup></a></li>
+			<li><a href="/tags/java/" title="java">java<sup>5</sup></a></li>
 		
-			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
 		
 			<li><a href="/tags/［宝宝］/" title="［宝宝］">［宝宝］<sup>1</sup></a></li>
+		
+			<li><a href="/tags/nio/" title="nio">nio<sup>1</sup></a></li>
 		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
 			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
 		
-			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
 			<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>1</sup></a></li>
 		
-			<li><a href="/tags/nio/" title="nio">nio<sup>1</sup></a></li>
+			<li><a href="/tags/［netty-nio］/" title="［netty nio］">［netty nio］<sup>1</sup></a></li>
+		
+			<li><a href="/tags/［sql］/" title="［sql］">［sql］<sup>1</sup></a></li>
+		
+			<li><a href="/tags/［java］/" title="［java］">［java］<sup>0</sup></a></li>
 		
 		</ul>
 </div>
@@ -232,7 +230,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">三月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 
@@ -326,7 +324,7 @@
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
 		
-		<a href="http://www.52ff.cc/about" target="_blank" title="feifei">feifei</a>
+		<a href="http://www.52ff.cc/about" target="_blank" title="ff">ff</a>
 		
 		</p>
 </div>

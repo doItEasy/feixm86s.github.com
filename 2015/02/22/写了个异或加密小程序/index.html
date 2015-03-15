@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>wap网页css技巧篇1 | feifei&#39;s blog</title>
+    <title>写了个异或加密小程序 | feifei&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="ff">
     
-    <meta name="description" content="前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧">
+    <meta name="description" content="之前做有你短信服务端时因客户端是delphi写的，网上找的加密算法在某些字符在java和delphi的运行结果不一致，所以就干脆花了大半天时间写了一个异或加密类XORCodec,写完后对字节处理，以及16进制，二进制和十进制的转化增进了了解">
     
     
-    <meta name="description" content="前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧">
+    <meta name="description" content="之前做有你短信服务端时因客户端是delphi写的，网上找的加密算法在某些字符在java和delphi的运行结果不一致，所以就干脆花了大半天时间写了一个异或加密类XORCodec,写完后对字节处理，以及16进制，二进制和十进制的转化增进了了解">
 <meta property="og:type" content="article">
-<meta property="og:title" content="wap网页css技巧篇1">
-<meta property="og:url" content="http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/index.html">
+<meta property="og:title" content="写了个异或加密小程序">
+<meta property="og:url" content="http://www.52ff.cc/2015/02/22/写了个异或加密小程序/index.html">
 <meta property="og:site_name" content="feifei's blog">
-<meta property="og:description" content="前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧">
+<meta property="og:description" content="之前做有你短信服务端时因客户端是delphi写的，网上找的加密算法在某些字符在java和delphi的运行结果不一致，所以就干脆花了大半天时间写了一个异或加密类XORCodec,写完后对字节处理，以及16进制，二进制和十进制的转化增进了了解">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wap网页css技巧篇1">
-<meta name="twitter:description" content="前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧">
+<meta name="twitter:title" content="写了个异或加密小程序">
+<meta name="twitter:description" content="之前做有你短信服务端时因客户端是delphi写的，网上找的加密算法在某些字符在java和delphi的运行结果不一致，所以就干脆花了大半天时间写了一个异或加密类XORCodec,写完后对字节处理，以及16进制，二进制和十进制的转化增进了了解">
 
     
     <link rel="alternative" href="/atom.xml" title="feifei&#39;s blog" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/12/wap网页css技巧篇1/" title="wap网页css技巧篇1" itemprop="url">wap网页css技巧篇1</a>
+      <a href="/2015/02/22/写了个异或加密小程序/" title="写了个异或加密小程序" itemprop="url">写了个异或加密小程序</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="ff" target="_blank" itemprop="author">ff</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-12T03:51:08.000Z" itemprop="datePublished"> 发表于 2015-03-12</time>
+    <time datetime="2015-02-22T13:40:50.000Z" itemprop="datePublished"> 发表于 2015-02-22</time>
     
   </p>
 </header>
@@ -97,18 +97,14 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用百分比"><span class="toc-number">1.</span> <span class="toc-text">使用百分比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#元素的高度和宽度按比例设置"><span class="toc-number">1.1.</span> <span class="toc-text">元素的高度和宽度按比例设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片背景"><span class="toc-number">2.</span> <span class="toc-text">图片背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#div设置图片背景"><span class="toc-number">2.1.</span> <span class="toc-text">div设置图片背景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#样式优先级"><span class="toc-number">3.</span> <span class="toc-text">样式优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS样式优先级"><span class="toc-number">3.1.</span> <span class="toc-text">CSS样式优先级</span></a></li></ol></li></ol>
+			
 		
 		</div>
 		
-		<p>前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧</p>
+		<p>之前做有你短信服务端时因客户端是delphi写的，网上找的加密算法在某些字符在java和delphi的运行结果不一致，所以就干脆花了大半天时间写了一个异或加密类XORCodec,写完后对字节处理，以及16进制，二进制和十进制的转化增进了了解</p>
 <a id="more"></a>
-<h2 id="使用百分比">使用百分比</h2><h3 id="元素的高度和宽度按比例设置">元素的高度和宽度按比例设置</h3><p>手机的wap网页尽量使用百分比<br>1.按一定的百分比设置宽度，如width：100%<br>2.高度设置成0，如height:0<br>3.设置高度是宽度的一定比例，假设60%，则：padding-bottom:60%</p>
-<h2 id="图片背景">图片背景</h2><h3 id="div设置图片背景">div设置图片背景</h3><p>示例：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#nav&#123; background:url("images/nav.png") no-repeat; width: 100%; padding-bottom: 38.194% ;height: 0; background-size :cover; &#125;</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="number">1</span>.图片设置成撑满整个div，使用</span><br><span class="line">``` bash</span><br><span class="line">background-size : cover;</span><br></pre></td></tr></table></figure></p>
-<p>2.图片在div中靠右显示，使用<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">background-position :right top;</span><br></pre></td></tr></table></figure></p>
-<h2 id="样式优先级">样式优先级</h2><h3 id="CSS样式优先级">CSS样式优先级</h3><p>一般情况下：<br>[1位重要标志位] &gt; [4位特殊性标志] &gt; 声明先后顺序</p>
-<p>!important &gt; [ id &gt; class &gt; tag ]  </p>
-<p>使用!important可以改变优先级别为最高，其次是style对象，然后是id &gt; class &gt;tag ，另外，另外在同级样式按照申明的顺序后出现的样式具有高优先级。</p>
+<p>代码如下，记录下以后review用<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class XORCodec &#123;</span><br><span class="line">	private final static String key = <span class="string">"unisms"</span>;  //密钥</span><br><span class="line">	private static String EncodeType =<span class="string">"utf-8"</span>;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @Title: 加密(字节版)，字节异或后转<span class="number">16</span>进制</span><br><span class="line">	 * @param @throws UnsupportedEncodingException</span><br><span class="line">	 * @<span class="built_in">return</span> String</span><br><span class="line">	 * @date <span class="number">2012</span>-<span class="number">4</span>-<span class="number">24</span> 上午<span class="number">12</span>:<span class="number">53</span>:<span class="number">55</span></span><br><span class="line">	 */</span><br><span class="line">	public static String encrypt(String <span class="keyword">in</span>Str) throws UnsupportedEncodingException &#123;</span><br><span class="line"></span><br><span class="line">		byte[] b=<span class="keyword">in</span>Str.getBytes(EncodeType);</span><br><span class="line">		byte[] snNum = new byte[b.length];</span><br><span class="line">		byte[] c=key.getBytes();</span><br><span class="line">		<span class="keyword">for</span> (int i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; b.length; i++, j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (j == c.length)</span><br><span class="line">				j = <span class="number">0</span>;</span><br><span class="line">			snNum[i] = (byte)(b[i] ^ c[j]);</span><br><span class="line">		&#125;</span><br><span class="line">		String result=<span class="string">""</span>;</span><br><span class="line">		try &#123;</span><br><span class="line">			result= byte2HexStr(snNum);</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @Title: 解密(字节版)，将<span class="number">16</span>进制字符串每<span class="number">2</span>位转成INT，再转成byte</span><br><span class="line">	 * @<span class="built_in">return</span> String</span><br><span class="line">	 * @date <span class="number">2012</span>-<span class="number">4</span>-<span class="number">24</span> 上午<span class="number">12</span>:<span class="number">54</span>:<span class="number">34</span></span><br><span class="line">	 */</span><br><span class="line">	public static String decrypt(String instr)&#123;</span><br><span class="line">		byte[] snNum=null;</span><br><span class="line">		byte[] c=null;</span><br><span class="line">		int len;</span><br><span class="line">		String result=<span class="string">""</span>;</span><br><span class="line">		try &#123;</span><br><span class="line">			len = instr.length()/<span class="number">2</span>;</span><br><span class="line">			snNum = new byte[len];</span><br><span class="line">			c=key.getBytes();</span><br><span class="line">			<span class="keyword">for</span> (int i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; len; i++, j++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (j == c.length)</span><br><span class="line">					j = <span class="number">0</span>;</span><br><span class="line">				snNum[i] = (byte) ((byte)(Integer.parseInt(instr.substring(i*<span class="number">2</span>,i*<span class="number">2</span>+<span class="number">2</span>),<span class="number">16</span>)) ^ c[j]);</span><br><span class="line">			&#125;</span><br><span class="line">			result=new String(snNum,EncodeType);</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * bytes转换成十六进制字符</span><br><span class="line">	 */</span><br><span class="line">	public static String byte2HexStr(byte[] b)</span><br><span class="line">	&#123;</span><br><span class="line">		String stmp=<span class="string">""</span>;</span><br><span class="line">		StringBuilder sb = new StringBuilder(<span class="string">""</span>);</span><br><span class="line">		<span class="keyword">for</span> (int n=<span class="number">0</span>;n&lt;b.length;n++)</span><br><span class="line">		&#123;</span><br><span class="line">			stmp = Integer.toHexString(b[n] &amp; <span class="number">0</span>xFF);//<span class="number">0</span>xFF即<span class="number">256</span>相当于<span class="number">11111111</span></span><br><span class="line">			sb.append((stmp.length()==<span class="number">1</span>)? <span class="string">"0"</span>+stmp : stmp);</span><br><span class="line">			sb.append(<span class="string">""</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span> sb.toString().toUpperCase().trim();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @Description: 加密(字符版)</span><br><span class="line">	 */</span><br><span class="line"></span><br><span class="line">	public static String encrypt2(String data)&#123;</span><br><span class="line">		int[] temp = new int[data.length()];</span><br><span class="line">		StringBuffer result =new StringBuffer();</span><br><span class="line">		String str = <span class="string">""</span>;</span><br><span class="line">		//循环需加密的字符串和密钥，分别从需加密字符串和密钥中获取一个字符进行异或</span><br><span class="line">		<span class="keyword">for</span>(int i=<span class="number">0</span>,j=<span class="number">0</span>;i&lt;data.length();i++,j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(j==key.length())&#123;</span><br><span class="line">				j=<span class="number">0</span>;//重新循环取密钥中的字符</span><br><span class="line">			&#125;</span><br><span class="line">			temp[i] = data.charAt(i)^key.charAt(j);//需加密的字符串中一个字符和密钥中一个字符异或得到十进制的整数</span><br><span class="line">			str = Integer.toHexString(temp[i]);//将十进制转化成<span class="number">16</span>进制</span><br><span class="line">			<span class="keyword">if</span>(str.length()==<span class="number">1</span>)&#123;//不足<span class="number">4</span>位的进行补零</span><br><span class="line">				str = <span class="string">"000"</span>+str;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(str.length()==<span class="number">2</span>)&#123;</span><br><span class="line">				str = <span class="string">"00"</span>+str;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(str.length()==<span class="number">3</span>)&#123;</span><br><span class="line">				str = <span class="string">"0"</span>+str;</span><br><span class="line">			&#125;</span><br><span class="line">			result.append(str);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span>  result.toString();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @Description: 解密(字符版)</span><br><span class="line">	 * @throws</span><br><span class="line">	 */</span><br><span class="line"></span><br><span class="line">	public static String decrypt2(String data)&#123;</span><br><span class="line">		char[] c=new char[data.length()/<span class="number">4</span>];//加密后的长度是原先的<span class="number">4</span>倍</span><br><span class="line">		StringBuffer result =new StringBuffer();</span><br><span class="line">		<span class="keyword">for</span>(int i=<span class="number">0</span>,j=<span class="number">0</span>;i&lt;c.length;i++,j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(j==key.length())&#123;</span><br><span class="line">				j=<span class="number">0</span>;//重新循环取密钥中的字符</span><br><span class="line">			&#125;</span><br><span class="line">			int n = Integer.parseInt(data.substring(i*<span class="number">4</span>,i*<span class="number">4</span>+<span class="number">4</span>),<span class="number">16</span>);//将<span class="number">16</span>进制的字符串解析为整数，因为加密时不足<span class="number">4</span>位补到<span class="number">4</span>位，所以每四个进行一次转化</span><br><span class="line">			c[i]=(char)((char)n^key.charAt(j));//重新和密钥中字符异或还原成原先的字符</span><br><span class="line">			result.append(c[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span> result.toString();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>}</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -116,13 +112,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+  <a class="article-category-link" href="/categories/java/">java</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/css/">css</a><a href="/tags/html5/">html5</a>
+  <span></span> <a href="/tags/java/">java</a>
   </div>
 
 </div>
@@ -131,7 +127,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/" data-title="wap网页css技巧篇1 | feifei&#39;s blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/02/22/写了个异或加密小程序/" data-title="写了个异或加密小程序 | feifei&#39;s blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -145,18 +141,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/03/12/Java编程中为了性能尽量要做到的一些地方/" title="Java编程中为了性能尽量要做到的一些地方">
+ <a href="/2015/03/05/netty笔记第一篇/" title="netty笔记第一篇">
   <strong>上一篇：</strong><br/>
   <span>
-  Java编程中为了性能尽量要做到的一些地方</span>
+  netty笔记第一篇</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/03/11/一个简陋的RPC框架/"  title="一个简陋的RPC框架">
+<a href="/2015/02/19/SQL优化的若干条技巧/"  title="SQL优化的几条建议">
  <strong>下一篇：</strong><br/> 
- <span>一个简陋的RPC框架
+ <span>SQL优化的几条建议
 </span>
 </a>
 </div>
@@ -165,7 +161,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/12/wap网页css技巧篇1/" data-title="wap网页css技巧篇1" data-url="http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/"></div>
+	<div class="ds-thread" data-thread-key="2015/02/22/写了个异或加密小程序/" data-title="写了个异或加密小程序" data-url="http://www.52ff.cc/2015/02/22/写了个异或加密小程序/"></div>
 </section>
 
 
@@ -175,7 +171,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用百分比"><span class="toc-number">1.</span> <span class="toc-text">使用百分比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#元素的高度和宽度按比例设置"><span class="toc-number">1.1.</span> <span class="toc-text">元素的高度和宽度按比例设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片背景"><span class="toc-number">2.</span> <span class="toc-text">图片背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#div设置图片背景"><span class="toc-number">2.1.</span> <span class="toc-text">div设置图片背景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#样式优先级"><span class="toc-number">3.</span> <span class="toc-text">样式优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS样式优先级"><span class="toc-number">3.1.</span> <span class="toc-text">CSS样式优先级</span></a></li></ol></li></ol>
+ 
  
   </div>
 

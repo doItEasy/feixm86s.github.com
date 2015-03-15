@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>wap网页css技巧篇1 | feifei&#39;s blog</title>
+    <title>netty笔记第一篇 | feifei&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="ff">
     
-    <meta name="description" content="前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧">
+    <meta name="description" content="">
     
     
-    <meta name="description" content="前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧">
+    <meta name="description">
 <meta property="og:type" content="article">
-<meta property="og:title" content="wap网页css技巧篇1">
-<meta property="og:url" content="http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/index.html">
+<meta property="og:title" content="netty笔记第一篇">
+<meta property="og:url" content="http://www.52ff.cc/2015/03/05/netty笔记第一篇/index.html">
 <meta property="og:site_name" content="feifei's blog">
-<meta property="og:description" content="前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wap网页css技巧篇1">
-<meta name="twitter:description" content="前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧">
+<meta name="twitter:title" content="netty笔记第一篇">
+<meta name="twitter:description">
 
     
     <link rel="alternative" href="/atom.xml" title="feifei&#39;s blog" type="application/atom+xml">
@@ -81,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/12/wap网页css技巧篇1/" title="wap网页css技巧篇1" itemprop="url">wap网页css技巧篇1</a>
+      <a href="/2015/03/05/netty笔记第一篇/" title="netty笔记第一篇" itemprop="url">netty笔记第一篇</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="ff" target="_blank" itemprop="author">ff</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-12T03:51:08.000Z" itemprop="datePublished"> 发表于 2015-03-12</time>
+    <time datetime="2015-03-05T13:37:48.000Z" itemprop="datePublished"> 发表于 2015-03-05</time>
     
   </p>
 </header>
@@ -97,32 +97,24 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用百分比"><span class="toc-number">1.</span> <span class="toc-text">使用百分比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#元素的高度和宽度按比例设置"><span class="toc-number">1.1.</span> <span class="toc-text">元素的高度和宽度按比例设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片背景"><span class="toc-number">2.</span> <span class="toc-text">图片背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#div设置图片背景"><span class="toc-number">2.1.</span> <span class="toc-text">div设置图片背景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#样式优先级"><span class="toc-number">3.</span> <span class="toc-text">样式优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS样式优先级"><span class="toc-number">3.1.</span> <span class="toc-text">CSS样式优先级</span></a></li></ol></li></ol>
+			
 		
 		</div>
 		
-		<p>前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧</p>
-<a id="more"></a>
-<h2 id="使用百分比">使用百分比</h2><h3 id="元素的高度和宽度按比例设置">元素的高度和宽度按比例设置</h3><p>手机的wap网页尽量使用百分比<br>1.按一定的百分比设置宽度，如width：100%<br>2.高度设置成0，如height:0<br>3.设置高度是宽度的一定比例，假设60%，则：padding-bottom:60%</p>
-<h2 id="图片背景">图片背景</h2><h3 id="div设置图片背景">div设置图片背景</h3><p>示例：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#nav&#123; background:url("images/nav.png") no-repeat; width: 100%; padding-bottom: 38.194% ;height: 0; background-size :cover; &#125;</span></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line"><span class="number">1</span>.图片设置成撑满整个div，使用</span><br><span class="line">``` bash</span><br><span class="line">background-size : cover;</span><br></pre></td></tr></table></figure></p>
-<p>2.图片在div中靠右显示，使用<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">background-position :right top;</span><br></pre></td></tr></table></figure></p>
-<h2 id="样式优先级">样式优先级</h2><h3 id="CSS样式优先级">CSS样式优先级</h3><p>一般情况下：<br>[1位重要标志位] &gt; [4位特殊性标志] &gt; 声明先后顺序</p>
-<p>!important &gt; [ id &gt; class &gt; tag ]  </p>
-<p>使用!important可以改变优先级别为最高，其次是style对象，然后是id &gt; class &gt;tag ，另外，另外在同级样式按照申明的顺序后出现的样式具有高优先级。</p>
-  
+		<a id="more"></a>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+  <a class="article-category-link" href="/categories/java/">java</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/css/">css</a><a href="/tags/html5/">html5</a>
+  <span></span> <a href="/tags/［netty-nio］/">［netty nio］</a>
   </div>
 
 </div>
@@ -131,7 +123,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/" data-title="wap网页css技巧篇1 | feifei&#39;s blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/03/05/netty笔记第一篇/" data-title="netty笔记第一篇 | feifei&#39;s blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -145,18 +137,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/03/12/Java编程中为了性能尽量要做到的一些地方/" title="Java编程中为了性能尽量要做到的一些地方">
+ <a href="/2015/03/06/hello-world/" title="hexo">
   <strong>上一篇：</strong><br/>
   <span>
-  Java编程中为了性能尽量要做到的一些地方</span>
+  hexo</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/03/11/一个简陋的RPC框架/"  title="一个简陋的RPC框架">
+<a href="/2015/02/22/写了个异或加密小程序/"  title="写了个异或加密小程序">
  <strong>下一篇：</strong><br/> 
- <span>一个简陋的RPC框架
+ <span>写了个异或加密小程序
 </span>
 </a>
 </div>
@@ -165,7 +157,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/12/wap网页css技巧篇1/" data-title="wap网页css技巧篇1" data-url="http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/05/netty笔记第一篇/" data-title="netty笔记第一篇" data-url="http://www.52ff.cc/2015/03/05/netty笔记第一篇/"></div>
 </section>
 
 
@@ -175,7 +167,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用百分比"><span class="toc-number">1.</span> <span class="toc-text">使用百分比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#元素的高度和宽度按比例设置"><span class="toc-number">1.1.</span> <span class="toc-text">元素的高度和宽度按比例设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片背景"><span class="toc-number">2.</span> <span class="toc-text">图片背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#div设置图片背景"><span class="toc-number">2.1.</span> <span class="toc-text">div设置图片背景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#样式优先级"><span class="toc-number">3.</span> <span class="toc-text">样式优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS样式优先级"><span class="toc-number">3.1.</span> <span class="toc-text">CSS样式优先级</span></a></li></ol></li></ol>
+ 
  
   </div>
 
