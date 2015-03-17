@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title><![CDATA[feifei's blog]]></title>
+  <title><![CDATA[flyfish's Blog]]></title>
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-03-14T05:13:34.000Z</updated>
+  <updated>2015-03-17T17:13:00.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
-    <name><![CDATA[ff]]></name>
+    <name><![CDATA[xiangming]]></name>
     <email><![CDATA[feixm86s@126.com]]></email>
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[hello blog]]></title>
+    <link href="http://www.52ff.cc/2015/03/18/hello-blog/"/>
+    <id>http://www.52ff.cc/2015/03/18/hello-blog/</id>
+    <published>2015-03-17T16:14:01.000Z</published>
+    <updated>2015-03-17T17:13:00.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="为什么写博客">为什么写博客</h3><p>学习领悟一个知识，较长一段时间未接触，是否感觉忘了大半，一时间想不出所以然？<br>学完的知识如果不使用或者不常常回顾，那么还不是自己的知识。<br>自己写的代码，6个月不看就是别人的代码。<br>所以要记下来自己学习过的东西方便自己查看和总结<br><a id="more"></a></p>
+<h3 id="为什么写独立博客？">为什么写独立博客？</h3><p>早就有弄一个独立博客的想法，但是这是一件很花时间和精力的事情，平时忙于琐碎的工作，很难抽出时间玩这个。去年发现有朋友基于bootstrap给自己做了个人站点，发现也有些其他朋友使用markdown写内容再生成静态页面。看到朋友的站点后一下子就想行动起来了，一开始玩了jekyll,后来因为一个主题和node.js选择了hexo。<br>驱使我弄独立博客主要是这几个原因：<br>1.够酷，自己的域名，门面是自己的<br>2.独立，自由，可自定义成自己喜欢的个性的样式<br>3.不会像平台博客那样，平台一变差，博客也跟着变差，更不会有广告飞<br>4.更好的记录</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="为什么写博客">为什么写博客</h3><p>学习领悟一个知识，较长一段时间未接触，是否感觉忘了大半，一时间想不出所以然？<br>学完的知识如果不使用或者不常常回顾，那么还不是自己的知识。<br>自己写的代码，6个月不看就是别人的代码。<br>所以要记下来自己学习过的东西方便自己查看和总结<br>]]>
+    
+    </summary>
+    
+      <category term="随笔生活" scheme="http://www.52ff.cc/categories/%E9%9A%8F%E7%AC%94%E7%94%9F%E6%B4%BB/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[毛毛]]></title>
     <link href="http://www.52ff.cc/2015/03/13/%E6%AF%9B%E6%AF%9B/"/>
     <id>http://www.52ff.cc/2015/03/13/毛毛/</id>
     <published>2015-03-12T16:49:36.000Z</published>
-    <updated>2015-03-14T05:13:34.000Z</updated>
+    <updated>2015-03-17T16:18:40.000Z</updated>
     <content type="html"><![CDATA[<p>多图预警，晒晒咱家宝贝的照片，😄😄</p>
 <a id="more"></a>
 <p><img src="http://a1.qpic.cn/psb?/V13e7Xsb3duNUs/8ZOurTlgn8RrbWoXS*BZX1J6IOluDKqIy5HvNrz*mRg!/b/dOpJsHBoEQAA&amp;bo=gAJVAwAAAAAFAPc!&amp;rf=viewer_4" alt=""></p>
@@ -34,16 +52,16 @@
     
       <category term="［宝宝］" scheme="http://www.52ff.cc/tags/%EF%BC%BB%E5%AE%9D%E5%AE%9D%EF%BC%BD/"/>
     
-      <category term="生活" scheme="http://www.52ff.cc/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="随笔生活" scheme="http://www.52ff.cc/categories/%E9%9A%8F%E7%AC%94%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   
   <entry>
-    <title><![CDATA[Java编程中为了性能尽量要做到的一些地方]]></title>
+    <title><![CDATA[Java编程中为性能注意的地方]]></title>
     <link href="http://www.52ff.cc/2015/03/12/Java%E7%BC%96%E7%A8%8B%E4%B8%AD%E4%B8%BA%E4%BA%86%E6%80%A7%E8%83%BD%E5%B0%BD%E9%87%8F%E8%A6%81%E5%81%9A%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9C%B0%E6%96%B9/"/>
     <id>http://www.52ff.cc/2015/03/12/Java编程中为了性能尽量要做到的一些地方/</id>
     <published>2015-03-12T09:32:47.000Z</published>
-    <updated>2015-03-14T05:07:29.000Z</updated>
+    <updated>2015-03-17T16:13:27.000Z</updated>
     <content type="html"><![CDATA[<p>系统运行一段时间老是内存溢出，除了增加启动内存外，还应该好好review一下我们的代码，有很多代码编写过于随意化，这些不好的习惯或对程序语言的不了解是应该好好打压打压了。</p>
 <p>下面是参考网络资源总结的一些在Java编程中尽可能要做到的一些地方。<br><a id="more"></a></p>
 <h3 id="1-_尽量在合适的场合使用单例">1. 尽量在合适的场合使用单例</h3><p>使用单例可以减轻加载的负担，缩短加载的时间，提高加载的效率，但并不是所有地方都适用于单例，简单来说，单例主要适用于以下三个方面：<br>第一，控制资源的使用，通过线程同步来控制资源的并发访问；<br>第二，控制实例的产生，以达到节约资源的目的；<br>第三，控制数据共享，在不建立直接关联的条件下，让多个不相关的进程或线程之间实现通信。</p>
@@ -245,35 +263,11 @@ Obj=null;
   </entry>
   
   <entry>
-    <title><![CDATA[hexo]]></title>
-    <link href="http://www.52ff.cc/2015/03/06/hello-world/"/>
-    <id>http://www.52ff.cc/2015/03/06/hello-world/</id>
-    <published>2015-03-06T09:32:47.000Z</published>
-    <updated>2015-03-14T05:28:44.000Z</updated>
-    <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<a id="more"></a>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>Welcome to <a href="http://hexo.io/">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>]]>
-    
-    </summary>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[netty笔记第一篇]]></title>
     <link href="http://www.52ff.cc/2015/03/05/netty%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AF%87/"/>
     <id>http://www.52ff.cc/2015/03/05/netty笔记第一篇/</id>
     <published>2015-03-05T13:37:48.000Z</published>
-    <updated>2015-03-15T14:03:12.000Z</updated>
+    <updated>2015-03-15T14:03:15.000Z</updated>
     <content type="html"><![CDATA[<a id="more"></a>]]></content>
     <summary type="html">
     <![CDATA[<a id="more"></a>]]>
@@ -312,7 +306,7 @@ Obj=null;
     <link href="http://www.52ff.cc/2015/02/19/SQL%E4%BC%98%E5%8C%96%E7%9A%84%E8%8B%A5%E5%B9%B2%E6%9D%A1%E6%8A%80%E5%B7%A7/"/>
     <id>http://www.52ff.cc/2015/02/19/SQL优化的若干条技巧/</id>
     <published>2015-02-19T06:50:55.000Z</published>
-    <updated>2015-03-15T13:26:22.000Z</updated>
+    <updated>2015-03-17T16:17:39.000Z</updated>
     <content type="html"><![CDATA[<p>在工作的前两年，做的电信行业，开发主要是和oracle打交道的管理模块，特分享几条同事们整理的文档中的sql优化建议，主要是where条件怎么写和如何不破坏索引之类的小知识点。</p>
 <a id="more"></a>
 <h3 id="选择最有效率的表名顺序_(只在基于规则的优化器中有效)_：">选择最有效率的表名顺序 (只在基于规则的优化器中有效) ：</h3><p>ORACLE 的解析器按照从右到左的顺序处理 FROM 子句中的表名， FROM 子句中写在最右的表将被最先处理，所以我们需要把记录最少的表写在最右边。如果有3个以上的表连接查询，那就需要选择交叉表写在最右，交叉表是指那个被其他表所引用的表。</p>
@@ -400,6 +394,8 @@ Obj=null;
     
       <category term="［sql］" scheme="http://www.52ff.cc/tags/%EF%BC%BBsql%EF%BC%BD/"/>
     
+      <category term="sql数据库" scheme="http://www.52ff.cc/categories/sql%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
   </entry>
   
   <entry>
@@ -429,6 +425,28 @@ Obj=null;
       <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
     
       <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[IntelliJ Idea操作技巧]]></title>
+    <link href="http://www.52ff.cc/2015/02/17/IntelliJ-Idea%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/"/>
+    <id>http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/</id>
+    <published>2015-02-17T06:55:49.000Z</published>
+    <updated>2015-03-17T09:37:43.000Z</updated>
+    <content type="html"><![CDATA[<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>
+<a id="more"></a>
+<p>写这篇文章的主要目的是记录idea工具磨合期掌握的最实用技巧，因为网上的快捷键列举比较杂乱而且应用在mac上不靠谱，自己记下来可以备忘，回顾也方便，帮助自己精通这个工具。</p>
+<p>ps:可使用ctrl+`切换keyMap，建议keyMap使用mac os x 10.5 +，使用default的在mac系统和其他快捷键冲突多些</p>
+<h3 id="搜索">搜索</h3><p>cmd+shift+f 当前项目下递归查找，相当于eclipse的ctrl+h<br>cmd+g       当前文件中往后搜索一样的字符，相当于eclipse的ctrl+ k<br>cmd+shift+g 当前文件中往前搜索一样的字符<br>cmd+p            查询某方法的参数信息<br>cmd+b            跳到调用方法的定义处<br>cmd+shift+b      跳到方法的实现处<br>cmd+u            跳到方法在父类或接口的定义处<br>cmd+alt+left/right 跳到上/下一次光标查看处<br>cmd+o        查找类<br>cmd+shift+o  查找文件</p>
+<h3 id="编辑">编辑</h3><p>cmd+j        调出IDEA的神器live template<br>cmd+n        各种自动生成代码<br>alt+enter    调出IDEA对出错点的提示处理方法，相当于eclipse的ctrl+1<br>cmd+D        复制粘贴当前行到下一行<br>shift+cmd+v  调出IDEA寄存器中保存的最近复制的N份内容，可选择性粘贴<br>cmd+/        注释/取消注释<br>shift+cmd+enter 补全当前行，最常用的场景时补全当前行后的；号，并将光标定位到下一行</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>]]>
+    
+    </summary>
+    
+      <category term="我的工具" scheme="http://www.52ff.cc/categories/%E6%88%91%E7%9A%84%E5%B7%A5%E5%85%B7/"/>
     
   </entry>
   

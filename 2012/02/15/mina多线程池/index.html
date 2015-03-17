@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>mina多线程池 | feifei&#39;s blog</title>
+    <title>mina多线程池 | flyfish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="ff">
+    <meta name="author" content="xiangming">
     
     <meta name="description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议； 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。">
     
@@ -16,14 +16,14 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="mina多线程池">
 <meta property="og:url" content="http://www.52ff.cc/2012/02/15/mina多线程池/index.html">
-<meta property="og:site_name" content="feifei's blog">
+<meta property="og:site_name" content="flyfish's Blog">
 <meta property="og:description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mina多线程池">
 <meta name="twitter:description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
 
     
-    <link rel="alternative" href="/atom.xml" title="feifei&#39;s blog" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -40,11 +40,11 @@
       <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="feifei&#39;s blog" title="feifei&#39;s blog"/></a>
+				<a href="/"><img src="/img/logo.png" alt="flyfish&#39;s Blog" title="flyfish&#39;s Blog"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="feifei&#39;s blog">feifei&#39;s blog</a></h1>
+				<h1 class="site-name"><a href="/" title="flyfish&#39;s Blog">flyfish&#39;s Blog</a></h1>
 				<h2 class="blog-motto">才华配不上梦想就是所谓的迷茫</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
@@ -85,7 +85,7 @@
   </h1>
   <p class="article-author">By
        
-		<a href="http://www.52ff.cc/about" title="ff" target="_blank" itemprop="author">ff</a>
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
     <time datetime="2012-02-15T02:51:08.000Z" itemprop="datePublished"> 发表于 2012-02-15</time>
@@ -129,7 +129,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2012/02/15/mina多线程池/" data-title="mina多线程池 | feifei&#39;s blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2012/02/15/mina多线程池/" data-title="mina多线程池 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -184,11 +184,15 @@
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>1</sup></a></li>
 		
+			<li><a href="/categories/sql数据库/" title="sql数据库">sql数据库<sup>1</sup></a></li>
+		
 			<li><a href="/categories/分布式文件存储/" title="分布式文件存储">分布式文件存储<sup>1</sup></a></li>
 		
 			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
 		
-			<li><a href="/categories/生活/" title="生活">生活<sup>1</sup></a></li>
+			<li><a href="/categories/我的工具/" title="我的工具">我的工具<sup>1</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>2</sup></a></li>
 		
 		</ul>
 </div>
@@ -205,8 +209,6 @@
 		
 			<li><a href="/tags/［宝宝］/" title="［宝宝］">［宝宝］<sup>1</sup></a></li>
 		
-			<li><a href="/tags/nio/" title="nio">nio<sup>1</sup></a></li>
-		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
 			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
@@ -219,9 +221,9 @@
 		
 			<li><a href="/tags/［netty-nio］/" title="［netty nio］">［netty nio］<sup>1</sup></a></li>
 		
-			<li><a href="/tags/［sql］/" title="［sql］">［sql］<sup>1</sup></a></li>
+			<li><a href="/tags/nio/" title="nio">nio<sup>1</sup></a></li>
 		
-			<li><a href="/tags/［java］/" title="［java］">［java］<sup>0</sup></a></li>
+			<li><a href="/tags/［sql］/" title="［sql］">［sql］<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -230,7 +232,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 
@@ -324,7 +326,7 @@
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
 		
-		<a href="http://www.52ff.cc/about" target="_blank" title="ff">ff</a>
+		<a href="http://www.52ff.cc/about" target="_blank" title="xiangming">xiangming</a>
 		
 		</p>
 </div>
