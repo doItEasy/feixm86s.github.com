@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-03-18T17:55:47.000Z</updated>
+  <updated>2015-03-18T18:00:11.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -13,6 +13,19 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[java多线程第三篇]]></title>
+    <link href="http://www.52ff.cc/2015/03/19/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B8%89%E7%AF%87/"/>
+    <id>http://www.52ff.cc/2015/03/19/java多线程第三篇/</id>
+    <published>2015-03-18T18:00:11.000Z</published>
+    <updated>2015-03-18T18:00:11.000Z</updated>
+    <content type="html"></content>
+    <summary type="html">
+    
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[java多线程第二篇]]></title>

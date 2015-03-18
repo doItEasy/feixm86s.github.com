@@ -4,27 +4,21 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>redis基础命令 | flyfish&#39;s Blog</title>
+    <title>java多线程第三篇 | flyfish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。
-它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令">
     
-    
-    <meta name="description" content="Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。
-它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我">
+    <meta name="description" content="feifei&apos;s blog java | github |netty | bootstrap | jquery | spring | mybatis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="redis基础命令">
-<meta property="og:url" content="http://www.52ff.cc/2015/03/11/redis基础命令/index.html">
+<meta property="og:title" content="java多线程第三篇">
+<meta property="og:url" content="http://www.52ff.cc/2015/03/19/java多线程第三篇/index.html">
 <meta property="og:site_name" content="flyfish's Blog">
-<meta property="og:description" content="Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。
-它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我">
+<meta property="og:description" content="feifei&apos;s blog java | github |netty | bootstrap | jquery | spring | mybatis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redis基础命令">
-<meta name="twitter:description" content="Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。
-它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我">
+<meta name="twitter:title" content="java多线程第三篇">
+<meta name="twitter:description" content="feifei&apos;s blog java | github |netty | bootstrap | jquery | spring | mybatis">
 
     
     <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
@@ -85,14 +79,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/11/redis基础命令/" title="redis基础命令" itemprop="url">redis基础命令</a>
+      <a href="/2015/03/19/java多线程第三篇/" title="java多线程第三篇" itemprop="url">java多线程第三篇</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-11T03:51:08.000Z" itemprop="datePublished"> 发表于 2015-03-11</time>
+    <time datetime="2015-03-18T18:00:11.000Z" itemprop="datePublished"> 发表于 2015-03-19</time>
     
   </p>
 </header>
@@ -101,35 +95,15 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化"><span class="toc-number">1.</span> <span class="toc-text">持久化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程服务控制"><span class="toc-number">2.</span> <span class="toc-text">远程服务控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对value操作的命令"><span class="toc-number">3.</span> <span class="toc-text">对value操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对String操作的命令"><span class="toc-number">4.</span> <span class="toc-text">对String操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对List操作的命令"><span class="toc-number">5.</span> <span class="toc-text">对List操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对Set操作的命令"><span class="toc-number">6.</span> <span class="toc-text">对Set操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对Hash操作的命令"><span class="toc-number">7.</span> <span class="toc-text">对Hash操作的命令</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
-<p>它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令</p>
-<a id="more"></a>
-<h3 id="持久化">持久化</h3><p>save：将数据同步保存到磁盘<br>bgsave：将数据异步保存到磁盘<br>lastsave：返回上次成功将数据保存到磁盘的Unix时戳<br>shundown：将数据同步保存到磁盘，然后关闭服务</p>
-<h3 id="远程服务控制">远程服务控制</h3><p>info：提供服务器的信息和统计<br>monitor：实时转储收到的请求<br>slaveof：改变复制策略设置<br>config：在运行时配置Redis服务器</p>
-<h3 id="对value操作的命令">对value操作的命令</h3><p>exists(key)：确认一个key是否存在<br>del(key)：删除一个key<br>type(key)：返回值的类型<br>keys(pattern)：返回满足给定pattern的所有key<br>randomkey：随机返回key空间的一个<br>keyrename(oldname, newname)：重命名key<br>dbsize：返回当前数据库中key的数目<br>expire：设定一个key的活动时间（s）<br>ttl：获得一个key的活动时间<br>select(index)：按索引查询<br>move(key, dbindex)：移动当前数据库中的key到dbindex数据库<br>flushdb：删除当前选择数据库中的所有key<br>flushall：删除所有数据库中的所有key</p>
-<h3 id="对String操作的命令">对String操作的命令</h3><p>set(key, value)：给数据库中名称为key的string赋予值value<br>get(key)：返回数据库中名称为key的string的value<br>getset(key, value)：给名称为key的string赋予上一次的value<br>mget(key1, key2,…, key N)：返回库中多个string的value<br>setnx(key, value)：添加string，名称为key，值为value<br>setex(key, time, value)：向库中添加string，设定过期时间time<br>mset(key N, value N)：批量设置多个string的值<br>msetnx(key N, value N)：如果所有名称为key i的string都不存在<br>incr(key)：名称为key的string增1操作<br>incrby(key, integer)：名称为key的string增加integer<br>decr(key)：名称为key的string减1操作<br>decrby(key, integer)：名称为key的string减少integer<br>append(key, value)：名称为key的string的值附加value<br>substr(key, start, end)：返回名称为key的string的value的子串</p>
-<h3 id="对List操作的命令">对List操作的命令</h3><p>rpush(key, value)：在名称为key的list尾添加一个值为value的元素<br>lpush(key, value)：在名称为key的list头添加一个值为value的 元素<br>llen(key)：返回名称为key的list的长度<br>lrange(key, start, end)：返回名称为key的list中start至end之间的元素<br>ltrim(key, start, end)：截取名称为key的list<br>lindex(key, index)：返回名称为key的list中index位置的元素<br>lset(key, index, value)：给名称为key的list中index位置的元素赋值<br>lrem(key, count, value)：删除count个key的list中值为value的元素<br>lpop(key)：返回并删除名称为key的list中的首元素<br>rpop(key)：返回并删除名称为key的list中的尾元素<br>blpop(key1, key2,… key N, timeout)：lpop命令的block版本。<br>brpop(key1, key2,… key N, timeout)：rpop的block版本。<br>rpoplpush(srckey, dstkey)：返回并删除名称为srckey的list的尾元素，并将该元素添加到名称为dstkey的list的头部</p>
-<h3 id="对Set操作的命令">对Set操作的命令</h3><p>sadd(key, member)：向名称为key的set中添加元素member<br>srem(key, member) ：删除名称为key的set中的元素member<br>spop(key) ：随机返回并删除名称为key的set中一个元素<br>smove(srckey, dstkey, member) ：移到集合元素<br>scard(key) ：返回名称为key的set的基数<br>sismember(key, member) ：member是否是名称为key的set的元素<br>sinter(key1, key2,…key N) ：求交集<br>sinterstore(dstkey, (keys)) ：求交集并将交集保存到dstkey的集合<br>sunion(key1, (keys)) ：求并集<br>sunionstore(dstkey, (keys)) ：求并集并将并集保存到dstkey的集合<br>sdiff(key1, (keys)) ：求差集<br>sdiffstore(dstkey, (keys)) ：求差集并将差集保存到dstkey的集合<br>smembers(key) ：返回名称为key的set的所有元素<br>srandmember(key) ：随机返回名称为key的set的一个元素</p>
-<h3 id="对Hash操作的命令">对Hash操作的命令</h3><p>hset(key, field, value)：向名称为key的hash中添加元素field<br>hget(key, field)：返回名称为key的hash中field对应的value<br>hmget(key, (fields))：返回名称为key的hash中field i对应的value<br>hmset(key, (fields))：向名称为key的hash中添加元素field<br>hincrby(key, field, integer)：将名称为key的hash中field的value增加integer<br>hexists(key, field)：名称为key的hash中是否存在键为field的域<br>hdel(key, field)：删除名称为key的hash中键为field的域<br>hlen(key)：返回名称为key的hash中元素个数<br>hkeys(key)：返回名称为key的hash中所有键<br>hvals(key)：返回名称为key的hash中所有键对应的value<br>hgetall(key)：返回名称为key的hash中所有的键（field）及其对应的value</p>
-  
+		  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/no-sql/">no-sql</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/redis/">redis</a><a href="/tags/缓存/">缓存</a>
-  </div>
 
 </div>
 
@@ -137,7 +111,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/03/11/redis基础命令/" data-title="redis基础命令 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/03/19/java多线程第三篇/" data-title="java多线程第三篇 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -150,19 +124,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/11/FastDFS常见命令/" title="FAST基础命令安装配置">
-  <strong>上一篇：</strong><br/>
-  <span>
-  FAST基础命令安装配置</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/03/09/java多线程第一篇/"  title="java多线程第一篇">
+<a href="/2015/03/19/java多线程第二篇/"  title="java多线程第二篇">
  <strong>下一篇：</strong><br/> 
- <span>java多线程第一篇
+ <span>java多线程第二篇
 </span>
 </a>
 </div>
@@ -171,7 +137,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/11/redis基础命令/" data-title="redis基础命令" data-url="http://www.52ff.cc/2015/03/11/redis基础命令/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/19/java多线程第三篇/" data-title="java多线程第三篇" data-url="http://www.52ff.cc/2015/03/19/java多线程第三篇/"></div>
 </section>
 
 
@@ -181,7 +147,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化"><span class="toc-number">1.</span> <span class="toc-text">持久化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程服务控制"><span class="toc-number">2.</span> <span class="toc-text">远程服务控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对value操作的命令"><span class="toc-number">3.</span> <span class="toc-text">对value操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对String操作的命令"><span class="toc-number">4.</span> <span class="toc-text">对String操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对List操作的命令"><span class="toc-number">5.</span> <span class="toc-text">对List操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对Set操作的命令"><span class="toc-number">6.</span> <span class="toc-text">对Set操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对Hash操作的命令"><span class="toc-number">7.</span> <span class="toc-text">对Hash操作的命令</span></a></li></ol>
+ 
  
   </div>
 
