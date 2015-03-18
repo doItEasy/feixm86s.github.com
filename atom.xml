@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-03-17T17:13:00.000Z</updated>
+  <updated>2015-03-17T17:46:42.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[hello blog]]></title>
+    <title><![CDATA[hello Blog]]></title>
     <link href="http://www.52ff.cc/2015/03/18/hello-blog/"/>
     <id>http://www.52ff.cc/2015/03/18/hello-blog/</id>
     <published>2015-03-17T16:14:01.000Z</published>
-    <updated>2015-03-17T17:13:00.000Z</updated>
+    <updated>2015-03-17T17:46:42.000Z</updated>
     <content type="html"><![CDATA[<h3 id="为什么写博客">为什么写博客</h3><p>学习领悟一个知识，较长一段时间未接触，是否感觉忘了大半，一时间想不出所以然？<br>学完的知识如果不使用或者不常常回顾，那么还不是自己的知识。<br>自己写的代码，6个月不看就是别人的代码。<br>所以要记下来自己学习过的东西方便自己查看和总结<br><a id="more"></a></p>
 <h3 id="为什么写独立博客？">为什么写独立博客？</h3><p>早就有弄一个独立博客的想法，但是这是一件很花时间和精力的事情，平时忙于琐碎的工作，很难抽出时间玩这个。去年发现有朋友基于bootstrap给自己做了个人站点，发现也有些其他朋友使用markdown写内容再生成静态页面。看到朋友的站点后一下子就想行动起来了，一开始玩了jekyll,后来因为一个主题和node.js选择了hexo。<br>驱使我弄独立博客主要是这几个原因：<br>1.够酷，自己的域名，门面是自己的<br>2.独立，自由，可自定义成自己喜欢的个性的样式<br>3.不会像平台博客那样，平台一变差，博客也跟着变差，更不会有广告飞<br>4.更好的记录</p>
 ]]></content>
@@ -433,13 +433,13 @@ Obj=null;
     <link href="http://www.52ff.cc/2015/02/17/IntelliJ-Idea%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/"/>
     <id>http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/</id>
     <published>2015-02-17T06:55:49.000Z</published>
-    <updated>2015-03-17T09:37:43.000Z</updated>
+    <updated>2015-03-18T03:40:50.000Z</updated>
     <content type="html"><![CDATA[<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>
 <a id="more"></a>
 <p>写这篇文章的主要目的是记录idea工具磨合期掌握的最实用技巧，因为网上的快捷键列举比较杂乱而且应用在mac上不靠谱，自己记下来可以备忘，回顾也方便，帮助自己精通这个工具。</p>
 <p>ps:可使用ctrl+`切换keyMap，建议keyMap使用mac os x 10.5 +，使用default的在mac系统和其他快捷键冲突多些</p>
 <h3 id="搜索">搜索</h3><p>cmd+shift+f 当前项目下递归查找，相当于eclipse的ctrl+h<br>cmd+g       当前文件中往后搜索一样的字符，相当于eclipse的ctrl+ k<br>cmd+shift+g 当前文件中往前搜索一样的字符<br>cmd+p            查询某方法的参数信息<br>cmd+b            跳到调用方法的定义处<br>cmd+shift+b      跳到方法的实现处<br>cmd+u            跳到方法在父类或接口的定义处<br>cmd+alt+left/right 跳到上/下一次光标查看处<br>cmd+o        查找类<br>cmd+shift+o  查找文件</p>
-<h3 id="编辑">编辑</h3><p>cmd+j        调出IDEA的神器live template<br>cmd+n        各种自动生成代码<br>alt+enter    调出IDEA对出错点的提示处理方法，相当于eclipse的ctrl+1<br>cmd+D        复制粘贴当前行到下一行<br>shift+cmd+v  调出IDEA寄存器中保存的最近复制的N份内容，可选择性粘贴<br>cmd+/        注释/取消注释<br>shift+cmd+enter 补全当前行，最常用的场景时补全当前行后的；号，并将光标定位到下一行</p>
+<h3 id="编辑">编辑</h3><p>cmd+j        调出IDEA的神器live template<br>cmd+n        各种自动生成代码<br>alt+enter    调出IDEA对出错点的提示处理方法，相当于eclipse的ctrl+1<br>cmd+D        复制粘贴当前行到下一行<br>shift+cmd+v  调出IDEA寄存器中保存的最近复制的N份内容，可选择性粘贴<br>ctrl+shift+/      注释/取消注释<br>shift+cmd+enter   补全当前行，最常用的场景时补全当前行后的；号，并将光标定位到下一行</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>]]>
