@@ -4,23 +4,31 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>netty笔记第一篇 | flyfish&#39;s Blog</title>
+    <title>JAVA多线程第四篇(线程交互) | flyfish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="">
+    <meta name="description" content="线程交互是比较复杂的问题，SCJP要求不很基础：给定一个场景，编写代码来恰当使用等待、通知和通知所有线程。
+一、线程交互的基础知识
+线程交互知识点需要从java.lang.Object的类的三个方法来学习：">
     
     
-    <meta name="description">
+    <meta name="description" content="线程交互是比较复杂的问题，SCJP要求不很基础：给定一个场景，编写代码来恰当使用等待、通知和通知所有线程。
+一、线程交互的基础知识
+线程交互知识点需要从java.lang.Object的类的三个方法来学习：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="netty笔记第一篇">
-<meta property="og:url" content="http://www.52ff.cc/2015/03/05/netty笔记第一篇/index.html">
+<meta property="og:title" content="JAVA多线程第四篇(线程交互)">
+<meta property="og:url" content="http://www.52ff.cc/2015/03/02/java多线程第四篇-线程交互/index.html">
 <meta property="og:site_name" content="flyfish's Blog">
-<meta property="og:description">
+<meta property="og:description" content="线程交互是比较复杂的问题，SCJP要求不很基础：给定一个场景，编写代码来恰当使用等待、通知和通知所有线程。
+一、线程交互的基础知识
+线程交互知识点需要从java.lang.Object的类的三个方法来学习：">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="netty笔记第一篇">
-<meta name="twitter:description">
+<meta name="twitter:title" content="JAVA多线程第四篇(线程交互)">
+<meta name="twitter:description" content="线程交互是比较复杂的问题，SCJP要求不很基础：给定一个场景，编写代码来恰当使用等待、通知和通知所有线程。
+一、线程交互的基础知识
+线程交互知识点需要从java.lang.Object的类的三个方法来学习：">
 
     
     <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
@@ -81,14 +89,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/05/netty笔记第一篇/" title="netty笔记第一篇" itemprop="url">netty笔记第一篇</a>
+      <a href="/2015/03/02/java多线程第四篇-线程交互/" title="JAVA多线程第四篇(线程交互)" itemprop="url">JAVA多线程第四篇(线程交互)</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-05T13:37:48.000Z" itemprop="datePublished"> 发表于 2015-03-05</time>
+    <time datetime="2015-03-01T17:24:43.000Z" itemprop="datePublished"> 发表于 2015-03-02</time>
     
   </p>
 </header>
@@ -101,7 +109,34 @@
 		
 		</div>
 		
-		<a id="more"></a>  
+		<p>线程交互是比较复杂的问题，SCJP要求不很基础：给定一个场景，编写代码来恰当使用等待、通知和通知所有线程。</p>
+<p>一、线程交互的基础知识</p>
+<p>线程交互知识点需要从java.lang.Object的类的三个方法来学习：<br><a id="more"></a> </p>
+<p>void notify()<br>唤醒在此对象监视器上等待的单个线程。<br>void notifyAll()<br>唤醒在此对象监视器上等待的所有线程。<br>void wait()<br>导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法。</p>
+<p>然，wait()还有另外两个重载方法：<br>void wait(long timeout)<br>导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量。<br>void wait(long timeout, int nanos)<br>导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量。</p>
+<p>以上这些方法是帮助线程传递线程关心的时间状态。</p>
+<p>关于等待/通知，要记住的关键点是：<br>必须从同步环境内调用wait()、notify()、notifyAll()方法。线程不能调用对象上等待或通知的方法，除非它拥有那个对象的锁。<br>wait()、notify()、notifyAll()都是Object的实例方法。与每个对象具有锁一样，每个对象可以有一个线程列表，他们等待来自该信号（通知）。线程通过执行对象上的wait()方法获得这个等待列表。从那时候起，它不再执行任何其他指令，直到调用对象的notify()方法为止。如果多个线程在同一个对象上等待，则将只选择一个线程（不保证以何种顺序）继续执行。如果没有线程等待，则不采取任何特殊操作。</p>
+<p>下面看个例子就明白了：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">public class ThreadA &#123; </span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        ThreadB b = new ThreadB(); </span><br><span class="line">        //启动计算线程 </span><br><span class="line">        b.start(); </span><br><span class="line">        //线程A拥有b对象上的锁。线程为了调用<span class="built_in">wait</span>()或notify()方法，该线程必须是那个对象锁的拥有者 </span><br><span class="line">        synchronized (b) &#123; </span><br><span class="line">            try &#123; </span><br><span class="line">                System.out.println(<span class="string">"等待对象b完成计算。。。"</span>); </span><br><span class="line">                //当前线程A等待 </span><br><span class="line">                b.wait(); </span><br><span class="line">            &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                e.printStackTrace(); </span><br><span class="line">            &#125; </span><br><span class="line">            System.out.println(<span class="string">"b对象计算的总和是："</span> + b.total); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class ThreadB extends Thread &#123; </span><br><span class="line">    int total; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        synchronized (this) &#123; </span><br><span class="line">            <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">101</span>; i++) &#123; </span><br><span class="line">                total += i; </span><br><span class="line">            &#125; </span><br><span class="line">            //（完成计算了）唤醒在此对象监视器上等待的单个线程，在本例中线程A被唤醒 </span><br><span class="line">            notify(); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等待对象b完成计算。。。<br>b对象计算的总和是：5050 </p>
+<p>千万注意：<br>当在对象上调用wait()方法时，执行该代码的线程立即放弃它在对象上的锁。然而调用notify()时，并不意味着这时线程会放弃其锁。如果线程荣然在完成同步代码，则线程在移出之前不会放弃锁。因此，只要调用notify()并不意味着这时该锁变得可用。</p>
+<p>二、多个线程在等待一个对象锁时候使用notifyAll()</p>
+<p>在多数情况下，最好通知等待某个对象的所有线程。如果这样做，可以在对象上使用notifyAll()让所有在此对象上等待的线程冲出等待区，返回到可运行状态。</p>
+<p>下面给个例子：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class Calculator extends Thread &#123; </span><br><span class="line">        int total; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                synchronized (this) &#123; </span><br><span class="line">                        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">101</span>; i++) &#123; </span><br><span class="line">                                total += i; </span><br><span class="line">                        &#125; </span><br><span class="line">                &#125; </span><br><span class="line">                //通知所有在此对象上等待的线程 </span><br><span class="line">                notifyAll(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ReaderResult extends Thread &#123; </span><br><span class="line">        Calculator c; </span><br><span class="line"></span><br><span class="line">        public ReaderResult(Calculator c) &#123; </span><br><span class="line">                this.c = c; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                synchronized (c) &#123; </span><br><span class="line">                        try &#123; </span><br><span class="line">                                System.out.println(Thread.currentThread() + <span class="string">"等待计算结果。。。"</span>); </span><br><span class="line">                                c.wait(); </span><br><span class="line">                        &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                                e.printStackTrace(); </span><br><span class="line">                        &#125; </span><br><span class="line">                        System.out.println(Thread.currentThread() + <span class="string">"计算结果为："</span> + c.total); </span><br><span class="line">                &#125; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public static void main(String[] args) &#123; </span><br><span class="line">                Calculator calculator = new Calculator(); </span><br><span class="line"></span><br><span class="line">                //启动三个线程，分别获取计算结果 </span><br><span class="line">                new ReaderResult(calculator).start(); </span><br><span class="line">                new ReaderResult(calculator).start(); </span><br><span class="line">                new ReaderResult(calculator).start(); </span><br><span class="line">                //启动计算线程 </span><br><span class="line">                calculator.start(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<pre><code>运行结果：
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">1</span>,<span class="number">5</span>,main]等待计算结果。。。 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">2</span>,<span class="number">5</span>,main]等待计算结果。。。 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">3</span>,<span class="number">5</span>,main]等待计算结果。。。 
+Exception in thread <span class="string">"Thread-0"</span> java.lang.IllegalMonitorStateException: current thread not owner 
+  at java.lang.Object.notifyAll(Native <span class="keyword">Method</span>) 
+  at threadtest.Calculator.run(Calculator.java:<span class="number">18</span>) 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">1</span>,<span class="number">5</span>,main]计算结果为：<span class="number">5050</span> 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">2</span>,<span class="number">5</span>,main]计算结果为：<span class="number">5050</span> 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">3</span>,<span class="number">5</span>,main]计算结果为：<span class="number">5050</span> 
+</code></pre><p>运行结果表明，程序中有异常，并且多次运行结果可能有多种输出结果。这就是说明，这个多线程的交互程序还存在问题。究竟是出了什么问题，需要深入的分析和思考，下面将做具体分析。</p>
+<p>实际上，上面这个代码中，我们期望的是读取结果的线程在计算线程调用notifyAll()之前等待即可。 但是，如果计算线程先执行，并在读取结果线程等待之前调用了notify()方法，那么又会发生什么呢？这种情况是可能发生的。因为无法保证线程的不同部分将按照什么顺序来执行。幸运的是当读取线程运行时，它只能马上进入等待状态——它没有做任何事情来检查等待的事件是否已经发生。  ——因此，如果计算线程已经调用了notifyAll()方法，那么它就不会再次调用notifyAll()，——并且等待的读取线程将永远保持等待。这当然是开发者所不愿意看到的问题。</p>
+<p>因此，当等待的事件发生时，需要能够检查notifyAll()通知事件是否已经发生。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -114,7 +149,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/［netty-nio］/">［netty nio］</a>
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
   </div>
 
 </div>
@@ -123,7 +158,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/03/05/netty笔记第一篇/" data-title="netty笔记第一篇 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/03/02/java多线程第四篇-线程交互/" data-title="JAVA多线程第四篇(线程交互) | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,18 +172,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/03/11/redis基础命令/" title="redis基础命令">
+ <a href="/2015/03/05/netty笔记第一篇/" title="netty笔记第一篇">
   <strong>上一篇：</strong><br/>
   <span>
-  redis基础命令</span>
+  netty笔记第一篇</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/03/02/java多线程第四篇-线程交互/"  title="JAVA多线程第四篇(线程交互)">
+<a href="/2015/02/22/写了个异或加密小程序/"  title="写了个异或加密小程序">
  <strong>下一篇：</strong><br/> 
- <span>JAVA多线程第四篇(线程交互)
+ <span>写了个异或加密小程序
 </span>
 </a>
 </div>
@@ -157,7 +192,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/05/netty笔记第一篇/" data-title="netty笔记第一篇" data-url="http://www.52ff.cc/2015/03/05/netty笔记第一篇/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/02/java多线程第四篇-线程交互/" data-title="JAVA多线程第四篇(线程交互)" data-url="http://www.52ff.cc/2015/03/02/java多线程第四篇-线程交互/"></div>
 </section>
 
 

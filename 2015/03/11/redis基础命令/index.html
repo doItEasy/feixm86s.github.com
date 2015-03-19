@@ -108,14 +108,80 @@
 		<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
 <p>它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令</p>
 <a id="more"></a>
-<h3 id="持久化">持久化</h3><p>save：将数据同步保存到磁盘<br>bgsave：将数据异步保存到磁盘<br>lastsave：返回上次成功将数据保存到磁盘的Unix时戳<br>shundown：将数据同步保存到磁盘，然后关闭服务</p>
-<h3 id="远程服务控制">远程服务控制</h3><p>info：提供服务器的信息和统计<br>monitor：实时转储收到的请求<br>slaveof：改变复制策略设置<br>config：在运行时配置Redis服务器</p>
-<h3 id="对value操作的命令">对value操作的命令</h3><p>exists(key)：确认一个key是否存在<br>del(key)：删除一个key<br>type(key)：返回值的类型<br>keys(pattern)：返回满足给定pattern的所有key<br>randomkey：随机返回key空间的一个<br>keyrename(oldname, newname)：重命名key<br>dbsize：返回当前数据库中key的数目<br>expire：设定一个key的活动时间（s）<br>ttl：获得一个key的活动时间<br>select(index)：按索引查询<br>move(key, dbindex)：移动当前数据库中的key到dbindex数据库<br>flushdb：删除当前选择数据库中的所有key<br>flushall：删除所有数据库中的所有key</p>
-<h3 id="对String操作的命令">对String操作的命令</h3><p>set(key, value)：给数据库中名称为key的string赋予值value<br>get(key)：返回数据库中名称为key的string的value<br>getset(key, value)：给名称为key的string赋予上一次的value<br>mget(key1, key2,…, key N)：返回库中多个string的value<br>setnx(key, value)：添加string，名称为key，值为value<br>setex(key, time, value)：向库中添加string，设定过期时间time<br>mset(key N, value N)：批量设置多个string的值<br>msetnx(key N, value N)：如果所有名称为key i的string都不存在<br>incr(key)：名称为key的string增1操作<br>incrby(key, integer)：名称为key的string增加integer<br>decr(key)：名称为key的string减1操作<br>decrby(key, integer)：名称为key的string减少integer<br>append(key, value)：名称为key的string的值附加value<br>substr(key, start, end)：返回名称为key的string的value的子串</p>
-<h3 id="对List操作的命令">对List操作的命令</h3><p>rpush(key, value)：在名称为key的list尾添加一个值为value的元素<br>lpush(key, value)：在名称为key的list头添加一个值为value的 元素<br>llen(key)：返回名称为key的list的长度<br>lrange(key, start, end)：返回名称为key的list中start至end之间的元素<br>ltrim(key, start, end)：截取名称为key的list<br>lindex(key, index)：返回名称为key的list中index位置的元素<br>lset(key, index, value)：给名称为key的list中index位置的元素赋值<br>lrem(key, count, value)：删除count个key的list中值为value的元素<br>lpop(key)：返回并删除名称为key的list中的首元素<br>rpop(key)：返回并删除名称为key的list中的尾元素<br>blpop(key1, key2,… key N, timeout)：lpop命令的block版本。<br>brpop(key1, key2,… key N, timeout)：rpop的block版本。<br>rpoplpush(srckey, dstkey)：返回并删除名称为srckey的list的尾元素，并将该元素添加到名称为dstkey的list的头部</p>
-<h3 id="对Set操作的命令">对Set操作的命令</h3><p>sadd(key, member)：向名称为key的set中添加元素member<br>srem(key, member) ：删除名称为key的set中的元素member<br>spop(key) ：随机返回并删除名称为key的set中一个元素<br>smove(srckey, dstkey, member) ：移到集合元素<br>scard(key) ：返回名称为key的set的基数<br>sismember(key, member) ：member是否是名称为key的set的元素<br>sinter(key1, key2,…key N) ：求交集<br>sinterstore(dstkey, (keys)) ：求交集并将交集保存到dstkey的集合<br>sunion(key1, (keys)) ：求并集<br>sunionstore(dstkey, (keys)) ：求并集并将并集保存到dstkey的集合<br>sdiff(key1, (keys)) ：求差集<br>sdiffstore(dstkey, (keys)) ：求差集并将差集保存到dstkey的集合<br>smembers(key) ：返回名称为key的set的所有元素<br>srandmember(key) ：随机返回名称为key的set的一个元素</p>
-<h3 id="对Hash操作的命令">对Hash操作的命令</h3><p>hset(key, field, value)：向名称为key的hash中添加元素field<br>hget(key, field)：返回名称为key的hash中field对应的value<br>hmget(key, (fields))：返回名称为key的hash中field i对应的value<br>hmset(key, (fields))：向名称为key的hash中添加元素field<br>hincrby(key, field, integer)：将名称为key的hash中field的value增加integer<br>hexists(key, field)：名称为key的hash中是否存在键为field的域<br>hdel(key, field)：删除名称为key的hash中键为field的域<br>hlen(key)：返回名称为key的hash中元素个数<br>hkeys(key)：返回名称为key的hash中所有键<br>hvals(key)：返回名称为key的hash中所有键对应的value<br>hgetall(key)：返回名称为key的hash中所有的键（field）及其对应的value</p>
-  
+<h3 id="持久化">持久化</h3><pre><code><span class="built_in">save</span>：将数据同步保存到磁盘
+bgsave：将数据异步保存到磁盘
+lastsave：返回上次成功将数据保存到磁盘的Unix时戳
+shundown：将数据同步保存到磁盘，然后关闭服务
+</code></pre><h3 id="远程服务控制">远程服务控制</h3><pre><code><span class="keyword">info</span>：提供服务器的信息和统计
+monitor：实时转储收到的请求
+slaveof：改变复制策略设置
+config：在运行时配置Redis服务器
+</code></pre><h3 id="对value操作的命令">对value操作的命令</h3><pre><code><span class="function"><span class="title">exists</span><span class="params">(key)</span></span>：确认一个key是否存在
+<span class="function"><span class="title">del</span><span class="params">(key)</span></span>：删除一个key
+<span class="function"><span class="title">type</span><span class="params">(key)</span></span>：返回值的类型
+<span class="function"><span class="title">keys</span><span class="params">(pattern)</span></span>：返回满足给定pattern的所有key
+randomkey：随机返回key空间的一个
+<span class="function"><span class="title">keyrename</span><span class="params">(old name, newname)</span></span>：重命名key
+dbsize：返回当前数据库中key的数目
+expire：设定一个key的活动时间（s）
+ttl：获得一个key的活动时间
+<span class="function"><span class="title">select</span><span class="params">(index)</span></span>：按索引查询
+<span class="function"><span class="title">move</span><span class="params">(key, dbindex)</span></span>：移动当前数据库中的key到dbindex数据库
+flushdb：删除当前选择数据库中的所有key
+flushall：删除所有数据库中的所有key
+</code></pre><h3 id="对String操作的命令">对String操作的命令</h3><pre><code><span class="operator"><span class="keyword">set</span>(<span class="keyword">key</span>, <span class="keyword">value</span>)：给数据库中名称为<span class="keyword">key</span>的<span class="keyword">string</span>赋予值<span class="keyword">value</span>
+<span class="keyword">get</span>(<span class="keyword">key</span>)：返回数据库中名称为<span class="keyword">key</span>的<span class="keyword">string</span>的<span class="keyword">value</span>
+getset(<span class="keyword">key</span>, <span class="keyword">value</span>)：给名称为<span class="keyword">key</span>的<span class="keyword">string</span>赋予上一次的<span class="keyword">value</span>
+mget(key1, key2,…, <span class="keyword">key</span> N)：返回库中多个<span class="keyword">string</span>的<span class="keyword">value</span>
+setnx(<span class="keyword">key</span>, <span class="keyword">value</span>)：添加<span class="keyword">string</span>，名称为<span class="keyword">key</span>，值为<span class="keyword">value</span>
+setex(<span class="keyword">key</span>, <span class="keyword">time</span>, <span class="keyword">value</span>)：向库中添加<span class="keyword">string</span>，设定过期时间<span class="keyword">time</span>
+mset(<span class="keyword">key</span> N, <span class="keyword">value</span> N)：批量设置多个<span class="keyword">string</span>的值
+msetnx(<span class="keyword">key</span> N, <span class="keyword">value</span> N)：如果所有名称为<span class="keyword">key</span> i的<span class="keyword">string</span>都不存在
+incr(<span class="keyword">key</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>增<span class="number">1</span>操作
+incrby(<span class="keyword">key</span>, <span class="built_in">integer</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>增加<span class="built_in">integer</span>
+decr(<span class="keyword">key</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>减<span class="number">1</span>操作
+decrby(<span class="keyword">key</span>, <span class="built_in">integer</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>减少<span class="built_in">integer</span>
+append(<span class="keyword">key</span>, <span class="keyword">value</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>的值附加<span class="keyword">value</span>
+<span class="keyword">substr</span>(<span class="keyword">key</span>, <span class="keyword">start</span>, <span class="keyword">end</span>)：返回名称为<span class="keyword">key</span>的<span class="keyword">string</span>的<span class="keyword">value</span>的子串</span>
+</code></pre><h3 id="对List操作的命令">对List操作的命令</h3><pre><code>rpush(key, value)：在名称为key的<span class="keyword">list</span>尾添加一个值为value的元素
+lpush(key, value)：在名称为key的<span class="keyword">list</span>头添加一个值为value的 元素
+llen(key)：返回名称为key的<span class="keyword">list</span>的长度
+<span class="keyword">lrange</span>(key, start, end)：返回名称为key的<span class="keyword">list</span>中start至end之间的元素
+ltrim(key, start, end)：截取名称为key的<span class="keyword">list</span>
+<span class="keyword">lindex</span>(key, index)：返回名称为key的<span class="keyword">list</span>中index位置的元素
+<span class="keyword">lset</span>(key, index, value)：给名称为key的<span class="keyword">list</span>中index位置的元素赋值
+lrem(key, count, value)：删除count个key的<span class="keyword">list</span>中值为value的元素
+lpop(key)：返回并删除名称为key的<span class="keyword">list</span>中的首元素
+rpop(key)：返回并删除名称为key的<span class="keyword">list</span>中的尾元素
+blpop(key1, key2,… key N, timeout)：lpop命令的block版本。
+brpop(key1, key2,… key N, timeout)：rpop的block版本。
+rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keyword">list</span>的尾元素，并将该元素添加到名称为dstkey的<span class="keyword">list</span>的头部
+</code></pre><h3 id="对Set操作的命令">对Set操作的命令</h3><pre><code><span class="function"><span class="title">sadd</span><span class="params">(key, member)</span></span>：向名称为key的set中添加元素member
+<span class="function"><span class="title">srem</span><span class="params">(key, member)</span></span> ：删除名称为key的set中的元素member
+<span class="function"><span class="title">spop</span><span class="params">(key)</span></span> ：随机返回并删除名称为key的set中一个元素
+<span class="function"><span class="title">smove</span><span class="params">(srckey, dstkey, member)</span></span> ：移到集合元素
+<span class="function"><span class="title">scard</span><span class="params">(key)</span></span> ：返回名称为key的set的基数
+<span class="function"><span class="title">sismember</span><span class="params">(key, member)</span></span> ：member是否是名称为key的set的元素
+<span class="function"><span class="title">sinter</span><span class="params">(key1, key2,…key N)</span></span> ：求交集
+<span class="function"><span class="title">sinterstore</span><span class="params">(dstkey, (keys)</span></span>) ：求交集并将交集保存到dstkey的集合
+<span class="function"><span class="title">sunion</span><span class="params">(key1, (keys)</span></span>) ：求并集
+<span class="function"><span class="title">sunionstore</span><span class="params">(dstkey, (keys)</span></span>) ：求并集并将并集保存到dstkey的集合
+<span class="function"><span class="title">sdiff</span><span class="params">(key1, (keys)</span></span>) ：求差集
+<span class="function"><span class="title">sdiffstore</span><span class="params">(dstkey, (keys)</span></span>) ：求差集并将差集保存到dstkey的集合
+<span class="function"><span class="title">smembers</span><span class="params">(key)</span></span> ：返回名称为key的set的所有元素
+<span class="function"><span class="title">srandmember</span><span class="params">(key)</span></span> ：随机返回名称为key的set的一个元素
+</code></pre><h3 id="对Hash操作的命令">对Hash操作的命令</h3><pre><code><span class="function"><span class="title">hset</span><span class="params">(key, field, value)</span></span>：向名称为key的hash中添加元素field
+<span class="function"><span class="title">hget</span><span class="params">(key, field)</span></span>：返回名称为key的hash中field对应的value
+<span class="function"><span class="title">hmget</span><span class="params">(key, (fields)</span></span>)：返回名称为key的hash中field i对应的value
+<span class="function"><span class="title">hmset</span><span class="params">(key, (fields)</span></span>)：向名称为key的hash中添加元素field 
+<span class="function"><span class="title">hincrby</span><span class="params">(key, field, integer)</span></span>：将名称为key的hash中field的value增加integer
+<span class="function"><span class="title">hexists</span><span class="params">(key, field)</span></span>：名称为key的hash中是否存在键为field的域
+<span class="function"><span class="title">hdel</span><span class="params">(key, field)</span></span>：删除名称为key的hash中键为field的域
+<span class="function"><span class="title">hlen</span><span class="params">(key)</span></span>：返回名称为key的hash中元素个数
+<span class="function"><span class="title">hkeys</span><span class="params">(key)</span></span>：返回名称为key的hash中所有键
+<span class="function"><span class="title">hvals</span><span class="params">(key)</span></span>：返回名称为key的hash中所有键对应的value
+<span class="function"><span class="title">hgetall</span><span class="params">(key)</span></span>：返回名称为key的hash中所有的键（field）及其对应的value
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -160,9 +226,9 @@
 
 
 <div class="next">
-<a href="/2015/03/09/java多线程第一篇/"  title="JAVA多线程第一篇(概念和启动线程)">
+<a href="/2015/03/05/netty笔记第一篇/"  title="netty笔记第一篇">
  <strong>下一篇：</strong><br/> 
- <span>JAVA多线程第一篇(概念和启动线程)
+ <span>netty笔记第一篇
 </span>
 </a>
 </div>
@@ -196,7 +262,7 @@
 		
 			<li><a href="/categories/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/categories/java/" title="java">java<sup>8</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>11</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>1</sup></a></li>
 		
@@ -219,9 +285,9 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/java/" title="java">java<sup>7</sup></a></li>
+			<li><a href="/tags/java/" title="java">java<sup>10</sup></a></li>
 		
-			<li><a href="/tags/多线程/" title="多线程">多线程<sup>2</sup></a></li>
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>5</sup></a></li>
 		
 			<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 		
@@ -250,7 +316,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

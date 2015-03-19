@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-03-19T15:16:32.000Z</updated>
+  <updated>2015-03-19T03:40:50.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -13,48 +13,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title><![CDATA[JAVA多线程第二篇(状态转换)]]></title>
-    <link href="http://www.52ff.cc/2015/03/19/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%BA%8C%E7%AF%87%EF%BC%88%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%EF%BC%89/"/>
-    <id>http://www.52ff.cc/2015/03/19/JAVA多线程第二篇（状态转换）/</id>
-    <published>2015-03-19T14:59:53.000Z</published>
-    <updated>2015-03-19T15:16:32.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="线程状态">线程状态</h2><h3 id="线程状态-1">线程状态</h3><p>线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。</p>
-<p>1、新状态：线程对象已经创建，还没有在其上调用start()方法。</p>
-<p>2、可运行状态：当线程有资格运行，但调度程序还没有把它选定为运行线程时线程所处的状态。当start()方法调用时，线程首先进入可运行状态。在线程运行之后或者从阻塞、等待或睡眠状态回来后，也返回到可运行状态。</p>
-<p>3、运行状态：线程调度程序从可运行池中选择一个线程作为当前线程时线程所处的状态。这也是线程进入运行状态的唯一一种方式。</p>
-<p>4、等待/阻塞/睡眠状态：这是线程有资格运行时它所处的状态。实际上这个三状态组合为一种，其共同点是：线程仍旧是活的，但是当前没有条件运行。换句话说，它是可运行的，但是如果某件事件出现，他可能返回到可运行状态。</p>
-<p>5、死亡态：当线程的run()方法完成时就认为它死去。这个线程对象也许是活的，但是，它已经不是一个单独执行的线程。线程一旦死亡，就不能复生。 如果在一个死去的线程上调用start()方法，会抛出java.lang.IllegalThreadStateException异常</p>
-<h2 id="阻止线程执行">阻止线程执行</h2><h3 id="阻止线程执行-1">阻止线程执行</h3><p>对于线程的阻止，考虑以下三个方面，不考虑IO阻塞的情况：<br>睡眠；<br>等待；<br>因为需要一个对象的锁定而被阻塞。</p>
-<p>1、睡眠<br>Thread.sleep(long millis)和Thread.sleep(long millis, int nanos)静态方法强制当前正在执行的线程休眠（暂停执行），以“减慢线程”。当线程睡眠时，它入睡在某个地方，在苏醒之前不会返回到可运行状态。当睡眠时间到期，则返回到可运行状态。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class MyThread extends Thread &#123; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> ((i) % <span class="number">10</span> == <span class="number">0</span>) &#123; </span><br><span class="line">                System.out.println(<span class="string">"-------"</span> + i); </span><br><span class="line">            &#125; </span><br><span class="line">            System.out.print(i); </span><br><span class="line">            try &#123; </span><br><span class="line">                Thread.sleep(<span class="number">1</span>); </span><br><span class="line">                System.out.print(<span class="string">"    线程睡眠1毫秒！\n"</span>); </span><br><span class="line">            &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                e.printStackTrace(); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        new MyThread().start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>注意：<br>1、线程睡眠是帮助所有线程获得运行机会的最好方法。<br>2、线程睡眠到期自动苏醒，并返回到可运行状态，不是运行状态。sleep()中指定的时间是线程不会运行的最短时间。因此，sleep()方法不能保证该线程睡眠到期后就开始执行。<br>3、sleep()是静态方法，只能控制当前正在运行的线程。</p>
-<hr>
-<p>2、线程的优先级和线程让步yield()<br>线程的让步是通过Thread.yield()来实现的。yield()方法的作用是：暂停当前正在执行的线程对象，并执行其他线程。</p>
-<p>要理解yield()，必须了解线程的优先级的概念。线程总是存在优先级，优先级范围在1~10之间。JVM线程调度程序是基于优先级的抢先调度机制。在大多数情况下，当前运行的线程优先级将大于或等于线程池中任何线程的优先级。但这仅仅是大多数情况。</p>
-<p>注意：当设计多线程应用程序的时候，一定不要依赖于线程的优先级。因为线程调度优先级操作是没有保障的，只能把线程优先级作用作为一种提高程序效率的方法，但是要保证程序不依赖这种操作。</p>
-<p>当线程池中线程都具有相同的优先级，调度程序的JVM实现自由选择它喜欢的线程。这时候调度程序的操作有两种可能：一是选择一个线程运行，直到它阻塞或者运行完成为止。二是时间分片，为池内的每个线程提供均等的运行机会。</p>
-<p>设置线程的优先级：线程默认的优先级是创建它的执行线程的优先级。可以通过setPriority(int newPriority)更改线程的优先级。例如：<br>Thread t = new MyThread();<br>t.setPriority(8);<br>t.start();<br>线程优先级为1~10之间的正整数，JVM从不会改变一个线程的优先级。然而，1~10之间的值是没有保证的。一些JVM可能不能识别10个不同的值，而将这些优先级进行每两个或多个合并，变成少于10个的优先级，则两个或多个优先级的线程可能被映射为一个优先级。</p>
-<p>线程默认优先级是5，Thread类中有三个常量，定义线程优先级范围：<br>static int MAX_PRIORITY<br>线程可以具有的最高优先级。<br>static int MIN_PRIORITY<br>线程可以具有的最低优先级。<br>static int NORM_PRIORITY<br>分配给线程的默认优先级。</p>
-<hr>
-<p>3、join()方法</p>
-<p>Thread的非静态方法join()让一个线程B“加入”到另外一个线程A的尾部。在A执行完毕之前，B不能工作。例如：<br>        Thread t = new MyThread();<br>        t.start();<br>        t.join();<br>另外，join()方法还有带超时限制的重载版本。 例如t.join(5000);则让线程等待5000毫秒，如果超过这个时间，则停止等待，变为可运行状态</p>
-<hr>
-<p>小结<br>到目前位置，介绍了线程离开运行状态的3种方法：<br>1、调用Thread.sleep()：使当前线程睡眠至少多少毫秒（尽管它可能在指定的时间之前被中断）。<br>2、调用Thread.yield()：不能保障太多事情，尽管通常它会让当前运行线程回到可运行性状态，使得有相同优先级的线程有机会执行。<br>3、调用join()方法：保证当前线程停止执行，直到该线程所加入的线程完成为止。然而，如果它加入的线程没有存活，则当前线程不需要停止。</p>
-<p>除了以上三种方式外，还有下面几种特殊情况可能使线程离开运行状态：<br>1、线程的run()方法完成。<br>2、在对象上调用wait()方法（不是在线程上调用）。<br>3、线程不能在对象上获得锁定，它正试图运行该对象的方法代码。<br>4、线程调度程序可以决定将当前运行状态移动到可运行状态，以便让另一个线程获得运行机会，而不需要任何理由。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="线程状态">线程状态</h2><h3 id="线程状态-1">线程状态</h3><p>线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。</p>
-<p>1、新状态：线程对象已经创建，还没有在其上调用start()方]]>
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
   
   <entry>
     <title><![CDATA[hello Blog]]></title>
@@ -213,6 +171,46 @@ Obj=null;
   </entry>
   
   <entry>
+    <title><![CDATA[JAVA多线程第五篇(并发协作例子)]]></title>
+    <link href="http://www.52ff.cc/2015/03/12/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%BA%94%E7%AF%87-%E5%B9%B6%E5%8F%91%E5%8D%8F%E4%BD%9C-%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85/"/>
+    <id>http://www.52ff.cc/2015/03/12/JAVA多线程第五篇-并发协作-生产者消费者/</id>
+    <published>2015-03-11T17:43:04.000Z</published>
+    <updated>2015-03-19T17:50:10.000Z</updated>
+    <content type="html"><![CDATA[<p>Java线程：并发协作-生产者消费者模型</p>
+<p>对于多线程程序来说，不管任何编程语言，生产者和消费者模型都是最经典的。就像学习每一门编程语言一样，Hello World！都是最经典的例子。</p>
+<p>实际上，准确说应该是“生产者-消费者-仓储”模型，离开了仓储，生产者消费者模型就显得没有说服力了。<br>对于此模型，应该明确一下几点：<br>1、生产者仅仅在仓储未满时候生产，仓满则停止生产。<br>2、消费者仅仅在仓储有产品时候才能消费，仓空则等待。<br>3、当消费者发现仓储没产品可消费时候会通知生产者生产。<br>4、生产者在生产出可消费产品时候，应该通知等待的消费者去消费。</p>
+<a id="more"></a>
+<p>此模型将要结合java.lang.Object的wait与notify、notifyAll方法来实现以上的需求。这是非常重要的。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/** </span><br><span class="line">* Java线程：并发协作-生产者消费者模型 </span><br><span class="line">* </span><br><span class="line">*/</span><br><span class="line">public class Test &#123; </span><br><span class="line">        public static void main(String[] args) &#123; </span><br><span class="line">                Godown godown = new Godown(<span class="number">30</span>); </span><br><span class="line">                Consumer c1 = new Consumer(<span class="number">50</span>, godown); </span><br><span class="line">                Consumer c2 = new Consumer(<span class="number">20</span>, godown); </span><br><span class="line">                Consumer c3 = new Consumer(<span class="number">30</span>, godown); </span><br><span class="line">                Producer p1 = new Producer(<span class="number">10</span>, godown); </span><br><span class="line">                Producer p2 = new Producer(<span class="number">10</span>, godown); </span><br><span class="line">                Producer p3 = new Producer(<span class="number">10</span>, godown); </span><br><span class="line">                Producer p4 = new Producer(<span class="number">10</span>, godown); </span><br><span class="line">                Producer p5 = new Producer(<span class="number">10</span>, godown); </span><br><span class="line">                Producer p6 = new Producer(<span class="number">10</span>, godown); </span><br><span class="line">                Producer p7 = new Producer(<span class="number">80</span>, godown); </span><br><span class="line"></span><br><span class="line">                c1.start(); </span><br><span class="line">                c2.start(); </span><br><span class="line">                c3.start(); </span><br><span class="line">                p1.start(); </span><br><span class="line">                p2.start(); </span><br><span class="line">                p3.start(); </span><br><span class="line">                p4.start(); </span><br><span class="line">                p5.start(); </span><br><span class="line">                p6.start(); </span><br><span class="line">                p7.start(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line">* 仓库 </span><br><span class="line">*/ </span><br><span class="line">class Godown &#123; </span><br><span class="line">        public static final int max_size = <span class="number">100</span>; //最大库存量 </span><br><span class="line">        public int curnum;     //当前库存量 </span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="title">Godown</span></span>() &#123; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        Godown(int curnum) &#123; </span><br><span class="line">                this.curnum = curnum; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        /** </span><br><span class="line">         * 生产指定数量的产品 </span><br><span class="line">         * </span><br><span class="line">         * @param neednum </span><br><span class="line">         */ </span><br><span class="line">        public synchronized void produce(int neednum) &#123; </span><br><span class="line">                //测试是否需要生产 </span><br><span class="line">                <span class="keyword">while</span> (neednum + curnum &gt; max_size) &#123; </span><br><span class="line">                        System.out.println(<span class="string">"要生产的产品数量"</span> + neednum + <span class="string">"超过剩余库存量"</span> + (max_size - curnum) + <span class="string">"，暂时不能执行生产任务!"</span>); </span><br><span class="line">                        try &#123; </span><br><span class="line">                                //当前的生产线程等待 </span><br><span class="line">                                <span class="built_in">wait</span>(); </span><br><span class="line">                        &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                                e.printStackTrace(); </span><br><span class="line">                        &#125; </span><br><span class="line">                &#125; </span><br><span class="line">                //满足生产条件，则进行生产，这里简单的更改当前库存量 </span><br><span class="line">                curnum += neednum; </span><br><span class="line">                System.out.println(<span class="string">"已经生产了"</span> + neednum + <span class="string">"个产品，现仓储量为"</span> + curnum); </span><br><span class="line">                //唤醒在此对象监视器上等待的所有线程 </span><br><span class="line">                notifyAll(); </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        /** </span><br><span class="line">         * 消费指定数量的产品 </span><br><span class="line">         * </span><br><span class="line">         * @param neednum </span><br><span class="line">         */ </span><br><span class="line">        public synchronized void consume(int neednum) &#123; </span><br><span class="line">                //测试是否可消费 </span><br><span class="line">                <span class="keyword">while</span> (curnum &lt; neednum) &#123; </span><br><span class="line">                        try &#123; </span><br><span class="line">                                //当前的生产线程等待 </span><br><span class="line">                                <span class="built_in">wait</span>(); </span><br><span class="line">                        &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                                e.printStackTrace(); </span><br><span class="line">                        &#125; </span><br><span class="line">                &#125; </span><br><span class="line">                //满足消费条件，则进行消费，这里简单的更改当前库存量 </span><br><span class="line">                curnum -= neednum; </span><br><span class="line">                System.out.println(<span class="string">"已经消费了"</span> + neednum + <span class="string">"个产品，现仓储量为"</span> + curnum); </span><br><span class="line">                //唤醒在此对象监视器上等待的所有线程 </span><br><span class="line">                notifyAll(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line">* 生产者 </span><br><span class="line">*/ </span><br><span class="line">class Producer extends Thread &#123; </span><br><span class="line">        private int neednum;                //生产产品的数量 </span><br><span class="line">        private Godown godown;            //仓库 </span><br><span class="line"></span><br><span class="line">        Producer(int neednum, Godown godown) &#123; </span><br><span class="line">                this.neednum = neednum; </span><br><span class="line">                this.godown = godown; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                //生产指定数量的产品 </span><br><span class="line">                godown.produce(neednum); </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line">* 消费者 </span><br><span class="line">*/ </span><br><span class="line">class Consumer extends Thread &#123; </span><br><span class="line">        private int neednum;                //生产产品的数量 </span><br><span class="line">        private Godown godown;            //仓库 </span><br><span class="line"></span><br><span class="line">        Consumer(int neednum, Godown godown) &#123; </span><br><span class="line">                this.neednum = neednum; </span><br><span class="line">                this.godown = godown; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                //消费指定数量的产品 </span><br><span class="line">                godown.consume(neednum); </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>已经生产了10个产品，现仓储量为40 
+已经生产了10个产品，现仓储量为50 
+已经消费了50个产品，现仓储量为0 
+已经生产了80个产品，现仓储量为80 
+已经消费了30个产品，现仓储量为50 
+已经生产了10个产品，现仓储量为60 
+已经消费了20个产品，现仓储量为40 
+已经生产了10个产品，现仓储量为50 
+已经生产了10个产品，现仓储量为60 
+已经生产了10个产品，现仓储量为70 
+</code></pre><p>说明：<br>对于本例，要说明的是当发现不能满足生产或者消费条件的时候，调用对象的wait方法，wait方法的作用是释放当前线程的所获得的锁，并调用对象的notifyAll() 方法，通知（唤醒）该对象上其他等待线程，使得其继续执行。这样，整个生产者、消费者线程得以正确的协作执行。<br>notifyAll() 方法，起到的是一个通知作用，不释放锁，也不获取锁。只是告诉该对象上等待的线程“可以竞争执行了，都醒来去执行吧”。</p>
+<p>本例仅仅是生产者消费者模型中最简单的一种表示，本例中，如果消费者消费的仓储量达不到满足，而又没有生产者，则程序会一直处于等待状态，这当然是不对的。实际上可以将此例进行修改，修改为，根据消费驱动生产，同时生产兼顾仓库，如果仓不满就生产，并对每次最大消费量做个限制，这样就不存在此问题了，当然这样的例子更复杂，更难以说明这样一个简单模型。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Java线程：并发协作-生产者消费者模型</p>
+<p>对于多线程程序来说，不管任何编程语言，生产者和消费者模型都是最经典的。就像学习每一门编程语言一样，Hello World！都是最经典的例子。</p>
+<p>实际上，准确说应该是“生产者-消费者-仓储”模型，离开了仓储，生产者消费者模型就显得没有说服力了。<br>对于此模型，应该明确一下几点：<br>1、生产者仅仅在仓储未满时候生产，仓满则停止生产。<br>2、消费者仅仅在仓储有产品时候才能消费，仓空则等待。<br>3、当消费者发现仓储没产品可消费时候会通知生产者生产。<br>4、生产者在生产出可消费产品时候，应该通知等待的消费者去消费。</p>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[一个简陋的RPC框架]]></title>
     <link href="http://www.52ff.cc/2015/03/11/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84RPC%E6%A1%86%E6%9E%B6/"/>
     <id>http://www.52ff.cc/2015/03/11/一个简陋的RPC框架/</id>
@@ -283,18 +281,84 @@ Obj=null;
     <link href="http://www.52ff.cc/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
     <id>http://www.52ff.cc/2015/03/11/redis基础命令/</id>
     <published>2015-03-11T03:51:08.000Z</published>
-    <updated>2015-03-14T05:23:49.000Z</updated>
+    <updated>2015-03-19T17:05:26.000Z</updated>
     <content type="html"><![CDATA[<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
 <p>它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令</p>
 <a id="more"></a>
-<h3 id="持久化">持久化</h3><p>save：将数据同步保存到磁盘<br>bgsave：将数据异步保存到磁盘<br>lastsave：返回上次成功将数据保存到磁盘的Unix时戳<br>shundown：将数据同步保存到磁盘，然后关闭服务</p>
-<h3 id="远程服务控制">远程服务控制</h3><p>info：提供服务器的信息和统计<br>monitor：实时转储收到的请求<br>slaveof：改变复制策略设置<br>config：在运行时配置Redis服务器</p>
-<h3 id="对value操作的命令">对value操作的命令</h3><p>exists(key)：确认一个key是否存在<br>del(key)：删除一个key<br>type(key)：返回值的类型<br>keys(pattern)：返回满足给定pattern的所有key<br>randomkey：随机返回key空间的一个<br>keyrename(oldname, newname)：重命名key<br>dbsize：返回当前数据库中key的数目<br>expire：设定一个key的活动时间（s）<br>ttl：获得一个key的活动时间<br>select(index)：按索引查询<br>move(key, dbindex)：移动当前数据库中的key到dbindex数据库<br>flushdb：删除当前选择数据库中的所有key<br>flushall：删除所有数据库中的所有key</p>
-<h3 id="对String操作的命令">对String操作的命令</h3><p>set(key, value)：给数据库中名称为key的string赋予值value<br>get(key)：返回数据库中名称为key的string的value<br>getset(key, value)：给名称为key的string赋予上一次的value<br>mget(key1, key2,…, key N)：返回库中多个string的value<br>setnx(key, value)：添加string，名称为key，值为value<br>setex(key, time, value)：向库中添加string，设定过期时间time<br>mset(key N, value N)：批量设置多个string的值<br>msetnx(key N, value N)：如果所有名称为key i的string都不存在<br>incr(key)：名称为key的string增1操作<br>incrby(key, integer)：名称为key的string增加integer<br>decr(key)：名称为key的string减1操作<br>decrby(key, integer)：名称为key的string减少integer<br>append(key, value)：名称为key的string的值附加value<br>substr(key, start, end)：返回名称为key的string的value的子串</p>
-<h3 id="对List操作的命令">对List操作的命令</h3><p>rpush(key, value)：在名称为key的list尾添加一个值为value的元素<br>lpush(key, value)：在名称为key的list头添加一个值为value的 元素<br>llen(key)：返回名称为key的list的长度<br>lrange(key, start, end)：返回名称为key的list中start至end之间的元素<br>ltrim(key, start, end)：截取名称为key的list<br>lindex(key, index)：返回名称为key的list中index位置的元素<br>lset(key, index, value)：给名称为key的list中index位置的元素赋值<br>lrem(key, count, value)：删除count个key的list中值为value的元素<br>lpop(key)：返回并删除名称为key的list中的首元素<br>rpop(key)：返回并删除名称为key的list中的尾元素<br>blpop(key1, key2,… key N, timeout)：lpop命令的block版本。<br>brpop(key1, key2,… key N, timeout)：rpop的block版本。<br>rpoplpush(srckey, dstkey)：返回并删除名称为srckey的list的尾元素，并将该元素添加到名称为dstkey的list的头部</p>
-<h3 id="对Set操作的命令">对Set操作的命令</h3><p>sadd(key, member)：向名称为key的set中添加元素member<br>srem(key, member) ：删除名称为key的set中的元素member<br>spop(key) ：随机返回并删除名称为key的set中一个元素<br>smove(srckey, dstkey, member) ：移到集合元素<br>scard(key) ：返回名称为key的set的基数<br>sismember(key, member) ：member是否是名称为key的set的元素<br>sinter(key1, key2,…key N) ：求交集<br>sinterstore(dstkey, (keys)) ：求交集并将交集保存到dstkey的集合<br>sunion(key1, (keys)) ：求并集<br>sunionstore(dstkey, (keys)) ：求并集并将并集保存到dstkey的集合<br>sdiff(key1, (keys)) ：求差集<br>sdiffstore(dstkey, (keys)) ：求差集并将差集保存到dstkey的集合<br>smembers(key) ：返回名称为key的set的所有元素<br>srandmember(key) ：随机返回名称为key的set的一个元素</p>
-<h3 id="对Hash操作的命令">对Hash操作的命令</h3><p>hset(key, field, value)：向名称为key的hash中添加元素field<br>hget(key, field)：返回名称为key的hash中field对应的value<br>hmget(key, (fields))：返回名称为key的hash中field i对应的value<br>hmset(key, (fields))：向名称为key的hash中添加元素field<br>hincrby(key, field, integer)：将名称为key的hash中field的value增加integer<br>hexists(key, field)：名称为key的hash中是否存在键为field的域<br>hdel(key, field)：删除名称为key的hash中键为field的域<br>hlen(key)：返回名称为key的hash中元素个数<br>hkeys(key)：返回名称为key的hash中所有键<br>hvals(key)：返回名称为key的hash中所有键对应的value<br>hgetall(key)：返回名称为key的hash中所有的键（field）及其对应的value</p>
-]]></content>
+<h3 id="持久化">持久化</h3><pre><code><span class="built_in">save</span>：将数据同步保存到磁盘
+bgsave：将数据异步保存到磁盘
+lastsave：返回上次成功将数据保存到磁盘的Unix时戳
+shundown：将数据同步保存到磁盘，然后关闭服务
+</code></pre><h3 id="远程服务控制">远程服务控制</h3><pre><code><span class="keyword">info</span>：提供服务器的信息和统计
+monitor：实时转储收到的请求
+slaveof：改变复制策略设置
+config：在运行时配置Redis服务器
+</code></pre><h3 id="对value操作的命令">对value操作的命令</h3><pre><code><span class="function"><span class="title">exists</span><span class="params">(key)</span></span>：确认一个key是否存在
+<span class="function"><span class="title">del</span><span class="params">(key)</span></span>：删除一个key
+<span class="function"><span class="title">type</span><span class="params">(key)</span></span>：返回值的类型
+<span class="function"><span class="title">keys</span><span class="params">(pattern)</span></span>：返回满足给定pattern的所有key
+randomkey：随机返回key空间的一个
+<span class="function"><span class="title">keyrename</span><span class="params">(old name, newname)</span></span>：重命名key
+dbsize：返回当前数据库中key的数目
+expire：设定一个key的活动时间（s）
+ttl：获得一个key的活动时间
+<span class="function"><span class="title">select</span><span class="params">(index)</span></span>：按索引查询
+<span class="function"><span class="title">move</span><span class="params">(key, dbindex)</span></span>：移动当前数据库中的key到dbindex数据库
+flushdb：删除当前选择数据库中的所有key
+flushall：删除所有数据库中的所有key
+</code></pre><h3 id="对String操作的命令">对String操作的命令</h3><pre><code><span class="operator"><span class="keyword">set</span>(<span class="keyword">key</span>, <span class="keyword">value</span>)：给数据库中名称为<span class="keyword">key</span>的<span class="keyword">string</span>赋予值<span class="keyword">value</span>
+<span class="keyword">get</span>(<span class="keyword">key</span>)：返回数据库中名称为<span class="keyword">key</span>的<span class="keyword">string</span>的<span class="keyword">value</span>
+getset(<span class="keyword">key</span>, <span class="keyword">value</span>)：给名称为<span class="keyword">key</span>的<span class="keyword">string</span>赋予上一次的<span class="keyword">value</span>
+mget(key1, key2,…, <span class="keyword">key</span> N)：返回库中多个<span class="keyword">string</span>的<span class="keyword">value</span>
+setnx(<span class="keyword">key</span>, <span class="keyword">value</span>)：添加<span class="keyword">string</span>，名称为<span class="keyword">key</span>，值为<span class="keyword">value</span>
+setex(<span class="keyword">key</span>, <span class="keyword">time</span>, <span class="keyword">value</span>)：向库中添加<span class="keyword">string</span>，设定过期时间<span class="keyword">time</span>
+mset(<span class="keyword">key</span> N, <span class="keyword">value</span> N)：批量设置多个<span class="keyword">string</span>的值
+msetnx(<span class="keyword">key</span> N, <span class="keyword">value</span> N)：如果所有名称为<span class="keyword">key</span> i的<span class="keyword">string</span>都不存在
+incr(<span class="keyword">key</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>增<span class="number">1</span>操作
+incrby(<span class="keyword">key</span>, <span class="built_in">integer</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>增加<span class="built_in">integer</span>
+decr(<span class="keyword">key</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>减<span class="number">1</span>操作
+decrby(<span class="keyword">key</span>, <span class="built_in">integer</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>减少<span class="built_in">integer</span>
+append(<span class="keyword">key</span>, <span class="keyword">value</span>)：名称为<span class="keyword">key</span>的<span class="keyword">string</span>的值附加<span class="keyword">value</span>
+<span class="keyword">substr</span>(<span class="keyword">key</span>, <span class="keyword">start</span>, <span class="keyword">end</span>)：返回名称为<span class="keyword">key</span>的<span class="keyword">string</span>的<span class="keyword">value</span>的子串</span>
+</code></pre><h3 id="对List操作的命令">对List操作的命令</h3><pre><code>rpush(key, value)：在名称为key的<span class="keyword">list</span>尾添加一个值为value的元素
+lpush(key, value)：在名称为key的<span class="keyword">list</span>头添加一个值为value的 元素
+llen(key)：返回名称为key的<span class="keyword">list</span>的长度
+<span class="keyword">lrange</span>(key, start, end)：返回名称为key的<span class="keyword">list</span>中start至end之间的元素
+ltrim(key, start, end)：截取名称为key的<span class="keyword">list</span>
+<span class="keyword">lindex</span>(key, index)：返回名称为key的<span class="keyword">list</span>中index位置的元素
+<span class="keyword">lset</span>(key, index, value)：给名称为key的<span class="keyword">list</span>中index位置的元素赋值
+lrem(key, count, value)：删除count个key的<span class="keyword">list</span>中值为value的元素
+lpop(key)：返回并删除名称为key的<span class="keyword">list</span>中的首元素
+rpop(key)：返回并删除名称为key的<span class="keyword">list</span>中的尾元素
+blpop(key1, key2,… key N, timeout)：lpop命令的block版本。
+brpop(key1, key2,… key N, timeout)：rpop的block版本。
+rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keyword">list</span>的尾元素，并将该元素添加到名称为dstkey的<span class="keyword">list</span>的头部
+</code></pre><h3 id="对Set操作的命令">对Set操作的命令</h3><pre><code><span class="function"><span class="title">sadd</span><span class="params">(key, member)</span></span>：向名称为key的set中添加元素member
+<span class="function"><span class="title">srem</span><span class="params">(key, member)</span></span> ：删除名称为key的set中的元素member
+<span class="function"><span class="title">spop</span><span class="params">(key)</span></span> ：随机返回并删除名称为key的set中一个元素
+<span class="function"><span class="title">smove</span><span class="params">(srckey, dstkey, member)</span></span> ：移到集合元素
+<span class="function"><span class="title">scard</span><span class="params">(key)</span></span> ：返回名称为key的set的基数
+<span class="function"><span class="title">sismember</span><span class="params">(key, member)</span></span> ：member是否是名称为key的set的元素
+<span class="function"><span class="title">sinter</span><span class="params">(key1, key2,…key N)</span></span> ：求交集
+<span class="function"><span class="title">sinterstore</span><span class="params">(dstkey, (keys)</span></span>) ：求交集并将交集保存到dstkey的集合
+<span class="function"><span class="title">sunion</span><span class="params">(key1, (keys)</span></span>) ：求并集
+<span class="function"><span class="title">sunionstore</span><span class="params">(dstkey, (keys)</span></span>) ：求并集并将并集保存到dstkey的集合
+<span class="function"><span class="title">sdiff</span><span class="params">(key1, (keys)</span></span>) ：求差集
+<span class="function"><span class="title">sdiffstore</span><span class="params">(dstkey, (keys)</span></span>) ：求差集并将差集保存到dstkey的集合
+<span class="function"><span class="title">smembers</span><span class="params">(key)</span></span> ：返回名称为key的set的所有元素
+<span class="function"><span class="title">srandmember</span><span class="params">(key)</span></span> ：随机返回名称为key的set的一个元素
+</code></pre><h3 id="对Hash操作的命令">对Hash操作的命令</h3><pre><code><span class="function"><span class="title">hset</span><span class="params">(key, field, value)</span></span>：向名称为key的hash中添加元素field
+<span class="function"><span class="title">hget</span><span class="params">(key, field)</span></span>：返回名称为key的hash中field对应的value
+<span class="function"><span class="title">hmget</span><span class="params">(key, (fields)</span></span>)：返回名称为key的hash中field i对应的value
+<span class="function"><span class="title">hmset</span><span class="params">(key, (fields)</span></span>)：向名称为key的hash中添加元素field 
+<span class="function"><span class="title">hincrby</span><span class="params">(key, field, integer)</span></span>：将名称为key的hash中field的value增加integer
+<span class="function"><span class="title">hexists</span><span class="params">(key, field)</span></span>：名称为key的hash中是否存在键为field的域
+<span class="function"><span class="title">hdel</span><span class="params">(key, field)</span></span>：删除名称为key的hash中键为field的域
+<span class="function"><span class="title">hlen</span><span class="params">(key)</span></span>：返回名称为key的hash中元素个数
+<span class="function"><span class="title">hkeys</span><span class="params">(key)</span></span>：返回名称为key的hash中所有键
+<span class="function"><span class="title">hvals</span><span class="params">(key)</span></span>：返回名称为key的hash中所有键对应的value
+<span class="function"><span class="title">hgetall</span><span class="params">(key)</span></span>：返回名称为key的hash中所有的键（field）及其对应的value
+</code></pre>]]></content>
     <summary type="html">
     <![CDATA[<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
 <p>它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令</p>]]>
@@ -310,39 +374,6 @@ Obj=null;
   </entry>
   
   <entry>
-    <title><![CDATA[JAVA多线程第一篇(概念和启动线程)]]></title>
-    <link href="http://www.52ff.cc/2015/03/09/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B8%80%E7%AF%87/"/>
-    <id>http://www.52ff.cc/2015/03/09/java多线程第一篇/</id>
-    <published>2015-03-08T17:52:33.000Z</published>
-    <updated>2015-03-19T15:01:06.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="进程和线程">进程和线程</h2><h3 id="操作系统中线程和进程">操作系统中线程和进程</h3><p>进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。</p>
-<p>线程是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属于某个进程，进程中的多个线程共享进程的内存。</p>
-<p>“同时”执行是人的感觉，在线程之间实际上轮换执行。</p>
-<h3 id="Java中的线程">Java中的线程</h3><p>在Java中，“线程”指两件不同的事情：<br>1、java.lang.Thread类的一个实例；<br>2、线程的执行。</p>
-<p>使用java.lang.Thread类或者java.lang.Runnable接口编写代码来定义、实例化和启动新线程。</p>
-<p>一个Thread类实例只是一个对象，像Java中的任何其他对象一样，具有变量和方法，生死于堆上。</p>
-<p>Java中，每个线程都有一个调用栈，即使不在程序中创建任何新的线程，线程也在后台运行着。</p>
-<p>一个Java应用总是从main()方法开始运行，mian()方法运行在一个线程内，它被称为主线程。</p>
-<p>一旦创建一个新的线程，就产生一个新的调用栈。</p>
-<p>线程总体分两类：用户线程和守候线程。</p>
-<p>当所有用户线程执行完毕的时候，JVM自动关闭。但是守候线程却不独立于JVM，守候线程一般是由操作系统或者用户自己创建的。</p>
-<h3 id="线程启动">线程启动</h3><h3 id="线程的启动">线程的启动</h3><p>1.实现Runnable接口<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class DoSomething implements Runnable &#123; </span><br><span class="line">    private String name; </span><br><span class="line"></span><br><span class="line">    public DoSomething(String name) &#123; </span><br><span class="line">        this.name = name; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">for</span> (long k = <span class="number">0</span>; k &lt; <span class="number">100000000</span>; k++) ; </span><br><span class="line">            System.out.println(name + <span class="string">": "</span> + i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        DoSomething ds1 = new DoSomething(<span class="string">"阿三"</span>); </span><br><span class="line">        DoSomething ds2 = new DoSomething(<span class="string">"李四"</span>); </span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(ds1); </span><br><span class="line">        Thread t2 = new Thread(ds2); </span><br><span class="line"></span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>2.继承thread类<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class TestThread extends Thread&#123; </span><br><span class="line">    public TestThread(String name) &#123; </span><br><span class="line">        super(name); </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123; </span><br><span class="line">            <span class="keyword">for</span>(long k= <span class="number">0</span>; k &lt;<span class="number">100000000</span>;k++); </span><br><span class="line">            System.out.println(this.getName()+<span class="string">" :"</span>+i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        Thread t1 = new TestThread(<span class="string">"阿三"</span>); </span><br><span class="line">        Thread t2 = new TestThread(<span class="string">"李四"</span>); </span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="FAQ">FAQ</h2><h3 id="一些常见问题">一些常见问题</h3><p>1、线程都可以设置名字，也可以获取线程的名字，连主线程也不例外。<br>2、获取当前线程的对象的方法是：Thread.currentThread()；<br>3、在一系列线程以某种顺序启动并不意味着将按该顺序执行。对于任何一组启动的线程来说，调度程序不能保证其执行次序，持续时间也无法保证。<br>4、当线程目标run()方法结束时该线程完成。<br>5、一旦线程启动，它就永远不能再重新启动。只有一个新的线程可以被启动，并且只能一次。一个可运行的线程或死线程可以被重新启动。<br>6、线程的调度是JVM的一部分，在一个CPU的机器上上，实际上一次只能运行一个线程。一次只有一个线程栈执行。JVM线程调度程序决定实际运行哪个处于可运行状态的线程。众多可运行线程中的某一个会被选中做为当前线程。可运行线程被选择运行的顺序是没有保障的。<br>7、尽管通常采用队列形式，但这是没有保障的。队列形式是指当一个线程完成“一轮”时，它移到可运行队列的尾部等待，直到它最终排队到该队列的前端为止，它才能被再次选中。事实上，我们把它称为可运行池而不是一个可运行队列，目的是帮助认识线程并不都是以某种有保障的顺序排列唱呢个一个队列的事实。<br>8、尽管我们没有无法控制线程调度程序，但可以通过别的方式来影响线程调度的方式。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="进程和线程">进程和线程</h2><h3 id="操作系统中线程和进程">操作系统中线程和进程</h3><p>进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程]]>
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[netty笔记第一篇]]></title>
     <link href="http://www.52ff.cc/2015/03/05/netty%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AF%87/"/>
     <id>http://www.52ff.cc/2015/03/05/netty笔记第一篇/</id>
@@ -354,6 +385,55 @@ Obj=null;
     </summary>
     
       <category term="［netty nio］" scheme="http://www.52ff.cc/tags/%EF%BC%BBnetty-nio%EF%BC%BD/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[JAVA多线程第四篇(线程交互)]]></title>
+    <link href="http://www.52ff.cc/2015/03/02/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E5%9B%9B%E7%AF%87-%E7%BA%BF%E7%A8%8B%E4%BA%A4%E4%BA%92/"/>
+    <id>http://www.52ff.cc/2015/03/02/java多线程第四篇-线程交互/</id>
+    <published>2015-03-01T17:24:43.000Z</published>
+    <updated>2015-03-19T17:39:27.000Z</updated>
+    <content type="html"><![CDATA[<p>线程交互是比较复杂的问题，SCJP要求不很基础：给定一个场景，编写代码来恰当使用等待、通知和通知所有线程。</p>
+<p>一、线程交互的基础知识</p>
+<p>线程交互知识点需要从java.lang.Object的类的三个方法来学习：<br><a id="more"></a> </p>
+<p>void notify()<br>唤醒在此对象监视器上等待的单个线程。<br>void notifyAll()<br>唤醒在此对象监视器上等待的所有线程。<br>void wait()<br>导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法。</p>
+<p>然，wait()还有另外两个重载方法：<br>void wait(long timeout)<br>导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量。<br>void wait(long timeout, int nanos)<br>导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量。</p>
+<p>以上这些方法是帮助线程传递线程关心的时间状态。</p>
+<p>关于等待/通知，要记住的关键点是：<br>必须从同步环境内调用wait()、notify()、notifyAll()方法。线程不能调用对象上等待或通知的方法，除非它拥有那个对象的锁。<br>wait()、notify()、notifyAll()都是Object的实例方法。与每个对象具有锁一样，每个对象可以有一个线程列表，他们等待来自该信号（通知）。线程通过执行对象上的wait()方法获得这个等待列表。从那时候起，它不再执行任何其他指令，直到调用对象的notify()方法为止。如果多个线程在同一个对象上等待，则将只选择一个线程（不保证以何种顺序）继续执行。如果没有线程等待，则不采取任何特殊操作。</p>
+<p>下面看个例子就明白了：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">public class ThreadA &#123; </span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        ThreadB b = new ThreadB(); </span><br><span class="line">        //启动计算线程 </span><br><span class="line">        b.start(); </span><br><span class="line">        //线程A拥有b对象上的锁。线程为了调用<span class="built_in">wait</span>()或notify()方法，该线程必须是那个对象锁的拥有者 </span><br><span class="line">        synchronized (b) &#123; </span><br><span class="line">            try &#123; </span><br><span class="line">                System.out.println(<span class="string">"等待对象b完成计算。。。"</span>); </span><br><span class="line">                //当前线程A等待 </span><br><span class="line">                b.wait(); </span><br><span class="line">            &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                e.printStackTrace(); </span><br><span class="line">            &#125; </span><br><span class="line">            System.out.println(<span class="string">"b对象计算的总和是："</span> + b.total); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class ThreadB extends Thread &#123; </span><br><span class="line">    int total; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        synchronized (this) &#123; </span><br><span class="line">            <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">101</span>; i++) &#123; </span><br><span class="line">                total += i; </span><br><span class="line">            &#125; </span><br><span class="line">            //（完成计算了）唤醒在此对象监视器上等待的单个线程，在本例中线程A被唤醒 </span><br><span class="line">            notify(); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>等待对象b完成计算。。。<br>b对象计算的总和是：5050 </p>
+<p>千万注意：<br>当在对象上调用wait()方法时，执行该代码的线程立即放弃它在对象上的锁。然而调用notify()时，并不意味着这时线程会放弃其锁。如果线程荣然在完成同步代码，则线程在移出之前不会放弃锁。因此，只要调用notify()并不意味着这时该锁变得可用。</p>
+<p>二、多个线程在等待一个对象锁时候使用notifyAll()</p>
+<p>在多数情况下，最好通知等待某个对象的所有线程。如果这样做，可以在对象上使用notifyAll()让所有在此对象上等待的线程冲出等待区，返回到可运行状态。</p>
+<p>下面给个例子：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class Calculator extends Thread &#123; </span><br><span class="line">        int total; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                synchronized (this) &#123; </span><br><span class="line">                        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">101</span>; i++) &#123; </span><br><span class="line">                                total += i; </span><br><span class="line">                        &#125; </span><br><span class="line">                &#125; </span><br><span class="line">                //通知所有在此对象上等待的线程 </span><br><span class="line">                notifyAll(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ReaderResult extends Thread &#123; </span><br><span class="line">        Calculator c; </span><br><span class="line"></span><br><span class="line">        public ReaderResult(Calculator c) &#123; </span><br><span class="line">                this.c = c; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                synchronized (c) &#123; </span><br><span class="line">                        try &#123; </span><br><span class="line">                                System.out.println(Thread.currentThread() + <span class="string">"等待计算结果。。。"</span>); </span><br><span class="line">                                c.wait(); </span><br><span class="line">                        &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                                e.printStackTrace(); </span><br><span class="line">                        &#125; </span><br><span class="line">                        System.out.println(Thread.currentThread() + <span class="string">"计算结果为："</span> + c.total); </span><br><span class="line">                &#125; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public static void main(String[] args) &#123; </span><br><span class="line">                Calculator calculator = new Calculator(); </span><br><span class="line"></span><br><span class="line">                //启动三个线程，分别获取计算结果 </span><br><span class="line">                new ReaderResult(calculator).start(); </span><br><span class="line">                new ReaderResult(calculator).start(); </span><br><span class="line">                new ReaderResult(calculator).start(); </span><br><span class="line">                //启动计算线程 </span><br><span class="line">                calculator.start(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<pre><code>运行结果：
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">1</span>,<span class="number">5</span>,main]等待计算结果。。。 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">2</span>,<span class="number">5</span>,main]等待计算结果。。。 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">3</span>,<span class="number">5</span>,main]等待计算结果。。。 
+Exception in thread <span class="string">"Thread-0"</span> java.lang.IllegalMonitorStateException: current thread not owner 
+  at java.lang.Object.notifyAll(Native <span class="keyword">Method</span>) 
+  at threadtest.Calculator.run(Calculator.java:<span class="number">18</span>) 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">1</span>,<span class="number">5</span>,main]计算结果为：<span class="number">5050</span> 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">2</span>,<span class="number">5</span>,main]计算结果为：<span class="number">5050</span> 
+<span class="keyword">Thread</span>[<span class="keyword">Thread</span>-<span class="number">3</span>,<span class="number">5</span>,main]计算结果为：<span class="number">5050</span> 
+</code></pre><p>运行结果表明，程序中有异常，并且多次运行结果可能有多种输出结果。这就是说明，这个多线程的交互程序还存在问题。究竟是出了什么问题，需要深入的分析和思考，下面将做具体分析。</p>
+<p>实际上，上面这个代码中，我们期望的是读取结果的线程在计算线程调用notifyAll()之前等待即可。 但是，如果计算线程先执行，并在读取结果线程等待之前调用了notify()方法，那么又会发生什么呢？这种情况是可能发生的。因为无法保证线程的不同部分将按照什么顺序来执行。幸运的是当读取线程运行时，它只能马上进入等待状态——它没有做任何事情来检查等待的事件是否已经发生。  ——因此，如果计算线程已经调用了notifyAll()方法，那么它就不会再次调用notifyAll()，——并且等待的读取线程将永远保持等待。这当然是开发者所不愿意看到的问题。</p>
+<p>因此，当等待的事件发生时，需要能够检查notifyAll()通知事件是否已经发生。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>线程交互是比较复杂的问题，SCJP要求不很基础：给定一个场景，编写代码来恰当使用等待、通知和通知所有线程。</p>
+<p>一、线程交互的基础知识</p>
+<p>线程交互知识点需要从java.lang.Object的类的三个方法来学习：<br>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
       <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     
@@ -382,91 +462,189 @@ Obj=null;
   </entry>
   
   <entry>
+    <title><![CDATA[JAVA多线程第三篇(线程同步synchronized和volatile)]]></title>
+    <link href="http://www.52ff.cc/2015/02/19/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B8%89%E7%AF%87/"/>
+    <id>http://www.52ff.cc/2015/02/19/JAVA多线程第三篇/</id>
+    <published>2015-02-19T15:38:30.000Z</published>
+    <updated>2015-03-19T17:14:04.000Z</updated>
+    <content type="html"><![CDATA[<p>当我们查看JDK API的时候，总会发现一些类说明写着，线程安全或者线程不安全，比如说StringBuilder中，有这么一句，“将StringBuilder 的实例用于多个线程是不安全的。如果需要这样的同步，则建议使用StringBuffer。” 首先我们创建一个线程不安全的类，然后在多线程中使用这个类，看看有什么效果。</p>
+<a id="more"></a>
+<h2 id="抛出问题">抛出问题</h2><h3 id="线程的安全和不安全">线程的安全和不安全</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class Count &#123;  </span><br><span class="line">    private int num;  </span><br><span class="line">    public void <span class="function"><span class="title">count</span></span>() &#123;  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++) &#123;  </span><br><span class="line">            num += i;  </span><br><span class="line">        &#125;  </span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"-"</span> + num);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125; </span><br><span class="line">public class ThreadTest &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        Runnable runnable = new <span class="function"><span class="title">Runnable</span></span>() &#123;  </span><br><span class="line">            Count count = new Count();  </span><br><span class="line">            public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">                count.count();  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;;  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;  </span><br><span class="line">            new Thread(runnable).start();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里启动了10个线程，看一下输出结果：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Thread-<span class="number">0</span>-<span class="number">55</span>  </span><br><span class="line">Thread-<span class="number">1</span>-<span class="number">110</span>  </span><br><span class="line">Thread-<span class="number">2</span>-<span class="number">165</span>  </span><br><span class="line">Thread-<span class="number">4</span>-<span class="number">220</span>  </span><br><span class="line">Thread-<span class="number">5</span>-<span class="number">275</span>  </span><br><span class="line">Thread-<span class="number">6</span>-<span class="number">330</span>  </span><br><span class="line">Thread-<span class="number">3</span>-<span class="number">385</span>  </span><br><span class="line">Thread-<span class="number">7</span>-<span class="number">440</span>  </span><br><span class="line">Thread-<span class="number">8</span>-<span class="number">495</span>  </span><br><span class="line">Thread-<span class="number">9</span>-<span class="number">550</span></span><br></pre></td></tr></table></figure>
+<p>只有Thread-0线程输出的结果是我们期望的，不安全的情况下输出的结果恰好是逐个递增的(其实是巧合，多运行几次，会产生不同的输出结果)，为什么会产生这样的结果呢，因为建立的Count对象是线程共享的，一个线程改变了其成员变量num值，下一个线程正巧读到了修改后的num，所以会递增输出。想得到我们期望的结果，有几种解决方案：</p>
+<ol>
+<li>将Count中num变成count方法的局部变量；</li>
+<li>将线程类成员变量拿到run方法中，这时count引用是线程内的局部变量；</li>
+</ol>
+<p>上述测试，我们发现，存在成员变量的类用于多线程时是不安全的，不安全体现在这个成员变量可能发生非原子性的操作，而变量定义在方法内也就是局部变量是线程安全的。</p>
+<h3 id="JAVA线程的两个特性，可见性和有序性">JAVA线程的两个特性，可见性和有序性</h3><p>要说明线程同步问题首先要说明Java线程的两个特性，可见性和有序性。多个线程之间是不能直接传递数据交互的，它们之间的交互只能通过共享变量来实现。拿上面的例子来说明，在多个线程之间共享了Count类的一个对象，这个对象是被创建在主内存(堆内存)中，每个线程都有自己的工作内存(线程栈)，工作内存存储了主内存Count对象的一个副本，当线程操作Count对象时，首先从主内存复制Count对象到工作内存中，然后执行代码count.count()，改变了num值，最后用工作内存Count刷新主内存Count。当一个对象在多个内存中都存在副本时，如果一个内存修改了共享变量，其它线程也应该能够看到被修改后的值，此为可见性。多个线程执行时，CPU对线程的调度是随机的，我们不知道当前程序被执行到哪步就切换到了下一个线程，一个最经典的例子就是银行汇款问题，先取款后汇款或者先汇款后取款，此为有序性。本文讲述了JDK5.0之前传统线程的同步方式，更高级的同步方式之后再叙述。<br>    下面同样用代码来展示一下线程同步问题。<br>    创建两个线程，执行同一个对象的输出方法。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class TraditionalThreadSynchronized &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        final Outputter output = new Outputter();  </span><br><span class="line">        new <span class="function"><span class="title">Thread</span></span>() &#123;  </span><br><span class="line">            public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">                output.output(<span class="string">"zhangsan"</span>);  </span><br><span class="line">            &#125;;  </span><br><span class="line">        &#125;.start();        </span><br><span class="line">        new <span class="function"><span class="title">Thread</span></span>() &#123;  </span><br><span class="line">            public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">                output.output(<span class="string">"lisi"</span>);  </span><br><span class="line">            &#125;;  </span><br><span class="line">        &#125;.start();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">class Outputter &#123;  </span><br><span class="line">    public void output(String name) &#123;  </span><br><span class="line">        // TODO 为了保证对name的输出不是一个原子操作，这里逐个输出name的每个字符  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; name.length(); i++) &#123;  </span><br><span class="line">            System.out.print(name.charAt(i));  </span><br><span class="line">            // Thread.sleep(<span class="number">10</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：zhlainsigsan</p>
+<h2 id="synchronized">synchronized</h2><p>显然输出的字符串被打乱了，我们期望的输出结果是zhangsanlisi，这就是线程同步问题，我们希望output方法被一个线程完整的执行完之后再切换到下一个线程，Java中使用synchronized保证一段代码在多线程执行时是互斥的，有两种用法：</p>
+<pre><code><span class="number">1.</span> 使用<span class="keyword">synchronized</span>将需要互斥的代码包含起来，并上一把锁。
+</code></pre><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;  </span><br><span class="line">    synchronized (this) &#123;  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; name.length(); i++) &#123;  </span><br><span class="line">            System.out.print(name.charAt(i));  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这把锁必须是需要互斥的多个线程间的共享对象，像下面的代码是没有意义的。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;  </span><br><span class="line">    Object lock = new Object();  </span><br><span class="line">    synchronized (lock) &#123;  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; name.length(); i++) &#123;  </span><br><span class="line">            System.out.print(name.charAt(i));  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每次进入output方法都会创建一个新的lock，这个锁显然每个线程都会创建，没有意义。</p>
+<pre><code><span class="number">2.</span> 将<span class="keyword">synchronized</span>加在需要互斥的方法上。
+</code></pre><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public synchronized void output(String name) &#123;  </span><br><span class="line">    // TODO 线程输出方法  </span><br><span class="line">    <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; name.length(); i++) &#123;  </span><br><span class="line">        System.out.print(name.charAt(i));  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式就相当于用this锁住整个方法内的代码块，如果用synchronized加在静态方法上，就相当于用××××.class锁住整个方法内的代码块。使用synchronized在某些情况下会造成死锁，死锁问题以后会说明。使用synchronized修饰的方法或者代码块可以看成是一个原子操作。<br>每个锁对(JLS中叫monitor)都有两个队列，一个是就绪队列，一个是阻塞队列，就绪队列存储了将要获得锁的线程，阻塞队列存储了被阻塞的线程，当一个线程被唤醒(notify)后，才会进入到就绪队列，等待CPU的调度，反之，当一个线程被wait后，就会进入阻塞队列，等待下一次被唤醒，这个涉及到线程间的通信，下一篇博文会说明。看我们的例子，当第一个线程执行输出方法时，获得同步锁，执行输出方法，恰好此时第二个线程也要执行输出方法，但发现同步锁没有被释放，第二个线程就会进入就绪队列，等待锁被释放。一个线程执行互斥代码过程如下：</p>
+<ol>
+<li>获得同步锁；</li>
+<li>清空工作内存；</li>
+<li>从主内存拷贝对象副本到工作内存；</li>
+<li>执行代码(计算或者输出等)；</li>
+<li>刷新主内存数据；</li>
+<li>释放同步锁。<br>所以，synchronized既保证了多线程的并发有序性，又保证了多线程的内存可见性。</li>
+</ol>
+<h2 id="volatile">volatile</h2><p>volatile是第二种Java多线程同步的机制，根据JLS(Java LanguageSpecifications)的说法，一个变量可以被volatile修饰，在这种情况下内存模型(主内存和线程工作内存)确保所有线程可以看到一致的变量值，来看一段代码：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">class Test &#123;  </span><br><span class="line">    static int i = <span class="number">0</span>, j = <span class="number">0</span>;  </span><br><span class="line">    static void <span class="function"><span class="title">one</span></span>() &#123;  </span><br><span class="line">        i++;  </span><br><span class="line">        j++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    static void <span class="function"><span class="title">two</span></span>() &#123;  </span><br><span class="line">        System.out.println(<span class="string">"i="</span> + i + <span class="string">" j="</span> + j);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一些线程执行one方法，另一些线程执行two方法，two方法有可能打印出j比i大的值，按照之前分析的线程执行过程分析一下：</p>
+<ol>
+<li>将变量i从主内存拷贝到工作内存；</li>
+<li>改变i的值；</li>
+<li>刷新主内存数据；</li>
+<li>将变量j从主内存拷贝到工作内存；</li>
+<li>改变j的值；</li>
+<li>刷新主内存数据；<br>这个时候执行two方法的线程先读取了主存i原来的值又读取了j改变后的值，这就导致了程序的输出不是我们预期的结果，要阻止这种不合理的行为的一种方式是在one方法和two方法前面加上synchronized修饰符：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">class Test &#123;  </span><br><span class="line">    static int i = <span class="number">0</span>, j = <span class="number">0</span>;  </span><br><span class="line">    static synchronized void <span class="function"><span class="title">one</span></span>() &#123;  </span><br><span class="line">        i++;  </span><br><span class="line">        j++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    static synchronized void <span class="function"><span class="title">two</span></span>() &#123;  </span><br><span class="line">        System.out.println(<span class="string">"i="</span> + i + <span class="string">" j="</span> + j);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>根据前面的分析，我们可以知道，这时one方法和two方法再也不会并发的执行了，i和j的值在主内存中会一直保持一致，并且two方法输出的也是一致的。另一种同步的机制是在共享变量之前加上volatile：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">class Test &#123;  </span><br><span class="line">    static volatile int i = <span class="number">0</span>, j = <span class="number">0</span>;  </span><br><span class="line">    static void <span class="function"><span class="title">one</span></span>() &#123;  </span><br><span class="line">        i++;  </span><br><span class="line">        j++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    static void <span class="function"><span class="title">two</span></span>() &#123;  </span><br><span class="line">        System.out.println(<span class="string">"i="</span> + i + <span class="string">" j="</span> + j);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>one方法和two方法还会并发的去执行，但是加上volatile可以将共享变量i和j的改变直接响应到主内存中，这样保证了主内存中i和j的值一致性，然而在执行two方法时，在two方法获取到i的值和获取到j的值中间的这段时间，one方法也许被执行了好多次，导致j的值会大于i的值。所以volatile可以保证内存可见性，不能保证并发有序性。<br>没有明白JLS中为什么使用两个变量来阐述volatile的工作原理，这样不是很好理解。volatile是一种弱的同步手段，相对于synchronized来说，某些情况下使用，可能效率更高，因为它不是阻塞的，尤其是读操作时，加与不加貌似没有影响，处理写操作的时候，可能消耗的性能更多些。但是volatile和synchronized性能的比较，我也说不太准，多线程本身就是比较玄的东西，依赖于CPU时间分片的调度，JVM更玄，还没有研究过虚拟机，从顶层往底层看往往是比较难看透的。在JDK5.0之前，如果没有参透volatile的使用场景，还是不要使用了，尽量用synchronized来处理同步问题，线程阻塞这玩意简单粗暴。另外volatile和final不能同时修饰一个字段，可以想想为什么。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>当我们查看JDK API的时候，总会发现一些类说明写着，线程安全或者线程不安全，比如说StringBuilder中，有这么一句，“将StringBuilder 的实例用于多个线程是不安全的。如果需要这样的同步，则建议使用StringBuffer。” 首先我们创建一个线程不安全的类，然后在多线程中使用这个类，看看有什么效果。</p>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[SQL优化的几条建议]]></title>
     <link href="http://www.52ff.cc/2015/02/19/SQL%E4%BC%98%E5%8C%96%E7%9A%84%E8%8B%A5%E5%B9%B2%E6%9D%A1%E6%8A%80%E5%B7%A7/"/>
     <id>http://www.52ff.cc/2015/02/19/SQL优化的若干条技巧/</id>
     <published>2015-02-19T06:50:55.000Z</published>
-    <updated>2015-03-17T16:17:39.000Z</updated>
+    <updated>2015-03-19T17:03:21.000Z</updated>
     <content type="html"><![CDATA[<p>在工作的前两年，做的电信行业，开发主要是和oracle打交道的管理模块，特分享几条同事们整理的文档中的sql优化建议，主要是where条件怎么写和如何不破坏索引之类的小知识点。</p>
 <a id="more"></a>
-<h3 id="选择最有效率的表名顺序_(只在基于规则的优化器中有效)_：">选择最有效率的表名顺序 (只在基于规则的优化器中有效) ：</h3><p>ORACLE 的解析器按照从右到左的顺序处理 FROM 子句中的表名， FROM 子句中写在最右的表将被最先处理，所以我们需要把记录最少的表写在最右边。如果有3个以上的表连接查询，那就需要选择交叉表写在最右，交叉表是指那个被其他表所引用的表。</p>
-<p>简而言之：大表在前，小表在后</p>
-<h3 id="WHERE子句中的连接顺序：">WHERE子句中的连接顺序：</h3><p>ORACLE采用自下而上的顺序解析 WHERE 子句,根据这个原理 , 表之间的连接必须写在其他 WHERE 条件之前 , 那些可以过滤掉最大数量记录的条件必须写在 WHERE 子句的末尾.</p>
-<h3 id="SELECT子句中避免使用_‘*’_：">SELECT子句中避免使用  ‘*’ ：</h3><p>ORACLE在解析的过程中 , 会将 ‘*’  依次转换成所有的列名 ,  这个工作是通过查询数据字典完成的 , 这意味着将耗费更多的时间</p>
-<h3 id="使用_DECODE_函数来减少处理时间：">使用 DECODE 函数来减少处理时间：</h3><p>使用DECODE 函数可以避免重复扫描相同记录或重复连接相同的表 .</p>
-<h3 id="删除重复记录：">删除重复记录：</h3><p>最高效的删除重复记录方法 (  因为使用了 ROWID) 例子：</p>
-<p>DELETE  FROM  EMP E  WHERE  E.ROWID &gt; (SELECT MIN(X.ROWID) FROM  EMP X  WHERE  X.EMP_NO = E.EMP_NO);</p>
-<h3 id="用_TRUNCATE_替代_DELETE_：">用 TRUNCATE 替代 DELETE ：</h3><p>当删除表中的记录时, 在通常情况下 ,  回滚段 (rollback segments )  用来存放可以被恢复的信息 .  如果你没有 COMMIT 事务 ,ORACLE 会将数据恢复到删除之前的状态 ( 准确地说是恢复到执行删除命令之前的状况 )  而当运用 TRUNCATE 时 ,  回滚段不再存放任何可被恢复的信息 . 当命令运行后 , 数据不能被恢复 . 因此很少的资源被调用 , 执行时间也会很短 . ( 译者按 : TRUNCATE 只在删除全表适用 ,TRUNCATE 是 DDL 不是 DML)</p>
-<h3 id="尽量多使用_COMMIT_：">尽量多使用 COMMIT ：</h3><p>只要有可能, 在程序中尽量多使用 COMMIT,  这样程序的性能得到提高 , 需求也会因为 COMMIT 所释放的资源而减少 :</p>
-<p>COMMIT所释放的资源 :</p>
-<p>a. 回滚段上用于恢复数据的信息<br>b. 被程序语句获得的锁<br>c. redo log buffer 中的空间<br>d. ORACLE为管理上述 3 种资源中的内部花费</p>
-<h3 id="用_Where_子句替换_HAVING_子句：">用 Where 子句替换 HAVING 子句：</h3><p>避免使用HAVING 子句 , HAVING  只会在检索出所有记录之后才对结果集进行过滤 .  这个处理需要排序 , 总计等操作 .  如果能通过 WHERE 子句限制记录的数目 , 那就能减少这方面的开销 . ( 非 oracle 中 )on 、 where 、 having 这三个都可以加条件的子句中， on 是最先执行， where 次之， having 最后</p>
-<h3 id="用_EXISTS_替代_IN_、用_NOT_EXISTS_替代_NOT_IN_：">用 EXISTS 替代 IN 、用 NOT EXISTS 替代 NOT IN ：</h3><p>在许多基于基础表的查询中, 为了满足一个条件 , 往往需要对另一个表进行联接 . 在这种情况下 ,  使用 EXISTS( 或 NOT EXISTS) 通常将提高查询的效率 . 在子查询中 ,NOT IN 子句将执行一个内部的排序和合并 .  无论在哪种情况下 ,NOT IN 都是最低效的  ( 因为它对子查询中的表执行了一个全表遍历 ).  为了避免使用 NOT IN , 我们可以把它改写成外连接 (Outer Joins) 或 NOT EXISTS.</p>
-<p>例子：</p>
-<p>(高效 )SELECT * FROM  EMP ( 基础表 )  WHERE  EMPNO &gt; 0  AND  EXISTS (SELECT  ‘ X’  FROM DEPT  WHERE  DEPT.DEPTNO = EMP.DEPTNO  AND  LOC =  ‘ MELB’)</p>
-<p>(低效 )SELECT  * FROM  EMP ( 基础表 )  WHERE  EMPNO &gt; 0  AND  DEPTNO IN(SELECT DEPTNO  FROM  DEPT  WHERE  LOC =  ‘ MELB’)</p>
-<h3 id="使用表的别名_(Alias)_：">使用表的别名 (Alias) ：</h3><p>当在SQL 语句中连接多个表时 ,  请使用表的别名并把别名前缀于每个 Column 上 . 这样一来 , 就可以减少解析的时间并减少那些由 Column 歧义引起的语法错误 .</p>
-<h3 id="避免在索引列上使用计算．">避免在索引列上使用计算．</h3><p>WHERE子句中，如果索引列是函数的一部分．优化器将不使用索引而使用全表扫描．</p>
-<p>低效：</p>
-<p>SELECT …  FROM  DEPT  WHERE SAL * 12 &gt; 25000;</p>
-<p>高效:</p>
-<p>SELECT …  FROM DEPT WHERE SAL &gt; 25000/12;</p>
-<h3 id="用_&gt;=_替代_&gt;">用 &gt;= 替代 &gt;</h3><p>高效:</p>
-<p>SELECT * FROM  EMP  WHERE  DEPTNO &gt;=4</p>
-<p>低效:</p>
-<p>SELECT * FROM EMP WHERE DEPTNO &gt;3</p>
-<p>两者的区别在于,  前者 DBMS 将直接跳到第一个 DEPT 等于 4 的记录而后者将首先定位到 DEPTNO=3 的记录并且向前扫描到第一个 DEPT 大于 3 的记录 .</p>
-<h3 id="减少对表的查询：">减少对表的查询：</h3><p>在含有子查询的SQL 语句中 , 要特别注意减少对表的查询 . 例子：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SELECT  TAB_NAME FROM TABLES WHERE (TAB_NAME,DB_VER) = ( SELECT TAB_NAME,DB_VER FROM  TAB_COLUMNS  WHERE  VERSION = <span class="number">604</span>)</span><br></pre></td></tr></table></figure></p>
-<h3 id="sql语句用大写的：">sql语句用大写的：</h3><p>因为oracle 总是先解析 sql 语句，把小写的字母转换成大写的再执行</p>
-<h3 id="在_java_代码中尽量少用连接符_“_＋_”_连接字符串！">在 java 代码中尽量少用连接符 “ ＋ ” 连接字符串！</h3><h3 id="避免在索引列上使用_NOT_：">避免在索引列上使用 NOT ：</h3><p>我们要避免在索引列上使用NOT, NOT 会产生在和在索引列上使用函数相同的影响 .  当 ORACLE ” 遇到 ” NOT, 他就会停止使用索引转而执行全表扫描 .</p>
-<h3 id="通过内部函数提高_SQL_效率：">通过内部函数提高 SQL 效率：</h3><p>复杂的SQL 往往牺牲了执行效率 . 能够掌握上面的运用函数解决问题的方法在实际工作中是非常有意义的</p>
-<h3 id="识别_‘_低效执行_‘_的_SQL_语句：">识别 ‘ 低效执行 ‘ 的 SQL 语句：</h3><p>虽然目前各种关于SQL 优化的图形化工具层出不穷 , 但是写出自己的 SQL 工具来解决问题始终是一个最好的方法：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SELECT  EXECUTIONS , DISK_READS, BUFFER_GETS,</span><br><span class="line">ROUND((BUFFER_GETS-DISK_READS)/BUFFER_GETS,<span class="number">2</span>) Hit_radio,</span><br><span class="line">ROUND(DISK_READS/EXECUTIONS,<span class="number">2</span>) Reads_per_run,</span><br><span class="line">SQL_TEXT</span><br><span class="line">FROM  V<span class="variable">$SQLAREA</span></span><br><span class="line">WHERE  EXECUTIONS&gt;<span class="number">0</span></span><br><span class="line">AND  BUFFER_GETS &gt; <span class="number">0</span></span><br><span class="line">AND  (BUFFER_GETS-DISK_READS)/BUFFER_GETS &lt; <span class="number">0.8</span></span><br><span class="line">ORDER BY  <span class="number">4</span> DESC;</span><br></pre></td></tr></table></figure>
-<h3 id="用索引提高效率：">用索引提高效率：</h3><p>索引是表的一个概念部分, 用来提高检索数据的效率， ORACLE 使用了一个复杂的自平衡 B-tree 结构 .  通常 , 通过索引查询数据比全表扫描要快 .  当 ORACLE 找出执行查询和 Update 语句的最佳路径时 , ORACLE 优化器将使用索引 .  同样在联结多个表时使用索引也可以提高效率 .  另一个使用索引的好处是 , 它提供了主键 (primary key) 的唯一性验证 . 。那些 LONG 或 LONG RAW 数据类型 ,  你可以索引几乎所有的列 .  通常 ,  在大型表中使用索引特别有效 .  当然 , 你也会发现 ,  在扫描小表时 , 使用索引同样能提高效率 .  虽然使用索引能得到查询效率的提高 , 但是我们也必须注意到它的代价 .  索引需要空间来存储 , 也需要定期维护 ,  每当有记录在表中增减或索引列被修改时 ,  索引本身也会被修改 .  这意味着每条记录的 INSERT , DELETE , UPDATE 将为此多付出 4 , 5  次的磁盘 I/O .  因为索引需要额外的存储空间和处理 , 那些不必要的索引反而会使查询反应时间变慢 . 。定期的重构索引是有必要的 . ：</p>
-<p>ALTER  INDEX <indexname> REBUILD <tablespacename></tablespacename></indexname></p>
-<h3 id="用_UNION_替换_OR_(_适用于索引列_)">用 UNION 替换 OR ( 适用于索引列 )</h3><p>通常情况下,  用 UNION 替换 WHERE 子句中的 OR 将会起到较好的效果 .  对索引列使用 OR 将造成全表扫描 .  注意 ,  以上规则只针对多个索引列有效 .  如果有 column 没有被索引 ,  查询效率可能会因为你没有选择 OR 而降低 .  在下面的例子中 , LOC_ID  和 REGION 上都建有索引 .</p>
-<p>高效:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SELECT LOC_ID , LOC_DESC , REGION</span><br><span class="line">FROM LOCATION</span><br><span class="line">WHERE LOC_ID = <span class="number">10</span></span><br><span class="line">UNION</span><br><span class="line">SELECT LOC_ID , LOC_DESC , REGION</span><br><span class="line">FROM LOCATION</span><br><span class="line">WHERE REGION = “ MELBOURNE ”</span><br></pre></td></tr></table></figure></p>
-<p>低效:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">SELECT LOC_ID , LOC_DESC , REGION</span><br><span class="line">FROM LOCATION</span><br><span class="line">WHERE LOC_ID = <span class="number">10</span> OR REGION = “ MELBOURNE ”</span><br></pre></td></tr></table></figure></p>
-<p>如果你坚持要用OR,  那就需要返回记录最少的索引列写在最前面 .</p>
-<h3 id="用_IN_来替换_OR">用 IN 来替换 OR</h3><p>低效:<br>SELECT… . FROM LOCATION WHERE LOC_ID = 10 OR LOC_ID = 20 OR LOC_ID = 30</p>
-<p>高效<br>SELECT…  FROM LOCATION WHERE LOC_IN  IN (10,20,30);</p>
-<h3 id="避免在索引列上使用_IS_NULL_和_IS_NOT_NULL">避免在索引列上使用 IS NULL 和 IS NOT NULL</h3><p>避免在索引中使用任何可以为空的列，ORACLE 将无法使用该索引．对于单列索引，如果列包含空值，索引中将不存在此记录 .  对于复合索引，如果每个列都为空，索引中同样不存在此记录 . 　如果至少有一个列不为空，则记录存在于索引中．举例 :  如果唯一性索引建立在表的 A 列和 B 列上 ,  并且表中存在一条记录的 A,B 值为 (123,null) , ORACLE 将不接受下一条具有相同 A,B 值 (123,null) 的记录 ( 插入 ).  然而如果所有的索引列都为空， ORACLE 将认为整个键值为空而空不等于空 .  因此你可以插入 1000  条具有相同键值的记录 , 当然它们都是空 !  因为空值不存在于索引列中 , 所以 WHERE 子句中对索引列进行空值比较将使 ORACLE 停用该索引 .</p>
-<p>低效: ( 索引失效 )</p>
-<p>SELECT …  FROM  DEPARTMENT  WHERE  DEPT_CODE IS NOT NULL;</p>
-<p>高效: ( 索引有效 )</p>
-<p>SELECT …  FROM  DEPARTMENT  WHERE  DEPT_CODE &gt;=0;</p>
-<h3 id="总是使用索引的第一个列：">总是使用索引的第一个列：</h3><p>如果索引是建立在多个列上,  只有在它的第一个列 (leading column) 被 where 子句引用时 , 优化器才会选择使用该索引 .  这也是一条简单而重要的规则，当仅引用索引的第二个列时 , 优化器使用了全表扫描而忽略了索引</p>
-<h3 id="用_UNION-ALL_替换_UNION_(如果业务允许)_：">用 UNION-ALL  替换 UNION (如果业务允许) ：</h3><p>当SQL  语句需要 UNION 两个查询结果集合时 , 这两个结果集合会以 UNION-ALL 的方式被合并 ,  然后在输出最终结果前进行排序 .  如果用 UNION ALL 替代 UNION,  这样排序就不是必要了 .  效率就会因此得到提高 .  需要注意的是， UNION ALL  将重复输出两个结果集合中相同记录 .  因此各位还是要从业务需求分析使用 UNION ALL 的可行性 . UNION  将对结果集合排序 , 这个操作会使用到 SORT_AREA_SIZE 这块内存 .  对于这块内存的优化也是相当重要的 .  下面的 SQL 可以用来查询排序的消耗量</p>
-<h3 id="用_WHERE_替代_ORDER_BY_：">用 WHERE 替代 ORDER BY ：</h3><p>ORDER BY 子句只在两种严格的条件下使用索引 .</p>
-<p>ORDER BY中所有的列必须包含在相同的索引中并保持在索引中的排列顺序 .</p>
-<p>ORDER BY中所有的列必须定义为非空 .</p>
-<p>WHERE子句使用的索引和 ORDER BY 子句中所使用的索引不能并列 .</p>
-<p>例如:</p>
-<p>表DEPT 包含以下列 :</p>
-<p>DEPT_CODE PK NOT NULL<br>DEPT_DESC NOT NULL<br>DEPT_TYPE NULL</p>
-<p>低效: ( 索引不被使用 )</p>
-<p>SELECT DEPT_CODE FROM  DEPT  ORDER BY  DEPT_TYPE</p>
-<p>高效: ( 使用索引 )</p>
-<p>SELECT DEPT_CODE  FROM  DEPT  WHERE  DEPT_TYPE &gt; 0</p>
-<h3 id="避免改变索引列的类型_:">避免改变索引列的类型 :</h3><p>当比较不同数据类型的数据时, ORACLE 自动对列进行简单的类型转换 .</p>
-<p>假设 EMPNO 是一个数值类型的索引列 .</p>
-<p>SELECT …   FROM EMP  WHERE  EMPNO = ‘123’</p>
-<p>实际上, 经过 ORACLE 类型转换 ,  语句转化为 :</p>
-<p>SELECT …   FROM EMP  WHERE  EMPNO = TO_NUMBER(‘123’)</p>
-<p>幸运的是, 类型转换没有发生在索引列上 , 索引的用途没有被改变 .</p>
-<p>现在, 假设 EMP_TYPE 是一个字符类型的索引列 .</p>
-<p>SELECT …   FROM EMP  WHERE EMP_TYPE = 123</p>
-<p>这个语句被ORACLE 转换为 :</p>
-<p>SELECT …   FROM EMP  WHERETO_NUMBER(EMP_TYPE)=123</p>
-<p>因为内部发生的类型转换,  这个索引将不会被用到 !  为了避免 ORACLE 对你的 SQL 进行隐式的类型转换 ,  最好把类型转换用显式表现出来 .  注意当字符和数值比较时 , ORACLE 会优先转换数值类型到字符类型</p>
-<h3 id="需要当心的_WHERE_子句_:">需要当心的 WHERE 子句 :</h3><p>某些SELECT 语句中的 WHERE 子句不使用索引 . 这里有一些例子 .</p>
-<p>在下面的例子里,</p>
-<p>(1)‘ !=’  将不使用索引 .  记住 ,  索引只能告诉你什么存在于表中 ,  而不能告诉你什么不存在于表中 .</p>
-<p>(2) ‘ ||’ 是字符连接函数 .  就象其他函数那样 ,  停用了索引 .</p>
-<p>(3) ‘ +’ 是数学函数 .  就象其他数学函数那样 ,  停用了索引 .</p>
-<h3 id="使用索引">使用索引</h3><p>a. 如果检索数据量超过 30% 的表中记录数 . 使用索引将没有显著的效率提高 .<br>b. 在特定情况下, 使用索引也许会比全表扫描慢 ,  但这是同一个数量级上的区别 . 而通常情况下, 使用索引比全表扫描要块几倍乃至几千倍 ! </p>
-<h3 id="避免使用耗费资源的操作_:">避免使用耗费资源的操作 :</h3><p>带有DISTINCT,UNION,MINUS,INTERSECT,ORDER BY 的 SQL 语句会启动 SQL 引擎<br>执行耗费资源的排序(SORT) 功能 . DISTINCT 需要一次排序操作 ,  而其他的至少需要执行两次排序 .  通常 ,  带有 UNION, MINUS , INTERSECT 的 SQL 语句都可以用其他方式重写 .  如果你的数据库的 SORT_AREA_SIZE 调配得好 ,  使用 UNION , MINUS, INTERSECT 也是可以考虑的 ,  毕竟它们的可读性很强 </p>
-]]></content>
+<h3 id="选择最有效率的表名顺序_(只在基于规则的优化器中有效)_：">选择最有效率的表名顺序 (只在基于规则的优化器中有效) ：</h3><pre><code>ORACLE 的解析器按照从右到左的顺序处理 <span class="keyword">FROM</span> 子句中的表名， <span class="keyword">FROM</span> 子句中写在最右的表将被最先处理，所以我们需要把记录最少的表写在最右边。如果有<span class="number">3</span>个以上的表连接查询，那就需要选择交叉表写在最右，交叉表是指那个被其他表所引用的表。
+简而言之：大表在前，小表在后
+</code></pre><h3 id="WHERE子句中的连接顺序：">WHERE子句中的连接顺序：</h3><pre><code>ORACLE采用自下而上的顺序解析 <span class="keyword">WHERE</span> 子句,根据这个原理 , 表之间的连接必须写在其他 <span class="keyword">WHERE</span> 条件之前 , 那些可以过滤掉最大数量记录的条件必须写在 <span class="keyword">WHERE</span> 子句的末尾<span class="built_in">.</span>
+</code></pre><h3 id="SELECT子句中避免使用’*’_：">SELECT子句中避免使用’*’ ：</h3><pre><code>ORACLE在解析的过程中,会将 <span class="string">'*'</span>  依次转换成所有的列名 ,  这个工作是通过查询数据字典完成的 , 这意味着将耗费更多的时间
+</code></pre><h3 id="使用_DECODE_函数来减少处理时间：">使用 DECODE 函数来减少处理时间：</h3><pre><code>使用<span class="variable">DECODE</span> 函数可以避免重复扫描相同记录或重复连接相同的表 .
+</code></pre><h3 id="删除重复记录：">删除重复记录：</h3><pre><code>最高效的删除重复记录方法 (因为使用了 ROWID) 例子：
+<span class="operator"><span class="keyword">DELETE</span>  <span class="keyword">FROM</span>  EMP E  <span class="keyword">WHERE</span>  E.ROWID &gt; (<span class="keyword">SELECT</span> <span class="keyword">MIN</span>(X.ROWID) <span class="keyword">FROM</span>  EMP X  <span class="keyword">WHERE</span>  X.EMP_NO = E.EMP_NO);</span>
+</code></pre><h3 id="用_TRUNCATE_替代_DELETE_：">用 TRUNCATE 替代 DELETE ：</h3><pre><code>当删除表中的记录时, 在通常情况下 ,  回滚段 (<span class="operator"><span class="keyword">rollback</span> segments)  用来存放可以被恢复的信息 .  如果你没有 <span class="keyword">COMMIT</span> 事务 ,ORACLE 会将数据恢复到删除之前的状态 (准确地说是恢复到执行删除命令之前的状况)  而当运用 <span class="keyword">TRUNCATE</span> 时 ,  回滚段不再存放任何可被恢复的信息 . 当命令运行后 , 数据不能被恢复 . 因此很少的资源被调用,执行时间也会很短.</span>
+</code></pre><h3 id="尽量多使用_COMMIT_：">尽量多使用 COMMIT ：</h3><pre><code>只要有可能, 在程序中尽量多使用 <span class="operator"><span class="keyword">COMMIT</span>,  这样程序的性能得到提高 , 需求也会因为 <span class="keyword">COMMIT</span> 所释放的资源而减少 :
+<span class="keyword">COMMIT</span>所释放的资源 :
+a. 回滚段上用于恢复数据的信息
+b. 被程序语句获得的锁
+c. redo <span class="keyword">log</span> buffer 中的空间
+d. ORACLE为管理上述 <span class="number">3</span> 种资源中的内部花费</span>
+</code></pre><h3 id="用_Where_子句替换_HAVING_子句：">用 Where 子句替换 HAVING 子句：</h3><pre><code>避免使用HAVING 子句 , HAVING  只会在检索出所有记录之后才对结果集进行过滤 .  这个处理需要排序 , 总计等操作 . 如果能通过 WHERE 子句限制记录的数目 , 那就能减少这方面的开销.<span class="keyword">on</span> 、 <span class="keyword">where</span> 、 having 这三个都可以加条件的子句中， <span class="function_start"><span class="keyword">on</span></span> 是最先执行， <span class="keyword">where</span> 次之， having 最后
+</code></pre><h3 id="用_EXISTS_替代_IN_、用_NOT_EXISTS_替代_NOT_IN_：">用 EXISTS 替代 IN 、用 NOT EXISTS 替代 NOT IN ：</h3><pre><code>在许多基于基础表的查询中, 为了满足一个条件 , 往往需要对另一个表进行联接 . 在这种情况下 ,  使用 EXISTS(或 <span class="keyword">NOT</span> EXISTS) 通常将提高查询的效率 . 在子查询中 ,<span class="keyword">NOT</span> <span class="keyword">IN</span> 子句将执行一个内部的排序和合并 .  无论在哪种情况下 ,<span class="keyword">NOT</span> <span class="keyword">IN</span> 都是最低效的  (因为它对子查询中的表执行了一个全表遍历 ).  为了避免使用 <span class="keyword">NOT</span> <span class="keyword">IN</span> , 我们可以把它改写成外连接 (Outer Joins) 或 <span class="keyword">NOT</span> EXISTS.
+
+(高效)<span class="keyword">SELECT</span> * <span class="keyword">FROM</span>  EMP (基础表)  <span class="keyword">WHERE</span>  EMPNO &gt; <span class="number">0</span>  <span class="keyword">AND</span>  EXISTS (<span class="keyword">SELECT</span>  ‘ X<span class="comment">'  FROM DEPT  WHERE  DEPT.DEPTNO = EMP.DEPTNO  AND  LOC =  ‘ MELB')</span>
+
+(低效)<span class="keyword">SELECT</span>  * <span class="keyword">FROM</span>  EMP (基础表)  <span class="keyword">WHERE</span>  EMPNO &gt; <span class="number">0</span>  <span class="keyword">AND</span>  DEPTNO <span class="keyword">IN</span>(<span class="keyword">SELECT</span> DEPTNO  <span class="keyword">FROM</span>  DEPT  <span class="keyword">WHERE</span>  LOC =  ‘ MELB<span class="comment">')</span>
+</code></pre><h3 id="使用表的别名_(Alias)_：">使用表的别名 (Alias) ：</h3><pre><code>当在SQL 语句中连接多个表时 ,  请使用表的别名并把别名前缀于每个 <span class="keyword">Column</span> 上 . 这样一来 , 就可以减少解析的时间并减少那些由 <span class="keyword">Column</span> 歧义引起的语法错误 .
+</code></pre><h3 id="避免在索引列上使用计算．">避免在索引列上使用计算．</h3><pre><code>WHERE子句中，如果索引列是函数的一部分．优化器将不使用索引而使用全表扫描．
+低效：
+<span class="operator"><span class="keyword">SELECT</span> …  <span class="keyword">FROM</span>  DEPT  <span class="keyword">WHERE</span> SAL * <span class="number">12</span> &gt; <span class="number">25000</span>;</span>
+高效:
+<span class="operator"><span class="keyword">SELECT</span> …  <span class="keyword">FROM</span> DEPT <span class="keyword">WHERE</span> SAL &gt; <span class="number">25000</span>/<span class="number">12</span>;</span>
+</code></pre><h3 id="用_&gt;=_替代_&gt;">用 &gt;= 替代 &gt;</h3><pre><code>高效:
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span>  EMP  <span class="keyword">WHERE</span>  DEPTNO &gt;=<span class="number">4</span>
+低效:
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> DEPTNO &gt;<span class="number">3</span>
+
+两者的区别在于,  前者 DBMS 将直接跳到第一个 DEPT 等于 <span class="number">4</span> 的记录而后者将首先定位到 DEPTNO=<span class="number">3</span> 的记录并且向前扫描到第一个 DEPT 大于 <span class="number">3</span> 的记录 .
+</code></pre><h3 id="减少对表的查询：">减少对表的查询：</h3><pre><code>在含有子查询的SQL 语句中 , 要特别注意减少对表的查询 . 例子：
+    <span class="operator"><span class="keyword">SELECT</span>  TAB_NAME <span class="keyword">FROM</span> <span class="keyword">TABLES</span> <span class="keyword">WHERE</span> (TAB_NAME,DB_VER) = ( <span class="keyword">SELECT</span> TAB_NAME,DB_VER <span class="keyword">FROM</span>  TAB_COLUMNS  <span class="keyword">WHERE</span>  <span class="keyword">VERSION</span> = <span class="number">604</span>)</span>
+</code></pre><h3 id="sql语句用大写的：">sql语句用大写的：</h3><pre><code>因为oracle 总是先解析 sql 语句，把小写的字母转换成大写的再执行
+</code></pre><h3 id="在_java_代码中尽量少用连接符_“_＋_”_连接字符串！">在 java 代码中尽量少用连接符 “ ＋ ” 连接字符串！</h3><h3 id="避免在索引列上使用_NOT_：">避免在索引列上使用 NOT ：</h3><pre><code>我们要避免在索引列上使用<span class="literal">NOT</span>, <span class="literal">NOT</span> 会产生在和在索引列上使用函数相同的影响 .  当 ORACLE ” 遇到 ” <span class="literal">NOT</span>, 他就会停止使用索引转而执行全表扫描 .
+</code></pre><h3 id="通过内部函数提高_SQL_效率：">通过内部函数提高 SQL 效率：</h3><pre><code>复杂的SQL 往往牺牲了执行效率 . 能够掌握上面的运用函数解决问题的方法在实际工作中是非常有意义的
+</code></pre><h3 id="识别_‘_低效执行_‘_的_SQL_语句：">识别 ‘ 低效执行 ‘ 的 SQL 语句：</h3><pre><code>虽然目前各种关于SQL 优化的图形化工具层出不穷 , 但是写出自己的 SQL 工具来解决问题始终是一个最好的方法：
+<span class="operator"><span class="keyword">SELECT</span>  EXECUTIONS , DISK_READS, BUFFER_GETS,
+<span class="keyword">ROUND</span>((BUFFER_GETS-DISK_READS)/BUFFER_GETS,<span class="number">2</span>) Hit_radio,
+<span class="keyword">ROUND</span>(DISK_READS/EXECUTIONS,<span class="number">2</span>) Reads_per_run,
+SQL_TEXT
+<span class="keyword">FROM</span>  V$SQLAREA
+<span class="keyword">WHERE</span>  EXECUTIONS&gt;<span class="number">0</span>
+<span class="keyword">AND</span>  BUFFER_GETS &gt; <span class="number">0</span>
+<span class="keyword">AND</span>  (BUFFER_GETS-DISK_READS)/BUFFER_GETS &lt; <span class="number">0.8</span>
+<span class="keyword">ORDER</span> <span class="keyword">BY</span>  <span class="number">4</span> <span class="keyword">DESC</span>;</span>
+</code></pre><h3 id="用索引提高效率：">用索引提高效率：</h3><pre><code>索引是表的一个概念部分, 用来提高检索数据的效率， ORACLE 使用了一个复杂的自平衡 B-tree 结构 .  通常 , 通过索引查询数据比全表扫描要快 .  当 ORACLE 找出执行查询和 <span class="operator"><span class="keyword">Update</span> 语句的最佳路径时 , ORACLE 优化器将使用索引 .  同样在联结多个表时使用索引也可以提高效率 .  另一个使用索引的好处是 , 它提供了主键 (<span class="keyword">primary</span> <span class="keyword">key</span>) 的唯一性验证 . 。那些 LONG 或 LONG RAW 数据类型 ,  你可以索引几乎所有的列 .  通常 ,  在大型表中使用索引特别有效 .  当然 , 你也会发现 ,  在扫描小表时 , 使用索引同样能提高效率 .  虽然使用索引能得到查询效率的提高 , 但是我们也必须注意到它的代价 .  索引需要空间来存储 , 也需要定期维护 ,  每当有记录在表中增减或索引列被修改时 ,  索引本身也会被修改 .  这意味着每条记录的 <span class="keyword">INSERT</span> , <span class="keyword">DELETE</span> , <span class="keyword">UPDATE</span> 将为此多付出 <span class="number">4</span> , <span class="number">5</span>  次的磁盘 I/O .  因为索引需要额外的存储空间和处理 , 那些不必要的索引反而会使查询反应时间变慢 . 。定期的重构索引是有必要的 . <span class="keyword">ALTER</span>  <span class="keyword">INDEX</span> &lt;INDEXNAME&gt; REBUILD &lt;TABLESPACENAME&gt;</span>
+</code></pre><h3 id="用_UNION_替换_OR_(_适用于索引列_)">用 UNION 替换 OR ( 适用于索引列 )</h3><pre><code>通常情况下,  用 <span class="keyword">UNION</span> 替换 <span class="keyword">WHERE</span> 子句中的 <span class="keyword">OR</span> 将会起到较好的效果 .  对索引列使用 <span class="keyword">OR</span> 将造成全表扫描 .  注意 ,  以上规则只针对多个索引列有效 .  如果有 column 没有被索引 ,  查询效率可能会因为你没有选择 <span class="keyword">OR</span> 而降低 .  在下面的例子中 , LOC_ID  和 REGION 上都建有索引 .
+
+高效:
+<span class="keyword">SELECT</span> LOC_ID , LOC_DESC , REGION
+<span class="keyword">FROM</span> LOCATION
+<span class="keyword">WHERE</span> LOC_ID = <span class="number">10</span>
+<span class="keyword">UNION</span>
+<span class="keyword">SELECT</span> LOC_ID , LOC_DESC , REGION
+<span class="keyword">FROM</span> LOCATION
+<span class="keyword">WHERE</span> REGION = “ MELBOURNE ”
+低效:
+<span class="keyword">SELECT</span> LOC_ID , LOC_DESC , REGION
+<span class="keyword">FROM</span> LOCATION
+<span class="keyword">WHERE</span> LOC_ID = <span class="number">10</span> <span class="keyword">OR</span> REGION = “ MELBOURNE ”
+如果你坚持要用<span class="keyword">OR</span>,  那就需要返回记录最少的索引列写在最前面 .
+</code></pre><h3 id="用_IN_来替换_OR">用 IN 来替换 OR</h3><pre><code>低效:
+<span class="operator"><span class="keyword">SELECT</span>… . <span class="keyword">FROM</span> LOCATION <span class="keyword">WHERE</span> LOC_ID = <span class="number">10</span> <span class="keyword">OR</span> LOC_ID = <span class="number">20</span> <span class="keyword">OR</span> LOC_ID = <span class="number">30</span>
+
+高效
+<span class="keyword">SELECT</span>…  <span class="keyword">FROM</span> LOCATION <span class="keyword">WHERE</span> LOC_IN  <span class="keyword">IN</span> (<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>);</span>
+</code></pre><h3 id="避免在索引列上使用_IS_NULL_和_IS_NOT_NULL">避免在索引列上使用 IS NULL 和 IS NOT NULL</h3><pre><code>避免在索引中使用任何可以为空的列，ORACLE 将无法使用该索引．对于单列索引，如果列包含空值，索引中将不存在此记录 .  对于复合索引，如果每个列都为空，索引中同样不存在此记录 . 　如果至少有一个列不为空，则记录存在于索引中．举例 :  如果唯一性索引建立在表的 A 列和 B 列上 ,  并且表中存在一条记录的 A,B 值为 (123,null) , ORACLE 将不接受下一条具有相同 A,B 值 (123,null) 的记录 ( 插入 ).  然而如果所有的索引列都为空， ORACLE 将认为整个键值为空而空不等于空 .  因此你可以插入 1000  条具有相同键值的记录 , 当然它们都是空 !  因为空值不存在于索引列中 , 所以 WHERE 子句中对索引列进行空值比较将使 ORACLE 停用该索引 .
+
+索引失效
+<span class="operator"><span class="keyword">SELECT</span> …  <span class="keyword">FROM</span>  DEPARTMENT  <span class="keyword">WHERE</span>  DEPT_CODE <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span>
+索引有效
+<span class="operator"><span class="keyword">SELECT</span> …  <span class="keyword">FROM</span>  DEPARTMENT  <span class="keyword">WHERE</span>  DEPT_CODE &gt;=<span class="number">0</span>;</span>
+</code></pre><h3 id="总是使用索引的第一个列：">总是使用索引的第一个列：</h3><pre><code>如果索引是建立在多个列上,  只有在它的第一个列 (leading column) 被 <span class="keyword">where</span> 子句引用时 , 优化器才会选择使用该索引 .  这也是一条简单而重要的规则，当仅引用索引的第二个列时 , 优化器使用了全表扫描而忽略了索引
+</code></pre><h3 id="用_UNION-ALL_替换_UNION_(如果业务允许)_：">用 UNION-ALL  替换 UNION (如果业务允许) ：</h3><pre><code>当SQL  语句需要 <span class="keyword">UNION</span> 两个查询结果集合时 , 这两个结果集合会以 <span class="keyword">UNION</span>-ALL 的方式被合并 ,  然后在输出最终结果前进行排序 .  如果用 <span class="keyword">UNION</span> ALL 替代 <span class="keyword">UNION</span>,  这样排序就不是必要了 .  效率就会因此得到提高 .  需要注意的是， <span class="keyword">UNION</span> ALL  将重复输出两个结果集合中相同记录 .  因此各位还是要从业务需求分析使用 <span class="keyword">UNION</span> ALL 的可行性 . <span class="keyword">UNION</span>  将对结果集合排序 , 这个操作会使用到 SORT_AREA_SIZE 这块内存 .  对于这块内存的优化也是相当重要的 .  下面的 SQL 可以用来查询排序的消耗量
+</code></pre><h3 id="用_WHERE_替代_ORDER_BY_：">用 WHERE 替代 ORDER BY ：</h3><pre><code><span class="keyword">ORDER</span> <span class="keyword">BY</span> 子句只在两种严格的条件下使用索引
+<span class="keyword">ORDER</span> <span class="keyword">BY</span>中所有的列必须包含在相同的索引中并保持在索引中的排列顺序 <span class="built_in">.
+</span><span class="keyword">ORDER</span> <span class="keyword">BY</span>中所有的列必须定义为非空 <span class="built_in">.
+</span><span class="keyword">WHERE</span>子句使用的索引和 <span class="keyword">ORDER</span> <span class="keyword">BY</span> 子句中所使用的索引不能并列 <span class="built_in">.
+
+</span>例如:
+表DEPT 包含以下列 :
+DEPT_CODE PK <span class="literal">NOT</span> <span class="built_in">NULL</span>
+DEPT_DESC <span class="literal">NOT</span> <span class="built_in">NULL</span>
+DEPT_TYPE <span class="built_in">NULL</span>
+
+低效: ( 索引不被使用 
+<span class="keyword">SELECT</span> DEPT_CODE FROM  DEPT  <span class="keyword">ORDER</span> <span class="keyword">BY</span>  DEPT_TYPE
+高效: ( 使用索引 )
+<span class="keyword">SELECT</span> DEPT_CODE  FROM  DEPT  <span class="keyword">WHERE</span>  DEPT_TYPE <span class="subst">&gt;</span> <span class="number">0</span>
+</code></pre><h3 id="避免改变索引列的类型_:">避免改变索引列的类型 :</h3><pre><code>当比较不同数据类型的数据时, ORACLE 自动对列进行简单的类型转换 .
+假设 EMPNO 是一个数值类型的索引列 .
+<span class="keyword">SELECT</span> …   <span class="keyword">FROM</span> EMP  <span class="keyword">WHERE</span>  EMPNO = ‘<span class="number">123</span><span class="comment">'</span>
+实际上, 经过 ORACLE 类型转换 ,  语句转化为 :
+<span class="keyword">SELECT</span> …   <span class="keyword">FROM</span> EMP  <span class="keyword">WHERE</span>  EMPNO = TO_NUMBER(‘<span class="number">123</span><span class="comment">')</span>
+幸运的是, 类型转换没有发生在索引列上 , 索引的用途没有被改变 .
+现在, 假设 EMP_TYPE 是一个字符类型的索引列 .
+<span class="keyword">SELECT</span> …   <span class="keyword">FROM</span> EMP  <span class="keyword">WHERE</span> EMP_TYPE = <span class="number">123</span>
+这个语句被ORACLE 转换为 :
+<span class="keyword">SELECT</span> …   <span class="keyword">FROM</span> EMP  WHERETO_NUMBER(EMP_TYPE)=<span class="number">12</span>    
+因为内部发生的类型转换,  这个索引将不会被用到 !  为了避免 ORACLE 对你的 SQL 进行隐式的类型转换 ,  最好把类型转换用显式表现出来 .  注意当字符和数值比较时 , ORACLE 会优先转换数值类型到字符类型
+</code></pre><h3 id="需要当心的_WHERE_子句_:">需要当心的 WHERE 子句 :</h3><pre><code>某些<span class="keyword">SELECT</span> 语句中的 <span class="keyword">WHERE</span> 子句不使用索引 . 这里有一些例子 .
+在下面的例子里,
+(<span class="number">1</span>)‘ !=<span class="comment">'  将不使用索引 .  记住 ,  索引只能告诉你什么存在于表中 ,  而不能告诉你什么不存在于表中 .</span>
+(<span class="number">2</span>) ‘ ||<span class="comment">' 是字符连接函数 .  就象其他函数那样 ,  停用了索引 .</span>
+(<span class="number">3</span>) ‘ +<span class="comment">' 是数学函数 .  就象其他数学函数那样 ,  停用了索引 .</span>
+</code></pre><h3 id="使用索引">使用索引</h3><pre><code><span class="tag">a</span>. 如果检索数据量超过 <span class="number">30%</span> 的表中记录数 . 使用索引将没有显著的效率提高 . 
+<span class="tag">b</span>. 在特定情况下, 使用索引也许会比全表扫描慢 ,  但这是同一个数量级上的区别 . 而通常情况下, 使用索引比全表扫描要块几倍乃至几千倍 ! 
+</code></pre><h3 id="避免使用耗费资源的操作_:">避免使用耗费资源的操作 :</h3><pre><code>带有DISTINCT,UNION,<span class="keyword">MINUS</span>,<span class="keyword">INTERSECT</span>,ORDER BY 的SQL 语句会启动 SQL引擎 
+执行耗费资源的排序(<span class="keyword">SORT</span>)功能 . DISTINCT 需要一次排序操作,而其他的至少需要执行两次排序.通常,带有 UNION, <span class="keyword">MINUS</span>,<span class="keyword">INTERSECT</span> 的 SQL 语句都可以用其他方式重写.如果你的数据库的 SORT_AREA_SIZE调配得好,使用 UNION,<span class="keyword">MINUS</span>,<span class="keyword">INTERSECT</span> 也是可以考虑的,毕竟它们的可读性很强 
+</code></pre>]]></content>
     <summary type="html">
     <![CDATA[<p>在工作的前两年，做的电信行业，开发主要是和oracle打交道的管理模块，特分享几条同事们整理的文档中的sql优化建议，主要是where条件怎么写和如何不破坏索引之类的小知识点。</p>]]>
     
@@ -533,6 +711,47 @@ Obj=null;
   </entry>
   
   <entry>
+    <title><![CDATA[JAVA多线程第二篇(状态转换)]]></title>
+    <link href="http://www.52ff.cc/2015/02/12/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%BA%8C%E7%AF%87%EF%BC%88%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%EF%BC%89/"/>
+    <id>http://www.52ff.cc/2015/02/12/JAVA多线程第二篇（状态转换）/</id>
+    <published>2015-02-12T14:59:53.000Z</published>
+    <updated>2015-03-19T17:14:32.000Z</updated>
+    <content type="html"><![CDATA[<p>线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。<br><a id="more"></a></p>
+<h2 id="线程状态">线程状态</h2><p>1、新状态：线程对象已经创建，还没有在其上调用start()方法。</p>
+<p>2、可运行状态：当线程有资格运行，但调度程序还没有把它选定为运行线程时线程所处的状态。当start()方法调用时，线程首先进入可运行状态。在线程运行之后或者从阻塞、等待或睡眠状态回来后，也返回到可运行状态。</p>
+<p>3、运行状态：线程调度程序从可运行池中选择一个线程作为当前线程时线程所处的状态。这也是线程进入运行状态的唯一一种方式。</p>
+<p>4、等待/阻塞/睡眠状态：这是线程有资格运行时它所处的状态。实际上这个三状态组合为一种，其共同点是：线程仍旧是活的，但是当前没有条件运行。换句话说，它是可运行的，但是如果某件事件出现，他可能返回到可运行状态。</p>
+<p>5、死亡态：当线程的run()方法完成时就认为它死去。这个线程对象也许是活的，但是，它已经不是一个单独执行的线程。线程一旦死亡，就不能复生。 如果在一个死去的线程上调用start()方法，会抛出java.lang.IllegalThreadStateException异常</p>
+<h2 id="阻止线程执行">阻止线程执行</h2><p>对于线程的阻止，考虑以下三个方面，不考虑IO阻塞的情况：<br>睡眠；<br>等待；<br>因为需要一个对象的锁定而被阻塞。</p>
+<h3 id="睡眠">睡眠</h3><hr>
+<p>Thread.sleep(long millis)和Thread.sleep(long millis, int nanos)静态方法强制当前正在执行的线程休眠（暂停执行），以“减慢线程”。当线程睡眠时，它入睡在某个地方，在苏醒之前不会返回到可运行状态。当睡眠时间到期，则返回到可运行状态。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class MyThread extends Thread &#123; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> ((i) % <span class="number">10</span> == <span class="number">0</span>) &#123; </span><br><span class="line">                System.out.println(<span class="string">"-------"</span> + i); </span><br><span class="line">            &#125; </span><br><span class="line">            System.out.print(i); </span><br><span class="line">            try &#123; </span><br><span class="line">                Thread.sleep(<span class="number">1</span>); </span><br><span class="line">                System.out.print(<span class="string">"    线程睡眠1毫秒！\n"</span>); </span><br><span class="line">            &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                e.printStackTrace(); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        new MyThread().start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：<br>1、线程睡眠是帮助所有线程获得运行机会的最好方法。<br>2、线程睡眠到期自动苏醒，并返回到可运行状态，不是运行状态。sleep()中指定的时间是线程不会运行的最短时间。因此，sleep()方法不能保证该线程睡眠到期后就开始执行。<br>3、sleep()是静态方法，只能控制当前正在运行的线程。</p>
+<h3 id="线程的优先级和线程让步yield()">线程的优先级和线程让步yield()</h3><hr>
+<p>线程的让步是通过Thread.yield()来实现的。yield()方法的作用是：暂停当前正在执行的线程对象，并执行其他线程。</p>
+<p>要理解yield()，必须了解线程的优先级的概念。线程总是存在优先级，优先级范围在1~10之间。JVM线程调度程序是基于优先级的抢先调度机制。在大多数情况下，当前运行的线程优先级将大于或等于线程池中任何线程的优先级。但这仅仅是大多数情况。</p>
+<p>注意：当设计多线程应用程序的时候，一定不要依赖于线程的优先级。因为线程调度优先级操作是没有保障的，只能把线程优先级作用作为一种提高程序效率的方法，但是要保证程序不依赖这种操作。</p>
+<p>当线程池中线程都具有相同的优先级，调度程序的JVM实现自由选择它喜欢的线程。这时候调度程序的操作有两种可能：一是选择一个线程运行，直到它阻塞或者运行完成为止。二是时间分片，为池内的每个线程提供均等的运行机会。</p>
+<p>设置线程的优先级：线程默认的优先级是创建它的执行线程的优先级。可以通过setPriority(int newPriority)更改线程的优先级。例如：<br>Thread t = new MyThread();<br>t.setPriority(8);<br>t.start();<br>线程优先级为1~10之间的正整数，JVM从不会改变一个线程的优先级。然而，1~10之间的值是没有保证的。一些JVM可能不能识别10个不同的值，而将这些优先级进行每两个或多个合并，变成少于10个的优先级，则两个或多个优先级的线程可能被映射为一个优先级。</p>
+<p>线程默认优先级是5，Thread类中有三个常量，定义线程优先级范围：<br>static int MAX_PRIORITY<br>线程可以具有的最高优先级。<br>static int MIN_PRIORITY<br>线程可以具有的最低优先级。<br>static int NORM_PRIORITY<br>分配给线程的默认优先级。</p>
+<h3 id="join()方法">join()方法</h3><hr>
+<p>Thread的非静态方法join()让一个线程B“加入”到另外一个线程A的尾部。在A执行完毕之前，B不能工作。例如：<br>        Thread t = new MyThread();<br>        t.start();<br>        t.join();<br>另外，join()方法还有带超时限制的重载版本。 例如t.join(5000);则让线程等待5000毫秒，如果超过这个时间，则停止等待，变为可运行状态</p>
+<h2 id="小结">小结</h2><p>到目前位置，介绍了线程离开运行状态的3种方法：<br>1、调用Thread.sleep()：使当前线程睡眠至少多少毫秒（尽管它可能在指定的时间之前被中断）。<br>2、调用Thread.yield()：不能保障太多事情，尽管通常它会让当前运行线程回到可运行性状态，使得有相同优先级的线程有机会执行。<br>3、调用join()方法：保证当前线程停止执行，直到该线程所加入的线程完成为止。然而，如果它加入的线程没有存活，则当前线程不需要停止。</p>
+<p>除了以上三种方式外，还有下面几种特殊情况可能使线程离开运行状态：<br>1、线程的run()方法完成。<br>2、在对象上调用wait()方法（不是在线程上调用）。<br>3、线程不能在对象上获得锁定，它正试图运行该对象的方法代码。<br>4、线程调度程序可以决定将当前运行状态移动到可运行状态，以便让另一个线程获得运行机会，而不需要任何理由。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。<br>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[重写hashcode()与equals()]]></title>
     <link href="http://www.52ff.cc/2015/02/12/%E9%87%8D%E5%86%99hashcode()%E4%B8%8Eequals()/"/>
     <id>http://www.52ff.cc/2015/02/12/重写hashcode()与equals()/</id>
@@ -551,6 +770,39 @@ Obj=null;
     </summary>
     
       <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[JAVA多线程第一篇(概念和启动线程)]]></title>
+    <link href="http://www.52ff.cc/2015/02/09/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B8%80%E7%AF%87/"/>
+    <id>http://www.52ff.cc/2015/02/09/java多线程第一篇/</id>
+    <published>2015-02-08T17:52:33.000Z</published>
+    <updated>2015-03-19T17:15:02.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="进程和线程">进程和线程</h2><h3 id="操作系统中线程和进程">操作系统中线程和进程</h3><p>进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。</p>
+<p>线程是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属于某个进程，进程中的多个线程共享进程的内存。</p>
+<p>“同时”执行是人的感觉，在线程之间实际上轮换执行。</p>
+<h3 id="Java中的线程">Java中的线程</h3><p>在Java中，“线程”指两件不同的事情：<br>1、java.lang.Thread类的一个实例；<br>2、线程的执行。</p>
+<p>使用java.lang.Thread类或者java.lang.Runnable接口编写代码来定义、实例化和启动新线程。</p>
+<p>一个Thread类实例只是一个对象，像Java中的任何其他对象一样，具有变量和方法，生死于堆上。</p>
+<p>Java中，每个线程都有一个调用栈，即使不在程序中创建任何新的线程，线程也在后台运行着。</p>
+<p>一个Java应用总是从main()方法开始运行，mian()方法运行在一个线程内，它被称为主线程。</p>
+<p>一旦创建一个新的线程，就产生一个新的调用栈。</p>
+<p>线程总体分两类：用户线程和守候线程。</p>
+<p>当所有用户线程执行完毕的时候，JVM自动关闭。但是守候线程却不独立于JVM，守候线程一般是由操作系统或者用户自己创建的。</p>
+<h2 id="线程启动">线程启动</h2><p>1.实现Runnable接口<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class DoSomething implements Runnable &#123; </span><br><span class="line">    private String name; </span><br><span class="line"></span><br><span class="line">    public DoSomething(String name) &#123; </span><br><span class="line">        this.name = name; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">for</span> (long k = <span class="number">0</span>; k &lt; <span class="number">100000000</span>; k++) ; </span><br><span class="line">            System.out.println(name + <span class="string">": "</span> + i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        DoSomething ds1 = new DoSomething(<span class="string">"阿三"</span>); </span><br><span class="line">        DoSomething ds2 = new DoSomething(<span class="string">"李四"</span>); </span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(ds1); </span><br><span class="line">        Thread t2 = new Thread(ds2); </span><br><span class="line"></span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.继承thread类<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class TestThread extends Thread&#123; </span><br><span class="line">    public TestThread(String name) &#123; </span><br><span class="line">        super(name); </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123; </span><br><span class="line">            <span class="keyword">for</span>(long k= <span class="number">0</span>; k &lt;<span class="number">100000000</span>;k++); </span><br><span class="line">            System.out.println(this.getName()+<span class="string">" :"</span>+i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        Thread t1 = new TestThread(<span class="string">"阿三"</span>); </span><br><span class="line">        Thread t2 = new TestThread(<span class="string">"李四"</span>); </span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="FAQ">FAQ</h2><p>1、线程都可以设置名字，也可以获取线程的名字，连主线程也不例外。<br>2、获取当前线程的对象的方法是：Thread.currentThread()；<br>3、在一系列线程以某种顺序启动并不意味着将按该顺序执行。对于任何一组启动的线程来说，调度程序不能保证其执行次序，持续时间也无法保证。<br>4、当线程目标run()方法结束时该线程完成。<br>5、一旦线程启动，它就永远不能再重新启动。只有一个新的线程可以被启动，并且只能一次。一个可运行的线程或死线程可以被重新启动。<br>6、线程的调度是JVM的一部分，在一个CPU的机器上上，实际上一次只能运行一个线程。一次只有一个线程栈执行。JVM线程调度程序决定实际运行哪个处于可运行状态的线程。众多可运行线程中的某一个会被选中做为当前线程。可运行线程被选择运行的顺序是没有保障的。<br>7、尽管通常采用队列形式，但这是没有保障的。队列形式是指当一个线程完成“一轮”时，它移到可运行队列的尾部等待，直到它最终排队到该队列的前端为止，它才能被再次选中。事实上，我们把它称为可运行池而不是一个可运行队列，目的是帮助认识线程并不都是以某种有保障的顺序排列唱呢个一个队列的事实。<br>8、尽管我们没有无法控制线程调度程序，但可以通过别的方式来影响线程调度的方式。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="进程和线程">进程和线程</h2><h3 id="操作系统中线程和进程">操作系统中线程和进程</h3><p>进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程]]>
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
       <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     
