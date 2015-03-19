@@ -4,23 +4,34 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>IntelliJ Idea操作技巧 | flyfish&#39;s Blog</title>
+    <title>JAVA多线程第二篇(状态转换) | flyfish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider">
+    <meta name="description" content="线程状态线程状态线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。
+1、新状态：线程对象已经创建，还没有在其上调用start()方法。
+2、可运行状态：当线程有资格运行，但调度程序还没有把它选定为运行线程时线程所处的状态。当start()方法调用时，">
     
     
-    <meta name="description" content="用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有">
+    <meta name="description" content="线程状态线程状态线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。
+1、新状态：线程对象已经创建，还没有在其上调用start()方法。
+2、可运行状态：当线程有资格运行，但调度程序还没有把它选定为运行线程时线程所处的状态。当start()方法调用时，线程首先进入可运行状态。在线程运行之后或者从阻塞、等待或睡眠状态回来后，也返回到可运行状态。
+3、运">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IntelliJ Idea操作技巧">
-<meta property="og:url" content="http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/index.html">
+<meta property="og:title" content="JAVA多线程第二篇(状态转换)">
+<meta property="og:url" content="http://www.52ff.cc/2015/03/19/JAVA多线程第二篇（状态转换）/index.html">
 <meta property="og:site_name" content="flyfish's Blog">
-<meta property="og:description" content="用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有">
+<meta property="og:description" content="线程状态线程状态线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。
+1、新状态：线程对象已经创建，还没有在其上调用start()方法。
+2、可运行状态：当线程有资格运行，但调度程序还没有把它选定为运行线程时线程所处的状态。当start()方法调用时，线程首先进入可运行状态。在线程运行之后或者从阻塞、等待或睡眠状态回来后，也返回到可运行状态。
+3、运">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IntelliJ Idea操作技巧">
-<meta name="twitter:description" content="用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有">
+<meta name="twitter:title" content="JAVA多线程第二篇(状态转换)">
+<meta name="twitter:description" content="线程状态线程状态线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。
+1、新状态：线程对象已经创建，还没有在其上调用start()方法。
+2、可运行状态：当线程有资格运行，但调度程序还没有把它选定为运行线程时线程所处的状态。当start()方法调用时，线程首先进入可运行状态。在线程运行之后或者从阻塞、等待或睡眠状态回来后，也返回到可运行状态。
+3、运">
 
     
     <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
@@ -81,14 +92,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/02/17/IntelliJ-Idea操作技巧/" title="IntelliJ Idea操作技巧" itemprop="url">IntelliJ Idea操作技巧</a>
+      <a href="/2015/03/19/JAVA多线程第二篇（状态转换）/" title="JAVA多线程第二篇(状态转换)" itemprop="url">JAVA多线程第二篇(状态转换)</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-02-17T06:55:49.000Z" itemprop="datePublished"> 发表于 2015-02-17</time>
+    <time datetime="2015-03-19T14:59:53.000Z" itemprop="datePublished"> 发表于 2015-03-19</time>
     
   </p>
 </header>
@@ -97,18 +108,32 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索"><span class="toc-number">1.</span> <span class="toc-text">搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑"><span class="toc-number">2.</span> <span class="toc-text">编辑</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程状态"><span class="toc-number">1.</span> <span class="toc-text">线程状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程状态-1"><span class="toc-number">1.1.</span> <span class="toc-text">线程状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阻止线程执行"><span class="toc-number">2.</span> <span class="toc-text">阻止线程执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#阻止线程执行-1"><span class="toc-number">2.1.</span> <span class="toc-text">阻止线程执行</span></a></li></ol></li></ol>
 		
 		</div>
 		
-		<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>
-<a id="more"></a>
-<p>写这篇文章的主要目的是记录idea工具磨合期掌握的最实用技巧，因为网上的快捷键列举比较杂乱而且应用在mac上不靠谱，自己记下来可以备忘，回顾也方便，帮助自己精通这个工具。</p>
-<p>ps:可使用ctrl+`切换keyMap，建议keyMap使用mac os x 10.5 +，使用default的在mac系统和其他快捷键冲突多些<br><br></p>
+		<h2 id="线程状态">线程状态</h2><h3 id="线程状态-1">线程状态</h3><p>线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。</p>
+<p>1、新状态：线程对象已经创建，还没有在其上调用start()方法。</p>
+<p>2、可运行状态：当线程有资格运行，但调度程序还没有把它选定为运行线程时线程所处的状态。当start()方法调用时，线程首先进入可运行状态。在线程运行之后或者从阻塞、等待或睡眠状态回来后，也返回到可运行状态。</p>
+<p>3、运行状态：线程调度程序从可运行池中选择一个线程作为当前线程时线程所处的状态。这也是线程进入运行状态的唯一一种方式。</p>
+<p>4、等待/阻塞/睡眠状态：这是线程有资格运行时它所处的状态。实际上这个三状态组合为一种，其共同点是：线程仍旧是活的，但是当前没有条件运行。换句话说，它是可运行的，但是如果某件事件出现，他可能返回到可运行状态。</p>
+<p>5、死亡态：当线程的run()方法完成时就认为它死去。这个线程对象也许是活的，但是，它已经不是一个单独执行的线程。线程一旦死亡，就不能复生。 如果在一个死去的线程上调用start()方法，会抛出java.lang.IllegalThreadStateException异常</p>
+<h2 id="阻止线程执行">阻止线程执行</h2><h3 id="阻止线程执行-1">阻止线程执行</h3><p>对于线程的阻止，考虑以下三个方面，不考虑IO阻塞的情况：<br>睡眠；<br>等待；<br>因为需要一个对象的锁定而被阻塞。</p>
+<p>1、睡眠<br>Thread.sleep(long millis)和Thread.sleep(long millis, int nanos)静态方法强制当前正在执行的线程休眠（暂停执行），以“减慢线程”。当线程睡眠时，它入睡在某个地方，在苏醒之前不会返回到可运行状态。当睡眠时间到期，则返回到可运行状态。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class MyThread extends Thread &#123; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> ((i) % <span class="number">10</span> == <span class="number">0</span>) &#123; </span><br><span class="line">                System.out.println(<span class="string">"-------"</span> + i); </span><br><span class="line">            &#125; </span><br><span class="line">            System.out.print(i); </span><br><span class="line">            try &#123; </span><br><span class="line">                Thread.sleep(<span class="number">1</span>); </span><br><span class="line">                System.out.print(<span class="string">"    线程睡眠1毫秒！\n"</span>); </span><br><span class="line">            &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                e.printStackTrace(); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        new MyThread().start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：<br>1、线程睡眠是帮助所有线程获得运行机会的最好方法。<br>2、线程睡眠到期自动苏醒，并返回到可运行状态，不是运行状态。sleep()中指定的时间是线程不会运行的最短时间。因此，sleep()方法不能保证该线程睡眠到期后就开始执行。<br>3、sleep()是静态方法，只能控制当前正在运行的线程。</p>
 <hr>
-<h3 id="搜索">搜索</h3><p>cmd+shift+f 当前项目下递归查找，相当于eclipse的ctrl+h<br>cmd+g       当前文件中往后搜索一样的字符，相当于eclipse的ctrl+ k<br>cmd+shift+g 当前文件中往前搜索一样的字符<br>cmd+p            查询某方法的参数信息<br>cmd+b            跳到调用方法的定义处<br>cmd+shift+b      跳到方法的实现处<br>cmd+u            跳到方法在父类或接口的定义处<br>cmd+alt+left/right 跳到上/下一次光标查看处<br>cmd+o        查找类<br>cmd+shift+o  查找文件<br><br></p>
+<p>2、线程的优先级和线程让步yield()<br>线程的让步是通过Thread.yield()来实现的。yield()方法的作用是：暂停当前正在执行的线程对象，并执行其他线程。</p>
+<p>要理解yield()，必须了解线程的优先级的概念。线程总是存在优先级，优先级范围在1~10之间。JVM线程调度程序是基于优先级的抢先调度机制。在大多数情况下，当前运行的线程优先级将大于或等于线程池中任何线程的优先级。但这仅仅是大多数情况。</p>
+<p>注意：当设计多线程应用程序的时候，一定不要依赖于线程的优先级。因为线程调度优先级操作是没有保障的，只能把线程优先级作用作为一种提高程序效率的方法，但是要保证程序不依赖这种操作。</p>
+<p>当线程池中线程都具有相同的优先级，调度程序的JVM实现自由选择它喜欢的线程。这时候调度程序的操作有两种可能：一是选择一个线程运行，直到它阻塞或者运行完成为止。二是时间分片，为池内的每个线程提供均等的运行机会。</p>
+<p>设置线程的优先级：线程默认的优先级是创建它的执行线程的优先级。可以通过setPriority(int newPriority)更改线程的优先级。例如：<br>Thread t = new MyThread();<br>t.setPriority(8);<br>t.start();<br>线程优先级为1~10之间的正整数，JVM从不会改变一个线程的优先级。然而，1~10之间的值是没有保证的。一些JVM可能不能识别10个不同的值，而将这些优先级进行每两个或多个合并，变成少于10个的优先级，则两个或多个优先级的线程可能被映射为一个优先级。</p>
+<p>线程默认优先级是5，Thread类中有三个常量，定义线程优先级范围：<br>static int MAX_PRIORITY<br>线程可以具有的最高优先级。<br>static int MIN_PRIORITY<br>线程可以具有的最低优先级。<br>static int NORM_PRIORITY<br>分配给线程的默认优先级。</p>
 <hr>
-<h3 id="编辑">编辑</h3><p>cmd+j        调出IDEA的神器live template<br>cmd+n        各种自动生成代码<br>alt+enter    调出IDEA对出错点的提示处理方法，相当于eclipse的ctrl+1<br>cmd+D        复制粘贴当前行到下一行<br>shift+cmd+v  调出IDEA寄存器中保存的最近复制的N份内容，可选择性粘贴<br>ctrl+shift+/      注释/取消注释<br>shift+cmd+enter   补全当前行，最常用的场景时补全当前行后的；号，并将光标定位到下一行</p>
+<p>3、join()方法</p>
+<p>Thread的非静态方法join()让一个线程B“加入”到另外一个线程A的尾部。在A执行完毕之前，B不能工作。例如：<br>        Thread t = new MyThread();<br>        t.start();<br>        t.join();<br>另外，join()方法还有带超时限制的重载版本。 例如t.join(5000);则让线程等待5000毫秒，如果超过这个时间，则停止等待，变为可运行状态</p>
+<hr>
+<p>小结<br>到目前位置，介绍了线程离开运行状态的3种方法：<br>1、调用Thread.sleep()：使当前线程睡眠至少多少毫秒（尽管它可能在指定的时间之前被中断）。<br>2、调用Thread.yield()：不能保障太多事情，尽管通常它会让当前运行线程回到可运行性状态，使得有相同优先级的线程有机会执行。<br>3、调用join()方法：保证当前线程停止执行，直到该线程所加入的线程完成为止。然而，如果它加入的线程没有存活，则当前线程不需要停止。</p>
+<p>除了以上三种方式外，还有下面几种特殊情况可能使线程离开运行状态：<br>1、线程的run()方法完成。<br>2、在对象上调用wait()方法（不是在线程上调用）。<br>3、线程不能在对象上获得锁定，它正试图运行该对象的方法代码。<br>4、线程调度程序可以决定将当前运行状态移动到可运行状态，以便让另一个线程获得运行机会，而不需要任何理由。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -116,9 +141,14 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/我的工具/">我的工具</a>
+  <a class="article-category-link" href="/categories/java/">java</a>
 </div>
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
 
 </div>
 
@@ -126,7 +156,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/" data-title="IntelliJ Idea操作技巧 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/03/19/JAVA多线程第二篇（状态转换）/" data-title="JAVA多线程第二篇(状态转换) | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -139,19 +169,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/02/17/java反射机制简单整理/" title="java反射简述一二">
-  <strong>上一篇：</strong><br/>
-  <span>
-  java反射简述一二</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/02/12/重写hashcode()与equals()/"  title="重写hashcode()与equals()">
+<a href="/2015/03/18/hello-blog/"  title="hello Blog">
  <strong>下一篇：</strong><br/> 
- <span>重写hashcode()与equals()
+ <span>hello Blog
 </span>
 </a>
 </div>
@@ -160,7 +182,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/02/17/IntelliJ-Idea操作技巧/" data-title="IntelliJ Idea操作技巧" data-url="http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/19/JAVA多线程第二篇（状态转换）/" data-title="JAVA多线程第二篇(状态转换)" data-url="http://www.52ff.cc/2015/03/19/JAVA多线程第二篇（状态转换）/"></div>
 </section>
 
 
@@ -170,7 +192,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索"><span class="toc-number">1.</span> <span class="toc-text">搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑"><span class="toc-number">2.</span> <span class="toc-text">编辑</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程状态"><span class="toc-number">1.</span> <span class="toc-text">线程状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程状态-1"><span class="toc-number">1.1.</span> <span class="toc-text">线程状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#阻止线程执行"><span class="toc-number">2.</span> <span class="toc-text">阻止线程执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#阻止线程执行-1"><span class="toc-number">2.1.</span> <span class="toc-text">阻止线程执行</span></a></li></ol></li></ol>
  
   </div>
 
