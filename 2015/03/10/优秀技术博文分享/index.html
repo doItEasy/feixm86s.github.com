@@ -4,27 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>FAST基础命令安装配置 | flyfish&#39;s Blog</title>
+    <title>优秀技术博文分享 | flyfish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
-它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。">
+    <meta name="description" content="本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：">
     
     
-    <meta name="description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
-它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google F">
+    <meta name="description" content="本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FAST基础命令安装配置">
-<meta property="og:url" content="http://www.52ff.cc/2015/03/11/FastDFS常见命令/index.html">
+<meta property="og:title" content="优秀技术博文分享">
+<meta property="og:url" content="http://www.52ff.cc/2015/03/10/优秀技术博文分享/index.html">
 <meta property="og:site_name" content="flyfish's Blog">
-<meta property="og:description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
-它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google F">
+<meta property="og:description" content="本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FAST基础命令安装配置">
-<meta name="twitter:description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
-它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google F">
+<meta name="twitter:title" content="优秀技术博文分享">
+<meta name="twitter:description" content="本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：">
 
     
     <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
@@ -85,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/11/FastDFS常见命令/" title="FAST基础命令安装配置" itemprop="url">FAST基础命令安装配置</a>
+      <a href="/2015/03/10/优秀技术博文分享/" title="优秀技术博文分享" itemprop="url">优秀技术博文分享</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-11T06:20:08.000Z" itemprop="datePublished"> 发表于 2015-03-11</time>
+    <time datetime="2015-03-10T02:58:18.000Z" itemprop="datePublished"> 发表于 2015-03-10</time>
     
   </p>
 </header>
@@ -101,33 +97,16 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动FastDFS"><span class="toc-number">1.</span> <span class="toc-text">启动FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭FastDFS"><span class="toc-number">2.</span> <span class="toc-text">关闭FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启FastDFS"><span class="toc-number">3.</span> <span class="toc-text">重启FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看集群情况"><span class="toc-number">4.</span> <span class="toc-text">查看集群情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除一个storage"><span class="toc-number">5.</span> <span class="toc-text">删除一个storage</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx+tomcat配置集群负载均衡"><span class="toc-number">1.</span> <span class="toc-text">Nginx+tomcat配置集群负载均衡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#netty学习"><span class="toc-number">2.</span> <span class="toc-text">netty学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo搭建博客"><span class="toc-number">3.</span> <span class="toc-text">hexo搭建博客</span></a></li></ol>
 		
 		</div>
 		
-		<p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。</p>
-<p>它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。</p>
+		<p>本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：</p>
 <a id="more"></a>
-<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
-<h3 id="关闭FastDFS">关闭FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_tracker</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_storage</span><br></pre></td></tr></table></figure>
-<p>或者 killall fdfs_trackered(storaged)  ——-注意，千万不要使用-9强行杀死进程。</p>
-<h3 id="重启FastDFS">重启FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_trackered</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_storaged</span><br></pre></td></tr></table></figure>
-<h3 id="查看集群情况">查看集群情况</h3><p>在任意一台storage(tracker也可以) </p>
-<pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf
-</code></pre>
-<h3 id="删除一个storage">删除一个storage</h3><p>在任意一台storage(tracker也可以) </p>
-<pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf delete group2 <span class="number">20.12</span>.<span class="number">1.73</span>
-</code></pre>
-<p>[CentOS 6.2下fastDFS的完整安装和配置步骤]<br>(<a href="http://www.linuxidc.com/Linux/2012-12/75989.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-12/75989.htm</a>)</p>
-<p>[FastDFS在Ubuntu下的安装，PHP客户端]<br>(<a href="http://www.linuxidc.com/Linux/2012-09/71459.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71459.htm</a>)</p>
-<p>[FastDFS分布式文件服务器安装，及配置，测试]<br>(<a href="http://www.linuxidc.com/Linux/2012-09/71458.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71458.htm</a>)</p>
-<p>[FastDFS 整合Nginx问题整理]<br>(<a href="http://www.linuxidc.com/Linux/2012-09/71232.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71232.htm</a>)</p>
-<p>[CentOS下搭建FastDFS]<br>(<a href="http://www.linuxidc.com/Linux/2012-09/70995.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/70995.htm</a>)</p>
-<p>[Ubuntu安装FastDFS全程记录]<br>(<a href="http://www.linuxidc.com/Linux/2012-03/56377.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-03/56377.htm</a>)</p>
-<p>同事小伍哥对于FastDFS性能的测试结果如下:</p>
-<p>场景1：FastDFS+自带HttpServer<br>FastDFS内置了一个Http服务器，可以提供文件下载服务,使用100个线程，下载一个60M的文件，内存消耗6G左右，估计是把文件都放内存里面去了,线程数增加到500，内存占用提高到12G，剩余空闲内存几乎没有，几分钟后，服务器彻底失去响应，只有进行硬件重启.<br>FastDFS开发者表示，老早就不推荐使用内置的Http服务了</p>
-<p>场景2：FastDFS+Nginx<br>编译FastDFS的Nginx支持模块，使用Nginx进行文件下载,使用1000个线程并发，下载60M大小的文件，Nginx服务器内存占用20M左右，完全没有压力</p>
-<p>场景3：FastDFS+TCPClient<br>FastDFS支持TCP协议，使用其自带的客户端进行下载,使用1000个线程并发，下载60M大小的文件，FastDFS storage内存占用在120M左右，虽然表现没有Nginx那么优秀，但是性能上也足以满足需求了需要注意的是，FastDFS自带的客户端下载文件，内存占用和磁盘IO没有做较好的优化，大并发下载大文件时，会有性能问题</p>
+<h3 id="Nginx+tomcat配置集群负载均衡">Nginx+tomcat配置集群负载均衡</h3><p><a href="http://ari.iteye.com/blog/833153" title="Nginx+tomcat配置集群负载均衡" target="_blank" rel="external">图文解说：Nginx+tomcat配置集群负载均衡</a> </p>
+<h3 id="netty学习">netty学习</h3><p><a href="http://ifeve.com/netty-2-6/" target="_blank" rel="external">并发编程网netty教程</a></p>
+<h3 id="hexo搭建博客">hexo搭建博客</h3><p><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo搭建博客全程指导</a></p>
+<p>随时更新</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -135,14 +114,9 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/分布式文件存储/">分布式文件存储</a>
+  <a class="article-category-link" href="/categories/记录分享/">记录分享</a>
 </div>
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/fastdfs/">fastdfs</a>
-  </div>
 
 </div>
 
@@ -150,7 +124,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/03/11/FastDFS常见命令/" data-title="FAST基础命令安装配置 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/03/10/优秀技术博文分享/" data-title="优秀技术博文分享 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -164,18 +138,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/03/11/一个简陋的RPC框架/" title="一个简陋的RPC框架">
+ <a href="/2015/03/11/redis基础命令/" title="redis基础命令">
   <strong>上一篇：</strong><br/>
   <span>
-  一个简陋的RPC框架</span>
+  redis基础命令</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/03/11/redis基础命令/"  title="redis基础命令">
+<a href="/2015/03/05/netty笔记第一篇/"  title="netty笔记第一篇">
  <strong>下一篇：</strong><br/> 
- <span>redis基础命令
+ <span>netty笔记第一篇
 </span>
 </a>
 </div>
@@ -184,7 +158,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/11/FastDFS常见命令/" data-title="FAST基础命令安装配置" data-url="http://www.52ff.cc/2015/03/11/FastDFS常见命令/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/10/优秀技术博文分享/" data-title="优秀技术博文分享" data-url="http://www.52ff.cc/2015/03/10/优秀技术博文分享/"></div>
 </section>
 
 
@@ -194,7 +168,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动FastDFS"><span class="toc-number">1.</span> <span class="toc-text">启动FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭FastDFS"><span class="toc-number">2.</span> <span class="toc-text">关闭FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启FastDFS"><span class="toc-number">3.</span> <span class="toc-text">重启FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看集群情况"><span class="toc-number">4.</span> <span class="toc-text">查看集群情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除一个storage"><span class="toc-number">5.</span> <span class="toc-text">删除一个storage</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx+tomcat配置集群负载均衡"><span class="toc-number">1.</span> <span class="toc-text">Nginx+tomcat配置集群负载均衡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#netty学习"><span class="toc-number">2.</span> <span class="toc-text">netty学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo搭建博客"><span class="toc-number">3.</span> <span class="toc-text">hexo搭建博客</span></a></li></ol>
  
   </div>
 
