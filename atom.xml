@@ -36,6 +36,59 @@
   </entry>
   
   <entry>
+    <title><![CDATA[JAVA多线程第八篇(锁对象Lock)]]></title>
+    <link href="http://www.52ff.cc/2015/03/13/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E5%85%AB%E7%AF%87-%E9%94%81%E5%AF%B9%E8%B1%A1Lock/"/>
+    <id>http://www.52ff.cc/2015/03/13/JAVA多线程第八篇-锁对象Lock/</id>
+    <published>2015-03-13T13:45:28.000Z</published>
+    <updated>2015-03-21T14:02:32.000Z</updated>
+    <content type="html"><![CDATA[<p>在Java5中，专门提供了锁对象，利用锁可以方便的实现资源的封锁，用来控制对竞争资源并发访问的控制，这些内容主要集中在java.util.concurrent.locks 包下面，里面有三个重要的接口Condition、Lock、ReadWriteLock。</p>
+<pre><code>Condition 将 Object 监视器方法（<span class="built_in">wait</span>、notify 和 notifyAll）分解成截然不同的对象，以便通过将这些对象与任意 Lock 实现组合使用，为每个对象提供多个等待 <span class="built_in">set</span> （<span class="built_in">wait</span>-<span class="built_in">set</span>）。
+Lock 实现提供了比使用 synchronized 方法和语句可获得的更广泛的锁定操作。
+ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一个用于写入操作。
+</code></pre><a id="more"></a>
+<p>下面看个例子帮助我们理解锁。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class Test &#123; </span><br><span class="line">        public static void main(String[] args) &#123; </span><br><span class="line">                //创建并发访问的账户 </span><br><span class="line">                MyCount myCount = new MyCount(<span class="string">"95599200901215522"</span>, <span class="number">10000</span>); </span><br><span class="line">                //创建一个锁对象 </span><br><span class="line">                Lock lock = new ReentrantLock(); </span><br><span class="line">                //创建一个线程池 </span><br><span class="line">                ExecutorService pool = Executors.newCachedThreadPool(); </span><br><span class="line">                //创建一些并发访问用户，一个信用卡，存的存，取的取，好热闹啊 </span><br><span class="line">                User u1 = new User(<span class="string">"张三"</span>, myCount, -<span class="number">4000</span>, lock); </span><br><span class="line">                User u2 = new User(<span class="string">"张三他爹"</span>, myCount, <span class="number">6000</span>, lock); </span><br><span class="line">                User u3 = new User(<span class="string">"张三他弟"</span>, myCount, -<span class="number">8000</span>, lock); </span><br><span class="line">                User u4 = new User(<span class="string">"张三"</span>, myCount, <span class="number">800</span>, lock); </span><br><span class="line">                //在线程池中执行各个用户的操作 </span><br><span class="line">                pool.execute(u1); </span><br><span class="line">                pool.execute(u2); </span><br><span class="line">                pool.execute(u3); </span><br><span class="line">                pool.execute(u4); </span><br><span class="line">                //关闭线程池 </span><br><span class="line">                pool.shutdown(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line">* 信用卡的用户 </span><br><span class="line">*/ </span><br><span class="line">class User implements Runnable &#123; </span><br><span class="line">        private String name;                //用户名 </span><br><span class="line">        private MyCount myCount;        //所要操作的账户 </span><br><span class="line">        private int iocash;                 //操作的金额，当然有正负之分了 </span><br><span class="line">        private Lock myLock;                //执行操作所需的锁对象 </span><br><span class="line"></span><br><span class="line">        User(String name, MyCount myCount, int iocash, Lock myLock) &#123; </span><br><span class="line">                this.name = name; </span><br><span class="line">                this.myCount = myCount; </span><br><span class="line">                this.iocash = iocash; </span><br><span class="line">                this.myLock = myLock; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                //获取锁 </span><br><span class="line">                myLock.lock(); </span><br><span class="line">                //执行现金业务 </span><br><span class="line">                System.out.println(name + <span class="string">"正在操作"</span> + myCount + <span class="string">"账户，金额为"</span> + iocash + <span class="string">"，当前金额为"</span> + myCount.getCash()); </span><br><span class="line">                myCount.setCash(myCount.getCash() + iocash); </span><br><span class="line">                System.out.println(name + <span class="string">"操作"</span> + myCount + <span class="string">"账户成功，金额为"</span> + iocash + <span class="string">"，当前金额为"</span> + myCount.getCash()); </span><br><span class="line">                //释放锁，否则别的线程没有机会执行了 </span><br><span class="line">                myLock.unlock(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line">class MyCount &#123; </span><br><span class="line">        private String oid;         //账号 </span><br><span class="line">        private int cash;             //账户余额 </span><br><span class="line"></span><br><span class="line">        MyCount(String oid, int cash) &#123; </span><br><span class="line">                this.oid = oid; </span><br><span class="line">                this.cash = cash; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public String <span class="function"><span class="title">getOid</span></span>() &#123; </span><br><span class="line">                <span class="built_in">return</span> oid; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="built_in">set</span>Oid(String oid) &#123; </span><br><span class="line">                this.oid = oid; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public int <span class="function"><span class="title">getCash</span></span>() &#123; </span><br><span class="line">                <span class="built_in">return</span> cash; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="built_in">set</span>Cash(int cash) &#123; </span><br><span class="line">                this.cash = cash; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        @Override </span><br><span class="line">        public String <span class="function"><span class="title">toString</span></span>() &#123; </span><br><span class="line">                <span class="built_in">return</span> <span class="string">"MyCount&#123;"</span> + </span><br><span class="line">                                <span class="string">"oid='"</span> + oid + <span class="string">'\'</span><span class="string">' + </span><br><span class="line">                                ", cash=" + cash + </span><br><span class="line">                                '</span>&#125;<span class="string">'; </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<pre><code>张三正在操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">10000</span>}账户，金额为-<span class="number">4000</span>，当前金额为<span class="number">10000</span> 
+张三操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">6000</span>}账户成功，金额为-<span class="number">4000</span>，当前金额为<span class="number">6000</span> 
+张三他爹正在操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">6000</span>}账户，金额为<span class="number">6000</span>，当前金额为<span class="number">6000</span> 
+张三他爹操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">12000</span>}账户成功，金额为<span class="number">6000</span>，当前金额为<span class="number">12000</span> 
+张三他弟正在操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">12000</span>}账户，金额为-<span class="number">8000</span>，当前金额为<span class="number">12000</span> 
+张三他弟操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">4000</span>}账户成功，金额为-<span class="number">8000</span>，当前金额为<span class="number">4000</span> 
+张三正在操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">4000</span>}账户，金额为<span class="number">800</span>，当前金额为<span class="number">4000</span> 
+张三操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">4800</span>}账户成功，金额为<span class="number">800</span>，当前金额为<span class="number">4800</span> 
+</code></pre><p>从上面的输出可以看到，利用锁对象太方便了，比直接在某个不知情的对象上用锁清晰多了。<br>但一定要注意的是，在获取了锁对象后，用完后应该尽快释放锁，以便别的等待该锁的线程有机会去执行。</p>
+<p>上面提到的Lock接口以及对象，使用它，很优雅的控制了竞争资源的安全访问，但是这种锁不区分读写，称这种锁为普通锁。为了提高性能，Java提供了读写锁，在读的地方使用读锁，在写的地方使用写锁，灵活控制，在一定程度上提高了程序的执行效率。</p>
+<p>Java中读写锁有个接口java.util.concurrent.locks.ReadWriteLock，也有具体的实现ReentrantReadWriteLock，详细的API可以查看JavaAPI文档。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class Test &#123; </span><br><span class="line">        public static void main(String[] args) &#123; </span><br><span class="line">                //创建并发访问的账户 </span><br><span class="line">                MyCount myCount = new MyCount(<span class="string">"95599200901215522"</span>, <span class="number">10000</span>); </span><br><span class="line">                //创建一个锁对象 </span><br><span class="line">                ReadWriteLock lock = new ReentrantReadWriteLock(<span class="literal">false</span>); </span><br><span class="line">                //创建一个线程池 </span><br><span class="line">                ExecutorService pool = Executors.newFixedThreadPool(<span class="number">2</span>); </span><br><span class="line">                //创建一些并发访问用户，一个信用卡，存的存，取的取，好热闹啊 </span><br><span class="line">                User u1 = new User(<span class="string">"张三"</span>, myCount, -<span class="number">4000</span>, lock, <span class="literal">false</span>); </span><br><span class="line">                User u2 = new User(<span class="string">"张三他爹"</span>, myCount, <span class="number">6000</span>, lock, <span class="literal">false</span>); </span><br><span class="line">                User u3 = new User(<span class="string">"张三他弟"</span>, myCount, -<span class="number">8000</span>, lock, <span class="literal">false</span>); </span><br><span class="line">                User u4 = new User(<span class="string">"张三"</span>, myCount, <span class="number">800</span>, lock, <span class="literal">false</span>); </span><br><span class="line">                User u5 = new User(<span class="string">"张三他爹"</span>, myCount, <span class="number">0</span>, lock, <span class="literal">true</span>); </span><br><span class="line">                //在线程池中执行各个用户的操作 </span><br><span class="line">                pool.execute(u1); </span><br><span class="line">                pool.execute(u2); </span><br><span class="line">                pool.execute(u3); </span><br><span class="line">                pool.execute(u4); </span><br><span class="line">                pool.execute(u5); </span><br><span class="line">                //关闭线程池 </span><br><span class="line">                pool.shutdown(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line">* 信用卡的用户 </span><br><span class="line">*/ </span><br><span class="line">class User implements Runnable &#123; </span><br><span class="line">        private String name;                //用户名 </span><br><span class="line">        private MyCount myCount;        //所要操作的账户 </span><br><span class="line">        private int iocash;                 //操作的金额，当然有正负之分了 </span><br><span class="line">        private ReadWriteLock myLock;                //执行操作所需的锁对象 </span><br><span class="line">        private boolean ischeck;        //是否查询 </span><br><span class="line"></span><br><span class="line">        User(String name, MyCount myCount, int iocash, ReadWriteLock myLock, boolean ischeck) &#123; </span><br><span class="line">                this.name = name; </span><br><span class="line">                this.myCount = myCount; </span><br><span class="line">                this.iocash = iocash; </span><br><span class="line">                this.myLock = myLock; </span><br><span class="line">                this.ischeck = ischeck; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                <span class="keyword">if</span> (ischeck) &#123; </span><br><span class="line">                        //获取读锁 </span><br><span class="line">                        myLock.readLock().lock(); </span><br><span class="line">                        System.out.println(<span class="string">"读："</span> + name + <span class="string">"正在查询"</span> + myCount + <span class="string">"账户，当前金额为"</span> + myCount.getCash()); </span><br><span class="line">                        //释放读锁 </span><br><span class="line">                        myLock.readLock().unlock(); </span><br><span class="line">                &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">                        //获取写锁 </span><br><span class="line">                        myLock.writeLock().lock(); </span><br><span class="line">                        //执行现金业务 </span><br><span class="line">                        System.out.println(<span class="string">"写："</span> + name + <span class="string">"正在操作"</span> + myCount + <span class="string">"账户，金额为"</span> + iocash + <span class="string">"，当前金额为"</span> + myCount.getCash()); </span><br><span class="line">                        myCount.setCash(myCount.getCash() + iocash); </span><br><span class="line">                        System.out.println(<span class="string">"写："</span> + name + <span class="string">"操作"</span> + myCount + <span class="string">"账户成功，金额为"</span> + iocash + <span class="string">"，当前金额为"</span> + myCount.getCash()); </span><br><span class="line">                        //释放写锁 </span><br><span class="line">                        myLock.writeLock().unlock(); </span><br><span class="line">                &#125; </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line">* 信用卡账户，可随意透支 </span><br><span class="line">*/ </span><br><span class="line">class MyCount &#123; </span><br><span class="line">        private String oid;         //账号 </span><br><span class="line">        private int cash;             //账户余额 </span><br><span class="line"></span><br><span class="line">        MyCount(String oid, int cash) &#123; </span><br><span class="line">                this.oid = oid; </span><br><span class="line">                this.cash = cash; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public String <span class="function"><span class="title">getOid</span></span>() &#123; </span><br><span class="line">                <span class="built_in">return</span> oid; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="built_in">set</span>Oid(String oid) &#123; </span><br><span class="line">                this.oid = oid; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public int <span class="function"><span class="title">getCash</span></span>() &#123; </span><br><span class="line">                <span class="built_in">return</span> cash; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="built_in">set</span>Cash(int cash) &#123; </span><br><span class="line">                this.cash = cash; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        @Override </span><br><span class="line">        public String <span class="function"><span class="title">toString</span></span>() &#123; </span><br><span class="line">                <span class="built_in">return</span> <span class="string">"MyCount&#123;"</span> + </span><br><span class="line">                                <span class="string">"oid='"</span> + oid + <span class="string">'\'</span><span class="string">' + </span><br><span class="line">                                ", cash=" + cash + </span><br><span class="line">                                '</span>&#125;<span class="string">'; </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+<pre><code>写：张三正在操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">10000</span>}账户，金额为-<span class="number">4000</span>，当前金额为<span class="number">10000</span> 
+写：张三操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">6000</span>}账户成功，金额为-<span class="number">4000</span>，当前金额为<span class="number">6000</span> 
+写：张三他弟正在操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">6000</span>}账户，金额为-<span class="number">8000</span>，当前金额为<span class="number">6000</span> 
+写：张三他弟操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span>-<span class="number">2000</span>}账户成功，金额为-<span class="number">8000</span>，当前金额为-<span class="number">2000</span> 
+写：张三正在操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span>-<span class="number">2000</span>}账户，金额为<span class="number">800</span>，当前金额为-<span class="number">2000</span> 
+写：张三操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span>-<span class="number">1200</span>}账户成功，金额为<span class="number">800</span>，当前金额为-<span class="number">1200</span> 
+读：张三他爹正在查询MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span>-<span class="number">1200</span>}账户，当前金额为-<span class="number">1200</span> 
+写：张三他爹正在操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span>-<span class="number">1200</span>}账户，金额为<span class="number">6000</span>，当前金额为-<span class="number">1200</span> 
+写：张三他爹操作MyCount{<span class="variable">oid=</span>'<span class="number">95599200901215522</span>', <span class="variable">cash=</span><span class="number">4800</span>}账户成功，金额为<span class="number">6000</span>，当前金额为<span class="number">4800</span>
+</code></pre><p>在实际开发中，最好在能用读写锁的情况下使用读写锁，而不要用普通锁，以求更好的性能。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在Java5中，专门提供了锁对象，利用锁可以方便的实现资源的封锁，用来控制对竞争资源并发访问的控制，这些内容主要集中在java.util.concurrent.locks 包下面，里面有三个重要的接口Condition、Lock、ReadWriteLock。</p>
+<pre><code>Condition 将 Object 监视器方法（<span class="built_in">wait</span>、notify 和 notifyAll）分解成截然不同的对象，以便通过将这些对象与任意 Lock 实现组合使用，为每个对象提供多个等待 <span class="built_in">set</span> （<span class="built_in">wait</span>-<span class="built_in">set</span>）。
+Lock 实现提供了比使用 synchronized 方法和语句可获得的更广泛的锁定操作。
+ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一个用于写入操作。
+</code></pre>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[毛毛]]></title>
     <link href="http://www.52ff.cc/2015/03/13/%E6%AF%9B%E6%AF%9B/"/>
     <id>http://www.52ff.cc/2015/03/13/毛毛/</id>
@@ -56,6 +109,31 @@
       <category term="［宝宝］" scheme="http://www.52ff.cc/tags/%EF%BC%BB%E5%AE%9D%E5%AE%9D%EF%BC%BD/"/>
     
       <category term="随笔生活" scheme="http://www.52ff.cc/categories/%E9%9A%8F%E7%AC%94%E7%94%9F%E6%B4%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[JAVA多线程第七篇(Callable和Future)]]></title>
+    <link href="http://www.52ff.cc/2015/03/12/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B8%83%E7%AF%87-Callable%E5%92%8CFuture/"/>
+    <id>http://www.52ff.cc/2015/03/12/JAVA多线程第七篇-Callable和Future/</id>
+    <published>2015-03-12T13:36:49.000Z</published>
+    <updated>2015-03-21T13:59:51.000Z</updated>
+    <content type="html"><![CDATA[<p>接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一个简单的例子：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class CallableAndFuture &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        Callable&lt;Integer&gt; callable = new Callable&lt;Integer&gt;() &#123;  </span><br><span class="line">            public Integer call() throws Exception &#123;  </span><br><span class="line">                <span class="built_in">return</span> new Random().nextInt(<span class="number">100</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;;  </span><br><span class="line">        FutureTask&lt;Integer&gt; future = new FutureTask&lt;Integer&gt;(callable);  </span><br><span class="line">        new Thread(future).start();  </span><br><span class="line">        try &#123;  </span><br><span class="line">            Thread.sleep(<span class="number">5000</span>);// 可能做一些事情  </span><br><span class="line">            System.out.println(future.get());  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; catch (ExecutionException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>FutureTask实现了两个接口，Runnable和Future，所以它既可以作为Runnable被线程执行，又可以作为Future得到Callable的返回值，那么这个组合的使用有什么好处呢？假设有一个很耗时的返回值需要计算，并且这个返回值不是立刻需要的话，那么就可以使用这个组合，用另一个线程去计算返回值，而当前线程在使用这个返回值之前可以做其它的操作，等到需要这个返回值时，再通过Future得到，岂不美哉！这里有一个Future模式的介绍：<a href="http://openhome.cc/Gossip/DesignPattern/FuturePattern.htm。" target="_blank" rel="external">http://openhome.cc/Gossip/DesignPattern/FuturePattern.htm。</a><br>下面来看另一种方式使用Callable和Future，通过ExecutorService的submit方法执行Callable，并返回Future，代码如下：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class CallableAndFuture &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        ExecutorService threadPool = Executors.newSingleThreadExecutor();  </span><br><span class="line">        Future&lt;Integer&gt; future = threadPool.submit(new Callable&lt;Integer&gt;() &#123;  </span><br><span class="line">            public Integer call() throws Exception &#123;  </span><br><span class="line">                <span class="built_in">return</span> new Random().nextInt(<span class="number">100</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;);  </span><br><span class="line">        try &#123;  </span><br><span class="line">            Thread.sleep(<span class="number">5000</span>);// 可能做一些事情  </span><br><span class="line">            System.out.println(future.get());  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; catch (ExecutionException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代码是不是简化了很多，ExecutorService继承自Executor，它的目的是为我们管理Thread对象，从而简化并发编程，Executor使我们无需显示的去管理线程的生命周期，是JDK 5之后启动任务的首选方式。<br>执行多个带返回值的任务，并取得多个返回值，代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class CallableAndFuture &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        ExecutorService threadPool = Executors.newCachedThreadPool();  </span><br><span class="line">        CompletionService&lt;Integer&gt; cs = new ExecutorCompletionService&lt;Integer&gt;(threadPool);  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt; <span class="number">5</span>; i++) &#123;  </span><br><span class="line">            final int taskID = i;  </span><br><span class="line">            cs.submit(new Callable&lt;Integer&gt;() &#123;  </span><br><span class="line">                public Integer call() throws Exception &#123;  </span><br><span class="line">                    <span class="built_in">return</span> taskID;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;);  </span><br><span class="line">        &#125;  </span><br><span class="line">        // 可能做一些事情  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt; <span class="number">5</span>; i++) &#123;  </span><br><span class="line">            try &#123;  </span><br><span class="line">                System.out.println(cs.take().get());  </span><br><span class="line">            &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">            &#125; catch (ExecutionException e) &#123;  </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实也可以不使用CompletionService，可以先创建一个装Future类型的集合，用Executor提交的任务返回值添加到集合中，最后遍历集合取出数据，代码略。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一个简单的例子：<br>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     
   </entry>
   
@@ -199,6 +277,97 @@ Obj=null;
     <![CDATA[<p>Java线程：并发协作-生产者消费者模型</p>
 <p>对于多线程程序来说，不管任何编程语言，生产者和消费者模型都是最经典的。就像学习每一门编程语言一样，Hello World！都是最经典的例子。</p>
 <p>实际上，准确说应该是“生产者-消费者-仓储”模型，离开了仓储，生产者消费者模型就显得没有说服力了。<br>对于此模型，应该明确一下几点：<br>1、生产者仅仅在仓储未满时候生产，仓满则停止生产。<br>2、消费者仅仅在仓储有产品时候才能消费，仓空则等待。<br>3、当消费者发现仓储没产品可消费时候会通知生产者生产。<br>4、生产者在生产出可消费产品时候，应该通知等待的消费者去消费。</p>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[JAVA多线程第六篇(线程池)]]></title>
+    <link href="http://www.52ff.cc/2015/03/11/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E5%85%AD%E7%AF%87-%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
+    <id>http://www.52ff.cc/2015/03/11/JAVA多线程第六篇-线程池/</id>
+    <published>2015-03-11T09:17:42.000Z</published>
+    <updated>2015-03-21T14:04:18.000Z</updated>
+    <content type="html"><![CDATA[<p>自JDK5之后，Java推出了一个并发包，java.util.concurrent，在Java开发中，我们接触到了好多池的技术，String类的对象池、Integer的共享池、连接数据库的连接池、Struts1.3的对象池等等，池的最终目的都是节约资源，以更小的开销做更多的事情，从而提高性能。</p>
+<p>线程池的基本思想还是一种对象池的思想，开辟一块内存空间，里面存放了众多（未死亡）的线程，池中线程执行调度由池管理器来处理。当有线程任务时，从池中取一个，执行完成后线程对象归池，这样可以避免反复创建线程对象所带来的性能开销，节省了系统的资源。</p>
+<a id="more"></a>
+<p>下面来看一下Java并发包下如何创建线程池。</p>
+<p>1.创建一个可重用固定线程集合的线程池，以共享的无界队列方式来运行这些线程</p>
+<pre><code><span class="constant">ExecutorService threadPool</span> = Executors.newFixedThreadPool(<span class="number">3</span>);<span class="comment">// 创建可以容纳3个线程的线程池</span>
+</code></pre><p>2.创建一个可根据需要创建新线程的线程池，但是在以前构造的线程可用时将重用它们。</p>
+<pre><code><span class="constant">ExecutorService threadPool</span> = Executors.newCachedThreadPool();<span class="comment">// 线程池的大小会根据执行的任务数动态分配</span>
+</code></pre><p>3.创建一个使用单个 worker 线程的 Executor，以无界队列方式来运行该线程。</p>
+<pre><code><span class="constant">ExecutorService threadPool</span> = Executors.newSingleThreadExecutor();<span class="comment">// 创建单个线程的线程池，如果当前线程在执行任务时突然中断，则会创建一个新的线程替代它继续执行任务</span>
+</code></pre><p>4.创建一个可安排在给定延迟后运行命令或者定期地执行的线程池。</p>
+<pre><code><span class="constant">ScheduledExecutorService threadPool</span> = Executors.newScheduledThreadPool(<span class="number">3</span>);<span class="comment">// 效果类似于Timer定时器</span>
+</code></pre><p>每种线程池都有不同的使用场景，下面看一下这四种线程池使用起来有什么不同。<br>1.newFixedThreadPool</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class ThreadPoolTest &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        ExecutorService threadPool = Executors.newFixedThreadPool(<span class="number">3</span>);  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt; <span class="number">5</span>; i++) &#123;  </span><br><span class="line">            final int taskID = i;  </span><br><span class="line">            threadPool.execute(new <span class="function"><span class="title">Runnable</span></span>() &#123;  </span><br><span class="line">                public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">                    <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt; <span class="number">5</span>; i++) &#123;  </span><br><span class="line">                        try &#123;  </span><br><span class="line">                            Thread.sleep(<span class="number">20</span>);// 为了测试出效果，让每次任务执行都需要一定时间  </span><br><span class="line">                        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">                            e.printStackTrace();  </span><br><span class="line">                        &#125;  </span><br><span class="line">                        System.out.println(<span class="string">"第"</span> + taskID + <span class="string">"次任务的第"</span> + i + <span class="string">"次执行"</span>);  </span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;);  </span><br><span class="line">        &#125;  </span><br><span class="line">        threadPool.shutdown();// 任务执行完毕，关闭线程池  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果:</p>
+<pre><code>第1次任务的第1次执行  
+第2次任务的第1次执行  
+第3次任务的第1次执行  
+第2次任务的第2次执行  
+第3次任务的第2次执行  
+第1次任务的第2次执行  
+第3次任务的第3次执行  
+第1次任务的第3次执行  
+第2次任务的第3次执行  
+第3次任务的第4次执行  
+第2次任务的第4次执行  
+第1次任务的第4次执行  
+第4次任务的第1次执行  
+第4次任务的第2次执行  
+第4次任务的第3次执行  
+第4次任务的第4次执行  
+</code></pre><p>上段代码中，创建了一个固定大小的线程池，容量为3，然后循环执行了4个任务，由输出结果可以看到，前3个任务首先执行完，然后空闲下来的线程去执行第4个任务，在FixedThreadPool中，有一个固定大小的池，如果当前需要执行的任务超过了池大小，那么多于的任务等待状态，直到有空闲下来的线程执行任务，而当执行的任务小于池大小，空闲的线程也不会去销毁。</p>
+<p>2.将newFixedThreadPool方法换成newCachedThreadPool方法</p>
+<pre><code>第3次任务的第1次执行  
+第4次任务的第1次执行  
+第1次任务的第1次执行  
+第2次任务的第1次执行  
+第4次任务的第2次执行  
+第3次任务的第2次执行  
+第2次任务的第2次执行  
+第1次任务的第2次执行  
+第2次任务的第3次执行  
+第3次任务的第3次执行  
+第1次任务的第3次执行  
+第4次任务的第3次执行  
+第2次任务的第4次执行  
+第4次任务的第4次执行  
+第3次任务的第4次执行  
+第1次任务的第4次执行
+</code></pre><p> 可见，4个任务是交替执行的，CachedThreadPool会创建一个缓存区，将初始化的线程缓存起来，如果线程有可用的，就使用之前创建好的线程，如果没有可用的，就新创建线程，终止并且从缓存中移除已有60秒未被使用的线程。</p>
+<p>3.将newFixedThreadPool方法换成newSingleThreadExecutor方法</p>
+<pre><code>第1次任务的第1次执行  
+第1次任务的第2次执行  
+第1次任务的第3次执行  
+第1次任务的第4次执行  
+第2次任务的第1次执行  
+第2次任务的第2次执行  
+第2次任务的第3次执行  
+第2次任务的第4次执行  
+第3次任务的第1次执行  
+第3次任务的第2次执行  
+第3次任务的第3次执行  
+第3次任务的第4次执行  
+第4次任务的第1次执行  
+第4次任务的第2次执行  
+第4次任务的第3次执行  
+第4次任务的第4次执行
+</code></pre><p>4个任务是顺序执行的，SingleThreadExecutor得到的是一个单个的线程，这个线程会保证你的任务执行完成，如果当前线程意外终止，会创建一个新线程继续执行任务，这和我们直接创建线程不同，也和newFixedThreadPool(1)不同</p>
+<p>4.ScheduledThreadPool<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class ThreadPoolTest &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        ScheduledExecutorService schedulePool = Executors.newScheduledThreadPool(<span class="number">1</span>);  </span><br><span class="line">        // <span class="number">5</span>秒后执行任务  </span><br><span class="line">        schedulePool.schedule(new <span class="function"><span class="title">Runnable</span></span>() &#123;  </span><br><span class="line">            public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">                System.out.println(<span class="string">"爆炸"</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;, <span class="number">5</span>, TimeUnit.SECONDS);  </span><br><span class="line">        // <span class="number">5</span>秒后执行任务，以后每<span class="number">2</span>秒执行一次  </span><br><span class="line">        schedulePool.scheduleAtFixedRate(new <span class="function"><span class="title">Runnable</span></span>() &#123;  </span><br><span class="line">            @Override  </span><br><span class="line">            public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">                System.out.println(<span class="string">"爆炸"</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;, <span class="number">5</span>, <span class="number">2</span>, TimeUnit.SECONDS);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ScheduledThreadPool可以定时的或延时的执行任务。<br>Java的并发包很强大，上面所说只是入门.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>自JDK5之后，Java推出了一个并发包，java.util.concurrent，在Java开发中，我们接触到了好多池的技术，String类的对象池、Integer的共享池、连接数据库的连接池、Struts1.3的对象池等等，池的最终目的都是节约资源，以更小的开销做更多的事情，从而提高性能。</p>
+<p>线程池的基本思想还是一种对象池的思想，开辟一块内存空间，里面存放了众多（未死亡）的线程，池中线程执行调度由池管理器来处理。当有线程任务时，从池中取一个，执行完成后线程对象归池，这样可以避免反复创建线程对象所带来的性能开销，节省了系统的资源。</p>]]>
     
     </summary>
     
@@ -772,89 +941,6 @@ DEPT_TYPE <span class="built_in">NULL</span>
       <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
     
       <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[重写hashcode()与equals()]]></title>
-    <link href="http://www.52ff.cc/2015/02/12/%E9%87%8D%E5%86%99hashcode()%E4%B8%8Eequals()/"/>
-    <id>http://www.52ff.cc/2015/02/12/重写hashcode()与equals()/</id>
-    <published>2015-02-12T03:51:08.000Z</published>
-    <updated>2015-03-15T13:27:18.000Z</updated>
-    <content type="html"><![CDATA[<p>浅谈为何要重写 hashcode()与equals()<br>我们知道，如果不重写equals，那么比较的将是对象的引用是否指向同一块内存地址，重写之后目的是为了比较两个对象的value值是否相等。特别指出，此时，利用equals比较八大包装对象（如int，float等）和String类（因为该类已重写了equals和hashcode方法）对象时，默认比较的是值，在比较其它对象都是比较的引用地址。那产生了一个问题，为什么jdk中希望我们在重写equals时，非常有必要重写hashcode呢？</p>
-<a id="more"></a>
-<p>首先，这两个方法都来自于Object对象，根据API文档查看下原意。(1)public boolean equals(Object obj)，对于任何非空引用值 x 和 y，当且仅当 x 和 y 引用同一个对象时，此方法才返回 true；注意：当此方法被重写时，通常有必要重写 hashCode 方法，以维护 hashCode 方法的常规协定，该协定声明相等对象必须具有相等的哈希码。（2）public int hashCode() 返回该对象的哈希码值。支持该方法是为哈希表提供一些优点，例如，java.util.Hashtable 提供的哈希表。</p>
-<p>我的理解是hashcode是用于散列数据的快速存取，如利用HashSet/HashMap/Hashtable类来存储数据时，都是根据存储对象的hashcode值来进行判断是否相同的。这样如果我们对一个对象重写了euqals，意思是只要对象的成员变量值都相等那么euqals就等于true，但不重写hashcode，那么我们再new一个新的对象，当原对象.equals（新对象）等于true时，两者的hashcode却是不一样的，由此将产生了理解的不一致，如在存储散列集合时（如Set类），将会存储了两个值一样的对象，导致混淆，因此，就也需要重写hashcode。为了保证这种一致性，必须满足以下两个条件：</p>
-<p>(1)当obj1.equals(obj2)为true时，obj1.hashCode() == obj2.hashCode()必须为true<br>(2)当obj1.hashCode() == obj2.hashCode()为false时，obj1.equals(obj2)必须为false<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line">class BeanA &#123;</span><br><span class="line">private int i;</span><br><span class="line">public BeanA(int i) &#123;</span><br><span class="line">   this.i = i;</span><br><span class="line">&#125;</span><br><span class="line">public String <span class="function"><span class="title">toString</span></span>() &#123;</span><br><span class="line">   <span class="built_in">return</span> <span class="string">"   "</span> + i;</span><br><span class="line">&#125;</span><br><span class="line">public boolean equals(Object o) &#123;</span><br><span class="line">   BeanA a = (BeanA) o;</span><br><span class="line">   <span class="built_in">return</span> (a.i == i) ? <span class="literal">true</span> : <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line">public int <span class="function"><span class="title">hashCode</span></span>() &#123;</span><br><span class="line">   <span class="built_in">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">public class HashCodeTest &#123;</span><br><span class="line"></span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">   HashSet&lt;BeanA&gt; <span class="built_in">set</span> = new HashSet&lt;BeanA&gt;();</span><br><span class="line">   <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt;= <span class="number">3</span>; i++)&#123;</span><br><span class="line">    set.add(new BeanA(i));</span><br><span class="line">   &#125;</span><br><span class="line">   System.out.println(<span class="built_in">set</span>);</span><br><span class="line">   set.add(new BeanA(<span class="number">1</span>));</span><br><span class="line">   System.out.println(set.toString());</span><br><span class="line">   System.out.println(set.contains(new BeanA(<span class="number">0</span>)));</span><br><span class="line">   System.out.println(set.add(new BeanA(<span class="number">1</span>)));</span><br><span class="line">   System.out.println(set.add(new BeanA(<span class="number">4</span>)));</span><br><span class="line">   System.out.println(<span class="built_in">set</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们在类BeanA中重写了equals和hashcode方法，这样在存储到HashSet数据集中，将保证不会出现重复的数据；如果把这两个方法去掉后，那些重复的数据仍会存入HashSet中，这就与HashSet强调的元素唯一性相违背，大家可以把这两个方法注释掉再运行一下。<br>因此，我们就可以理解在一些java类中什么情况下需要重写equals和hashcode。比如：在hibernate的实体类中，往往通过一个主键（或唯一标识符）来判断数据库的某一行，这就需要重写这两个方法。因为，Hibernate保证，仅在特定会话范围内，持久化标识（数据库的行）和Java标识是等价的。因此，一旦我们混合了从不同会话中获取的实例，如果希望Set有明确的语义，就必 须实现equals() 和hashCode()。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>浅谈为何要重写 hashcode()与equals()<br>我们知道，如果不重写equals，那么比较的将是对象的引用是否指向同一块内存地址，重写之后目的是为了比较两个对象的value值是否相等。特别指出，此时，利用equals比较八大包装对象（如int，float等）和String类（因为该类已重写了equals和hashcode方法）对象时，默认比较的是值，在比较其它对象都是比较的引用地址。那产生了一个问题，为什么jdk中希望我们在重写equals时，非常有必要重写hashcode呢？</p>]]>
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[JAVA多线程第一篇(概念和启动线程)]]></title>
-    <link href="http://www.52ff.cc/2015/02/09/java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B8%80%E7%AF%87/"/>
-    <id>http://www.52ff.cc/2015/02/09/java多线程第一篇/</id>
-    <published>2015-02-08T17:52:33.000Z</published>
-    <updated>2015-03-19T17:15:02.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="进程和线程">进程和线程</h2><h3 id="操作系统中线程和进程">操作系统中线程和进程</h3><p>进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。</p>
-<p>线程是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属于某个进程，进程中的多个线程共享进程的内存。</p>
-<p>“同时”执行是人的感觉，在线程之间实际上轮换执行。</p>
-<h3 id="Java中的线程">Java中的线程</h3><p>在Java中，“线程”指两件不同的事情：<br>1、java.lang.Thread类的一个实例；<br>2、线程的执行。</p>
-<p>使用java.lang.Thread类或者java.lang.Runnable接口编写代码来定义、实例化和启动新线程。</p>
-<p>一个Thread类实例只是一个对象，像Java中的任何其他对象一样，具有变量和方法，生死于堆上。</p>
-<p>Java中，每个线程都有一个调用栈，即使不在程序中创建任何新的线程，线程也在后台运行着。</p>
-<p>一个Java应用总是从main()方法开始运行，mian()方法运行在一个线程内，它被称为主线程。</p>
-<p>一旦创建一个新的线程，就产生一个新的调用栈。</p>
-<p>线程总体分两类：用户线程和守候线程。</p>
-<p>当所有用户线程执行完毕的时候，JVM自动关闭。但是守候线程却不独立于JVM，守候线程一般是由操作系统或者用户自己创建的。</p>
-<h2 id="线程启动">线程启动</h2><p>1.实现Runnable接口<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class DoSomething implements Runnable &#123; </span><br><span class="line">    private String name; </span><br><span class="line"></span><br><span class="line">    public DoSomething(String name) &#123; </span><br><span class="line">        this.name = name; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">for</span> (long k = <span class="number">0</span>; k &lt; <span class="number">100000000</span>; k++) ; </span><br><span class="line">            System.out.println(name + <span class="string">": "</span> + i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        DoSomething ds1 = new DoSomething(<span class="string">"阿三"</span>); </span><br><span class="line">        DoSomething ds2 = new DoSomething(<span class="string">"李四"</span>); </span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(ds1); </span><br><span class="line">        Thread t2 = new Thread(ds2); </span><br><span class="line"></span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>2.继承thread类<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class TestThread extends Thread&#123; </span><br><span class="line">    public TestThread(String name) &#123; </span><br><span class="line">        super(name); </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123; </span><br><span class="line">            <span class="keyword">for</span>(long k= <span class="number">0</span>; k &lt;<span class="number">100000000</span>;k++); </span><br><span class="line">            System.out.println(this.getName()+<span class="string">" :"</span>+i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        Thread t1 = new TestThread(<span class="string">"阿三"</span>); </span><br><span class="line">        Thread t2 = new TestThread(<span class="string">"李四"</span>); </span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="FAQ">FAQ</h2><p>1、线程都可以设置名字，也可以获取线程的名字，连主线程也不例外。<br>2、获取当前线程的对象的方法是：Thread.currentThread()；<br>3、在一系列线程以某种顺序启动并不意味着将按该顺序执行。对于任何一组启动的线程来说，调度程序不能保证其执行次序，持续时间也无法保证。<br>4、当线程目标run()方法结束时该线程完成。<br>5、一旦线程启动，它就永远不能再重新启动。只有一个新的线程可以被启动，并且只能一次。一个可运行的线程或死线程可以被重新启动。<br>6、线程的调度是JVM的一部分，在一个CPU的机器上上，实际上一次只能运行一个线程。一次只有一个线程栈执行。JVM线程调度程序决定实际运行哪个处于可运行状态的线程。众多可运行线程中的某一个会被选中做为当前线程。可运行线程被选择运行的顺序是没有保障的。<br>7、尽管通常采用队列形式，但这是没有保障的。队列形式是指当一个线程完成“一轮”时，它移到可运行队列的尾部等待，直到它最终排队到该队列的前端为止，它才能被再次选中。事实上，我们把它称为可运行池而不是一个可运行队列，目的是帮助认识线程并不都是以某种有保障的顺序排列唱呢个一个队列的事实。<br>8、尽管我们没有无法控制线程调度程序，但可以通过别的方式来影响线程调度的方式。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="进程和线程">进程和线程</h2><h3 id="操作系统中线程和进程">操作系统中线程和进程</h3><p>进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程]]>
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[mina多线程池]]></title>
-    <link href="http://www.52ff.cc/2012/02/15/mina%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0/"/>
-    <id>http://www.52ff.cc/2012/02/15/mina多线程池/</id>
-    <published>2012-02-15T02:51:08.000Z</published>
-    <updated>2015-03-15T13:27:36.000Z</updated>
-    <content type="html"><![CDATA[<p>mina服务端的通信过程如下<br> 1 、通过 SocketAcceptor 同客户端建立连接<br> 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的<br> 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议；<br> 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程<br> 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。</p>
-<a id="more"></a>
-<p>Mina 的多级线程池<br>在基于 SocketAcceptor 的应用程序中运行过程中 Mina 框架本身会有两种类型的线程在运行<br>一种是在SocketAcceptor 中创建的用于监听并接收来自客户端请求的线程。还有一类线程是处理客户端与服务器端 I/O 的线程即 Processor 的处理线程。后面还有第三类，就是过滤器层的线程。<br>这个多级的概念后面你会体会到Acceptor 是一级线程池而 Processor 的线程池主要通过 ExecutorFileter 进行添加当然可以添加多个层次的线程池。下面逐层进行讲解。</p>
-<p>第一类线程池<br>当调用 SocketAcceptor 的 bind 方法时默认会创建一个名称前缀为 SocketAcceptor 的线程该线程负责监听来自客户端的请求如果接收到客户端的请求它仅仅是为处理这个请求做好准备而把具体处理请求以及I/O 的任务代理给 SocketIoProcessor 让它去处理请求。这个准备过程主要是为接受到的请求创建一个   IoSession 并构建出 IoFilter 链然后把准备好的数据以及来自客户端的请求交给 SocketIoProcessor 处理。通常 这类线程会针对每一次的 bind 调用创建一个新的线程。 请注意 “通常 ” 二字使用这两个字说明上述的行为不是绝对的。的确这不是绝对的这取决于SocketAcceptor 的字段 executor 的实现可以通过构造方法来设置字段 executor 的值 executor 字段的类型为 java.util.concurrent.Executor 。 mina 默认是用 org.apache.mina.util.NewThreadExecutor 它会为每一个提交的任务创建一个新的线程。因为在 bind 方法中它会把实现监听客户端请求任务的 Runnable 提交到 executor中去执行。注意千万不要使用一个不创建新线程而是在原线程中执行的 Executor 这会使程序无法监听客户端的请求因为程序中的唯一线程会被 Selector.get() 方法所阻塞详情可以查看 SocketAcceptor 类的源代码。</p>
-<p>第二类线程池<br> 当 SocketAcceptor 收到了来自客户端的请求它就会把此请求丢给 SocketIoProcessor 去处理这会创建名称以 SocketAcceptorIoProcessor 为前缀的线程 mina 框架在这类线程中处理 I/O 发布并处理事件。这一类线程的数量可以通过 SocketAcceptor 的构造函数来设置。具体的值可以根据应用的具体需求来决定。 作为 I/O 真正处理的线程存在于服务器端和客户端用来处理 I/O 的读写操作线程的数量是可以配置的默认最大数量是 CPU 个数 +1 。 在服务器端中在创建 SocketAcceptor 的时候指定 ProcessorCount 。<br>SocketAcceptor acceptor = new SocketAcceptor(Runtime.getRuntime().availableProcessors() + 1, Executors.newCachedThreadPool()); NioProcessor 虽然是多线程但是对与一个连接的时候业务处理只会使用一个线程进行处理 Processor线程对于一个客户端连接只使用一个线程 NioProcessor-n 如果 handler 的业务比较耗时会导致NioProcessor 线程堵塞 在 2 个客户端同时连接上来的时候会创建第 2 个前提是第 1 个 NioProcessor 正在忙创建的最大数量由 Acceptor 构造方法的时候指定。如果一个客户端连接同服务器端有很多通信并且I/O 的开销不大但是 Handler 处理的业务时间比较长那么需要采用独立的线程模式在 FilterChain 的最后增加一个 ExecutorFitler 这个就是第三类线程池了。</p>
-<p>第三类线程池<br>上述的两类线程是 mina 框架本身所创建的如果你的应用每次处理请求的时间较长而又希望应用能够有较好的响应性那么最好是把处理业务逻辑的任务放到一个新的线程中去执行而不是在 mina 框架创建的线程中去执行。 mina 框架本身提供了一个过滤器 ExecutorFilter 来完成这样的任务它会把在此之后的过滤器以及IoHandler 中处理业务逻辑的代码放到一个新的线程中去执行。当 mina 框架中的第二类线程执行完此过滤器后就会立即返回可以用于处理新的请求。如果不想使用此过滤器还可以设置 mina 的线程模型来达到相同的效果其实线程模型也是使用 ExecutorFilter 实现的。但需要注意的是在 mina 2.0 版本中已经废弃了线程模型。 使用类这三次线程池性能可以得到保证了在本项目中主要配置了第二类线程池和第三类线程池。第二类线程池在新建 NioAcceptor 对象以建立 TCP 监听服务器为例时候在其构造函数中体现而这个数值需要多次测试来设定其测试方法在国外网站有完整表述请自行 Google 第三类线程池设定在 Apache Mina 的过滤器层一般而言只需要设置一层设置在最消耗时间的业务前面如比较复杂的解码或者是数据库访问模块。 关于共享线程池问题 Apache Mina 有个官方说法你可以想让 IoServices 和 ExecutorFilters 共享一个线程池而不是一家一个。这个是不禁止的但是会出现很多问题在这种情况下除非你为 IoServices 建立一个缓冲线程池。 本人尚未考究。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>mina服务端的通信过程如下<br> 1 、通过 SocketAcceptor 同客户端建立连接<br> 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的<br> 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议；<br> 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程<br> 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。</p>]]>
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
     
       <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     
