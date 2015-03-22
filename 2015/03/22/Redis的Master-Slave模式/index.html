@@ -9,26 +9,18 @@
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。
-一、Redis的Replication：
-下面的列表清楚的解释了Redis R">
+    <meta name="description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。">
     
     
-    <meta name="description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。
-一、Redis的Replication：
-下面的列表清楚的解释了Redis Replication的特点和优势。同一个Master可以同步多个Slaves。Slave同样可以接受">
+    <meta name="description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis的Master-Slave模式">
 <meta property="og:url" content="http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/index.html">
 <meta property="og:site_name" content="flyfish's Blog">
-<meta property="og:description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。
-一、Redis的Replication：
-下面的列表清楚的解释了Redis Replication的特点和优势。同一个Master可以同步多个Slaves。Slave同样可以接受">
+<meta property="og:description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis的Master-Slave模式">
-<meta name="twitter:description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。
-一、Redis的Replication：
-下面的列表清楚的解释了Redis Replication的特点和优势。同一个Master可以同步多个Slaves。Slave同样可以接受">
+<meta name="twitter:description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。">
 
     
     <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
@@ -110,6 +102,7 @@
 		</div>
 		
 		<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
+<a id="more"></a>
 <p>一、Redis的Replication：</p>
 <p>下面的列表清楚的解释了Redis Replication的特点和优势。<br>同一个Master可以同步多个Slaves。<br>Slave同样可以接受其它Slaves的连接和同步请求，这样可以有效的分载Master的同步压力。因此我们可以将Redis的Replication架构视为图结构。<br>Master Server是以非阻塞的方式为Slaves提供服务。所以在Master-Slave同步期间，客户端仍然可以提交查询或修改请求。<br>Slave Server同样是以非阻塞的方式完成数据同步。在同步期间，如果有客户端提交查询请求，Redis则返回同步之前的数据。<br>为了分载Master的读操作压力，Slave服务器可以为客户端提供只读操作的服务，写服务仍然必须由Master来完成。即便如此，系统的伸缩性还是得到了很大的提高。<br>Master可以将数据保存操作交给Slaves完成，从而避免了在Master中要有独立的进程来完成此操作。</p>
 <p>二、Replication的工作原理：</p>
