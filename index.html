@@ -83,6 +83,99 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/03/22/Redis的Master-Slave模式/" title="Redis的Master-Slave模式" itemprop="url">Redis的Master-Slave模式</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-22T13:51:48.000Z" itemprop="datePublished"> 发表于 2015-03-22</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
+<p>一、Redis的Replication：</p>
+<p>下面的列表清楚的解释了Redis Replication的特点和优势。<br>同一个Master可以同步多个Slaves。<br>Slave同样可以接受其它Slaves的连接和同步请求，这样可以有效的分载Master的同步压力。因此我们可以将Redis的Replication架构视为图结构。<br>Master Server是以非阻塞的方式为Slaves提供服务。所以在Master-Slave同步期间，客户端仍然可以提交查询或修改请求。<br>Slave Server同样是以非阻塞的方式完成数据同步。在同步期间，如果有客户端提交查询请求，Redis则返回同步之前的数据。<br>为了分载Master的读操作压力，Slave服务器可以为客户端提供只读操作的服务，写服务仍然必须由Master来完成。即便如此，系统的伸缩性还是得到了很大的提高。<br>Master可以将数据保存操作交给Slaves完成，从而避免了在Master中要有独立的进程来完成此操作。</p>
+<p>二、Replication的工作原理：</p>
+<p>在Slave启动并连接到Master之后，它将主动发送一个SYNC命令。此后Master将启动后台存盘进程，同时收集所有接收到的用于修改数据集的命令，在后台进程执行完毕后，Master将传送整个数据库文件到Slave，以完成一次完全同步。而Slave服务器在接收到数据库文件数据之后将其存盘并加载到内存中。此后，Master继续将所有已经收集到的修改命令，和新的修改命令依次传送给Slaves，Slave将在本次执行这些数据修改命令，从而达到最终的数据同步。<br>如果Master和Slave之间的链接出现断连现象，Slave可以自动重连Master，但是在连接成功之后，一次完全同步将被自动执行。</p>
+<p>三、如何配置Replication：</p>
+<p>见如下步骤：<br>1). 同时启动两个Redis服务器，可以考虑在同一台机器上启动两个Redis服务器，分别监听不同的端口，如6379和6380。<br>2). 在Slave服务器上执行一下命令：<br>/&gt; redis-cli -p 6380   #这里我们假设Slave的端口号是6380<br>redis 127.0.0.1:6380&gt; slaveof 127.0.0.1 6379 #我们假设Master和Slave在同一台主机，Master的端口为6379<br>OK<br>上面的方式只是保证了在执行slaveof命令之后，redis_6380成为了redis_6379的slave，一旦服务(redis_6380)重新启动之后，他们之间的复制关系将终止。<br>如果希望长期保证这两个服务器之间的Replication关系，可以在redis_6380的配置文件中做如下修改：<br>/&gt; cd /etc/redis  #切换Redis服务器配置文件所在的目录。<br>/&gt; ls<br>6379.conf  6380.conf<br>/&gt; vi 6380.conf<br>将</p>
+<h1 id="slaveof">slaveof <masterip> <masterport></masterport></masterip></h1><p>改为<br>slaveof 127.0.0.1 6379<br>保存退出。<br>这样就可以保证Redis_6380服务程序在每次启动后都会主动建立与Redis_6379的Replication连接了。</p>
+<p>四、应用示例：</p>
+<p>这里我们假设Master-Slave已经建立。</p>
+<h1 id="启动master服务器。">启动master服务器。</h1><pre><code>[root<span class="property">@Stephen</span>-PC redis]<span class="comment"># redis-cli -p 6379</span>
+redis <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt;
+</code></pre><h1 id="情况Master当前数据库中的所有Keys。">情况Master当前数据库中的所有Keys。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; flushdb
+OK
+</code></pre><h1 id="在Master中创建新的Keys作为测试数据。">在Master中创建新的Keys作为测试数据。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; set mykey hello
+OK
+redis <span class="number">127.0.0.1:6379</span>&gt; set mykey2 world
+OK
+</code></pre><h1 id="查看Master中存在哪些Keys。">查看Master中存在哪些Keys。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+<span class="number">2</span>) <span class="string">"mykey2"</span>
+</code></pre><h1 id="启动slave服务器。">启动slave服务器。</h1><pre><code>[root<span class="property">@Stephen</span>-PC redis]<span class="comment"># redis-cli -p 6380</span>
+</code></pre><h1 id="查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。">查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6380</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+<span class="number">2</span>) <span class="string">"mykey2"</span>
+</code></pre><h1 id="在Master中删除其中一个测试Key，并查看删除后的结果。">在Master中删除其中一个测试Key，并查看删除后的结果。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; del mykey2
+(integer) <span class="number">1</span>
+redis <span class="number">127.0.0.1:6379</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+</code></pre><h1 id="在Slave中查看是否mykey2也已经在Slave中被删除。">在Slave中查看是否mykey2也已经在Slave中被删除。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6380</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/no-sql/">no-sql</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/redis/">redis</a><a href="/tags/缓存/">缓存</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/22/Redis的Master-Slave模式/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/03/18/hello-blog/" title="hello Blog" itemprop="url">hello Blog</a>
   </h1>
   <p class="article-author">By
@@ -143,7 +236,7 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/" title="JAVA多线程第10篇(阻塞队列和栈)" itemprop="url">JAVA多线程第10篇(阻塞队列和栈)</a>
+      <a href="/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/" title="JAVA多线程第十篇(阻塞队列和栈)" itemprop="url">JAVA多线程第十篇(阻塞队列和栈)</a>
   </h1>
   <p class="article-author">By
        
@@ -467,71 +560,6 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/12/Java编程中为了性能尽量要做到的一些地方/" title="Java编程中为性能注意的地方" itemprop="url">Java编程中为性能注意的地方</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-12T09:32:47.000Z" itemprop="datePublished"> 发表于 2015-03-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>系统运行一段时间老是内存溢出，除了增加启动内存外，还应该好好review一下我们的代码，有很多代码编写过于随意化，这些不好的习惯或对程序语言的不了解是应该好好打压打压了。</p>
-<p>下面是参考网络资源总结的一些在Java编程中尽可能要做到的一些地方。<br>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/12/Java编程中为了性能尽量要做到的一些地方/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/12/Java编程中为了性能尽量要做到的一些地方/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/12/Java编程中为了性能尽量要做到的一些地方/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -551,7 +579,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 		
 			<li><a href="/categories/java/" title="java">java<sup>17</sup></a></li>
 		
-			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>1</sup></a></li>
+			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
 			<li><a href="/categories/sql数据库/" title="sql数据库">sql数据库<sup>1</sup></a></li>
 		
@@ -576,9 +604,9 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
 		
-			<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 		
-			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
 		
 			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
 		
@@ -586,13 +614,13 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 		
 			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
-			<li><a href="/tags/缓存/" title="缓存">缓存<sup>1</sup></a></li>
+			<li><a href="/tags/［宝宝］/" title="［宝宝］">［宝宝］<sup>1</sup></a></li>
 		
 			<li><a href="/tags/［netty-nio］/" title="［netty nio］">［netty nio］<sup>1</sup></a></li>
 		
 			<li><a href="/tags/nio/" title="nio">nio<sup>1</sup></a></li>
 		
-			<li><a href="/tags/［宝宝］/" title="［宝宝］">［宝宝］<sup>1</sup></a></li>
+			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
 			<li><a href="/tags/［sql］/" title="［sql］">［sql］<sup>1</sup></a></li>
 		
@@ -603,7 +631,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

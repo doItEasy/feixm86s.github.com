@@ -4,23 +4,31 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>优秀技术博文分享 | flyfish&#39;s Blog</title>
+    <title>Redis的Master-Slave模式 | flyfish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：">
+    <meta name="description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。
+一、Redis的Replication：
+下面的列表清楚的解释了Redis R">
     
     
-    <meta name="description" content="本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：">
+    <meta name="description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。
+一、Redis的Replication：
+下面的列表清楚的解释了Redis Replication的特点和优势。同一个Master可以同步多个Slaves。Slave同样可以接受">
 <meta property="og:type" content="article">
-<meta property="og:title" content="优秀技术博文分享">
-<meta property="og:url" content="http://www.52ff.cc/2015/03/10/优秀技术博文分享/index.html">
+<meta property="og:title" content="Redis的Master-Slave模式">
+<meta property="og:url" content="http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/index.html">
 <meta property="og:site_name" content="flyfish's Blog">
-<meta property="og:description" content="本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：">
+<meta property="og:description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。
+一、Redis的Replication：
+下面的列表清楚的解释了Redis Replication的特点和优势。同一个Master可以同步多个Slaves。Slave同样可以接受">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="优秀技术博文分享">
-<meta name="twitter:description" content="本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：">
+<meta name="twitter:title" content="Redis的Master-Slave模式">
+<meta name="twitter:description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。
+一、Redis的Replication：
+下面的列表清楚的解释了Redis Replication的特点和优势。同一个Master可以同步多个Slaves。Slave同样可以接受">
 
     
     <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
@@ -81,14 +89,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/10/优秀技术博文分享/" title="优秀技术博文分享" itemprop="url">优秀技术博文分享</a>
+      <a href="/2015/03/22/Redis的Master-Slave模式/" title="Redis的Master-Slave模式" itemprop="url">Redis的Master-Slave模式</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-10T02:58:18.000Z" itemprop="datePublished"> 发表于 2015-03-10</time>
+    <time datetime="2015-03-22T13:51:48.000Z" itemprop="datePublished"> 发表于 2015-03-22</time>
     
   </p>
 </header>
@@ -97,27 +105,56 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx+tomcat配置集群负载均衡"><span class="toc-number">1.</span> <span class="toc-text">Nginx+tomcat配置集群负载均衡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#netty学习"><span class="toc-number">2.</span> <span class="toc-text">netty学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo搭建博客"><span class="toc-number">3.</span> <span class="toc-text">hexo搭建博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dubbo指南"><span class="toc-number">4.</span> <span class="toc-text">Dubbo指南</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#slaveof"><span class="toc-number">1.</span> <span class="toc-text">slaveof  </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动master服务器。"><span class="toc-number">2.</span> <span class="toc-text">启动master服务器。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#情况Master当前数据库中的所有Keys。"><span class="toc-number">3.</span> <span class="toc-text">情况Master当前数据库中的所有Keys。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在Master中创建新的Keys作为测试数据。"><span class="toc-number">4.</span> <span class="toc-text">在Master中创建新的Keys作为测试数据。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看Master中存在哪些Keys。"><span class="toc-number">5.</span> <span class="toc-text">查看Master中存在哪些Keys。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动slave服务器。"><span class="toc-number">6.</span> <span class="toc-text">启动slave服务器。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。"><span class="toc-number">7.</span> <span class="toc-text">查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在Master中删除其中一个测试Key，并查看删除后的结果。"><span class="toc-number">8.</span> <span class="toc-text">在Master中删除其中一个测试Key，并查看删除后的结果。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在Slave中查看是否mykey2也已经在Slave中被删除。"><span class="toc-number">9.</span> <span class="toc-text">在Slave中查看是否mykey2也已经在Slave中被删除。</span></a></li></ol>
 		
 		</div>
 		
-		<p>本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：</p>
-<a id="more"></a>
-<h3 id="Nginx+tomcat配置集群负载均衡">Nginx+tomcat配置集群负载均衡</h3><p><a href="http://ari.iteye.com/blog/833153" title="Nginx+tomcat配置集群负载均衡" target="_blank" rel="external">图文解说：Nginx+tomcat配置集群负载均衡</a> </p>
-<h3 id="netty学习">netty学习</h3><p><a href="http://ifeve.com/netty-2-6/" target="_blank" rel="external">并发编程网netty教程</a></p>
-<h3 id="hexo搭建博客">hexo搭建博客</h3><p><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo搭建博客全程指导</a></p>
-<h3 id="Dubbo指南">Dubbo指南</h3><p><a href="http://alibaba.github.io/dubbo-doc-static/Home-zh.htm" target="_blank" rel="external">Dubo指南</a></p>
-<p>随时更新</p>
-  
+		<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
+<p>一、Redis的Replication：</p>
+<p>下面的列表清楚的解释了Redis Replication的特点和优势。<br>同一个Master可以同步多个Slaves。<br>Slave同样可以接受其它Slaves的连接和同步请求，这样可以有效的分载Master的同步压力。因此我们可以将Redis的Replication架构视为图结构。<br>Master Server是以非阻塞的方式为Slaves提供服务。所以在Master-Slave同步期间，客户端仍然可以提交查询或修改请求。<br>Slave Server同样是以非阻塞的方式完成数据同步。在同步期间，如果有客户端提交查询请求，Redis则返回同步之前的数据。<br>为了分载Master的读操作压力，Slave服务器可以为客户端提供只读操作的服务，写服务仍然必须由Master来完成。即便如此，系统的伸缩性还是得到了很大的提高。<br>Master可以将数据保存操作交给Slaves完成，从而避免了在Master中要有独立的进程来完成此操作。</p>
+<p>二、Replication的工作原理：</p>
+<p>在Slave启动并连接到Master之后，它将主动发送一个SYNC命令。此后Master将启动后台存盘进程，同时收集所有接收到的用于修改数据集的命令，在后台进程执行完毕后，Master将传送整个数据库文件到Slave，以完成一次完全同步。而Slave服务器在接收到数据库文件数据之后将其存盘并加载到内存中。此后，Master继续将所有已经收集到的修改命令，和新的修改命令依次传送给Slaves，Slave将在本次执行这些数据修改命令，从而达到最终的数据同步。<br>如果Master和Slave之间的链接出现断连现象，Slave可以自动重连Master，但是在连接成功之后，一次完全同步将被自动执行。</p>
+<p>三、如何配置Replication：</p>
+<p>见如下步骤：<br>1). 同时启动两个Redis服务器，可以考虑在同一台机器上启动两个Redis服务器，分别监听不同的端口，如6379和6380。<br>2). 在Slave服务器上执行一下命令：<br>/&gt; redis-cli -p 6380   #这里我们假设Slave的端口号是6380<br>redis 127.0.0.1:6380&gt; slaveof 127.0.0.1 6379 #我们假设Master和Slave在同一台主机，Master的端口为6379<br>OK<br>上面的方式只是保证了在执行slaveof命令之后，redis_6380成为了redis_6379的slave，一旦服务(redis_6380)重新启动之后，他们之间的复制关系将终止。<br>如果希望长期保证这两个服务器之间的Replication关系，可以在redis_6380的配置文件中做如下修改：<br>/&gt; cd /etc/redis  #切换Redis服务器配置文件所在的目录。<br>/&gt; ls<br>6379.conf  6380.conf<br>/&gt; vi 6380.conf<br>将</p>
+<h1 id="slaveof">slaveof <masterip> <masterport></masterport></masterip></h1><p>改为<br>slaveof 127.0.0.1 6379<br>保存退出。<br>这样就可以保证Redis_6380服务程序在每次启动后都会主动建立与Redis_6379的Replication连接了。</p>
+<p>四、应用示例：</p>
+<p>这里我们假设Master-Slave已经建立。</p>
+<h1 id="启动master服务器。">启动master服务器。</h1><pre><code>[root<span class="property">@Stephen</span>-PC redis]<span class="comment"># redis-cli -p 6379</span>
+redis <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt;
+</code></pre><h1 id="情况Master当前数据库中的所有Keys。">情况Master当前数据库中的所有Keys。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; flushdb
+OK
+</code></pre><h1 id="在Master中创建新的Keys作为测试数据。">在Master中创建新的Keys作为测试数据。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; set mykey hello
+OK
+redis <span class="number">127.0.0.1:6379</span>&gt; set mykey2 world
+OK
+</code></pre><h1 id="查看Master中存在哪些Keys。">查看Master中存在哪些Keys。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+<span class="number">2</span>) <span class="string">"mykey2"</span>
+</code></pre><h1 id="启动slave服务器。">启动slave服务器。</h1><pre><code>[root<span class="property">@Stephen</span>-PC redis]<span class="comment"># redis-cli -p 6380</span>
+</code></pre><h1 id="查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。">查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6380</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+<span class="number">2</span>) <span class="string">"mykey2"</span>
+</code></pre><h1 id="在Master中删除其中一个测试Key，并查看删除后的结果。">在Master中删除其中一个测试Key，并查看删除后的结果。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; del mykey2
+(integer) <span class="number">1</span>
+redis <span class="number">127.0.0.1:6379</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+</code></pre><h1 id="在Slave中查看是否mykey2也已经在Slave中被删除。">在Slave中查看是否mykey2也已经在Slave中被删除。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6380</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/记录分享/">记录分享</a>
+  <a class="article-category-link" href="/categories/no-sql/">no-sql</a>
 </div>
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/redis/">redis</a><a href="/tags/缓存/">缓存</a>
+  </div>
 
 </div>
 
@@ -125,7 +162,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/03/10/优秀技术博文分享/" data-title="优秀技术博文分享 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/" data-title="Redis的Master-Slave模式 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,19 +175,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/11/redis基础命令/" title="redis基础命令">
-  <strong>上一篇：</strong><br/>
-  <span>
-  redis基础命令</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/03/05/netty笔记第一篇/"  title="netty笔记第一篇">
+<a href="/2015/03/18/hello-blog/"  title="hello Blog">
  <strong>下一篇：</strong><br/> 
- <span>netty笔记第一篇
+ <span>hello Blog
 </span>
 </a>
 </div>
@@ -159,7 +188,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/10/优秀技术博文分享/" data-title="优秀技术博文分享" data-url="http://www.52ff.cc/2015/03/10/优秀技术博文分享/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/22/Redis的Master-Slave模式/" data-title="Redis的Master-Slave模式" data-url="http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/"></div>
 </section>
 
 
@@ -169,7 +198,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx+tomcat配置集群负载均衡"><span class="toc-number">1.</span> <span class="toc-text">Nginx+tomcat配置集群负载均衡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#netty学习"><span class="toc-number">2.</span> <span class="toc-text">netty学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hexo搭建博客"><span class="toc-number">3.</span> <span class="toc-text">hexo搭建博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dubbo指南"><span class="toc-number">4.</span> <span class="toc-text">Dubbo指南</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#slaveof"><span class="toc-number">1.</span> <span class="toc-text">slaveof  </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动master服务器。"><span class="toc-number">2.</span> <span class="toc-text">启动master服务器。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#情况Master当前数据库中的所有Keys。"><span class="toc-number">3.</span> <span class="toc-text">情况Master当前数据库中的所有Keys。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在Master中创建新的Keys作为测试数据。"><span class="toc-number">4.</span> <span class="toc-text">在Master中创建新的Keys作为测试数据。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看Master中存在哪些Keys。"><span class="toc-number">5.</span> <span class="toc-text">查看Master中存在哪些Keys。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动slave服务器。"><span class="toc-number">6.</span> <span class="toc-text">启动slave服务器。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。"><span class="toc-number">7.</span> <span class="toc-text">查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在Master中删除其中一个测试Key，并查看删除后的结果。"><span class="toc-number">8.</span> <span class="toc-text">在Master中删除其中一个测试Key，并查看删除后的结果。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在Slave中查看是否mykey2也已经在Slave中被删除。"><span class="toc-number">9.</span> <span class="toc-text">在Slave中查看是否mykey2也已经在Slave中被删除。</span></a></li></ol>
  
   </div>
 

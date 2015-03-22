@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-03-19T03:40:50.000Z</updated>
+  <updated>2015-03-22T14:01:45.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -13,6 +13,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Redis的Master-Slave模式]]></title>
+    <link href="http://www.52ff.cc/2015/03/22/Redis%E7%9A%84Master-Slave%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/</id>
+    <published>2015-03-22T13:51:48.000Z</published>
+    <updated>2015-03-22T14:01:45.000Z</updated>
+    <content type="html"><![CDATA[<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
+<p>一、Redis的Replication：</p>
+<p>下面的列表清楚的解释了Redis Replication的特点和优势。<br>同一个Master可以同步多个Slaves。<br>Slave同样可以接受其它Slaves的连接和同步请求，这样可以有效的分载Master的同步压力。因此我们可以将Redis的Replication架构视为图结构。<br>Master Server是以非阻塞的方式为Slaves提供服务。所以在Master-Slave同步期间，客户端仍然可以提交查询或修改请求。<br>Slave Server同样是以非阻塞的方式完成数据同步。在同步期间，如果有客户端提交查询请求，Redis则返回同步之前的数据。<br>为了分载Master的读操作压力，Slave服务器可以为客户端提供只读操作的服务，写服务仍然必须由Master来完成。即便如此，系统的伸缩性还是得到了很大的提高。<br>Master可以将数据保存操作交给Slaves完成，从而避免了在Master中要有独立的进程来完成此操作。</p>
+<p>二、Replication的工作原理：</p>
+<p>在Slave启动并连接到Master之后，它将主动发送一个SYNC命令。此后Master将启动后台存盘进程，同时收集所有接收到的用于修改数据集的命令，在后台进程执行完毕后，Master将传送整个数据库文件到Slave，以完成一次完全同步。而Slave服务器在接收到数据库文件数据之后将其存盘并加载到内存中。此后，Master继续将所有已经收集到的修改命令，和新的修改命令依次传送给Slaves，Slave将在本次执行这些数据修改命令，从而达到最终的数据同步。<br>如果Master和Slave之间的链接出现断连现象，Slave可以自动重连Master，但是在连接成功之后，一次完全同步将被自动执行。</p>
+<p>三、如何配置Replication：</p>
+<p>见如下步骤：<br>1). 同时启动两个Redis服务器，可以考虑在同一台机器上启动两个Redis服务器，分别监听不同的端口，如6379和6380。<br>2). 在Slave服务器上执行一下命令：<br>/&gt; redis-cli -p 6380   #这里我们假设Slave的端口号是6380<br>redis 127.0.0.1:6380&gt; slaveof 127.0.0.1 6379 #我们假设Master和Slave在同一台主机，Master的端口为6379<br>OK<br>上面的方式只是保证了在执行slaveof命令之后，redis_6380成为了redis_6379的slave，一旦服务(redis_6380)重新启动之后，他们之间的复制关系将终止。<br>如果希望长期保证这两个服务器之间的Replication关系，可以在redis_6380的配置文件中做如下修改：<br>/&gt; cd /etc/redis  #切换Redis服务器配置文件所在的目录。<br>/&gt; ls<br>6379.conf  6380.conf<br>/&gt; vi 6380.conf<br>将</p>
+<h1 id="slaveof">slaveof <masterip> <masterport></masterport></masterip></h1><p>改为<br>slaveof 127.0.0.1 6379<br>保存退出。<br>这样就可以保证Redis_6380服务程序在每次启动后都会主动建立与Redis_6379的Replication连接了。</p>
+<p>四、应用示例：</p>
+<p>这里我们假设Master-Slave已经建立。</p>
+<h1 id="启动master服务器。">启动master服务器。</h1><pre><code>[root<span class="property">@Stephen</span>-PC redis]<span class="comment"># redis-cli -p 6379</span>
+redis <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6379</span>&gt;
+</code></pre><h1 id="情况Master当前数据库中的所有Keys。">情况Master当前数据库中的所有Keys。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; flushdb
+OK
+</code></pre><h1 id="在Master中创建新的Keys作为测试数据。">在Master中创建新的Keys作为测试数据。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; set mykey hello
+OK
+redis <span class="number">127.0.0.1:6379</span>&gt; set mykey2 world
+OK
+</code></pre><h1 id="查看Master中存在哪些Keys。">查看Master中存在哪些Keys。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+<span class="number">2</span>) <span class="string">"mykey2"</span>
+</code></pre><h1 id="启动slave服务器。">启动slave服务器。</h1><pre><code>[root<span class="property">@Stephen</span>-PC redis]<span class="comment"># redis-cli -p 6380</span>
+</code></pre><h1 id="查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。">查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6380</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+<span class="number">2</span>) <span class="string">"mykey2"</span>
+</code></pre><h1 id="在Master中删除其中一个测试Key，并查看删除后的结果。">在Master中删除其中一个测试Key，并查看删除后的结果。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6379</span>&gt; del mykey2
+(integer) <span class="number">1</span>
+redis <span class="number">127.0.0.1:6379</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+</code></pre><h1 id="在Slave中查看是否mykey2也已经在Slave中被删除。">在Slave中查看是否mykey2也已经在Slave中被删除。</h1><pre><code><span class="title">redis</span> <span class="number">127.0.0.1:6380</span>&gt; keys *
+<span class="number">1</span>) <span class="string">"mykey"</span>
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
+<p>一、Redis的Replicatio]]>
+    </summary>
+    
+      <category term="redis" scheme="http://www.52ff.cc/tags/redis/"/>
+    
+      <category term="缓存" scheme="http://www.52ff.cc/tags/%E7%BC%93%E5%AD%98/"/>
+    
+      <category term="no-sql" scheme="http://www.52ff.cc/categories/no-sql/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[hello Blog]]></title>
@@ -36,11 +87,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[JAVA多线程第10篇(阻塞队列和栈)]]></title>
+    <title><![CDATA[JAVA多线程第十篇(阻塞队列和栈)]]></title>
     <link href="http://www.52ff.cc/2015/03/15/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC10%E7%AF%87-%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%92%8C%E6%A0%88/"/>
     <id>http://www.52ff.cc/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/</id>
     <published>2015-03-15T12:53:09.000Z</published>
-    <updated>2015-03-22T13:01:58.000Z</updated>
+    <updated>2015-03-22T13:03:31.000Z</updated>
     <content type="html"><![CDATA[<p>Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。<br>BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时<br>BlockingQueue是个接口，有如下实现类：</p>
 <pre><code><span class="bullet">1. </span>ArrayBlockQueue：一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象必须明确大小，像数组一样。
 <span class="bullet">2. </span>LinkedBlockQueue：一个可改变大小的阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象如果没有明确大小，默认值是Integer.MAX_VALUE。链接队列的吞吐量通常要高于基于数组的队列，但是在大多数并发应用程序中，其可预知的性能要低。 
@@ -654,12 +705,13 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
     <link href="http://www.52ff.cc/2015/03/10/%E4%BC%98%E7%A7%80%E6%8A%80%E6%9C%AF%E5%8D%9A%E6%96%87%E5%88%86%E4%BA%AB/"/>
     <id>http://www.52ff.cc/2015/03/10/优秀技术博文分享/</id>
     <published>2015-03-10T02:58:18.000Z</published>
-    <updated>2015-03-20T03:54:05.000Z</updated>
+    <updated>2015-03-22T13:14:59.000Z</updated>
     <content type="html"><![CDATA[<p>本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：</p>
 <a id="more"></a>
 <h3 id="Nginx+tomcat配置集群负载均衡">Nginx+tomcat配置集群负载均衡</h3><p><a href="http://ari.iteye.com/blog/833153" title="Nginx+tomcat配置集群负载均衡" target="_blank" rel="external">图文解说：Nginx+tomcat配置集群负载均衡</a> </p>
 <h3 id="netty学习">netty学习</h3><p><a href="http://ifeve.com/netty-2-6/" target="_blank" rel="external">并发编程网netty教程</a></p>
 <h3 id="hexo搭建博客">hexo搭建博客</h3><p><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo搭建博客全程指导</a></p>
+<h3 id="Dubbo指南">Dubbo指南</h3><p><a href="http://alibaba.github.io/dubbo-doc-static/Home-zh.htm" target="_blank" rel="external">Dubo指南</a></p>
 <p>随时更新</p>
 ]]></content>
     <summary type="html">
@@ -951,36 +1003,6 @@ DEPT_TYPE <span class="built_in">NULL</span>
       <category term="［sql］" scheme="http://www.52ff.cc/tags/%EF%BC%BBsql%EF%BC%BD/"/>
     
       <category term="sql数据库" scheme="http://www.52ff.cc/categories/sql%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[java反射简述一二]]></title>
-    <link href="http://www.52ff.cc/2015/02/17/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E7%AE%80%E5%8D%95%E6%95%B4%E7%90%86/"/>
-    <id>http://www.52ff.cc/2015/02/17/java反射机制简单整理/</id>
-    <published>2015-02-17T14:19:16.000Z</published>
-    <updated>2015-03-15T14:02:17.000Z</updated>
-    <content type="html"><![CDATA[<p>在Java运行时环境中，对于任意一个类，能否知道这个类有哪些属性和方法？对于任意一个对象，能否调用他的方法？这些答案是肯定的，这种动态获取类的信息，以及动态调用类的方法的功能来源于JAVA的反射。它使您能够创建灵活的代码，这些代码可以在运行时装配，无需在组件之间进行源代表链接。反射允许我们在编写与 执行时，使我们的程序代码能够接入装载到JVM中的类的内部信息，而不是源代码中选定的类协作的代码。这使反射成为构建灵活的应用的主要工具。</p>
-<a id="more"></a>
-<p>JAVA反射机制主要提供了以下功能(前提都是在运行时不是在编译时)：<br>1.判断任意一个对象所属的类<br>2.构造任意一个类的对象<br>3.判断任意一个类所具有的成员变量和方法<br>4.调用任意一个对象的方法(包括private)</p>
-<p>Java 反射相关的API简介：<br>位于java.lang.reflect包中<br>—Class类：代表一个类<br>—Filed类：代表类的成员变量<br>—Method类：代表类的方法<br>—Constructor类：代表类的构造方法<br>—Array类：提供了动态创建数组，以及访问数组的元素的静态方法。该类中的所有方法都是静态方法</p>
-<h3 id="Class类">Class类</h3><p>在 java 的Object类中的申明了数个应该在所有的java类中被改写的methods：<br>hashCode(), equals(),clone(),toString(),getClass()等，其中的getClass()返回一个Class 类型的对象。<br>Class类十分的特殊，它和一般的类一样继承自Object，其实体用以表达java程序运行时的class和interface，也用来表达 enum，array，primitive，Java Types 以及关键字void，当加载一个类，或者当加载器（class loader）的defineClass（）被JVM调用，便产生一个Class对象，<br>Class是Reflection起源，针对任何你想探勘的class（类），唯有现为他产生一个Class的对象，接下来才能经由后者唤起为数十多个的反射API。</p>
-<p>Java允许我们从多种途径为一个类class生成对应的Class对象。<br>—运用 getClass()：Object类中的方法，每个类都拥有此方法<br>String str=”abc”;<br>Class cl=str.getClass();</p>
-<p>—运用 Class.getSuperclass（）：Class类中的方法，返回该Class的父类的Class<br>—运用 Class.forName()静态方法：<br>—运用 Class：类名.class<br>—运用primitive wrapper classes的TYPE语法： 基本类型包装类的TYPE，如：Integer.TYPE<br>注意：TYPE的使用，只适合原生（基本）数据类型</p>
-<p>——运行时生成instance</p>
-<p>想生成对象的实体，在反射动态机制中有两种方法，一个针对无变量的构造方法，一个针对带参数的构造方法，如果想调用带参数的构造方法，就比较的麻烦，不能直接调用Class类中的newInstance()，而是调用Constructor类中newInstance（）方法，首先准备一个Class[]作为Constructor的参数类型。然后调用该Class对象的getConstructor()方法获得一个专属的Constructor的对象，最后再准备一个<br>Object[]作为Constructor对象昂的newInstance(()方法的实参。<br>在这里需要说明的是 只有两个类拥有newInstance()方法，分别是Class类和Constructor类<br>Class类中的newInstance()方法是不带参数的，而Constructro类中的newInstance()方法是带参数的<br>需要提供必要的参数。<br>例:<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Class c=Class.forName(<span class="string">"DynTest"</span>);</span><br><span class="line">Class[] ptype=new Class[]&#123;double.class,int.class&#125;；Constructor ctor=c.getConstructor(ptypr);</span><br><span class="line">Object[] obj=new Object[]&#123;new Double(<span class="number">3.1415</span>),new Integer(<span class="number">123</span>)&#125;;</span><br><span class="line">Object object=ctor.newInstance(obj);</span><br></pre></td></tr></table></figure></p>
-<h3 id="运行时调用Method">运行时调用Method</h3><p>这个动作首先准备一个Class[]{}作为getMethod（String name，Class[]）方法的参数类型，接下来准备一个Obeject[]放置自变量，然后调用Method对象的invoke（Object obj，Object[]）方法。</p>
-<h3 id="运行时调用Field内容">运行时调用Field内容</h3><p>变更Field不需要参数和自变量，首先调用Class的getField（）并指定field名称，获得特定的Field对象后便可以直接调用Field的 get（Object obj）和set(Object obj,Object value)方法<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public static void main(String[] args) &#123;        </span><br><span class="line">        Class&lt;?&gt; clazz = null;  </span><br><span class="line">        try &#123;</span><br><span class="line">            clazz = User.class;  </span><br><span class="line">            Object obj=clazz.newInstance();  </span><br><span class="line">            ((User) obj).setUsername(<span class="string">"4"</span>);  </span><br><span class="line">            ((User) obj).setPassword(<span class="string">"2222"</span>); </span><br><span class="line">            //获取构造函数数组</span><br><span class="line">            Object[] constructors = clazz.getDeclaredConstructors();  </span><br><span class="line">            <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; constructors.length; i++) &#123;</span><br><span class="line">                System.out.println(<span class="string">"----constructors["</span>+i+<span class="string">"]-----"</span>+constructors[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            //获取类中声明的字段数组，包括公有和私有字段&lt;br&gt;  </span><br><span class="line">            Field[] fields = clazz.getDeclaredFields();  </span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; fields.length; j++) &#123;  </span><br><span class="line">                String head = fields[j].getName().toUpperCase().substring(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">                //获取属性的get方法名称</span><br><span class="line">                String getName = <span class="string">"get"</span> + head+ fields[j].getName().substring(<span class="number">1</span>);  </span><br><span class="line">                //获取属性的<span class="built_in">set</span>方法名称</span><br><span class="line">                String <span class="built_in">set</span>Name = <span class="string">"set"</span> + head+ fields[j].getName().substring(<span class="number">1</span>);  </span><br><span class="line">                //获取类中声明的方法数组，包括公有和私有方法</span><br><span class="line">                Method[] methods=clazz.getDeclaredMethods();  </span><br><span class="line">                <span class="keyword">for</span>(int m=<span class="number">0</span>;m&lt;methods.length;m++)&#123;</span><br><span class="line">                    System.out.println(<span class="string">"----method["</span>+m+<span class="string">"]------"</span>+methods[m].getName()); </span><br><span class="line">                 &#125;</span><br><span class="line">                //根据方法名称和参数，获取Method对象，第一个参数是方法名称，后边是一个Class数组，里边是方法参数类型</span><br><span class="line">                Method getMethod= clazz.getMethod(getName, new Class[] &#123;&#125;); </span><br><span class="line">                Method <span class="built_in">set</span>Method= clazz.getMethod(<span class="built_in">set</span>Name,new Class[]&#123; fields[j].getType() &#125;);</span><br><span class="line">                //obj -从中调用底层方法的对象,后边是用于方法调用的参数</span><br><span class="line">                Object result2=<span class="built_in">set</span>Method.invoke(obj, new Object[]&#123;new String(<span class="string">"hello  "</span>+fields[j].getName())&#125;);</span><br><span class="line">                Object result = getMethod.invoke(obj, new Object[] &#123;&#125;);</span><br><span class="line">                System.out.println(<span class="string">"----result------"</span> + result);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; catch (SecurityException e) &#123;            </span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; catch (NoSuchMethodException e) &#123;</span><br><span class="line">                    e.printStackTrace();  </span><br><span class="line">                &#125; catch (IllegalArgumentException e) &#123; </span><br><span class="line">                    e.printStackTrace();  </span><br><span class="line">                &#125; catch (IllegalAccessException e) &#123;  </span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; catch (InvocationTargetException e) &#123;</span><br><span class="line">                    e.printStackTrace();  </span><br><span class="line">                &#125; catch (InstantiationException e) &#123;</span><br><span class="line">                    e.printStackTrace(); </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Java类反射中的主要方法">Java类反射中的主要方法</h3><p>对于以下三类组件中的任何一类来说 — 构造函数、字段和方法 — java.lang.Class 提供四种独立的反射调用，以不同的方式来获得信息。调用都遵循一种标准格式。以下是用于查找构造函数的一组反射调用：<br>Constructor getConstructor(Class[] params) — 获得使用特殊的参数类型的公共构造函数，<br>Constructor[] getConstructors() — 获得类的所有公共构造函数<br>Constructor getDeclaredConstructor(Class[] params) — 获得使用特定参数类型的构造函数(与接入级别无关)<br>Constructor[] getDeclaredConstructors() — 获得类的所有构造函数(与接入级别无关)<br>获得字段信息的Class 反射调用不同于那些用于接入构造函数的调用，在参数类型数组中使用了字段名：<br>Field getField(String name) — 获得命名的公共字段<br>Field[] getFields() — 获得类的所有公共字段<br>Field getDeclaredField(String name) — 获得类声明的命名的字段<br>Field[] getDeclaredFields() — 获得类声明的所有字段<br>用于获得方法信息函数：<br>Method getMethod(String name, Class[] params) — 使用特定的参数类型，获得命名的公共方法<br>Method[] getMethods() — 获得类的所有公共方法<br>Method getDeclaredMethod(String name, Class[] params) — 使用特写的参数类型，获得类声明的命名的方法<br>Method[] getDeclaredMethods() — 获得类声明的所有方法 </p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>在Java运行时环境中，对于任意一个类，能否知道这个类有哪些属性和方法？对于任意一个对象，能否调用他的方法？这些答案是肯定的，这种动态获取类的信息，以及动态调用类的方法的功能来源于JAVA的反射。它使您能够创建灵活的代码，这些代码可以在运行时装配，无需在组件之间进行源代表链接。反射允许我们在编写与 执行时，使我们的程序代码能够接入装载到JVM中的类的内部信息，而不是源代码中选定的类协作的代码。这使反射成为构建灵活的应用的主要工具。</p>]]>
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     
   </entry>
   
