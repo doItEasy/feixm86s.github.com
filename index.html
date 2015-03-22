@@ -143,6 +143,140 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/" title="JAVA多线程第10篇(阻塞队列和栈)" itemprop="url">JAVA多线程第10篇(阻塞队列和栈)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-15T12:53:09.000Z" itemprop="datePublished"> 发表于 2015-03-15</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。<br>BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时<br>BlockingQueue是个接口，有如下实现类：</p>
+<pre><code><span class="bullet">1. </span>ArrayBlockQueue：一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象必须明确大小，像数组一样。
+<span class="bullet">2. </span>LinkedBlockQueue：一个可改变大小的阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象如果没有明确大小，默认值是Integer.MAX_VALUE。链接队列的吞吐量通常要高于基于数组的队列，但是在大多数并发应用程序中，其可预知的性能要低。 
+<span class="bullet">3. </span>PriorityBlockingQueue：类似于LinkedBlockingQueue，但其所含对象的排序不是FIFO，而是依据对象的自然排序顺序或者是构造函数所带的Comparator决定的顺序。
+<span class="bullet">4. </span>SynchronousQueue：同步队列。同步队列没有任何容量，每个插入必须等待另一个线程移除，反之亦然。
+</code></pre><p>有了这样的功能，就为多线程的排队等候的模型实现开辟了便捷通道，非常有用。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/15/JAVA多线程第10篇-阻塞队列和栈/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/14/JAVA多线程第九篇-Condition/" title="JAVA多线程第九篇(条件变量Condition)" itemprop="url">JAVA多线程第九篇(条件变量Condition)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-14T12:30:27.000Z" itemprop="datePublished"> 发表于 2015-03-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>条件变量是Java5线程中很重要的一个概念，顾名思义，条件变量就是表示条件的一种变量。但是必须说明，这里的条件是没有实际含义的，仅仅是个标记而已，并且条件的含义往往通过代码来赋予其含义。</p>
+<p>条件变量都实现了java.util.concurrent.locks.Condition接口，条件变量的实例化是通过一个Lock对象上调用newCondition()方法来获取的，这样，条件就和一个锁对象绑定起来了。因此，Java中的条件变量只能和锁配合使用，来控制并发程序访问竞争资源的安全。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/14/JAVA多线程第九篇-Condition/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/14/JAVA多线程第九篇-Condition/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/14/JAVA多线程第九篇-Condition/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/03/13/JAVA多线程第八篇-锁对象Lock/" title="JAVA多线程第八篇(锁对象Lock)" itemprop="url">JAVA多线程第八篇(锁对象Lock)</a>
   </h1>
   <p class="article-author">By
@@ -398,136 +532,6 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/12/wap网页css技巧篇1/" title="wap网页css技巧篇1" itemprop="url">wap网页css技巧篇1</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-12T03:51:08.000Z" itemprop="datePublished"> 发表于 2015-03-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/12/wap网页css技巧篇1/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/css/">css</a><a href="/tags/html5/">html5</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/12/wap网页css技巧篇1/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/12/JAVA多线程第五篇-并发协作-生产者消费者/" title="JAVA多线程第五篇(并发协作例子)" itemprop="url">JAVA多线程第五篇(并发协作例子)</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-11T17:43:04.000Z" itemprop="datePublished"> 发表于 2015-03-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Java线程：并发协作-生产者消费者模型</p>
-<p>对于多线程程序来说，不管任何编程语言，生产者和消费者模型都是最经典的。就像学习每一门编程语言一样，Hello World！都是最经典的例子。</p>
-<p>实际上，准确说应该是“生产者-消费者-仓储”模型，离开了仓储，生产者消费者模型就显得没有说服力了。<br>对于此模型，应该明确一下几点：<br>1、生产者仅仅在仓储未满时候生产，仓满则停止生产。<br>2、消费者仅仅在仓储有产品时候才能消费，仓空则等待。<br>3、当消费者发现仓储没产品可消费时候会通知生产者生产。<br>4、生产者在生产出可消费产品时候，应该通知等待的消费者去消费。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/12/JAVA多线程第五篇-并发协作-生产者消费者/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/12/JAVA多线程第五篇-并发协作-生产者消费者/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/12/JAVA多线程第五篇-并发协作-生产者消费者/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -545,7 +549,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>15</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>17</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>1</sup></a></li>
 		
@@ -568,9 +572,9 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/java/" title="java">java<sup>13</sup></a></li>
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
 		
-			<li><a href="/tags/多线程/" title="多线程">多线程<sup>8</sup></a></li>
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
 		
 			<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 		
@@ -599,7 +603,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

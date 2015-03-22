@@ -36,6 +36,109 @@
   </entry>
   
   <entry>
+    <title><![CDATA[JAVA多线程第10篇(阻塞队列和栈)]]></title>
+    <link href="http://www.52ff.cc/2015/03/15/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC10%E7%AF%87-%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%92%8C%E6%A0%88/"/>
+    <id>http://www.52ff.cc/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/</id>
+    <published>2015-03-15T12:53:09.000Z</published>
+    <updated>2015-03-22T13:01:58.000Z</updated>
+    <content type="html"><![CDATA[<p>Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。<br>BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时<br>BlockingQueue是个接口，有如下实现类：</p>
+<pre><code><span class="bullet">1. </span>ArrayBlockQueue：一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象必须明确大小，像数组一样。
+<span class="bullet">2. </span>LinkedBlockQueue：一个可改变大小的阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象如果没有明确大小，默认值是Integer.MAX_VALUE。链接队列的吞吐量通常要高于基于数组的队列，但是在大多数并发应用程序中，其可预知的性能要低。 
+<span class="bullet">3. </span>PriorityBlockingQueue：类似于LinkedBlockingQueue，但其所含对象的排序不是FIFO，而是依据对象的自然排序顺序或者是构造函数所带的Comparator决定的顺序。
+<span class="bullet">4. </span>SynchronousQueue：同步队列。同步队列没有任何容量，每个插入必须等待另一个线程移除，反之亦然。
+</code></pre><p>有了这样的功能，就为多线程的排队等候的模型实现开辟了便捷通道，非常有用。</p>
+<a id="more"></a>
+<p>下面使用ArrayBlockQueue来实现之前实现过的生产者消/费者模式<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/** 定义一个盘子类，可以放鸡蛋和取鸡蛋 */  </span><br><span class="line">public class BigPlate &#123;  </span><br><span class="line">  </span><br><span class="line">    /** 装鸡蛋的盘子，大小为<span class="number">5</span> */  </span><br><span class="line">    private BlockingQueue&lt;Object&gt; eggs = new ArrayBlockingQueue&lt;Object&gt;(<span class="number">5</span>);  </span><br><span class="line">      </span><br><span class="line">    /** 放鸡蛋 */  </span><br><span class="line">    public void putEgg(Object egg) &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            eggs.put(egg);// 向盘子末尾放一个鸡蛋，如果盘子满了，当前线程阻塞  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        // 下面输出有时不准确，因为与put操作不是一个原子操作  </span><br><span class="line">        System.out.println(<span class="string">"放入鸡蛋"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    /** 取鸡蛋 */  </span><br><span class="line">    public Object <span class="function"><span class="title">getEgg</span></span>() &#123;  </span><br><span class="line">        Object egg = null;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            egg = eggs.take();// 从盘子开始取一个鸡蛋，如果盘子空了，当前线程阻塞  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        // 下面输出有时不准确，因为与take操作不是一个原子操作  </span><br><span class="line">        System.out.println(<span class="string">"拿到鸡蛋"</span>);  </span><br><span class="line">        <span class="built_in">return</span> egg;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    /** 放鸡蛋线程 */  </span><br><span class="line">    static class AddThread extends Thread &#123;  </span><br><span class="line">        private BigPlate plate;  </span><br><span class="line">        private Object egg = new Object();  </span><br><span class="line">  </span><br><span class="line">        public AddThread(BigPlate plate) &#123;  </span><br><span class="line">            this.plate = plate;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">            plate.putEgg(egg);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    /** 取鸡蛋线程 */  </span><br><span class="line">    static class GetThread extends Thread &#123;  </span><br><span class="line">        private BigPlate plate;  </span><br><span class="line">  </span><br><span class="line">        public GetThread(BigPlate plate) &#123;  </span><br><span class="line">            this.plate = plate;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">            plate.getEgg();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        BigPlate plate = new BigPlate();  </span><br><span class="line">        // 先启动<span class="number">10</span>个放鸡蛋线程  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;  </span><br><span class="line">            new Thread(new AddThread(plate)).start();  </span><br><span class="line">        &#125;  </span><br><span class="line">        // 再启动<span class="number">10</span>个取鸡蛋线程  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;  </span><br><span class="line">            new Thread(new GetThread(plate)).start();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<pre><code>放入鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+拿到鸡蛋  
+放入鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+拿到鸡蛋  
+放入鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+</code></pre><p>从结果看，启动10个放鸡蛋线程和10个取鸡蛋线程，前5个放入鸡蛋的线程成功执行，到第6个，发现盘子满了，阻塞住，这时切换到取鸡蛋线程执行，成功实现了生产者/消费者模式。</p>
+<p>对于阻塞栈，与阻塞队列相似。不同点在于栈是“后入先出”的结构，每次操作的是栈顶，而队列是“先进先出”的结构，每次操作的是队列头。<br>下面是一个简单例子：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class Test &#123; </span><br><span class="line">        public static void main(String[] args) throws InterruptedException &#123; </span><br><span class="line">                BlockingDeque bDeque = new LinkedBlockingDeque(<span class="number">20</span>); </span><br><span class="line">                <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">30</span>; i++) &#123; </span><br><span class="line">                        //将指定元素添加到此阻塞栈中，如果没有可用空间，将一直等待（如果有必要）。 </span><br><span class="line">                        bDeque.putFirst(i); </span><br><span class="line">                        System.out.println(<span class="string">"向阻塞栈中添加了元素:"</span> + i); </span><br><span class="line">                &#125; </span><br><span class="line">                System.out.println(<span class="string">"程序到此运行结束，即将退出----"</span>); </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。<br>BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时<br>BlockingQueue是个接口，有如下实现类：</p>
+<pre><code><span class="bullet">1. </span>ArrayBlockQueue：一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象必须明确大小，像数组一样。
+<span class="bullet">2. </span>LinkedBlockQueue：一个可改变大小的阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象如果没有明确大小，默认值是Integer.MAX_VALUE。链接队列的吞吐量通常要高于基于数组的队列，但是在大多数并发应用程序中，其可预知的性能要低。 
+<span class="bullet">3. </span>PriorityBlockingQueue：类似于LinkedBlockingQueue，但其所含对象的排序不是FIFO，而是依据对象的自然排序顺序或者是构造函数所带的Comparator决定的顺序。
+<span class="bullet">4. </span>SynchronousQueue：同步队列。同步队列没有任何容量，每个插入必须等待另一个线程移除，反之亦然。
+</code></pre><p>有了这样的功能，就为多线程的排队等候的模型实现开辟了便捷通道，非常有用。</p>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[JAVA多线程第九篇(条件变量Condition)]]></title>
+    <link href="http://www.52ff.cc/2015/03/14/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B9%9D%E7%AF%87-Condition/"/>
+    <id>http://www.52ff.cc/2015/03/14/JAVA多线程第九篇-Condition/</id>
+    <published>2015-03-14T12:30:27.000Z</published>
+    <updated>2015-03-22T12:44:36.000Z</updated>
+    <content type="html"><![CDATA[<p>条件变量是Java5线程中很重要的一个概念，顾名思义，条件变量就是表示条件的一种变量。但是必须说明，这里的条件是没有实际含义的，仅仅是个标记而已，并且条件的含义往往通过代码来赋予其含义。</p>
+<p>条件变量都实现了java.util.concurrent.locks.Condition接口，条件变量的实例化是通过一个Lock对象上调用newCondition()方法来获取的，这样，条件就和一个锁对象绑定起来了。因此，Java中的条件变量只能和锁配合使用，来控制并发程序访问竞争资源的安全。</p>
+<a id="more"></a>
+<p>条件变量的出现是为了更精细控制线程等待与唤醒，在Java5之前，线程的等待与唤醒依靠的是Object对象的wait()和notify()/notifyAll()方法，这样的处理不够精细。 </p>
+<p>而在Java5中，一个锁可以有多个条件，每个条件上可以有多个线程等待，通过调用await()方法，可以让线程在该条件下等待。当调用signalAll()方法，又可以唤醒该条件下的等待的线程。有关Condition接口的API可以具体参考JavaAPI文档。</p>
+<p>条件变量比较抽象，原因是他不是自然语言中的条件概念，而是程序控制的一种手段。</p>
+<p>下面以一个银行存取款的模拟程序为例来揭盖Java多线程条件变量的神秘面纱：</p>
+<p>有一个账户，多个用户（线程）在同时操作这个账户，有的存款有的取款，存款随便存，取款有限制，不能透支，任何试图透支的操作都将等待里面有足够存款才执行操作。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class Test &#123; </span><br><span class="line">        public static void main(String[] args) &#123; </span><br><span class="line">                //创建并发访问的账户 </span><br><span class="line">                MyCount myCount = new MyCount(<span class="string">"95599200901215522"</span>, <span class="number">10000</span>); </span><br><span class="line">                //创建一个线程池 </span><br><span class="line">                ExecutorService pool = Executors.newFixedThreadPool(<span class="number">2</span>); </span><br><span class="line">                Thread t1 = new SaveThread(<span class="string">"张三"</span>, myCount, <span class="number">2000</span>); </span><br><span class="line">                Thread t2 = new SaveThread(<span class="string">"李四"</span>, myCount, <span class="number">3600</span>); </span><br><span class="line">                Thread t3 = new DrawThread(<span class="string">"王五"</span>, myCount, <span class="number">2700</span>); </span><br><span class="line">                Thread t4 = new SaveThread(<span class="string">"老张"</span>, myCount, <span class="number">600</span>); </span><br><span class="line">                Thread t5 = new DrawThread(<span class="string">"老牛"</span>, myCount, <span class="number">1300</span>); </span><br><span class="line">                Thread t6 = new DrawThread(<span class="string">"胖子"</span>, myCount, <span class="number">800</span>); </span><br><span class="line">                //执行各个线程 </span><br><span class="line">                pool.execute(t1); </span><br><span class="line">                pool.execute(t2); </span><br><span class="line">                pool.execute(t3); </span><br><span class="line">                pool.execute(t4); </span><br><span class="line">                pool.execute(t5); </span><br><span class="line">                pool.execute(t6); </span><br><span class="line">                //关闭线程池 </span><br><span class="line">                pool.shutdown(); </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line">* 存款线程类 </span><br><span class="line">*/ </span><br><span class="line">class SaveThread extends Thread &#123; </span><br><span class="line">        private String name;                //操作人 </span><br><span class="line">        private MyCount myCount;        //账户 </span><br><span class="line">        private int x;                            //存款金额 </span><br><span class="line"></span><br><span class="line">        SaveThread(String name, MyCount myCount, int x) &#123; </span><br><span class="line">                this.name = name; </span><br><span class="line">                this.myCount = myCount; </span><br><span class="line">                this.x = x; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                myCount.saving(x, name); </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line">* 取款线程类 </span><br><span class="line">*/ </span><br><span class="line">class DrawThread extends Thread &#123; </span><br><span class="line">        private String name;                //操作人 </span><br><span class="line">        private MyCount myCount;        //账户 </span><br><span class="line">        private int x;                            //存款金额 </span><br><span class="line"></span><br><span class="line">        DrawThread(String name, MyCount myCount, int x) &#123; </span><br><span class="line">                this.name = name; </span><br><span class="line">                this.myCount = myCount; </span><br><span class="line">                this.x = x; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">                myCount.drawing(x, name); </span><br><span class="line">        &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line">* 普通银行账户，不可透支 </span><br><span class="line">*/ </span><br><span class="line">class MyCount &#123; </span><br><span class="line">        private String oid;                         //账号 </span><br><span class="line">        private int cash;                             //账户余额 </span><br><span class="line">        private Lock lock = new ReentrantLock();                //账户锁 </span><br><span class="line">        private Condition _save = lock.newCondition();    //存款条件 </span><br><span class="line">        private Condition _draw = lock.newCondition();    //取款条件 </span><br><span class="line"></span><br><span class="line">        MyCount(String oid, int cash) &#123; </span><br><span class="line">                this.oid = oid; </span><br><span class="line">                this.cash = cash; </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        /** </span><br><span class="line">         * 存款 </span><br><span class="line">         * </span><br><span class="line">         * @param x        操作金额 </span><br><span class="line">         * @param name 操作人 </span><br><span class="line">         */ </span><br><span class="line">        public void saving(int x, String name) &#123; </span><br><span class="line">                lock.lock();                        //获取锁 </span><br><span class="line">                <span class="keyword">if</span> (x &gt; <span class="number">0</span>) &#123; </span><br><span class="line">                        cash += x;                    //存款 </span><br><span class="line">                        System.out.println(name + <span class="string">"存款"</span> + x + <span class="string">"，当前余额为"</span> + cash); </span><br><span class="line">                &#125; </span><br><span class="line">                _draw.signalAll();            //唤醒所有等待线程。 </span><br><span class="line">                lock.unlock();                    //释放锁 </span><br><span class="line">        &#125; </span><br><span class="line"></span><br><span class="line">        /** </span><br><span class="line">         * 取款 </span><br><span class="line">         * </span><br><span class="line">         * @param x        操作金额 </span><br><span class="line">         * @param name 操作人 </span><br><span class="line">         */ </span><br><span class="line">        public void drawing(int x, String name) &#123; </span><br><span class="line">                lock.lock();                                 //获取锁 </span><br><span class="line">                try &#123; </span><br><span class="line">                        <span class="keyword">if</span> (cash - x &lt; <span class="number">0</span>) &#123; </span><br><span class="line">                                _draw.await();             //阻塞取款操作 </span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">                                cash -= x;                     //取款 </span><br><span class="line">                                System.out.println(name + <span class="string">"取款"</span> + x + <span class="string">"，当前余额为"</span> + cash); </span><br><span class="line">                        &#125; </span><br><span class="line">                        _save.signalAll();             //唤醒所有存款操作 </span><br><span class="line">                &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                        e.printStackTrace(); </span><br><span class="line">                &#125; finally &#123; </span><br><span class="line">                        lock.unlock();                     //释放锁 </span><br><span class="line">                &#125; </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>李四存款3600，当前余额为13600
+张三存款2000，当前余额为15600
+老张存款600，当前余额为16200
+老牛取款1300，当前余额为14900
+胖子取款800，当前余额为14100
+王五取款2700，当前余额为11400
+</code></pre><p>在Condition中，用await()替换wait()，用signal()替换notify()，用signalAll()替换notifyAll()，传统线程的通信方式，Condition都可以实现，这里注意，Condition是被绑定到Lock上的，要创建一个Lock的Condition必须用newCondition()方法。<br>        这样看来，Condition和传统的线程通信没什么区别，Condition的强大之处在于它可以为多个线程间建立不同的Condition，下面引入API中的一段代码，加以说明。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">class BoundedBuffer &#123;  </span><br><span class="line">   final Lock lock = new ReentrantLock();//锁对象  </span><br><span class="line">   final Condition notFull  = lock.newCondition();//写线程条件   </span><br><span class="line">   final Condition notEmpty = lock.newCondition();//读线程条件   </span><br><span class="line">  </span><br><span class="line">   final Object[] items = new Object[<span class="number">100</span>];//缓存队列  </span><br><span class="line">   int putptr/*写索引*/, takeptr/*读索引*/, count/*队列中存在的数据个数*/;  </span><br><span class="line">  </span><br><span class="line">   public void put(Object x) throws InterruptedException &#123;  </span><br><span class="line">     lock.lock();  </span><br><span class="line">     try &#123;  </span><br><span class="line">       <span class="keyword">while</span> (count == items.length)//如果队列满了   </span><br><span class="line">         notFull.await();//阻塞写线程  </span><br><span class="line">       items[putptr] = x;//赋值   </span><br><span class="line">       <span class="keyword">if</span> (++putptr == items.length) putptr = <span class="number">0</span>;//如果写索引写到队列的最后一个位置了，那么置为<span class="number">0</span>  </span><br><span class="line">       ++count;//个数++  </span><br><span class="line">       notEmpty.signal();//唤醒读线程  </span><br><span class="line">     &#125; finally &#123;  </span><br><span class="line">       lock.unlock();  </span><br><span class="line">     &#125;  </span><br><span class="line">   &#125;  </span><br><span class="line">  </span><br><span class="line">   public Object take() throws InterruptedException &#123;  </span><br><span class="line">     lock.lock();  </span><br><span class="line">     try &#123;  </span><br><span class="line">       <span class="keyword">while</span> (count == <span class="number">0</span>)//如果队列为空  </span><br><span class="line">         notEmpty.await();//阻塞读线程  </span><br><span class="line">       Object x = items[takeptr];//取值   </span><br><span class="line">       <span class="keyword">if</span> (++takeptr == items.length) takeptr = <span class="number">0</span>;//如果读索引读到队列的最后一个位置了，那么置为<span class="number">0</span>  </span><br><span class="line">       --count;//个数--  </span><br><span class="line">       notFull.signal();//唤醒写线程  </span><br><span class="line">       <span class="built_in">return</span> x;  </span><br><span class="line">     &#125; finally &#123;  </span><br><span class="line">       lock.unlock();  </span><br><span class="line">     &#125;  </span><br><span class="line">   &#125;   </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个处于多线程工作环境下的缓存区，缓存区提供了两个方法，put和take，put是存数据，take是取数据，内部有个缓存队列，具体变量和方法说明见代码，这个缓存区类实现的功能：有多个线程往里面存数据和从里面取数据，其缓存队列(先进先出后进后出)能缓存的最大数值是100，多个线程间是互斥的，当缓存队列中存储的值达到100时，将写线程阻塞，并唤醒读线程，当缓存队列中存储的值为0时，将读线程阻塞，并唤醒写线程，下面分析一下代码的执行过程：</p>
+<pre><code><span class="bullet">1. </span>一个写线程执行，调用put方法；
+<span class="bullet">2. </span>判断count是否为100，显然没有100；
+<span class="bullet">3. </span>继续执行，存入值；
+<span class="bullet">4. </span>判断当前写入的索引位置++后，是否和100相等，相等将写入索引值变为0，并将count+1；
+<span class="bullet">5. </span>仅唤醒读线程阻塞队列中的一个；
+<span class="bullet">6. </span>一个读线程执行，调用take方法；
+<span class="bullet">7. </span>……
+<span class="bullet">8. </span>仅唤醒写线程阻塞队列中的一个。
+这就是多个Condition的强大之处，假设缓存队列中已经存满，那么阻塞的肯定是写线程，唤醒的肯定是读线程，相反，阻塞的肯定是读线程，唤醒的肯定是写线程，那么假设只有一个Condition会有什么效果呢，缓存队列中已经存满，这个Lock不知道唤醒的是读线程还是写线程了，如果唤醒的是读线程，皆大欢喜，如果唤醒的是写线程，那么线程刚被唤醒，又被阻塞了，这时又去唤醒，这样就浪费了很多时间。
+</code></pre>]]></content>
+    <summary type="html">
+    <![CDATA[<p>条件变量是Java5线程中很重要的一个概念，顾名思义，条件变量就是表示条件的一种变量。但是必须说明，这里的条件是没有实际含义的，仅仅是个标记而已，并且条件的含义往往通过代码来赋予其含义。</p>
+<p>条件变量都实现了java.util.concurrent.locks.Condition接口，条件变量的实例化是通过一个Lock对象上调用newCondition()方法来获取的，这样，条件就和一个锁对象绑定起来了。因此，Java中的条件变量只能和锁配合使用，来控制并发程序访问竞争资源的安全。</p>]]>
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+    
+      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[JAVA多线程第八篇(锁对象Lock)]]></title>
     <link href="http://www.52ff.cc/2015/03/13/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E5%85%AB%E7%AF%87-%E9%94%81%E5%AF%B9%E8%B1%A1Lock/"/>
     <id>http://www.52ff.cc/2015/03/13/JAVA多线程第八篇-锁对象Lock/</id>
@@ -876,71 +979,6 @@ DEPT_TYPE <span class="built_in">NULL</span>
     </summary>
     
       <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[IntelliJ Idea操作技巧]]></title>
-    <link href="http://www.52ff.cc/2015/02/17/IntelliJ-Idea%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/"/>
-    <id>http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/</id>
-    <published>2015-02-17T06:55:49.000Z</published>
-    <updated>2015-03-20T03:05:01.000Z</updated>
-    <content type="html"><![CDATA[<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>
-<a id="more"></a>
-<p>写这篇文章的主要目的是记录idea工具磨合期掌握的最实用技巧，因为网上的快捷键列举比较杂乱而且应用在mac上不靠谱，自己记下来可以备忘，回顾也方便，帮助自己精通这个工具。</p>
-<p>ps:可使用ctrl+`切换keyMap，建议keyMap使用mac os x 10.5 +，使用default的在mac系统和其他快捷键冲突多些<br><br></p>
-<hr>
-<h3 id="搜索">搜索</h3><p>cmd+shift+f 当前项目下递归查找，相当于eclipse的ctrl+h<br>cmd+g       当前文件中往后搜索一样的字符，相当于eclipse的ctrl+ k<br>cmd+shift+g 当前文件中往前搜索一样的字符<br>cmd+p            查询某方法的参数信息<br>cmd+b            跳到调用方法的定义处<br>cmd+shift+b      跳到方法的实现处<br>cmd+u            跳到方法在父类或接口的定义处<br>cmd+alt+left/right 跳到上/下一次光标查看处<br>cmd+o        查找类<br>cmd+shift+o  查找文件<br><br></p>
-<hr>
-<h3 id="编辑">编辑</h3><p>cmd+j        调出IDEA的神器live template<br>cmd+n        各种自动生成代码<br>alt+enter    调出IDEA对出错点的提示处理方法，相当于eclipse的ctrl+1<br>cmd+D        复制粘贴当前行到下一行<br>shift+cmd+v  调出IDEA寄存器中保存的最近复制的N份内容，可选择性粘贴<br>ctrl+shift+/      注释/取消注释<br>shift+cmd+enter   补全当前行，最常用的场景时补全当前行后的；号，并将光标定位到下一行</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>]]>
-    
-    </summary>
-    
-      <category term="记录分享" scheme="http://www.52ff.cc/categories/%E8%AE%B0%E5%BD%95%E5%88%86%E4%BA%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[JAVA多线程第二篇(状态转换)]]></title>
-    <link href="http://www.52ff.cc/2015/02/12/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%BA%8C%E7%AF%87%EF%BC%88%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%EF%BC%89/"/>
-    <id>http://www.52ff.cc/2015/02/12/JAVA多线程第二篇（状态转换）/</id>
-    <published>2015-02-12T14:59:53.000Z</published>
-    <updated>2015-03-19T17:14:32.000Z</updated>
-    <content type="html"><![CDATA[<p>线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。<br><a id="more"></a></p>
-<h2 id="线程状态">线程状态</h2><p>1、新状态：线程对象已经创建，还没有在其上调用start()方法。</p>
-<p>2、可运行状态：当线程有资格运行，但调度程序还没有把它选定为运行线程时线程所处的状态。当start()方法调用时，线程首先进入可运行状态。在线程运行之后或者从阻塞、等待或睡眠状态回来后，也返回到可运行状态。</p>
-<p>3、运行状态：线程调度程序从可运行池中选择一个线程作为当前线程时线程所处的状态。这也是线程进入运行状态的唯一一种方式。</p>
-<p>4、等待/阻塞/睡眠状态：这是线程有资格运行时它所处的状态。实际上这个三状态组合为一种，其共同点是：线程仍旧是活的，但是当前没有条件运行。换句话说，它是可运行的，但是如果某件事件出现，他可能返回到可运行状态。</p>
-<p>5、死亡态：当线程的run()方法完成时就认为它死去。这个线程对象也许是活的，但是，它已经不是一个单独执行的线程。线程一旦死亡，就不能复生。 如果在一个死去的线程上调用start()方法，会抛出java.lang.IllegalThreadStateException异常</p>
-<h2 id="阻止线程执行">阻止线程执行</h2><p>对于线程的阻止，考虑以下三个方面，不考虑IO阻塞的情况：<br>睡眠；<br>等待；<br>因为需要一个对象的锁定而被阻塞。</p>
-<h3 id="睡眠">睡眠</h3><hr>
-<p>Thread.sleep(long millis)和Thread.sleep(long millis, int nanos)静态方法强制当前正在执行的线程休眠（暂停执行），以“减慢线程”。当线程睡眠时，它入睡在某个地方，在苏醒之前不会返回到可运行状态。当睡眠时间到期，则返回到可运行状态。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class MyThread extends Thread &#123; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> ((i) % <span class="number">10</span> == <span class="number">0</span>) &#123; </span><br><span class="line">                System.out.println(<span class="string">"-------"</span> + i); </span><br><span class="line">            &#125; </span><br><span class="line">            System.out.print(i); </span><br><span class="line">            try &#123; </span><br><span class="line">                Thread.sleep(<span class="number">1</span>); </span><br><span class="line">                System.out.print(<span class="string">"    线程睡眠1毫秒！\n"</span>); </span><br><span class="line">            &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                e.printStackTrace(); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        new MyThread().start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>注意：<br>1、线程睡眠是帮助所有线程获得运行机会的最好方法。<br>2、线程睡眠到期自动苏醒，并返回到可运行状态，不是运行状态。sleep()中指定的时间是线程不会运行的最短时间。因此，sleep()方法不能保证该线程睡眠到期后就开始执行。<br>3、sleep()是静态方法，只能控制当前正在运行的线程。</p>
-<h3 id="线程的优先级和线程让步yield()">线程的优先级和线程让步yield()</h3><hr>
-<p>线程的让步是通过Thread.yield()来实现的。yield()方法的作用是：暂停当前正在执行的线程对象，并执行其他线程。</p>
-<p>要理解yield()，必须了解线程的优先级的概念。线程总是存在优先级，优先级范围在1~10之间。JVM线程调度程序是基于优先级的抢先调度机制。在大多数情况下，当前运行的线程优先级将大于或等于线程池中任何线程的优先级。但这仅仅是大多数情况。</p>
-<p>注意：当设计多线程应用程序的时候，一定不要依赖于线程的优先级。因为线程调度优先级操作是没有保障的，只能把线程优先级作用作为一种提高程序效率的方法，但是要保证程序不依赖这种操作。</p>
-<p>当线程池中线程都具有相同的优先级，调度程序的JVM实现自由选择它喜欢的线程。这时候调度程序的操作有两种可能：一是选择一个线程运行，直到它阻塞或者运行完成为止。二是时间分片，为池内的每个线程提供均等的运行机会。</p>
-<p>设置线程的优先级：线程默认的优先级是创建它的执行线程的优先级。可以通过setPriority(int newPriority)更改线程的优先级。例如：<br>Thread t = new MyThread();<br>t.setPriority(8);<br>t.start();<br>线程优先级为1~10之间的正整数，JVM从不会改变一个线程的优先级。然而，1~10之间的值是没有保证的。一些JVM可能不能识别10个不同的值，而将这些优先级进行每两个或多个合并，变成少于10个的优先级，则两个或多个优先级的线程可能被映射为一个优先级。</p>
-<p>线程默认优先级是5，Thread类中有三个常量，定义线程优先级范围：<br>static int MAX_PRIORITY<br>线程可以具有的最高优先级。<br>static int MIN_PRIORITY<br>线程可以具有的最低优先级。<br>static int NORM_PRIORITY<br>分配给线程的默认优先级。</p>
-<h3 id="join()方法">join()方法</h3><hr>
-<p>Thread的非静态方法join()让一个线程B“加入”到另外一个线程A的尾部。在A执行完毕之前，B不能工作。例如：<br>        Thread t = new MyThread();<br>        t.start();<br>        t.join();<br>另外，join()方法还有带超时限制的重载版本。 例如t.join(5000);则让线程等待5000毫秒，如果超过这个时间，则停止等待，变为可运行状态</p>
-<h2 id="小结">小结</h2><p>到目前位置，介绍了线程离开运行状态的3种方法：<br>1、调用Thread.sleep()：使当前线程睡眠至少多少毫秒（尽管它可能在指定的时间之前被中断）。<br>2、调用Thread.yield()：不能保障太多事情，尽管通常它会让当前运行线程回到可运行性状态，使得有相同优先级的线程有机会执行。<br>3、调用join()方法：保证当前线程停止执行，直到该线程所加入的线程完成为止。然而，如果它加入的线程没有存活，则当前线程不需要停止。</p>
-<p>除了以上三种方式外，还有下面几种特殊情况可能使线程离开运行状态：<br>1、线程的run()方法完成。<br>2、在对象上调用wait()方法（不是在线程上调用）。<br>3、线程不能在对象上获得锁定，它正试图运行该对象的方法代码。<br>4、线程调度程序可以决定将当前运行状态移动到可运行状态，以便让另一个线程获得运行机会，而不需要任何理由。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。<br>]]>
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
       <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     

@@ -4,23 +4,28 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>mina多线程池 | flyfish&#39;s Blog</title>
+    <title>JAVA多线程第10篇(阻塞队列和栈) | flyfish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议； 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。">
+    <meta name="description" content="Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时BlockingQueue是个接口，有如下实现类：
+1. ArrayBlockQueue：一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象必须明确大小，像数组一样。
+2. LinkedBlockQueue：一个可改变大小的阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象如果没有明确大小，默认值是Integer.MAX_VALUE。链接队列的吞吐量通常要高于基于数组的队列，但是在大多数并发应用程序中，其可预知的性能要低。 
+3. PriorityBlockingQueue：类似于LinkedBlockingQueue，但其所含对象的排序不是FIFO，而是依据对象的自然排序顺序或者是构造函数所带的Comparator决定的顺序。
+4. SynchronousQueue：同步队列。同步队列没有任何容量，每个插入必须等待另一个线程移除，反之亦然。
+有了这样的功能，就为多线程的排队等候的模型实现开辟了便捷通道，非常有用。">
     
     
-    <meta name="description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
+    <meta name="description" content="Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时BlockingQueue是个接口，有如下实现类：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mina多线程池">
-<meta property="og:url" content="http://www.52ff.cc/2012/02/15/mina多线程池/index.html">
+<meta property="og:title" content="JAVA多线程第10篇(阻塞队列和栈)">
+<meta property="og:url" content="http://www.52ff.cc/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/index.html">
 <meta property="og:site_name" content="flyfish's Blog">
-<meta property="og:description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
+<meta property="og:description" content="Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时BlockingQueue是个接口，有如下实现类：">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mina多线程池">
-<meta name="twitter:description" content="mina服务端的通信过程如下 1 、通过 SocketAcceptor 同客户端建立连接 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义">
+<meta name="twitter:title" content="JAVA多线程第10篇(阻塞队列和栈)">
+<meta name="twitter:description" content="Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时BlockingQueue是个接口，有如下实现类：">
 
     
     <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
@@ -81,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2012/02/15/mina多线程池/" title="mina多线程池" itemprop="url">mina多线程池</a>
+      <a href="/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/" title="JAVA多线程第10篇(阻塞队列和栈)" itemprop="url">JAVA多线程第10篇(阻塞队列和栈)</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2012-02-15T02:51:08.000Z" itemprop="datePublished"> 发表于 2012-02-15</time>
+    <time datetime="2015-03-15T12:53:09.000Z" itemprop="datePublished"> 发表于 2015-03-15</time>
     
   </p>
 </header>
@@ -101,12 +106,36 @@
 		
 		</div>
 		
-		<p>mina服务端的通信过程如下<br> 1 、通过 SocketAcceptor 同客户端建立连接<br> 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的<br> 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议；<br> 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程<br> 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。</p>
+		<p>Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。<br>BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时<br>BlockingQueue是个接口，有如下实现类：</p>
+<pre><code><span class="bullet">1. </span>ArrayBlockQueue：一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象必须明确大小，像数组一样。
+<span class="bullet">2. </span>LinkedBlockQueue：一个可改变大小的阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象如果没有明确大小，默认值是Integer.MAX_VALUE。链接队列的吞吐量通常要高于基于数组的队列，但是在大多数并发应用程序中，其可预知的性能要低。 
+<span class="bullet">3. </span>PriorityBlockingQueue：类似于LinkedBlockingQueue，但其所含对象的排序不是FIFO，而是依据对象的自然排序顺序或者是构造函数所带的Comparator决定的顺序。
+<span class="bullet">4. </span>SynchronousQueue：同步队列。同步队列没有任何容量，每个插入必须等待另一个线程移除，反之亦然。
+</code></pre><p>有了这样的功能，就为多线程的排队等候的模型实现开辟了便捷通道，非常有用。</p>
 <a id="more"></a>
-<p>Mina 的多级线程池<br>在基于 SocketAcceptor 的应用程序中运行过程中 Mina 框架本身会有两种类型的线程在运行<br>一种是在SocketAcceptor 中创建的用于监听并接收来自客户端请求的线程。还有一类线程是处理客户端与服务器端 I/O 的线程即 Processor 的处理线程。后面还有第三类，就是过滤器层的线程。<br>这个多级的概念后面你会体会到Acceptor 是一级线程池而 Processor 的线程池主要通过 ExecutorFileter 进行添加当然可以添加多个层次的线程池。下面逐层进行讲解。</p>
-<p>第一类线程池<br>当调用 SocketAcceptor 的 bind 方法时默认会创建一个名称前缀为 SocketAcceptor 的线程该线程负责监听来自客户端的请求如果接收到客户端的请求它仅仅是为处理这个请求做好准备而把具体处理请求以及I/O 的任务代理给 SocketIoProcessor 让它去处理请求。这个准备过程主要是为接受到的请求创建一个   IoSession 并构建出 IoFilter 链然后把准备好的数据以及来自客户端的请求交给 SocketIoProcessor 处理。通常 这类线程会针对每一次的 bind 调用创建一个新的线程。 请注意 “通常 ” 二字使用这两个字说明上述的行为不是绝对的。的确这不是绝对的这取决于SocketAcceptor 的字段 executor 的实现可以通过构造方法来设置字段 executor 的值 executor 字段的类型为 java.util.concurrent.Executor 。 mina 默认是用 org.apache.mina.util.NewThreadExecutor 它会为每一个提交的任务创建一个新的线程。因为在 bind 方法中它会把实现监听客户端请求任务的 Runnable 提交到 executor中去执行。注意千万不要使用一个不创建新线程而是在原线程中执行的 Executor 这会使程序无法监听客户端的请求因为程序中的唯一线程会被 Selector.get() 方法所阻塞详情可以查看 SocketAcceptor 类的源代码。</p>
-<p>第二类线程池<br> 当 SocketAcceptor 收到了来自客户端的请求它就会把此请求丢给 SocketIoProcessor 去处理这会创建名称以 SocketAcceptorIoProcessor 为前缀的线程 mina 框架在这类线程中处理 I/O 发布并处理事件。这一类线程的数量可以通过 SocketAcceptor 的构造函数来设置。具体的值可以根据应用的具体需求来决定。 作为 I/O 真正处理的线程存在于服务器端和客户端用来处理 I/O 的读写操作线程的数量是可以配置的默认最大数量是 CPU 个数 +1 。 在服务器端中在创建 SocketAcceptor 的时候指定 ProcessorCount 。<br>SocketAcceptor acceptor = new SocketAcceptor(Runtime.getRuntime().availableProcessors() + 1, Executors.newCachedThreadPool()); NioProcessor 虽然是多线程但是对与一个连接的时候业务处理只会使用一个线程进行处理 Processor线程对于一个客户端连接只使用一个线程 NioProcessor-n 如果 handler 的业务比较耗时会导致NioProcessor 线程堵塞 在 2 个客户端同时连接上来的时候会创建第 2 个前提是第 1 个 NioProcessor 正在忙创建的最大数量由 Acceptor 构造方法的时候指定。如果一个客户端连接同服务器端有很多通信并且I/O 的开销不大但是 Handler 处理的业务时间比较长那么需要采用独立的线程模式在 FilterChain 的最后增加一个 ExecutorFitler 这个就是第三类线程池了。</p>
-<p>第三类线程池<br>上述的两类线程是 mina 框架本身所创建的如果你的应用每次处理请求的时间较长而又希望应用能够有较好的响应性那么最好是把处理业务逻辑的任务放到一个新的线程中去执行而不是在 mina 框架创建的线程中去执行。 mina 框架本身提供了一个过滤器 ExecutorFilter 来完成这样的任务它会把在此之后的过滤器以及IoHandler 中处理业务逻辑的代码放到一个新的线程中去执行。当 mina 框架中的第二类线程执行完此过滤器后就会立即返回可以用于处理新的请求。如果不想使用此过滤器还可以设置 mina 的线程模型来达到相同的效果其实线程模型也是使用 ExecutorFilter 实现的。但需要注意的是在 mina 2.0 版本中已经废弃了线程模型。 使用类这三次线程池性能可以得到保证了在本项目中主要配置了第二类线程池和第三类线程池。第二类线程池在新建 NioAcceptor 对象以建立 TCP 监听服务器为例时候在其构造函数中体现而这个数值需要多次测试来设定其测试方法在国外网站有完整表述请自行 Google 第三类线程池设定在 Apache Mina 的过滤器层一般而言只需要设置一层设置在最消耗时间的业务前面如比较复杂的解码或者是数据库访问模块。 关于共享线程池问题 Apache Mina 有个官方说法你可以想让 IoServices 和 ExecutorFilters 共享一个线程池而不是一家一个。这个是不禁止的但是会出现很多问题在这种情况下除非你为 IoServices 建立一个缓冲线程池。 本人尚未考究。</p>
+<p>下面使用ArrayBlockQueue来实现之前实现过的生产者消/费者模式<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/** 定义一个盘子类，可以放鸡蛋和取鸡蛋 */  </span><br><span class="line">public class BigPlate &#123;  </span><br><span class="line">  </span><br><span class="line">    /** 装鸡蛋的盘子，大小为<span class="number">5</span> */  </span><br><span class="line">    private BlockingQueue&lt;Object&gt; eggs = new ArrayBlockingQueue&lt;Object&gt;(<span class="number">5</span>);  </span><br><span class="line">      </span><br><span class="line">    /** 放鸡蛋 */  </span><br><span class="line">    public void putEgg(Object egg) &#123;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            eggs.put(egg);// 向盘子末尾放一个鸡蛋，如果盘子满了，当前线程阻塞  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        // 下面输出有时不准确，因为与put操作不是一个原子操作  </span><br><span class="line">        System.out.println(<span class="string">"放入鸡蛋"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    /** 取鸡蛋 */  </span><br><span class="line">    public Object <span class="function"><span class="title">getEgg</span></span>() &#123;  </span><br><span class="line">        Object egg = null;  </span><br><span class="line">        try &#123;  </span><br><span class="line">            egg = eggs.take();// 从盘子开始取一个鸡蛋，如果盘子空了，当前线程阻塞  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        // 下面输出有时不准确，因为与take操作不是一个原子操作  </span><br><span class="line">        System.out.println(<span class="string">"拿到鸡蛋"</span>);  </span><br><span class="line">        <span class="built_in">return</span> egg;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    /** 放鸡蛋线程 */  </span><br><span class="line">    static class AddThread extends Thread &#123;  </span><br><span class="line">        private BigPlate plate;  </span><br><span class="line">        private Object egg = new Object();  </span><br><span class="line">  </span><br><span class="line">        public AddThread(BigPlate plate) &#123;  </span><br><span class="line">            this.plate = plate;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">            plate.putEgg(egg);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    /** 取鸡蛋线程 */  </span><br><span class="line">    static class GetThread extends Thread &#123;  </span><br><span class="line">        private BigPlate plate;  </span><br><span class="line">  </span><br><span class="line">        public GetThread(BigPlate plate) &#123;  </span><br><span class="line">            this.plate = plate;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        public void <span class="function"><span class="title">run</span></span>() &#123;  </span><br><span class="line">            plate.getEgg();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        BigPlate plate = new BigPlate();  </span><br><span class="line">        // 先启动<span class="number">10</span>个放鸡蛋线程  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;  </span><br><span class="line">            new Thread(new AddThread(plate)).start();  </span><br><span class="line">        &#125;  </span><br><span class="line">        // 再启动<span class="number">10</span>个取鸡蛋线程  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;  </span><br><span class="line">            new Thread(new GetThread(plate)).start();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<pre><code>放入鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+拿到鸡蛋  
+放入鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+放入鸡蛋  
+拿到鸡蛋  
+放入鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+拿到鸡蛋  
+</code></pre><p>从结果看，启动10个放鸡蛋线程和10个取鸡蛋线程，前5个放入鸡蛋的线程成功执行，到第6个，发现盘子满了，阻塞住，这时切换到取鸡蛋线程执行，成功实现了生产者/消费者模式。</p>
+<p>对于阻塞栈，与阻塞队列相似。不同点在于栈是“后入先出”的结构，每次操作的是栈顶，而队列是“先进先出”的结构，每次操作的是队列头。<br>下面是一个简单例子：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class Test &#123; </span><br><span class="line">        public static void main(String[] args) throws InterruptedException &#123; </span><br><span class="line">                BlockingDeque bDeque = new LinkedBlockingDeque(<span class="number">20</span>); </span><br><span class="line">                <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">30</span>; i++) &#123; </span><br><span class="line">                        //将指定元素添加到此阻塞栈中，如果没有可用空间，将一直等待（如果有必要）。 </span><br><span class="line">                        bDeque.putFirst(i); </span><br><span class="line">                        System.out.println(<span class="string">"向阻塞栈中添加了元素:"</span> + i); </span><br><span class="line">                &#125; </span><br><span class="line">                System.out.println(<span class="string">"程序到此运行结束，即将退出----"</span>); </span><br><span class="line">        &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -120,7 +149,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/nio/">nio</a>
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
   </div>
 
 </div>
@@ -129,7 +158,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2012/02/15/mina多线程池/" data-title="mina多线程池 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/" data-title="JAVA多线程第10篇(阻塞队列和栈) | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -143,19 +172,27 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/02/09/java多线程第一篇/" title="JAVA多线程第一篇(概念和启动线程)">
+ <a href="/2015/03/18/hello-blog/" title="hello Blog">
   <strong>上一篇：</strong><br/>
   <span>
-  JAVA多线程第一篇(概念和启动线程)</span>
+  hello Blog</span>
 </a>
 </div>
 
+
+<div class="next">
+<a href="/2015/03/14/JAVA多线程第九篇-Condition/"  title="JAVA多线程第九篇(条件变量Condition)">
+ <strong>下一篇：</strong><br/> 
+ <span>JAVA多线程第九篇(条件变量Condition)
+</span>
+</a>
+</div>
 
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2012/02/15/mina多线程池/" data-title="mina多线程池" data-url="http://www.52ff.cc/2012/02/15/mina多线程池/"></div>
+	<div class="ds-thread" data-thread-key="2015/03/15/JAVA多线程第10篇-阻塞队列和栈/" data-title="JAVA多线程第10篇(阻塞队列和栈)" data-url="http://www.52ff.cc/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/"></div>
 </section>
 
 
