@@ -83,6 +83,72 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/03/23/java.nio.Buffer研究笔记/" title="java.nio.Buffer研究笔记" itemprop="url">java.nio.Buffer研究笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-23T06:22:26.000Z" itemprop="datePublished"> 发表于 2015-03-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>每当你需要传输数据时,一个缓冲区是必要的。Java NIO API中缓冲区的类主要是Buffer。Buffer是一个包装了基本数据元素数组的对象，它以及它的子类定义了一系列API用于处理数据缓存。其中最重要的子类是ByteBuffer。</p>
+<p>Netty的ByteBuf对jdk自带的缓冲区进行了重新设计和优化，Mina的IoBuffer对ByteBuffer进行了封装优化,它们比JDK自带的缓冲区实现更优秀。</p>
+<p>本文用于记录java.nio.Buffer的概念结构，也是为了备忘。<br>最后的目的还是为了更好的学习理解Netty的ByteBuf。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/23/java.nio.Buffer研究笔记/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/netty/">netty</a><a href="/tags/nio/">nio</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/23/java.nio.Buffer研究笔记/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/23/java.nio.Buffer研究笔记/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/03/22/Redis的Master-Slave模式/" title="Redis的Master-Slave模式" itemprop="url">Redis的Master-Slave模式</a>
   </h1>
   <p class="article-author">By
@@ -143,268 +209,6 @@
 
    
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/18/hello-blog/" title="hello Blog" itemprop="url">hello Blog</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-17T16:14:01.000Z" itemprop="datePublished"> 发表于 2015-03-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>学习领悟一个知识，较长一段时间未接触，是否感觉忘了大半，一时间想不出所以然？<br>学完的知识如果不使用或者不常常回顾，那么还不是自己的知识。<br>自己写的代码，6个月不看就是别人的代码。<br>所以要记下来自己学习过的东西方便自己查看和总结.<br><br>                </p>
-<hr>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/18/hello-blog/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/随笔生活/">随笔生活</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/18/hello-blog/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/18/hello-blog/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/" title="JAVA多线程第十篇(阻塞队列和栈)" itemprop="url">JAVA多线程第十篇(阻塞队列和栈)</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-15T12:53:09.000Z" itemprop="datePublished"> 发表于 2015-03-15</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。<br>BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时<br>BlockingQueue是个接口，有如下实现类：</p>
-<pre><code><span class="bullet">1. </span>ArrayBlockQueue：一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象必须明确大小，像数组一样。
-<span class="bullet">2. </span>LinkedBlockQueue：一个可改变大小的阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。创建其对象如果没有明确大小，默认值是Integer.MAX_VALUE。链接队列的吞吐量通常要高于基于数组的队列，但是在大多数并发应用程序中，其可预知的性能要低。 
-<span class="bullet">3. </span>PriorityBlockingQueue：类似于LinkedBlockingQueue，但其所含对象的排序不是FIFO，而是依据对象的自然排序顺序或者是构造函数所带的Comparator决定的顺序。
-<span class="bullet">4. </span>SynchronousQueue：同步队列。同步队列没有任何容量，每个插入必须等待另一个线程移除，反之亦然。
-</code></pre><p>有了这样的功能，就为多线程的排队等候的模型实现开辟了便捷通道，非常有用。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/15/JAVA多线程第10篇-阻塞队列和栈/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/15/JAVA多线程第10篇-阻塞队列和栈/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/14/JAVA多线程第九篇-Condition/" title="JAVA多线程第九篇(条件变量Condition)" itemprop="url">JAVA多线程第九篇(条件变量Condition)</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-14T12:30:27.000Z" itemprop="datePublished"> 发表于 2015-03-14</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>条件变量是Java5线程中很重要的一个概念，顾名思义，条件变量就是表示条件的一种变量。但是必须说明，这里的条件是没有实际含义的，仅仅是个标记而已，并且条件的含义往往通过代码来赋予其含义。</p>
-<p>条件变量都实现了java.util.concurrent.locks.Condition接口，条件变量的实例化是通过一个Lock对象上调用newCondition()方法来获取的，这样，条件就和一个锁对象绑定起来了。因此，Java中的条件变量只能和锁配合使用，来控制并发程序访问竞争资源的安全。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/14/JAVA多线程第九篇-Condition/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/14/JAVA多线程第九篇-Condition/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/14/JAVA多线程第九篇-Condition/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/13/JAVA多线程第八篇-锁对象Lock/" title="JAVA多线程第八篇(锁对象Lock)" itemprop="url">JAVA多线程第八篇(锁对象Lock)</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-13T13:45:28.000Z" itemprop="datePublished"> 发表于 2015-03-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>在Java5中，专门提供了锁对象，利用锁可以方便的实现资源的封锁，用来控制对竞争资源并发访问的控制，这些内容主要集中在java.util.concurrent.locks 包下面，里面有三个重要的接口Condition、Lock、ReadWriteLock。</p>
-<pre><code>Condition 将 Object 监视器方法（<span class="built_in">wait</span>、notify 和 notifyAll）分解成截然不同的对象，以便通过将这些对象与任意 Lock 实现组合使用，为每个对象提供多个等待 <span class="built_in">set</span> （<span class="built_in">wait</span>-<span class="built_in">set</span>）。
-Lock 实现提供了比使用 synchronized 方法和语句可获得的更广泛的锁定操作。
-ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一个用于写入操作。
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/13/JAVA多线程第八篇-锁对象Lock/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/13/JAVA多线程第八篇-锁对象Lock/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/13/JAVA多线程第八篇-锁对象Lock/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
     <article class="post-expand photo" itemprop="articleBody"> 
         <header class="article-info clearfix">
   <h1 itemprop="name">
@@ -440,11 +244,6 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 </div>
 
 
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/［宝宝］/">［宝宝］</a>
-  </div>
-
 </div>
 
 
@@ -473,25 +272,26 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/12/JAVA多线程第七篇-Callable和Future/" title="JAVA多线程第七篇(Callable和Future)" itemprop="url">JAVA多线程第七篇(Callable和Future)</a>
+      <a href="/2015/03/12/Java编程中为了性能尽量要做到的一些地方/" title="Java编程中为性能注意的地方" itemprop="url">Java编程中为性能注意的地方</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-12T13:36:49.000Z" itemprop="datePublished"> 发表于 2015-03-12</time>
+    <time datetime="2015-03-12T09:32:47.000Z" itemprop="datePublished"> 发表于 2015-03-12</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <p>接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一个简单的例子：<br>
+        <p>系统运行一段时间老是内存溢出，除了增加启动内存外，还应该好好review一下我们的代码，有很多代码编写过于随意化，这些不好的习惯或对程序语言的不了解是应该好好打压打压了。</p>
+<p>下面是参考网络资源总结的一些在Java编程中尽可能要做到的一些地方。<br>
         
         
         <p class="article-more-link">
           
-            <a href="/2015/03/12/JAVA多线程第七篇-Callable和Future/#more">阅读更多</a>
+            <a href="/2015/03/12/Java编程中为了性能尽量要做到的一些地方/#more">阅读更多</a>
           
        </p>
     </div>
@@ -506,7 +306,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  <span></span> <a href="/tags/java/">java</a>
   </div>
 
 </div>
@@ -517,7 +317,201 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 <div class="comments-count">
 	
 	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/12/JAVA多线程第七篇-Callable和Future/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/12/JAVA多线程第七篇-Callable和Future/" data-count-type="comments">&nbsp;</a>
+		<a href="http://www.52ff.cc/2015/03/12/Java编程中为了性能尽量要做到的一些地方/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/12/Java编程中为了性能尽量要做到的一些地方/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/12/wap网页css技巧篇1/" title="wap网页css技巧篇1" itemprop="url">wap网页css技巧篇1</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-12T03:51:08.000Z" itemprop="datePublished"> 发表于 2015-03-12</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/12/wap网页css技巧篇1/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/前端技术/">前端技术</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/css/">css</a><a href="/tags/html5/">html5</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/12/wap网页css技巧篇1/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/11/一个简陋的RPC框架/" title="一个简陋的RPC框架" itemprop="url">一个简陋的RPC框架</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-11T07:03:28.000Z" itemprop="datePublished"> 发表于 2015-03-11</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>简易描述RPC的基本工作原理：服务器启动了一个线程监听 Socket 端口, 有Socket访问了, 反序列化解析出<br>调用的Service 和method, 以及传入的参数,再用Socket 写回去。</p>
+<p>客户端利用jdk的Proxy生成了一个代理类,在创建Proxy 时建立与服务器的Socket连接.<br>调用Proxy的方法时,向服务器发送数据,等待结果返回。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/11/一个简陋的RPC框架/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/RPC远程调用/">RPC远程调用</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/11/一个简陋的RPC框架/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/11/一个简陋的RPC框架/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/11/FastDFS常见命令/" title="FAST基础命令安装配置" itemprop="url">FAST基础命令安装配置</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-11T06:20:08.000Z" itemprop="datePublished"> 发表于 2015-03-11</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。</p>
+<p>它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/11/FastDFS常见命令/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/分布式文件存储/">分布式文件存储</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/fastdfs/">fastdfs</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/11/FastDFS常见命令/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/11/FastDFS常见命令/" data-count-type="comments">&nbsp;</a>
 	
 </div>
 
@@ -548,7 +542,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>17</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>18</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -575,25 +569,25 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
 		
-			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+			<li><a href="/tags/nio/" title="nio">nio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
 		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
 		
-			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 		
 			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
 		
-			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
-		
-			<li><a href="/tags/［宝宝］/" title="［宝宝］">［宝宝］<sup>1</sup></a></li>
-		
-			<li><a href="/tags/［netty-nio］/" title="［netty nio］">［netty nio］<sup>1</sup></a></li>
-		
-			<li><a href="/tags/nio/" title="nio">nio<sup>1</sup></a></li>
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
 		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/tags/［sql］/" title="［sql］">［sql］<sup>1</sup></a></li>
+			<li><a href="/tags/［linux］/" title="［linux］">［linux］<sup>1</sup></a></li>
+		
+			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -602,7 +596,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

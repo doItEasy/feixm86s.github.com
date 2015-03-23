@@ -1,0 +1,566 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>开发需掌握的linux命令小记 | flyfish&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="xiangming">
+    
+    <meta name="description" content="文件相关
+文件拷贝
+
+参数：cp -l file1 file2 创建硬链接cp -s file1 file2 创建软链接cp -r d1 d2 递归持续复制，用于目录的复制行为；mv test.log test1.txt 文件改名mv test1.txt test3 将test1.txt文件移到目录">
+    
+    
+    <meta name="description" content="文件相关
+文件拷贝
+
+参数：cp -l file1 file2 创建硬链接cp -s file1 file2 创建软链接cp -r d1 d2 递归持续复制，用于目录的复制行为；mv test.log test1.txt 文件改名mv test1.txt test3 将test1.txt文件移到目录test3中mv  ../移动当前文件夹下的所有文件到上一级目录mv test3/.txt test">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发需掌握的linux命令小记">
+<meta property="og:url" content="http://www.52ff.cc/2015/02/23/开发人员需掌握的linux命令/index.html">
+<meta property="og:site_name" content="flyfish's Blog">
+<meta property="og:description" content="文件相关
+文件拷贝
+
+参数：cp -l file1 file2 创建硬链接cp -s file1 file2 创建软链接cp -r d1 d2 递归持续复制，用于目录的复制行为；mv test.log test1.txt 文件改名mv test1.txt test3 将test1.txt文件移到目录test3中mv  ../移动当前文件夹下的所有文件到上一级目录mv test3/.txt test">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="开发需掌握的linux命令小记">
+<meta name="twitter:description" content="文件相关
+文件拷贝
+
+参数：cp -l file1 file2 创建硬链接cp -s file1 file2 创建软链接cp -r d1 d2 递归持续复制，用于目录的复制行为；mv test.log test1.txt 文件改名mv test1.txt test3 将test1.txt文件移到目录test3中mv  ../移动当前文件夹下的所有文件到上一级目录mv test3/.txt test">
+
+    
+    <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="flyfish&#39;s Blog" title="flyfish&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="flyfish&#39;s Blog">flyfish&#39;s Blog</a></h1>
+				<h2 class="blog-motto">才华配不上梦想就是所谓的迷茫</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="https://github.com/feixm86s">github</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.52ff.cc">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/23/开发人员需掌握的linux命令/" title="开发需掌握的linux命令小记" itemprop="url">开发需掌握的linux命令小记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-23T02:13:12.000Z" itemprop="datePublished"> 发表于 2015-02-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文件相关"><span class="toc-number">1.</span> <span class="toc-text">文件相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络相关"><span class="toc-number">2.</span> <span class="toc-text">网络相关</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="文件相关">文件相关</h2><ul>
+<li>文件拷贝</li>
+</ul>
+<p>参数：<br>cp -l file1 file2 创建硬链接<br>cp -s file1 file2 创建软链接<br>cp -r d1 d2 递归持续复制，用于目录的复制行为；<br>mv test.log test1.txt 文件改名<br>mv test1.txt test3 将test1.txt文件移到目录test3中<br>mv <em> ../移动当前文件夹下的所有文件到上一级目录<br>mv test3/</em>.txt test5 把当前目录的一个子目录里的文件移动到另一个子目录里<br>mv dir1 dir2 目录的移动<br>rz 上传文件<br>sz 下载文件</p>
+<ul>
+<li>远程文件拷贝</li>
+</ul>
+<p>rcp通过rsh方式远端复制文件或目录。<br>scp通过ssh方式远端复制文件或目录</p>
+<p>语法：rcp [-pr][源文件或目录][目标文件或目录] 或 scp [-pr][源文件或目录…][目标文件] </p>
+<p>例如：<br>scp /home/user/hosts.list  user@ip:/home/user/<br>scp user@ip:/home/user/hosts.list  /home/user/</p>
+<ul>
+<li>内容查看</li>
+</ul>
+<p>cat -n file1 查看整个文件，同时显示行号<br>grep 进行匹配输出<br>tail -100f file1 显示文件file1最后100行<br>sort 对文本文件进行行排序</p>
+<ul>
+<li>文件解压缩<br>zip -r test.zip test 递归压缩目录<br>unzip test.zip 解压<br>tar -tf test.tar 列出test.tar 内容，不解压<br>tar -xvf test.tar 解压<br>tar -zxvf test.tgz 解压gzip压缩过的tar文件</li>
+</ul>
+<h2 id="网络相关">网络相关</h2><ul>
+<li><p>Netstat</p>
+<p>用于显示各种网络相关信息，如网络连接，路由表，接口状态 (Interface Statistics)</p>
+<p>  常见参数<br>  -a (all)显示所有选项，默认不显示LISTEN相关<br>  -t (tcp)仅显示tcp相关选项<br>  -u (udp)仅显示udp相关选项<br>  -n 拒绝显示别名，能显示数字的全部转化成数字。<br>  -l 仅列出有在 Listen (监听) 的服務状态<br>  -p 显示建立相关链接的程序名<br>  -r 显示路由信息，路由表<br>  -e 显示扩展信息，例如uid等<br>  -s 按各个协议进行统计<br>  -c 每隔一个固定时间，执行该netstat命令。<br>  提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到</p>
+</li>
+</ul>
+<pre><code>列出所有端口 netstat -a
+列出所有 tcp 端口 netstat -at
+列出所有 udp 端口 netstat -au
+只显示监听端口 netstat -<span class="keyword">l</span>
+只列出所有监听 UNIX 端口 netstat -lx
+显示TCP或UDP 端口的统计信息 netstat -<span class="keyword">st</span> 或 -<span class="keyword">su</span>
+显示核心路由信息 netstat -<span class="literal">r</span>
+找出运行在指定端口的进程 netstat -<span class="keyword">an</span>|grep 8080 或 netstat -anpt|grep 8080
+</code></pre><ul>
+<li>tcpdump</li>
+</ul>
+<p>用简单的话来定义tcpdump，就是：dump the traffic on a network，根据使用者的定义对网络上的数据包进行截获的包分析工具。 tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。</p>
+<p>截获所有210.27.48.1 的主机收到的和发出的所有的数据包<br>tcpdump host 210.27.48.1</p>
+<p>截获主机210.27.48.1 和主机210.27.48.2 的通信<br>tcpdump host 210.27.48.1 and 210.27.48.2 </p>
+<p>详见：<a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html" target="_blank" rel="external">http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/［linux］/">［linux］</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.52ff.cc/2015/02/23/开发人员需掌握的linux命令/" data-title="开发需掌握的linux命令小记 | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/03/03/JAVA多线程第八篇-锁对象Lock/" title="JAVA多线程第八篇(锁对象Lock)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  JAVA多线程第八篇(锁对象Lock)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/02/22/写了个异或加密小程序/"  title="写了个异或加密小程序">
+ <strong>下一篇：</strong><br/> 
+ <span>写了个异或加密小程序
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/02/23/开发人员需掌握的linux命令/" data-title="开发需掌握的linux命令小记" data-url="http://www.52ff.cc/2015/02/23/开发人员需掌握的linux命令/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文件相关"><span class="toc-number">1.</span> <span class="toc-text">文件相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络相关"><span class="toc-number">2.</span> <span class="toc-text">网络相关</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>18</sup></a></li>
+		
+			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
+		
+			<li><a href="/categories/sql数据库/" title="sql数据库">sql数据库<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分布式文件存储/" title="分布式文件存储">分布式文件存储<sup>1</sup></a></li>
+		
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		
+			<li><a href="/categories/记录分享/" title="记录分享">记录分享<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
+		
+			<li><a href="/tags/nio/" title="nio">nio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
+		
+			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
+		
+			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+		
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/［linux］/" title="［linux］">［linux］<sup>1</sup></a></li>
+		
+			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://dcloudio.github.io/mui/" target="_blank" title="MUI webapp框架">MUI webapp框架</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="www.jianshu.com" target="_blank" title="简书">简书</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dev.mopo.com/" target="_blank" title="冒泡开发者平台">冒泡开发者平台</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.jq22.com/" target="_blank" title="JQuery插件库">JQuery插件库</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://115.236.18.195:9300/" target="_blank" title="cms">cms</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://expo.bootcss.com/" target="_blank" title="bootstrap优站">bootstrap优站</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m fei xiangming  in hangzhou. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/feixm86s" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:feixm86s@126.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://www.52ff.cc/about" target="_blank" title="xiangming">xiangming</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"flydev"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F60d4b1ddeb623022666b3054d653ecbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>

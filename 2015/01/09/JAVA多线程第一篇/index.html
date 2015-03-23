@@ -1,0 +1,545 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>JAVA多线程第一篇(概念和启动线程) | flyfish&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="xiangming">
+    
+    <meta name="description" content="进程和线程操作系统中线程和进程进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。
+线程是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属">
+    
+    
+    <meta name="description" content="进程和线程操作系统中线程和进程进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。
+线程是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属于某个进程，进程中的多个线程共享进程的内存。
+“同时”执行是人的感觉，在线程之间实际上轮换执行。
+J">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA多线程第一篇(概念和启动线程)">
+<meta property="og:url" content="http://www.52ff.cc/2015/01/09/JAVA多线程第一篇/index.html">
+<meta property="og:site_name" content="flyfish's Blog">
+<meta property="og:description" content="进程和线程操作系统中线程和进程进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。
+线程是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属于某个进程，进程中的多个线程共享进程的内存。
+“同时”执行是人的感觉，在线程之间实际上轮换执行。
+J">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA多线程第一篇(概念和启动线程)">
+<meta name="twitter:description" content="进程和线程操作系统中线程和进程进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。
+线程是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属于某个进程，进程中的多个线程共享进程的内存。
+“同时”执行是人的感觉，在线程之间实际上轮换执行。
+J">
+
+    
+    <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="flyfish&#39;s Blog" title="flyfish&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="flyfish&#39;s Blog">flyfish&#39;s Blog</a></h1>
+				<h2 class="blog-motto">才华配不上梦想就是所谓的迷茫</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="https://github.com/feixm86s">github</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.52ff.cc">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/01/09/JAVA多线程第一篇/" title="JAVA多线程第一篇(概念和启动线程)" itemprop="url">JAVA多线程第一篇(概念和启动线程)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-01-08T17:52:33.000Z" itemprop="datePublished"> 发表于 2015-01-09</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程和线程"><span class="toc-number">1.</span> <span class="toc-text">进程和线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统中线程和进程"><span class="toc-number">1.1.</span> <span class="toc-text">操作系统中线程和进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java中的线程"><span class="toc-number">1.2.</span> <span class="toc-text">Java中的线程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程启动"><span class="toc-number">2.</span> <span class="toc-text">线程启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">3.</span> <span class="toc-text">FAQ</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="进程和线程">进程和线程</h2><h3 id="操作系统中线程和进程">操作系统中线程和进程</h3><p>进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。</p>
+<p>线程是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属于某个进程，进程中的多个线程共享进程的内存。</p>
+<p>“同时”执行是人的感觉，在线程之间实际上轮换执行。</p>
+<h3 id="Java中的线程">Java中的线程</h3><p>在Java中，“线程”指两件不同的事情：<br>1、java.lang.Thread类的一个实例；<br>2、线程的执行。</p>
+<p>使用java.lang.Thread类或者java.lang.Runnable接口编写代码来定义、实例化和启动新线程。</p>
+<p>一个Thread类实例只是一个对象，像Java中的任何其他对象一样，具有变量和方法，生死于堆上。</p>
+<p>Java中，每个线程都有一个调用栈，即使不在程序中创建任何新的线程，线程也在后台运行着。</p>
+<p>一个Java应用总是从main()方法开始运行，mian()方法运行在一个线程内，它被称为主线程。</p>
+<p>一旦创建一个新的线程，就产生一个新的调用栈。</p>
+<p>线程总体分两类：用户线程和守候线程。</p>
+<p>当所有用户线程执行完毕的时候，JVM自动关闭。但是守候线程却不独立于JVM，守候线程一般是由操作系统或者用户自己创建的。</p>
+<h2 id="线程启动">线程启动</h2><p>1.实现Runnable接口<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class DoSomething implements Runnable &#123; </span><br><span class="line">    private String name; </span><br><span class="line"></span><br><span class="line">    public DoSomething(String name) &#123; </span><br><span class="line">        this.name = name; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">for</span> (long k = <span class="number">0</span>; k &lt; <span class="number">100000000</span>; k++) ; </span><br><span class="line">            System.out.println(name + <span class="string">": "</span> + i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        DoSomething ds1 = new DoSomething(<span class="string">"阿三"</span>); </span><br><span class="line">        DoSomething ds2 = new DoSomething(<span class="string">"李四"</span>); </span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(ds1); </span><br><span class="line">        Thread t2 = new Thread(ds2); </span><br><span class="line"></span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.继承thread类<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class TestThread extends Thread&#123; </span><br><span class="line">    public TestThread(String name) &#123; </span><br><span class="line">        super(name); </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123; </span><br><span class="line">            <span class="keyword">for</span>(long k= <span class="number">0</span>; k &lt;<span class="number">100000000</span>;k++); </span><br><span class="line">            System.out.println(this.getName()+<span class="string">" :"</span>+i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        Thread t1 = new TestThread(<span class="string">"阿三"</span>); </span><br><span class="line">        Thread t2 = new TestThread(<span class="string">"李四"</span>); </span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="FAQ">FAQ</h2><p>1、线程都可以设置名字，也可以获取线程的名字，连主线程也不例外。<br>2、获取当前线程的对象的方法是：Thread.currentThread()；<br>3、在一系列线程以某种顺序启动并不意味着将按该顺序执行。对于任何一组启动的线程来说，调度程序不能保证其执行次序，持续时间也无法保证。<br>4、当线程目标run()方法结束时该线程完成。<br>5、一旦线程启动，它就永远不能再重新启动。只有一个新的线程可以被启动，并且只能一次。一个可运行的线程或死线程可以被重新启动。<br>6、线程的调度是JVM的一部分，在一个CPU的机器上上，实际上一次只能运行一个线程。一次只有一个线程栈执行。JVM线程调度程序决定实际运行哪个处于可运行状态的线程。众多可运行线程中的某一个会被选中做为当前线程。可运行线程被选择运行的顺序是没有保障的。<br>7、尽管通常采用队列形式，但这是没有保障的。队列形式是指当一个线程完成“一轮”时，它移到可运行队列的尾部等待，直到它最终排队到该队列的前端为止，它才能被再次选中。事实上，我们把它称为可运行池而不是一个可运行队列，目的是帮助认识线程并不都是以某种有保障的顺序排列唱呢个一个队列的事实。<br>8、尽管我们没有无法控制线程调度程序，但可以通过别的方式来影响线程调度的方式。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.52ff.cc/2015/01/09/JAVA多线程第一篇/" data-title="JAVA多线程第一篇(概念和启动线程) | flyfish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/01/12/JAVA多线程第二篇（状态转换）/" title="JAVA多线程第二篇(状态转换)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  JAVA多线程第二篇(状态转换)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2012/02/15/mina多线程池/"  title="mina多线程池">
+ <strong>下一篇：</strong><br/> 
+ <span>mina多线程池
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/01/09/JAVA多线程第一篇/" data-title="JAVA多线程第一篇(概念和启动线程)" data-url="http://www.52ff.cc/2015/01/09/JAVA多线程第一篇/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程和线程"><span class="toc-number">1.</span> <span class="toc-text">进程和线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统中线程和进程"><span class="toc-number">1.1.</span> <span class="toc-text">操作系统中线程和进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java中的线程"><span class="toc-number">1.2.</span> <span class="toc-text">Java中的线程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程启动"><span class="toc-number">2.</span> <span class="toc-text">线程启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">3.</span> <span class="toc-text">FAQ</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>18</sup></a></li>
+		
+			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
+		
+			<li><a href="/categories/sql数据库/" title="sql数据库">sql数据库<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分布式文件存储/" title="分布式文件存储">分布式文件存储<sup>1</sup></a></li>
+		
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		
+			<li><a href="/categories/记录分享/" title="记录分享">记录分享<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
+		
+			<li><a href="/tags/nio/" title="nio">nio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
+		
+			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
+		
+			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+		
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/［linux］/" title="［linux］">［linux］<sup>1</sup></a></li>
+		
+			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://dcloudio.github.io/mui/" target="_blank" title="MUI webapp框架">MUI webapp框架</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="www.jianshu.com" target="_blank" title="简书">简书</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dev.mopo.com/" target="_blank" title="冒泡开发者平台">冒泡开发者平台</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.jq22.com/" target="_blank" title="JQuery插件库">JQuery插件库</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://115.236.18.195:9300/" target="_blank" title="cms">cms</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://expo.bootcss.com/" target="_blank" title="bootstrap优站">bootstrap优站</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m fei xiangming  in hangzhou. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/feixm86s" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:feixm86s@126.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="http://www.52ff.cc/about" target="_blank" title="xiangming">xiangming</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"flydev"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F60d4b1ddeb623022666b3054d653ecbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>
