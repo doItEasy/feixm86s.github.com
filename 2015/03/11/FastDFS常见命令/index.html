@@ -108,10 +108,10 @@
 		<p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。</p>
 <p>它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。</p>
 <a id="more"></a>
-<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
-<h3 id="关闭FastDFS">关闭FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_tracker</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_storage</span><br></pre></td></tr></table></figure>
+<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
+<h3 id="关闭FastDFS">关闭FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_tracker</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_storage</span><br></pre></td></tr></table></figure>
 <p>或者 killall fdfs_trackered(storaged)  ——-注意，千万不要使用-9强行杀死进程。</p>
-<h3 id="重启FastDFS">重启FastDFS</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_trackered</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_storaged</span><br></pre></td></tr></table></figure>
+<h3 id="重启FastDFS">重启FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_trackered</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_storaged</span><br></pre></td></tr></table></figure>
 <h3 id="查看集群情况">查看集群情况</h3><p>在任意一台storage(tracker也可以) </p>
 <pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf
 </code></pre>
@@ -248,7 +248,7 @@
 		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/tags/［linux］/" title="［linux］">［linux］<sup>1</sup></a></li>
+			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
 		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		

@@ -109,7 +109,7 @@
 <p>5、死亡态：当线程的run()方法完成时就认为它死去。这个线程对象也许是活的，但是，它已经不是一个单独执行的线程。线程一旦死亡，就不能复生。 如果在一个死去的线程上调用start()方法，会抛出java.lang.IllegalThreadStateException异常</p>
 <h2 id="阻止线程执行">阻止线程执行</h2><p>对于线程的阻止，考虑以下三个方面，不考虑IO阻塞的情况：<br>睡眠；<br>等待；<br>因为需要一个对象的锁定而被阻塞。</p>
 <h3 id="睡眠">睡眠</h3><hr>
-<p>Thread.sleep(long millis)和Thread.sleep(long millis, int nanos)静态方法强制当前正在执行的线程休眠（暂停执行），以“减慢线程”。当线程睡眠时，它入睡在某个地方，在苏醒之前不会返回到可运行状态。当睡眠时间到期，则返回到可运行状态。<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class MyThread extends Thread &#123; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> ((i) % <span class="number">10</span> == <span class="number">0</span>) &#123; </span><br><span class="line">                System.out.println(<span class="string">"-------"</span> + i); </span><br><span class="line">            &#125; </span><br><span class="line">            System.out.print(i); </span><br><span class="line">            try &#123; </span><br><span class="line">                Thread.sleep(<span class="number">1</span>); </span><br><span class="line">                System.out.print(<span class="string">"    线程睡眠1毫秒！\n"</span>); </span><br><span class="line">            &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                e.printStackTrace(); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        new MyThread().start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Thread.sleep(long millis)和Thread.sleep(long millis, int nanos)静态方法强制当前正在执行的线程休眠（暂停执行），以“减慢线程”。当线程睡眠时，它入睡在某个地方，在苏醒之前不会返回到可运行状态。当睡眠时间到期，则返回到可运行状态。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class MyThread extends Thread &#123; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> ((i) % <span class="number">10</span> == <span class="number">0</span>) &#123; </span><br><span class="line">                System.out.println(<span class="string">"-------"</span> + i); </span><br><span class="line">            &#125; </span><br><span class="line">            System.out.print(i); </span><br><span class="line">            try &#123; </span><br><span class="line">                Thread.sleep(<span class="number">1</span>); </span><br><span class="line">                System.out.print(<span class="string">"    线程睡眠1毫秒！\n"</span>); </span><br><span class="line">            &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                e.printStackTrace(); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        new MyThread().start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>注意：<br>1、线程睡眠是帮助所有线程获得运行机会的最好方法。<br>2、线程睡眠到期自动苏醒，并返回到可运行状态，不是运行状态。sleep()中指定的时间是线程不会运行的最短时间。因此，sleep()方法不能保证该线程睡眠到期后就开始执行。<br>3、sleep()是静态方法，只能控制当前正在运行的线程。</p>
 <h3 id="线程的优先级和线程让步yield()">线程的优先级和线程让步yield()</h3><hr>
 <p>线程的让步是通过Thread.yield()来实现的。yield()方法的作用是：暂停当前正在执行的线程对象，并执行其他线程。</p>
@@ -167,9 +167,9 @@
 
 
 <div class="next">
-<a href="/2015/01/09/JAVA多线程第一篇/"  title="JAVA多线程第一篇(概念和启动线程)">
+<a href="/2015/01/09/JAVA多线程第一篇/"  title="JAVA多线程第一篇(概念和启动)">
  <strong>下一篇：</strong><br/> 
- <span>JAVA多线程第一篇(概念和启动线程)
+ <span>JAVA多线程第一篇(概念和启动)
 </span>
 </a>
 </div>
@@ -242,7 +242,7 @@
 		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/tags/［linux］/" title="［linux］">［linux］<sup>1</sup></a></li>
+			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
 		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		

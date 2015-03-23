@@ -207,7 +207,7 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/05/netty笔记第一篇/" title="netty笔记第一篇" itemprop="url">netty笔记第一篇</a>
+      <a href="/2015/03/05/netty笔记第一篇/" title="netty几个核心类的概念和用法" itemprop="url">netty几个核心类的概念和用法</a>
   </h1>
   <p class="article-author">By
        
@@ -220,10 +220,12 @@
 </header>
     <div class="article-content">
         
-        <a id="more"></a>
+        <p>本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来，</p>
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/03/05/netty笔记第一篇/#more">阅读更多</a>
           
        </p>
     </div>
@@ -484,48 +486,12 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 </header>
     <div class="article-content">
         
-        <h2 id="文件相关">文件相关</h2><ul>
-<li>文件拷贝</li>
-</ul>
-<p>参数：<br>cp -l file1 file2 创建硬链接<br>cp -s file1 file2 创建软链接<br>cp -r d1 d2 递归持续复制，用于目录的复制行为；<br>mv test.log test1.txt 文件改名<br>mv test1.txt test3 将test1.txt文件移到目录test3中<br>mv <em> ../移动当前文件夹下的所有文件到上一级目录<br>mv test3/</em>.txt test5 把当前目录的一个子目录里的文件移动到另一个子目录里<br>mv dir1 dir2 目录的移动<br>rz 上传文件<br>sz 下载文件</p>
-<ul>
-<li>远程文件拷贝</li>
-</ul>
-<p>rcp通过rsh方式远端复制文件或目录。<br>scp通过ssh方式远端复制文件或目录</p>
-<p>语法：rcp [-pr][源文件或目录][目标文件或目录] 或 scp [-pr][源文件或目录…][目标文件] </p>
-<p>例如：<br>scp /home/user/hosts.list  user@ip:/home/user/<br>scp user@ip:/home/user/hosts.list  /home/user/</p>
-<ul>
-<li>内容查看</li>
-</ul>
-<p>cat -n file1 查看整个文件，同时显示行号<br>grep 进行匹配输出<br>tail -100f file1 显示文件file1最后100行<br>sort 对文本文件进行行排序</p>
-<ul>
-<li>文件解压缩<br>zip -r test.zip test 递归压缩目录<br>unzip test.zip 解压<br>tar -tf test.tar 列出test.tar 内容，不解压<br>tar -xvf test.tar 解压<br>tar -zxvf test.tgz 解压gzip压缩过的tar文件</li>
-</ul>
-<h2 id="网络相关">网络相关</h2><ul>
-<li><p>Netstat</p>
-<p>用于显示各种网络相关信息，如网络连接，路由表，接口状态 (Interface Statistics)</p>
-<p>  常见参数<br>  -a (all)显示所有选项，默认不显示LISTEN相关<br>  -t (tcp)仅显示tcp相关选项<br>  -u (udp)仅显示udp相关选项<br>  -n 拒绝显示别名，能显示数字的全部转化成数字。<br>  -l 仅列出有在 Listen (监听) 的服務状态<br>  -p 显示建立相关链接的程序名<br>  -r 显示路由信息，路由表<br>  -e 显示扩展信息，例如uid等<br>  -s 按各个协议进行统计<br>  -c 每隔一个固定时间，执行该netstat命令。<br>  提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到</p>
-</li>
-</ul>
-<pre><code>列出所有端口 netstat -a
-列出所有 tcp 端口 netstat -at
-列出所有 udp 端口 netstat -au
-只显示监听端口 netstat -<span class="keyword">l</span>
-只列出所有监听 UNIX 端口 netstat -lx
-显示TCP或UDP 端口的统计信息 netstat -<span class="keyword">st</span> 或 -<span class="keyword">su</span>
-显示核心路由信息 netstat -<span class="literal">r</span>
-找出运行在指定端口的进程 netstat -<span class="keyword">an</span>|grep 8080 或 netstat -anpt|grep 8080
-</code></pre><ul>
-<li>tcpdump</li>
-</ul>
-<p>用简单的话来定义tcpdump，就是：dump the traffic on a network，根据使用者的定义对网络上的数据包进行截获的包分析工具。 tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。</p>
-<p>截获所有210.27.48.1 的主机收到的和发出的所有的数据包<br>tcpdump host 210.27.48.1</p>
-<p>截获主机210.27.48.1 和主机210.27.48.2 的通信<br>tcpdump host 210.27.48.1 and 210.27.48.2 </p>
-<p>详见：<a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html" target="_blank" rel="external">http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html</a></p>
-
+        <p>抽空将之前记录的工作几年来使用的linux命令重新温习整理下<br>
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/02/23/开发人员需掌握的linux命令/#more">阅读更多</a>
           
        </p>
     </div>
@@ -535,7 +501,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/［linux］/">［linux］</a>
+  <span></span> <a href="/tags/linux/">linux</a>
   </div>
 
 </div>
@@ -618,7 +584,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/tags/［linux］/" title="［linux］">［linux］<sup>1</sup></a></li>
+			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
 		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		

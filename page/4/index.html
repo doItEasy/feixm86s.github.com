@@ -402,7 +402,7 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/09/JAVA多线程第一篇/" title="JAVA多线程第一篇(概念和启动线程)" itemprop="url">JAVA多线程第一篇(概念和启动线程)</a>
+      <a href="/2015/01/09/JAVA多线程第一篇/" title="JAVA多线程第一篇(概念和启动)" itemprop="url">JAVA多线程第一篇(概念和启动)</a>
   </h1>
   <p class="article-author">By
        
@@ -417,22 +417,12 @@
         
         <h2 id="进程和线程">进程和线程</h2><h3 id="操作系统中线程和进程">操作系统中线程和进程</h3><p>进程是指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。</p>
 <p>线程是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属于某个进程，进程中的多个线程共享进程的内存。</p>
-<p>“同时”执行是人的感觉，在线程之间实际上轮换执行。</p>
-<h3 id="Java中的线程">Java中的线程</h3><p>在Java中，“线程”指两件不同的事情：<br>1、java.lang.Thread类的一个实例；<br>2、线程的执行。</p>
-<p>使用java.lang.Thread类或者java.lang.Runnable接口编写代码来定义、实例化和启动新线程。</p>
-<p>一个Thread类实例只是一个对象，像Java中的任何其他对象一样，具有变量和方法，生死于堆上。</p>
-<p>Java中，每个线程都有一个调用栈，即使不在程序中创建任何新的线程，线程也在后台运行着。</p>
-<p>一个Java应用总是从main()方法开始运行，mian()方法运行在一个线程内，它被称为主线程。</p>
-<p>一旦创建一个新的线程，就产生一个新的调用栈。</p>
-<p>线程总体分两类：用户线程和守候线程。</p>
-<p>当所有用户线程执行完毕的时候，JVM自动关闭。但是守候线程却不独立于JVM，守候线程一般是由操作系统或者用户自己创建的。</p>
-<h2 id="线程启动">线程启动</h2><p>1.实现Runnable接口<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class DoSomething implements Runnable &#123; </span><br><span class="line">    private String name; </span><br><span class="line"></span><br><span class="line">    public DoSomething(String name) &#123; </span><br><span class="line">        this.name = name; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">for</span> (long k = <span class="number">0</span>; k &lt; <span class="number">100000000</span>; k++) ; </span><br><span class="line">            System.out.println(name + <span class="string">": "</span> + i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        DoSomething ds1 = new DoSomething(<span class="string">"阿三"</span>); </span><br><span class="line">        DoSomething ds2 = new DoSomething(<span class="string">"李四"</span>); </span><br><span class="line"></span><br><span class="line">        Thread t1 = new Thread(ds1); </span><br><span class="line">        Thread t2 = new Thread(ds2); </span><br><span class="line"></span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>2.继承thread类<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">public class TestThread extends Thread&#123; </span><br><span class="line">    public TestThread(String name) &#123; </span><br><span class="line">        super(name); </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123; </span><br><span class="line">            <span class="keyword">for</span>(long k= <span class="number">0</span>; k &lt;<span class="number">100000000</span>;k++); </span><br><span class="line">            System.out.println(this.getName()+<span class="string">" :"</span>+i); </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        Thread t1 = new TestThread(<span class="string">"阿三"</span>); </span><br><span class="line">        Thread t2 = new TestThread(<span class="string">"李四"</span>); </span><br><span class="line">        t1.start(); </span><br><span class="line">        t2.start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="FAQ">FAQ</h2><p>1、线程都可以设置名字，也可以获取线程的名字，连主线程也不例外。<br>2、获取当前线程的对象的方法是：Thread.currentThread()；<br>3、在一系列线程以某种顺序启动并不意味着将按该顺序执行。对于任何一组启动的线程来说，调度程序不能保证其执行次序，持续时间也无法保证。<br>4、当线程目标run()方法结束时该线程完成。<br>5、一旦线程启动，它就永远不能再重新启动。只有一个新的线程可以被启动，并且只能一次。一个可运行的线程或死线程可以被重新启动。<br>6、线程的调度是JVM的一部分，在一个CPU的机器上上，实际上一次只能运行一个线程。一次只有一个线程栈执行。JVM线程调度程序决定实际运行哪个处于可运行状态的线程。众多可运行线程中的某一个会被选中做为当前线程。可运行线程被选择运行的顺序是没有保障的。<br>7、尽管通常采用队列形式，但这是没有保障的。队列形式是指当一个线程完成“一轮”时，它移到可运行队列的尾部等待，直到它最终排队到该队列的前端为止，它才能被再次选中。事实上，我们把它称为可运行池而不是一个可运行队列，目的是帮助认识线程并不都是以某种有保障的顺序排列唱呢个一个队列的事实。<br>8、尽管我们没有无法控制线程调度程序，但可以通过别的方式来影响线程调度的方式。</p>
-
+<p>“同时”执行是人的感觉，在线程之间实际上轮换执行。<br>
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/01/09/JAVA多线程第一篇/#more">阅读更多</a>
           
        </p>
     </div>
@@ -594,7 +584,7 @@
 		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/tags/［linux］/" title="［linux］">［linux］<sup>1</sup></a></li>
+			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
 		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		

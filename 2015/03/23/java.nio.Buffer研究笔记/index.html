@@ -114,7 +114,7 @@ Netty的ByteBuf对jdk自带的缓冲区进行了重新设计和优化，Mina的I
 <p>四者关系：0 &lt;= mark &lt;= position &lt;= limit &lt;= capacity</p>
 <pre><code>写完后将<span class="built_in">limit</span>从capacity设为position
 读的时候从position读到<span class="built_in">limit</span>
-</code></pre><h3 id="BufferAPI">BufferAPI</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">package java.nio;</span><br><span class="line">public abstract class Buffer &#123;</span><br><span class="line">public final int capacity( )</span><br><span class="line">public final int position( )</span><br><span class="line">public final Buffer position (int newPosition)</span><br><span class="line">public final int <span class="built_in">limit</span>( )</span><br><span class="line">public final Buffer <span class="built_in">limit</span> (int newLimit)</span><br><span class="line">public final Buffer mark( )</span><br><span class="line">public final Buffer reset( )</span><br><span class="line">public final Buffer clear( )</span><br><span class="line">public final Buffer flip( )</span><br><span class="line">public final Buffer rewind( )</span><br><span class="line">public final int remaining( )</span><br><span class="line">public final boolean hasRemaining( )</span><br><span class="line">public abstract boolean isReadOnly( );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="BufferAPI">BufferAPI</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package java.nio;</span><br><span class="line">public abstract class Buffer &#123;</span><br><span class="line">public final int capacity( )</span><br><span class="line">public final int position( )</span><br><span class="line">public final Buffer position (int newPosition)</span><br><span class="line">public final int <span class="built_in">limit</span>( )</span><br><span class="line">public final Buffer <span class="built_in">limit</span> (int newLimit)</span><br><span class="line">public final Buffer mark( )</span><br><span class="line">public final Buffer reset( )</span><br><span class="line">public final Buffer clear( )</span><br><span class="line">public final Buffer flip( )</span><br><span class="line">public final Buffer rewind( )</span><br><span class="line">public final int remaining( )</span><br><span class="line">public final boolean hasRemaining( )</span><br><span class="line">public abstract boolean isReadOnly( );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>支持链式调用，如：buffer.mark().position(5).reset();</p>
 <h3 id="操作说明">操作说明</h3><ul>
 <li>get()从当前position位置读取</li>
@@ -239,7 +239,7 @@ Netty的ByteBuf对jdk自带的缓冲区进行了重新设计和优化，Mina的I
 		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/tags/［linux］/" title="［linux］">［linux］<sup>1</sup></a></li>
+			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
 		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		
