@@ -473,35 +473,41 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/02/23/开发人员需掌握的linux命令/" title="开发需掌握的linux命令小记" itemprop="url">开发需掌握的linux命令小记</a>
+      <a href="/2015/02/28/spring动态数据源和事务配置详解/" title="spring动态数据源和事务配置详解" itemprop="url">spring动态数据源和事务配置详解</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-02-23T02:13:12.000Z" itemprop="datePublished"> 发表于 2015-02-23</time>
+    <time datetime="2015-02-28T12:53:21.000Z" itemprop="datePublished"> 发表于 2015-02-28</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <p>抽空将之前记录的工作几年来使用的linux命令重新温习整理下<br>
+        <p>最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。</p>
+<p>动态数据源具体实现的思路就是采用Proxy模式，弄一个虚拟的数据源，并且用它来封装数据源选择逻辑，由虚拟的数据源根据Client提供的上下文来实现数据源的选择。</p>
         
         
         <p class="article-more-link">
           
-            <a href="/2015/02/23/开发人员需掌握的linux命令/#more">阅读更多</a>
+            <a href="/2015/02/28/spring动态数据源和事务配置详解/#more">阅读更多</a>
           
        </p>
     </div>
     <footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/linux/">linux</a>
+  <span></span> <a href="/tags/spring/">spring</a>
   </div>
 
 </div>
@@ -512,7 +518,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 <div class="comments-count">
 	
 	  	<span></span>
-		<a href="http://www.52ff.cc/2015/02/23/开发人员需掌握的linux命令/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/02/23/开发人员需掌握的linux命令/" data-count-type="comments">&nbsp;</a>
+		<a href="http://www.52ff.cc/2015/02/28/spring动态数据源和事务配置详解/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/02/28/spring动态数据源和事务配置详解/" data-count-type="comments">&nbsp;</a>
 	
 </div>
 
@@ -528,7 +534,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 
 </div>
@@ -543,7 +549,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>18</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>19</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -572,23 +578,25 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 		
 			<li><a href="/tags/nio/" title="nio">nio<sup>3</sup></a></li>
 		
-			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
+			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
 		
-			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
 		
-			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
-		
-			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
-		
-			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
 			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
 		
+			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
+		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		
-			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -597,7 +605,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

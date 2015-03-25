@@ -1,0 +1,545 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>spring动态数据源和事务配置详解 | FlyFish&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="xiangming">
+    
+    <meta name="description" content="最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。
+动态数据源具体实现的思路就是采用Proxy模式，弄一个虚拟的数据源，并且用它来封装数据源选择逻辑，由虚拟的数据源根据Client提供的上下文来实现数据源的选择。">
+    
+    
+    <meta name="description" content="最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。
+动态数据源具体实现的思路就是采用Proxy模式，弄一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring动态数据源和事务配置详解">
+<meta property="og:url" content="http://www.52ff.cc/2015/02/28/spring动态数据源和事务配置详解/index.html">
+<meta property="og:site_name" content="FlyFish's Blog">
+<meta property="og:description" content="最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。
+动态数据源具体实现的思路就是采用Proxy模式，弄一">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring动态数据源和事务配置详解">
+<meta name="twitter:description" content="最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。
+动态数据源具体实现的思路就是采用Proxy模式，弄一">
+
+    
+    <link rel="alternative" href="/atom.xml" title="FlyFish&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="FlyFish&#39;s Blog" title="FlyFish&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="FlyFish&#39;s Blog">FlyFish&#39;s Blog</a></h1>
+				<h2 class="blog-motto">才华配不上梦想就是所谓的迷茫</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="https://github.com/feixm86s">github</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:www.52ff.cc">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/28/spring动态数据源和事务配置详解/" title="spring动态数据源和事务配置详解" itemprop="url">spring动态数据源和事务配置详解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-28T12:53:21.000Z" itemprop="datePublished"> 发表于 2015-02-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#动态数据源dynamicDataSource配置"><span class="toc-number">1.</span> <span class="toc-text">动态数据源dynamicDataSource配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事务管理器配置的两种方式"><span class="toc-number">2.</span> <span class="toc-text">事务管理器配置的两种方式</span></a></li></ol>
+		
+		</div>
+		
+		<p>最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。</p>
+<p>动态数据源具体实现的思路就是采用Proxy模式，弄一个虚拟的数据源，并且用它来封装数据源选择逻辑，由虚拟的数据源根据Client提供的上下文来实现数据源的选择。</p>
+<a id="more"></a>
+<h2 id="动态数据源dynamicDataSource配置">动态数据源dynamicDataSource配置</h2><p>具体的实现请在org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource</p>
+<p>下面具体演示下：<br>重写determineCurrentLookupKey方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class DynamicDataSource extends AbstractRoutingDataSource &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected Object <span class="function"><span class="title">determineCurrentLookupKey</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> DataSourceContextHolder.getDataSourceType();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当前线程里取出对应的数据源名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class DataSourceContextHolder&#123;</span><br><span class="line"></span><br><span class="line">    public static final String ONE=<span class="string">"one"</span>;</span><br><span class="line">    public static final String TWO = <span class="string">"two"</span>;</span><br><span class="line">    private static final ThreadLocal contextHolder =</span><br><span class="line">            new ThreadLocal();</span><br><span class="line"></span><br><span class="line">    public static void <span class="built_in">set</span>DataSourceType(String dataSourceType) &#123;</span><br><span class="line">        contextHolder.set(dataSourceType);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static String <span class="function"><span class="title">getDataSourceType</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> (String) contextHolder.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void <span class="function"><span class="title">clearDataSourceType</span></span>() &#123;</span><br><span class="line">        contextHolder.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>配置下xml文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 数据源定义,使用Apache DBCP 连接池 --&gt;</span><br><span class="line">	&lt;bean id=<span class="string">"dataSource0"</span> class=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span> destroy-method=<span class="string">"close"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"maxIdle"</span> value=<span class="string">"60"</span> /&gt;</span><br><span class="line">		&lt;property name=<span class="string">"maxActive"</span> value=<span class="string">"60"</span> /&gt;</span><br><span class="line">		&lt;property name=<span class="string">"timeBetweenEvictionRunsMillis"</span> value=<span class="string">"3600000"</span> /&gt;</span><br><span class="line">		&lt;property name=<span class="string">"minEvictableIdleTimeMillis"</span> value=<span class="string">"3600000"</span> /&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">	&lt;bean id=<span class="string">"dataSource1"</span> parent=<span class="string">"dataSource0"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"driverClassName"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.driver&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"url"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.url&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"username"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.username&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"password"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.password&#125;</span>"</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;bean id=<span class="string">"dataSource2"</span> parent=<span class="string">"dataSource0"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"driverClassName"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.driver2&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"url"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.url2&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"username"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.username2&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"password"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.password2&#125;</span>"</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">	&lt;bean id=<span class="string">"dynamicDataSource"</span> class=<span class="string">"com.skymobi.webframework.utils.DynamicDataSource"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"targetDataSources"</span>&gt;</span><br><span class="line">			&lt;map key-type=<span class="string">"java.lang.String"</span>&gt;</span><br><span class="line">				&lt;entry key=<span class="string">"two"</span> value-ref=<span class="string">"dataSource2"</span>/&gt;</span><br><span class="line">			&lt;/map&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">		&lt;property name=<span class="string">"defaultTargetDataSource"</span> ref=<span class="string">"dataSource1"</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;bean id=<span class="string">"sessionFactory"</span> class=<span class="string">"org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"dataSource"</span> ref=<span class="string">"dynamicDataSource"</span> /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 事务管理器配置 --&gt;</span><br><span class="line">	&lt;bean id=<span class="string">"transactionManager"</span> class=<span class="string">"org.springframework.orm.hibernate3.HibernateTransactionManager"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"sessionFactory"</span> ref=<span class="string">"sessionFactory"</span> /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 使用annotation定义事务 --&gt;</span><br><span class="line">	&lt;tx:annotation-driven transaction-manager=<span class="string">"transactionManager"</span> proxy-target-class=<span class="string">"true"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>注意：切换数据源必须在一个事务结束后切换，在一个事务内是无法切换数据源的<br>所以建议切换数据源的代码要写在service层而非dao层</p>
+<h2 id="事务管理器配置的两种方式">事务管理器配置的两种方式</h2><p>上面动态数据源也涉及到了事务，顺便回顾下spring事务管理的两种最常见配置</p>
+<ul>
+<li>现在最常用的annotation方式<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"myBatisTransaction"</span> class=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span><br><span class="line">	&lt;property name=<span class="string">"dataSource"</span> ref=<span class="string">"dataSource"</span> /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 使用annotation定义事务 --&gt;</span><br><span class="line">&lt;tx:annotation-driven transaction-manager=<span class="string">"myBatisTransaction"</span> proxy-target-class=<span class="string">"true"</span> /&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>需要在方法前加上@Transactional</p>
+<ul>
+<li>aop配置切面<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;tx:advice id=<span class="string">"txAdvice"</span> transaction-manager=<span class="string">"myBatisTransaction"</span>&gt;</span><br><span class="line">		&lt;tx:attributes&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"*"</span> propagation=<span class="string">"REQUIRED"</span> rollback-for=<span class="string">"java.lang.RuntimeException"</span> /&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"get*"</span> <span class="built_in">read</span>-only=<span class="string">"true"</span> /&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"query*"</span> <span class="built_in">read</span>-only=<span class="string">"true"</span> /&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"find*"</span> <span class="built_in">read</span>-only=<span class="string">"true"</span> /&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"isNot*"</span> <span class="built_in">read</span>-only=<span class="string">"true"</span> /&gt;</span><br><span class="line">		&lt;/tx:attributes&gt;</span><br><span class="line">	&lt;/tx:advice&gt;</span><br><span class="line"></span><br><span class="line">	&lt;aop:config&gt;</span><br><span class="line">		&lt;aop:pointcut id=<span class="string">"services"</span></span><br><span class="line">					  expression=<span class="string">"execution(* flydev.*.service.*.*(..))"</span> /&gt;</span><br><span class="line">		&lt;aop:advisor advice-ref=<span class="string">"txAdvice"</span> pointcut-ref=<span class="string">"services"</span> /&gt;</span><br><span class="line">	&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/spring/">spring</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://www.52ff.cc/2015/02/28/spring动态数据源和事务配置详解/" data-title="spring动态数据源和事务配置详解 | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/03/03/JAVA多线程第八篇-锁对象Lock/" title="JAVA多线程第八篇(锁对象Lock)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  JAVA多线程第八篇(锁对象Lock)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/02/23/开发人员需掌握的linux命令/"  title="开发需掌握的linux命令小记">
+ <strong>下一篇：</strong><br/> 
+ <span>开发需掌握的linux命令小记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/02/28/spring动态数据源和事务配置详解/" data-title="spring动态数据源和事务配置详解" data-url="http://www.52ff.cc/2015/02/28/spring动态数据源和事务配置详解/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#动态数据源dynamicDataSource配置"><span class="toc-number">1.</span> <span class="toc-text">动态数据源dynamicDataSource配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事务管理器配置的两种方式"><span class="toc-number">2.</span> <span class="toc-text">事务管理器配置的两种方式</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>19</sup></a></li>
+		
+			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
+		
+			<li><a href="/categories/sql数据库/" title="sql数据库">sql数据库<sup>1</sup></a></li>
+		
+			<li><a href="/categories/分布式文件存储/" title="分布式文件存储">分布式文件存储<sup>1</sup></a></li>
+		
+			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		
+			<li><a href="/categories/记录分享/" title="记录分享">记录分享<sup>2</sup></a></li>
+		
+			<li><a href="/categories/随笔生活/" title="随笔生活">随笔生活<sup>2</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
+		
+			<li><a href="/tags/nio/" title="nio">nio<sup>3</sup></a></li>
+		
+			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+		
+			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
+		
+			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
+		
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
+		
+			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
+		
+			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://dcloudio.github.io/mui/" target="_blank" title="MUI webapp框架">MUI webapp框架</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="www.jianshu.com" target="_blank" title="简书">简书</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://dev.mopo.com/" target="_blank" title="冒泡开发者平台">冒泡开发者平台</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.jq22.com/" target="_blank" title="JQuery插件库">JQuery插件库</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://115.236.18.195:9300/" target="_blank" title="cms">cms</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://expo.bootcss.com/" target="_blank" title="bootstrap优站">bootstrap优站</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m fei xiangming  in hangzhou. <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/feixm86s" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:feixm86s@126.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by modify Jacman © 2015
+		
+		<a href="http://www.52ff.cc/about" target="_blank" title="xiangming">xiangming</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"flydev"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F60d4b1ddeb623022666b3054d653ecbe' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>

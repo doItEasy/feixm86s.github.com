@@ -83,6 +83,72 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/02/12/JAVA多线程第五篇-并发协作-生产者消费者/" title="JAVA多线程第五篇(并发协作例子)" itemprop="url">JAVA多线程第五篇(并发协作例子)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-11T17:43:04.000Z" itemprop="datePublished"> 发表于 2015-02-12</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Java线程：并发协作-生产者消费者模型</p>
+<p>对于多线程程序来说，不管任何编程语言，生产者和消费者模型都是最经典的。就像学习每一门编程语言一样，Hello World！都是最经典的例子。</p>
+<p>实际上，准确说应该是“生产者-消费者-仓储”模型，离开了仓储，生产者消费者模型就显得没有说服力了。<br>对于此模型，应该明确一下几点：<br>1、生产者仅仅在仓储未满时候生产，仓满则停止生产。<br>2、消费者仅仅在仓储有产品时候才能消费，仓空则等待。<br>3、当消费者发现仓储没产品可消费时候会通知生产者生产。<br>4、生产者在生产出可消费产品时候，应该通知等待的消费者去消费。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/02/12/JAVA多线程第五篇-并发协作-生产者消费者/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/02/12/JAVA多线程第五篇-并发协作-生产者消费者/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/02/12/JAVA多线程第五篇-并发协作-生产者消费者/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/02/11/JAVA多线程第六篇-线程池/" title="JAVA多线程第六篇(线程池)" itemprop="url">JAVA多线程第六篇(线程池)</a>
   </h1>
   <p class="article-author">By
@@ -462,73 +528,9 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2012/02/15/mina多线程池/" title="mina多线程池" itemprop="url">mina多线程池</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2012-02-15T02:51:08.000Z" itemprop="datePublished"> 发表于 2012-02-15</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>mina服务端的通信过程如下<br> 1 、通过 SocketAcceptor 同客户端建立连接<br> 2 、链接建立之后 I/O 的读写交给了 I/O Processor 线程 I/O Processor 是多线程的<br> 3 、通过 I/O Processor 读取的数据经过 IoFilterChain 里所有配置的 IoFilter  IoFilter 进行消息的过滤格式的转换在这个层面可以制定一些自定义的协议；<br> 4 、最后 IoFilter 将数据交给 Handler 进行业务处理完成了整个读取的过程<br> 5 、写入过程也是类似只是刚好倒过来通过 IoSession.write 写出数据然后 Handler 进行写入的业务处理处理完成后交给 IoFilterChain 进行消息过滤和协议的转换最后通过 I/O Processor 将数据写出到 socket通道。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2012/02/15/mina多线程池/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/nio/">nio</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2012/02/15/mina多线程池/#comments" class="ds-thread-count comments-count-link" data-thread-key="2012/02/15/mina多线程池/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/3/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next<span></span></a>
   </nav>
 
 </div>
@@ -543,7 +545,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>18</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>19</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -572,23 +574,25 @@
 		
 			<li><a href="/tags/nio/" title="nio">nio<sup>3</sup></a></li>
 		
-			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
+			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
 		
-			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
 		
-			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
-		
-			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
-		
-			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
 			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
 		
+			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
+		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		
-			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -597,7 +601,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 
