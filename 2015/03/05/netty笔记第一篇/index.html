@@ -9,18 +9,18 @@
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来，">
+    <meta name="description" content="本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来。">
     
     
-    <meta name="description" content="本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来，">
+    <meta name="description" content="本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="netty几个核心类的概念和用法">
 <meta property="og:url" content="http://www.52ff.cc/2015/03/05/netty笔记第一篇/index.html">
 <meta property="og:site_name" content="flyfish's Blog">
-<meta property="og:description" content="本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来，">
+<meta property="og:description" content="本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来。">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="netty几个核心类的概念和用法">
-<meta name="twitter:description" content="本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来，">
+<meta name="twitter:description" content="本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来。">
 
     
     <link rel="alternative" href="/atom.xml" title="flyfish&#39;s Blog" type="application/atom+xml">
@@ -101,7 +101,7 @@
 		
 		</div>
 		
-		<p>本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来，</p>
+		<p>本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来。</p>
 <a id="more"></a>
 <h2 id="Bootstrap_or_ServerBootstrap">Bootstrap or ServerBootstrap</h2><p>  一个Netty程序开始于Bootstrap类,Bootstrap类是Netty提供的一个可以通过简单配置来设置或”引导”程序的一个很重要的类。当你需要连接客户端或服务器绑定指定端口时需要使用bootstrap.</p>
 <ul>
@@ -110,9 +110,9 @@
 </ul>
 <h2 id="EventLoop">EventLoop</h2><p>EventLoop 是一个Channel执行实际工作的线程。当一个Channel注册后,Netty将这个Channel绑定到一个EventLoop,在Channel的生命周期内总是被绑定到一个EventLoop。<br>处理IO的工作由EventLoop管理</p>
 <h2 id="EventLoopGroup">EventLoopGroup</h2><p>EventLoopGroup包含一个或多个EventLoop，可以理解为EventLoop是一个事件循环线程,而EventLoopGroup是一个事件循环集合</p>
-<h2 id="ChannelPipeline">ChannelPipeline</h2><p>所有的Netty程序都是基于ChannelPipeline,ChannelPipeline上面用于添加ChannelHandler。<br>ChannelHandler会在程序的“引导”阶段被添加 ChannelPipeline中,并且被添加的顺序将决定处理数据的顺序。ChannelPipeline的作用我们可以理解为用来管理ChannelHandler的一个容器。<br>也可以理解为一个过滤器链。</p>
+<h2 id="ChannelPipeline">ChannelPipeline</h2><p>所有的Netty程序都是基于ChannelPipeline,ChannelPipeline上面用于添加ChannelHandler。<br>ChannelHandler会在程序的“引导”阶段被添加 ChannelPipeline中,并且被添加的顺序将决定处理数据的顺序。ChannelPipeline的作用我们可以理解为用来管理ChannelHandler的一个容器。<br>也可以理解为一个链状的列表。</p>
 <p>例<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ch.pipeline().addLast(new MyServerHandler());</span><br></pre></td></tr></table></figure></p>
-<h2 id="Channel">Channel</h2><p>消息传输的通道</p>
+<h2 id="Channel">Channel</h2><p>Channel概念与java.nio.channel概念一致，用以连接IO设备（socket、文件等）的纽带，是数据传输的通道，传输API的核心是Channel接口,每个Channel都会分配一个ChannelPipeline和ChannelConfig。<br>对于每个新的通道,会创建一个新的ChannelPipeline并附加至通道。一旦连接,Channel和ChannelPipeline之间的耦合是永久性 的。Channel不能附加其他的ChannelPipeline或从ChannelPipeline分离。</p>
 <h2 id="Future_or_ChannelFuture">Future or ChannelFuture</h2><h2 id="ChannelInitializer">ChannelInitializer</h2><p>ChannelInitializer类用来配置Handlers，通过ChannelPipeline来添加ChannelHandler的，ChannelInitializer自身也是一个ChannelHandler,在添加完其他的handlers之后会自动从ChannelPipeline中删除自己</p>
 <h2 id="ChannelHandler">ChannelHandler</h2><p>Netty的ChannelHandler是你的应用程序中处理最多的，我们 可以理解为ChannelHandler是一段执行业务逻辑处理数据的代码,它们来来往往的通过ChannelPipeline。实际上,ChannelHandler是定义一个handler 的父接口，ChannelInboundHandler和ChannelOutboundHandler都实现ChannelHandler接口</p>
 <ul>
