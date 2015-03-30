@@ -83,6 +83,146 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/03/30/Netty学习笔记-线程模型/" title="Netty学习笔记-线程模型" itemprop="url">Netty学习笔记-线程模型</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-30T15:05:34.000Z" itemprop="datePublished"> 发表于 2015-03-30</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>常见并发服务器方案比较:<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/20131104212306625.png" alt=""></p>
+<p>具体可参照:<a href="http://blog.csdn.net/yusiguyuan/article/details/17591613">常见多线程并发服务器编程模型</a></p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/30/Netty学习笔记-线程模型/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/netty/">netty</a><a href="/tags/nio/">nio</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/30/Netty学习笔记-线程模型/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/30/Netty学习笔记-线程模型/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/24/Netty学习笔记–ByteBuf/" title="Netty学习笔记–ByteBuf" itemprop="url">Netty学习笔记–ByteBuf</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-24T12:54:25.000Z" itemprop="datePublished"> 发表于 2015-03-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Netty的ByteBuf是Java NIO Buffer的优化，比JDK自带的缓冲区实现更优秀。</p>
+<p>Netty缓冲API提供了几个优势:</p>
+<ul>
+<li>可以自定义缓冲类型 </li>
+<li>通过一个内置的复合缓冲类型实现零拷贝 </li>
+<li>扩展性好,比如StringBuffer </li>
+<li>不需要调用flip()来切换读/写模式 </li>
+<li>读取和写入索引分开</li>
+<li>方法链 </li>
+<li>引用计数 </li>
+<li>Pooling(池)</li>
+</ul>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/24/Netty学习笔记–ByteBuf/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/netty/">netty</a><a href="/tags/nio/">nio</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/24/Netty学习笔记–ByteBuf/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/24/Netty学习笔记–ByteBuf/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/03/23/java.nio.Buffer研究笔记/" title="java.nio.Buffer研究笔记" itemprop="url">java.nio.Buffer研究笔记</a>
   </h1>
   <p class="article-author">By
@@ -395,136 +535,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/11/一个简陋的RPC框架/" title="一个简易的RPC框架" itemprop="url">一个简易的RPC框架</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-11T07:03:28.000Z" itemprop="datePublished"> 发表于 2015-03-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>简易描述RPC的基本工作原理：服务器启动了一个线程监听 Socket 端口, 有Socket访问了, 反序列化解析出<br>调用的Service 和method, 以及传入的参数,再用Socket 写回去。</p>
-<p>客户端利用jdk的Proxy生成了一个代理类,在创建Proxy 时建立与服务器的Socket连接.<br>调用Proxy的方法时,向服务器发送数据,等待结果返回。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/11/一个简陋的RPC框架/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/RPC远程调用/">RPC远程调用</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/11/一个简陋的RPC框架/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/11/一个简陋的RPC框架/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/11/FastDFS常见命令/" title="FAST基础命令安装配置" itemprop="url">FAST基础命令安装配置</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-11T06:20:08.000Z" itemprop="datePublished"> 发表于 2015-03-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。</p>
-<p>它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/11/FastDFS常见命令/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/分布式文件存储/">分布式文件存储</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/fastdfs/">fastdfs</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/11/FastDFS常见命令/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/11/FastDFS常见命令/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -542,7 +552,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>19</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>21</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -569,13 +579,13 @@
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
 		
-			<li><a href="/tags/nio/" title="nio">nio<sup>3</sup></a></li>
+			<li><a href="/tags/nio/" title="nio">nio<sup>5</sup></a></li>
+		
+			<li><a href="/tags/netty/" title="netty">netty<sup>4</sup></a></li>
 		
 			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
-		
-			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
 		
 			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
@@ -598,7 +608,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

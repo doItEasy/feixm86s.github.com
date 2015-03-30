@@ -83,6 +83,139 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/03/03/JAVA多线程第八篇-锁对象Lock/" title="JAVA多线程第八篇(锁对象Lock)" itemprop="url">JAVA多线程第八篇(锁对象Lock)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-03T13:45:28.000Z" itemprop="datePublished"> 发表于 2015-03-03</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>在Java5中，专门提供了锁对象，利用锁可以方便的实现资源的封锁，用来控制对竞争资源并发访问的控制，这些内容主要集中在java.util.concurrent.locks 包下面，里面有三个重要的接口Condition、Lock、ReadWriteLock。</p>
+<pre><code>Condition 将 Object 监视器方法（<span class="built_in">wait</span>、notify 和 notifyAll）分解成截然不同的对象，以便通过将这些对象与任意 Lock 实现组合使用，为每个对象提供多个等待 <span class="built_in">set</span> （<span class="built_in">wait</span>-<span class="built_in">set</span>）。
+Lock 实现提供了比使用 synchronized 方法和语句可获得的更广泛的锁定操作。
+ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一个用于写入操作。
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/03/JAVA多线程第八篇-锁对象Lock/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/03/JAVA多线程第八篇-锁对象Lock/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/03/JAVA多线程第八篇-锁对象Lock/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/28/spring动态数据源和事务配置详解/" title="spring动态数据源和事务配置详解" itemprop="url">spring动态数据源和事务配置详解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-28T12:53:21.000Z" itemprop="datePublished"> 发表于 2015-02-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。</p>
+<p>动态数据源具体实现的思路就是采用Proxy模式，弄一个虚拟的数据源，并且用它来封装数据源选择逻辑，由虚拟的数据源根据Client提供的上下文来实现数据源的选择。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/02/28/spring动态数据源和事务配置详解/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/spring/">spring</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/02/28/spring动态数据源和事务配置详解/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/02/28/spring动态数据源和事务配置详解/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/02/23/开发人员需掌握的linux命令/" title="开发需掌握的linux命令小记" itemprop="url">开发需掌握的linux命令小记</a>
   </h1>
   <p class="article-author">By
@@ -387,134 +520,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/02/13/JAVA多线程第七篇-Callable和Future/" title="JAVA多线程第七篇(Callable和Future)" itemprop="url">JAVA多线程第七篇(Callable和Future)</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-02-13T13:36:49.000Z" itemprop="datePublished"> 发表于 2015-02-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一个简单的例子：<br>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/02/13/JAVA多线程第七篇-Callable和Future/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/02/13/JAVA多线程第七篇-Callable和Future/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/02/12/重写hashcode()与equals()/" title="重写hashcode()与equals()" itemprop="url">重写hashcode()与equals()</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-02-12T03:51:08.000Z" itemprop="datePublished"> 发表于 2015-02-12</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>浅谈为何要重写 hashcode()与equals()<br>我们知道，如果不重写equals，那么比较的将是对象的引用是否指向同一块内存地址，重写之后目的是为了比较两个对象的value值是否相等。特别指出，此时，利用equals比较八大包装对象（如int，float等）和String类（因为该类已重写了equals和hashcode方法）对象时，默认比较的是值，在比较其它对象都是比较的引用地址。那产生了一个问题，为什么jdk中希望我们在重写equals时，非常有必要重写hashcode呢？</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/02/12/重写hashcode()与equals()/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/02/12/重写hashcode()与equals()/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/02/12/重写hashcode()与equals()/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -532,7 +537,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>19</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>21</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -559,13 +564,13 @@
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
 		
-			<li><a href="/tags/nio/" title="nio">nio<sup>3</sup></a></li>
+			<li><a href="/tags/nio/" title="nio">nio<sup>5</sup></a></li>
+		
+			<li><a href="/tags/netty/" title="netty">netty<sup>4</sup></a></li>
 		
 			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
-		
-			<li><a href="/tags/netty/" title="netty">netty<sup>2</sup></a></li>
 		
 			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
@@ -588,7 +593,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

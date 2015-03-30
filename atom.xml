@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-03-23T07:58:43.000Z</updated>
+  <updated>2015-03-30T15:39:36.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -13,6 +13,112 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Netty学习笔记-线程模型]]></title>
+    <link href="http://www.52ff.cc/2015/03/30/Netty%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://www.52ff.cc/2015/03/30/Netty学习笔记-线程模型/</id>
+    <published>2015-03-30T15:05:34.000Z</published>
+    <updated>2015-03-30T15:39:36.000Z</updated>
+    <content type="html"><![CDATA[<p>常见并发服务器方案比较:<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/20131104212306625.png" alt=""></p>
+<p>具体可参照:<a href="http://blog.csdn.net/yusiguyuan/article/details/17591613" target="_blank" rel="external">常见多线程并发服务器编程模型</a></p>
+<a id="more"></a>
+<p>下面看下Netty的线程模型。Netty采用了Reactor模式，Reactor模式有多个变种，Netty基于Multiple Reactors模式（如下图）做了一定的修改，Mutilple Reactors模式有多个reactor：mainReactor和subReactor，其中mainReactor负责客户端的连接请求，并将请求转交给subReactor，后由subReactor负责相应通道的IO请求，非IO请求（具体逻辑处理）的任务则会直接写入队列，等待worker threads进行处理。</p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/netty.png" alt=""></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>常见并发服务器方案比较:<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/20131104212306625.png" alt=""></p>
+<p>具体可参照:<a href="http://blog.csdn.net/yusiguyuan/article/details/17591613">常见多线程并发服务器编程模型</a></p>]]>
+    
+    </summary>
+    
+      <category term="netty" scheme="http://www.52ff.cc/tags/netty/"/>
+    
+      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Netty学习笔记–ByteBuf]]></title>
+    <link href="http://www.52ff.cc/2015/03/24/Netty%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%93ByteBuf/"/>
+    <id>http://www.52ff.cc/2015/03/24/Netty学习笔记–ByteBuf/</id>
+    <published>2015-03-24T12:54:25.000Z</published>
+    <updated>2015-03-29T14:01:03.000Z</updated>
+    <content type="html"><![CDATA[<p>Netty的ByteBuf是Java NIO Buffer的优化，比JDK自带的缓冲区实现更优秀。</p>
+<p>Netty缓冲API提供了几个优势:</p>
+<ul>
+<li>可以自定义缓冲类型 </li>
+<li>通过一个内置的复合缓冲类型实现零拷贝 </li>
+<li>扩展性好,比如StringBuffer </li>
+<li>不需要调用flip()来切换读/写模式 </li>
+<li>读取和写入索引分开</li>
+<li>方法链 </li>
+<li>引用计数 </li>
+<li>Pooling(池)</li>
+</ul>
+<a id="more"></a>
+<h2 id="读写索引">读写索引</h2><p>ByteBuf是一个很好的经过优化的字节数据容器,我们可以将字节数据有效的添加到ByteBuf中或从ByteBuf中获取数据。ByteBuf有2部分:一个用于读,一个用于写。ByteBuf提供两个指针变量支付读和写操作,读操作是使用readerIndex(),写操作时使用writerIndex()<br>写入数据到ByteBuf后,写入索引是增加的字节数量。开始读字节后,读取索引增加。你可以读取字节,直到写入索引和读取索引处理相同的位置,若再继续读取,则会抛出IndexOutOfBoundsException。调用ByteBuf的任何方法开始读/写都会单独维护读索引和写索引。ByteBuf的默认最大容量限制是Integer.MAX_VALUE,写入时若超出这个值将会导致一个异常。</p>
+<p>对比上一篇讲到的关于java.nio.Buffer的知识。<br>个人的理解是：</p>
+<pre><code>ByteBuf的读索引替代了java<span class="class">.nio</span><span class="class">.Buffer</span>的<span class="attribute">position</span>的作用
+写索引替代了java<span class="class">.nio</span><span class="class">.Buffer</span>的limit的作用
+</code></pre><p>这和JDK的ByteBuffer不同,ByteBuffer只有一个方法来设置索引,所以需要使用flip()方法来切换读和写模式。<br>ByteBuf一定符合:0 &lt;= readerIndex &lt;= writerIndex &lt;= capacity。<br>注:flip()相当于buffer.limit(buffer.position( )).position(0); </p>
+<h2 id="3种不同类型的ByteBuf">3种不同类型的ByteBuf</h2><ul>
+<li>Heap Buffer(堆缓冲区)<br>  最常用的类型是ByteBuf将数据存储在JVM的堆空间,这是通过将数据存储在数组的实现。堆缓冲区可以快速分配,当不使用时也可<br>以快速释放。它还提供了直接访问数组的方法,通过ByteBuf.array()来获取byte[]数据。<br>访问非堆缓冲区ByteBuf的数组会导致UnsupportedOperationException,可以使用ByteBuf.hasArray()来检查是否支持访问数组。</li>
+<li>Direct Buffer(直接缓冲区)<br>直接缓冲区,在堆之外直接分配内存。直接缓冲区不会占用堆空间容量,使用时应该考虑到应用程序要使用的最大内存容量以及如何限制它。直接缓冲区在使用Socket传递数据时性能很好,因为若使用间接缓冲区,JVM会先将数据复制到直接缓冲区再进行传递;但是直接缓冲区的缺点是在分配内存空间和释放内存时比堆缓冲区更复杂,而Netty使用内存池来解决这样的问题,这也是Netty使用内存池的原因之一。直接缓冲区不支持数组访问数据,但是我们可以间接的访问数据数组,如下面代码:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf directBuf = Unpooled.directBuffer(<span class="number">16</span>);￼<span class="keyword">if</span>(!directBuf.hasArray())&#123;    int len = directBuf.readableBytes();￼    byte[] arr = new byte[len];￼    directBuf.getBytes(<span class="number">0</span>, arr);&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>访问直接缓冲区的数据数组需要更多的编码和更复杂的操作,建议若需要在数组访问数据使用堆缓冲区会更好。</p>
+<ul>
+<li>Composite Buffer(复合缓冲区)<br>  复合缓冲区,我们可以创建多个不同的ByteBuf,然后提供一个这些ByteBuf组合的视图。复合缓冲区就像一个列表,我们可以动态 的添加和删除其中的ByteBuf,JDK的ByteBuffer没有这样的功能。Netty提供了CompositeByteBuf类来处理复合缓冲 区,CompositeByteBuf只是一个视图,CompositeByteBuf.hasArray()总是返回false,因为它可能包含一些直接或间接的不同类型的 ByteBuf。</li>
+</ul>
+<p>Unpooled也是用来创建缓冲区的工具类,Unpooled提供了很多方法,详细方法及使用可以看API文档<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//创建复合缓冲区CompositeByteBuf compBuf = Unpooled.compositeBuffer();￼//创建堆缓冲区￼ByteBuf heapBuf = Unpooled.buffer(<span class="number">8</span>);￼//创建直接缓冲区ByteBuf directBuf = Unpooled.directBuffer(<span class="number">16</span>);</span><br></pre></td></tr></table></figure></p>
+<p>ByteBuf提供了一些较为丰富的实现类，逻辑上主要分为两种：HeapByteBuf和DirectByteBuf，实现机制则分为两种：PooledByteBuf和UnpooledByteBuf，除了这些之外，Netty还实现了一些衍生ByteBuf（DerivedByteBuf），如：ReadOnlyByteBuf、DuplicatedByteBuf以及SlicedByteBuf。</p>
+<p>ByteBuf实现类的类图如下：</p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/netty3.jpg" alt=""></p>
+<h2 id="ByteBuf特殊机制">ByteBuf特殊机制</h2><ul>
+<li><p>Reference Count<br>ByteBuf的生命周期管理引入了Reference Count的机制，感觉让我回到了CPP时代。可以通过简单的继承SimpleChannelInboundHandler实现自动释放reference count。SimpleChannelInboundHandler的事件方法如下，在消费完毕msg后，可以AutoRelease之：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception &#123;</span><br><span class="line">    boolean release = <span class="literal">true</span>;</span><br><span class="line">    try &#123;</span><br><span class="line">        <span class="keyword">if</span> (acceptInboundMessage(msg)) &#123;</span><br><span class="line">            @SuppressWarnings(<span class="string">"unchecked"</span>)</span><br><span class="line">            I imsg = (I) msg;</span><br><span class="line">            messageReceived(ctx, imsg);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            release = <span class="literal">false</span>;</span><br><span class="line">            ctx.fireChannelRead(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        <span class="keyword">if</span> (autoRelease &amp;&amp; release) &#123;</span><br><span class="line">            ReferenceCountUtil.release(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Zero Copy<br>Zero-copy与传统意义的zero-copy不太一样。传统的zero-copy是IO传输过程中，数据无需中内核态到用户态、用户态到内核态的数据拷贝，减少拷贝次数。而Netty的zero-copy则是完全在用户态，或者说传输层的zero-copy机制，可以参考下图。由于协议传输过程中，通常会有拆包、合并包的过程，一般的做法就是System.arrayCopy了，但是Netty通过ByteBuf.slice以及Unpooled.wrappedBuffer等方法拆分、合并Buffer无需拷贝数据。<br>如何实现zero-copy的呢。slice实现就是创建一个SlicedByteBuf对象，将this对象，以及相应的数据指针传入即可，wrappedBuffer实现机制类似。</p>
+</li>
+</ul>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/netty4.png" alt=""></p>
+<h2 id="实用工具类">实用工具类</h2><ul>
+<li><p>ByteBufHolder<br>ByteBufHolder是一个辅助类,是一个接口,其实现类是DefaultByteBufHolder,还有一些实现了ByteBufHolder接口的其他接口类。 ByteBufHolder的作用就是帮助更方便的访问ByteBuf中的数据,当缓冲区没用了后,可以使用这个辅助类释放资源。ByteBufHolder很简 单,提供的可供访问的方法也很少。如果你想实现一个“消息对象”有效负载存储在ByteBuf,使用ByteBufHolder是一个好主意。</p>
+</li>
+<li><p>ByteBufAllocator<br>Netty支持各种ByteBuf的池实现,来使Netty提供一种称为ByteBufAllocator成为可能。ByteBufAllocator负责分配ByteBuf实 例,ByteBufAllocator提供了各种分配不同ByteBuf的方法,如需要一个堆缓冲区可以使用ByteBufAllocator.heapBuffer(),需要一个直接 缓冲区可以使用ByteBufAllocator.directBuffer(),需要一个复合缓冲区可以使用ByteBufAllocator.compositeBuffer()。其他方法的使用可 以看ByteBufAllocator源码及注释。<br>获取ByteBufAllocator对象很容易,可以从Channel的alloc()获取,也可以从ChannelHandlerContext的alloc()获取。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">￼@Override￼public void channelActive(ChannelHandlerContext ctx) throws Exception &#123;    ￼//get ByteBufAllocator instance by ChannelHandlerContext.alloc()</span><br><span class="line">    ByteBufAllocator alloc1 = ctx.alloc();</span><br><span class="line">    ctx.writeAndFlush(buf.duplicate()).addListener(ChannelFutureListener.CLOSE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ByteBufUtil<br>ByteBufUtil提供了一些静态的方法,在操作ByteBuf时非常有用。ByteBufUtil提供了Unpooled之外的一些方法,也许最有价值的是 hexDump(ByteBuf buffer)方法,这个方法返回指定ByteBuf中可读字节的十六进制字符串,可以用于调试程序时打印ByteBuf的内容,十 六进制字符串相比字节而言对用户更友好。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Netty的ByteBuf是Java NIO Buffer的优化，比JDK自带的缓冲区实现更优秀。</p>
+<p>Netty缓冲API提供了几个优势:</p>
+<ul>
+<li>可以自定义缓冲类型 </li>
+<li>通过一个内置的复合缓冲类型实现零拷贝 </li>
+<li>扩展性好,比如StringBuffer </li>
+<li>不需要调用flip()来切换读/写模式 </li>
+<li>读取和写入索引分开</li>
+<li>方法链 </li>
+<li>引用计数 </li>
+<li>Pooling(池)</li>
+</ul>]]>
+    
+    </summary>
+    
+      <category term="netty" scheme="http://www.52ff.cc/tags/netty/"/>
+    
+      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[java.nio.Buffer研究笔记]]></title>
@@ -898,55 +1004,6 @@ DEPT_TYPE <span class="built_in">NULL</span>
     </summary>
     
       <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[IntelliJ Idea操作技巧]]></title>
-    <link href="http://www.52ff.cc/2015/02/17/IntelliJ-Idea%E6%93%8D%E4%BD%9C%E6%8A%80%E5%B7%A7/"/>
-    <id>http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/</id>
-    <published>2015-02-17T06:55:49.000Z</published>
-    <updated>2015-03-20T03:05:01.000Z</updated>
-    <content type="html"><![CDATA[<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>
-<a id="more"></a>
-<p>写这篇文章的主要目的是记录idea工具磨合期掌握的最实用技巧，因为网上的快捷键列举比较杂乱而且应用在mac上不靠谱，自己记下来可以备忘，回顾也方便，帮助自己精通这个工具。</p>
-<p>ps:可使用ctrl+`切换keyMap，建议keyMap使用mac os x 10.5 +，使用default的在mac系统和其他快捷键冲突多些<br><br></p>
-<hr>
-<h3 id="搜索">搜索</h3><p>cmd+shift+f 当前项目下递归查找，相当于eclipse的ctrl+h<br>cmd+g       当前文件中往后搜索一样的字符，相当于eclipse的ctrl+ k<br>cmd+shift+g 当前文件中往前搜索一样的字符<br>cmd+p            查询某方法的参数信息<br>cmd+b            跳到调用方法的定义处<br>cmd+shift+b      跳到方法的实现处<br>cmd+u            跳到方法在父类或接口的定义处<br>cmd+alt+left/right 跳到上/下一次光标查看处<br>cmd+o        查找类<br>cmd+shift+o  查找文件<br><br></p>
-<hr>
-<h3 id="编辑">编辑</h3><p>cmd+j        调出IDEA的神器live template<br>cmd+n        各种自动生成代码<br>alt+enter    调出IDEA对出错点的提示处理方法，相当于eclipse的ctrl+1<br>cmd+D        复制粘贴当前行到下一行<br>shift+cmd+v  调出IDEA寄存器中保存的最近复制的N份内容，可选择性粘贴<br>ctrl+shift+/      注释/取消注释<br>shift+cmd+enter   补全当前行，最常用的场景时补全当前行后的；号，并将光标定位到下一行</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>]]>
-    
-    </summary>
-    
-      <category term="记录分享" scheme="http://www.52ff.cc/categories/%E8%AE%B0%E5%BD%95%E5%88%86%E4%BA%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[JAVA多线程第七篇(Callable和Future)]]></title>
-    <link href="http://www.52ff.cc/2015/02/13/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B8%83%E7%AF%87-Callable%E5%92%8CFuture/"/>
-    <id>http://www.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/</id>
-    <published>2015-02-13T13:36:49.000Z</published>
-    <updated>2015-03-23T06:28:41.000Z</updated>
-    <content type="html"><![CDATA[<p>接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一个简单的例子：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class CallableAndFuture &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        Callable&lt;Integer&gt; callable = new Callable&lt;Integer&gt;() &#123;  </span><br><span class="line">            public Integer call() throws Exception &#123;  </span><br><span class="line">                <span class="built_in">return</span> new Random().nextInt(<span class="number">100</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;;  </span><br><span class="line">        FutureTask&lt;Integer&gt; future = new FutureTask&lt;Integer&gt;(callable);  </span><br><span class="line">        new Thread(future).start();  </span><br><span class="line">        try &#123;  </span><br><span class="line">            Thread.sleep(<span class="number">5000</span>);// 可能做一些事情  </span><br><span class="line">            System.out.println(future.get());  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; catch (ExecutionException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>FutureTask实现了两个接口，Runnable和Future，所以它既可以作为Runnable被线程执行，又可以作为Future得到Callable的返回值，那么这个组合的使用有什么好处呢？假设有一个很耗时的返回值需要计算，并且这个返回值不是立刻需要的话，那么就可以使用这个组合，用另一个线程去计算返回值，而当前线程在使用这个返回值之前可以做其它的操作，等到需要这个返回值时，再通过Future得到，岂不美哉！这里有一个Future模式的介绍：<a href="http://openhome.cc/Gossip/DesignPattern/FuturePattern.htm。" target="_blank" rel="external">http://openhome.cc/Gossip/DesignPattern/FuturePattern.htm。</a><br>下面来看另一种方式使用Callable和Future，通过ExecutorService的submit方法执行Callable，并返回Future，代码如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class CallableAndFuture &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        ExecutorService threadPool = Executors.newSingleThreadExecutor();  </span><br><span class="line">        Future&lt;Integer&gt; future = threadPool.submit(new Callable&lt;Integer&gt;() &#123;  </span><br><span class="line">            public Integer call() throws Exception &#123;  </span><br><span class="line">                <span class="built_in">return</span> new Random().nextInt(<span class="number">100</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;);  </span><br><span class="line">        try &#123;  </span><br><span class="line">            Thread.sleep(<span class="number">5000</span>);// 可能做一些事情  </span><br><span class="line">            System.out.println(future.get());  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; catch (ExecutionException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>代码是不是简化了很多，ExecutorService继承自Executor，它的目的是为我们管理Thread对象，从而简化并发编程，Executor使我们无需显示的去管理线程的生命周期，是JDK 5之后启动任务的首选方式。<br>执行多个带返回值的任务，并取得多个返回值，代码如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class CallableAndFuture &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        ExecutorService threadPool = Executors.newCachedThreadPool();  </span><br><span class="line">        CompletionService&lt;Integer&gt; cs = new ExecutorCompletionService&lt;Integer&gt;(threadPool);  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt; <span class="number">5</span>; i++) &#123;  </span><br><span class="line">            final int taskID = i;  </span><br><span class="line">            cs.submit(new Callable&lt;Integer&gt;() &#123;  </span><br><span class="line">                public Integer call() throws Exception &#123;  </span><br><span class="line">                    <span class="built_in">return</span> taskID;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;);  </span><br><span class="line">        &#125;  </span><br><span class="line">        // 可能做一些事情  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt; <span class="number">5</span>; i++) &#123;  </span><br><span class="line">            try &#123;  </span><br><span class="line">                System.out.println(cs.take().get());  </span><br><span class="line">            &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">            &#125; catch (ExecutionException e) &#123;  </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其实也可以不使用CompletionService，可以先创建一个装Future类型的集合，用Executor提交的任务返回值添加到集合中，最后遍历集合取出数据，代码略。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一个简单的例子：<br>]]>
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
       <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     
