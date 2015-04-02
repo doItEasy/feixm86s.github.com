@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-03-30T15:39:36.000Z</updated>
+  <updated>2015-04-02T13:06:19.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -13,6 +13,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[JVM-体系结构 内存模型]]></title>
+    <link href="http://www.52ff.cc/2015/04/02/JVM-%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://www.52ff.cc/2015/04/02/JVM-体系结构-内存模型/</id>
+    <published>2015-04-02T13:01:39.000Z</published>
+    <updated>2015-04-02T13:06:19.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="一：Java技术体系模块图">一：Java技术体系模块图</h2><p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/jvm1.jpg" alt=""><br><a id="more"></a></p>
+<h2 id="二：JVM内存区域模型">二：JVM内存区域模型</h2><p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/jvm2.jpg" alt=""></p>
+<p>1.方法区<br>也称”永久代” 、“非堆”，  它用于存储虚拟机加载的类信息、常量、静态变量、是各个线程共享的内存区域。默认最小值为16MB，最大值为64MB，可以通过-XX:PermSize 和 -XX:MaxPermSize 参数限制方法区的大小。<br>运行时常量池：是方法区的一部分，Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放编译器生成的各种符号引用，这部分内容将在类加载后放到方法区的运行时常量池中。<br>2.虚拟机栈<br>描述的是java 方法执行的内存模型：每个方法被执行的时候 都会创建一个“栈帧”用于存储局部变量表(包括参数)、操作栈、方法出口等信息。每个方法被调用到执行完的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。声明周期与线程相同，是线程私有的。<br> 局部变量表存放了编译器可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用(引用指针，并非对象本身)，其中64位长度的long和double类型的数据会占用2个局部变量的空间，其余数据类型只占1个。局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在栈帧中分配多大的局部变量是完全确定的，在运行期间栈帧不会改变局部变量表的大小空间。<br>3.本地方法栈<br> 与虚拟机栈基本类似，区别在于虚拟机栈为虚拟机执行的java方法服务，而本地方法栈则是为Native方法服务。<br>4.堆<br>也叫做java 堆、GC堆是java虚拟机所管理的内存中最大的一块内存区域，也是被各个线程共享的内存区域，在JVM启动时创建。该内存区域存放了对象实例及数组(所有new的对象)。其大小通过-Xms(最小值)和-Xmx(最大值)参数设置，-Xms为JVM启动时申请的最小内存，默认为操作系统物理内存的1/64但小于1G，-Xmx为JVM可申请的最大内存，默认为物理内存的1/4但小于1G，默认当空余堆内存小于40%时，JVM会增大Heap到-Xmx指定的大小，可通过-XX:MinHeapFreeRation=来指定这个比列；当空余堆内存大于70%时，JVM会减小heap的大小到-Xms指定的大小，可通过XX:MaxHeapFreeRation=来指定这个比列，对于运行系统，为避免在运行时频繁调整Heap的大小，通常-Xms与-Xmx的值设成一样。<br>由于现在收集器都是采用分代收集算法，堆被划分为新生代和老年代。新生代主要存储新创建的对象和尚未进入老年代的对象。老年代存储经过多次新生代GC(Minor GC)任然存活的对象。<br>新生代：<br> 程序新创建的对象都是从新生代分配内存，新生代由Eden Space和两块相同大小的Survivor Space(通常又称S0和S1或From和To)构成，可通过-Xmn参数来指定新生代的大小，也可以通过-XX:SurvivorRation来调整Eden Space及Survivor Space的大小。<br>老年代：<br>用于存放经过多次新生代GC任然存活的对象，例如缓存对象，新建的对象也有可能直接进入老年代，主要有两种情况：①.大对象，可通过启动参数设置-XX:PretenureSizeThreshold=1024(单位为字节，默认为0)来代表超过多大时就不在新生代分配，而是直接在老年代分配。②.大的数组对象，切数组中无引用外部对象。<br>老年代所占的内存大小为-Xmx对应的值减去-Xmn对应的值。</p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/jvm3.jpg" alt=""></p>
+<p>5.程序计数器<br>是最小的一块内存区域，它的作用是当前线程所执行的字节码的行号指示器，在虚拟机的模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、异常处理、线程恢复等基础功能都需要依赖计数器完成。</p>
+<h2 id="三：直接内存">三：直接内存</h2><p>直接内存并不是虚拟机内存的一部分，也不是Java虚拟机规范中定义的内存区域。jdk1.4中新加入的NIO，引入了通道与缓冲区的IO方式，它可以调用Native方法直接分配堆外内存，这个堆外内存就是本机内存，不会影响到堆内存的大小。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="一：Java技术体系模块图">一：Java技术体系模块图</h2><p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/jvm1.jpg" alt=""><br>]]>
+    
+    </summary>
+    
+      <category term="jvm" scheme="http://www.52ff.cc/tags/jvm/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Netty学习笔记-线程模型]]></title>
@@ -976,36 +1000,6 @@ DEPT_TYPE <span class="built_in">NULL</span>
       <category term="sql" scheme="http://www.52ff.cc/tags/sql/"/>
     
       <category term="sql数据库" scheme="http://www.52ff.cc/categories/sql%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[java反射简述一二]]></title>
-    <link href="http://www.52ff.cc/2015/02/17/java%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6%E7%AE%80%E5%8D%95%E6%95%B4%E7%90%86/"/>
-    <id>http://www.52ff.cc/2015/02/17/java反射机制简单整理/</id>
-    <published>2015-02-17T14:19:16.000Z</published>
-    <updated>2015-03-15T14:02:17.000Z</updated>
-    <content type="html"><![CDATA[<p>在Java运行时环境中，对于任意一个类，能否知道这个类有哪些属性和方法？对于任意一个对象，能否调用他的方法？这些答案是肯定的，这种动态获取类的信息，以及动态调用类的方法的功能来源于JAVA的反射。它使您能够创建灵活的代码，这些代码可以在运行时装配，无需在组件之间进行源代表链接。反射允许我们在编写与 执行时，使我们的程序代码能够接入装载到JVM中的类的内部信息，而不是源代码中选定的类协作的代码。这使反射成为构建灵活的应用的主要工具。</p>
-<a id="more"></a>
-<p>JAVA反射机制主要提供了以下功能(前提都是在运行时不是在编译时)：<br>1.判断任意一个对象所属的类<br>2.构造任意一个类的对象<br>3.判断任意一个类所具有的成员变量和方法<br>4.调用任意一个对象的方法(包括private)</p>
-<p>Java 反射相关的API简介：<br>位于java.lang.reflect包中<br>—Class类：代表一个类<br>—Filed类：代表类的成员变量<br>—Method类：代表类的方法<br>—Constructor类：代表类的构造方法<br>—Array类：提供了动态创建数组，以及访问数组的元素的静态方法。该类中的所有方法都是静态方法</p>
-<h3 id="Class类">Class类</h3><p>在 java 的Object类中的申明了数个应该在所有的java类中被改写的methods：<br>hashCode(), equals(),clone(),toString(),getClass()等，其中的getClass()返回一个Class 类型的对象。<br>Class类十分的特殊，它和一般的类一样继承自Object，其实体用以表达java程序运行时的class和interface，也用来表达 enum，array，primitive，Java Types 以及关键字void，当加载一个类，或者当加载器（class loader）的defineClass（）被JVM调用，便产生一个Class对象，<br>Class是Reflection起源，针对任何你想探勘的class（类），唯有现为他产生一个Class的对象，接下来才能经由后者唤起为数十多个的反射API。</p>
-<p>Java允许我们从多种途径为一个类class生成对应的Class对象。<br>—运用 getClass()：Object类中的方法，每个类都拥有此方法<br>String str=”abc”;<br>Class cl=str.getClass();</p>
-<p>—运用 Class.getSuperclass（）：Class类中的方法，返回该Class的父类的Class<br>—运用 Class.forName()静态方法：<br>—运用 Class：类名.class<br>—运用primitive wrapper classes的TYPE语法： 基本类型包装类的TYPE，如：Integer.TYPE<br>注意：TYPE的使用，只适合原生（基本）数据类型</p>
-<p>——运行时生成instance</p>
-<p>想生成对象的实体，在反射动态机制中有两种方法，一个针对无变量的构造方法，一个针对带参数的构造方法，如果想调用带参数的构造方法，就比较的麻烦，不能直接调用Class类中的newInstance()，而是调用Constructor类中newInstance（）方法，首先准备一个Class[]作为Constructor的参数类型。然后调用该Class对象的getConstructor()方法获得一个专属的Constructor的对象，最后再准备一个<br>Object[]作为Constructor对象昂的newInstance(()方法的实参。<br>在这里需要说明的是 只有两个类拥有newInstance()方法，分别是Class类和Constructor类<br>Class类中的newInstance()方法是不带参数的，而Constructro类中的newInstance()方法是带参数的<br>需要提供必要的参数。<br>例:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Class c=Class.forName(<span class="string">"DynTest"</span>);</span><br><span class="line">Class[] ptype=new Class[]&#123;double.class,int.class&#125;；Constructor ctor=c.getConstructor(ptypr);</span><br><span class="line">Object[] obj=new Object[]&#123;new Double(<span class="number">3.1415</span>),new Integer(<span class="number">123</span>)&#125;;</span><br><span class="line">Object object=ctor.newInstance(obj);</span><br></pre></td></tr></table></figure></p>
-<h3 id="运行时调用Method">运行时调用Method</h3><p>这个动作首先准备一个Class[]{}作为getMethod（String name，Class[]）方法的参数类型，接下来准备一个Obeject[]放置自变量，然后调用Method对象的invoke（Object obj，Object[]）方法。</p>
-<h3 id="运行时调用Field内容">运行时调用Field内容</h3><p>变更Field不需要参数和自变量，首先调用Class的getField（）并指定field名称，获得特定的Field对象后便可以直接调用Field的 get（Object obj）和set(Object obj,Object value)方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) &#123;        </span><br><span class="line">        Class&lt;?&gt; clazz = null;  </span><br><span class="line">        try &#123;</span><br><span class="line">            clazz = User.class;  </span><br><span class="line">            Object obj=clazz.newInstance();  </span><br><span class="line">            ((User) obj).setUsername(<span class="string">"4"</span>);  </span><br><span class="line">            ((User) obj).setPassword(<span class="string">"2222"</span>); </span><br><span class="line">            //获取构造函数数组</span><br><span class="line">            Object[] constructors = clazz.getDeclaredConstructors();  </span><br><span class="line">            <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; constructors.length; i++) &#123;</span><br><span class="line">                System.out.println(<span class="string">"----constructors["</span>+i+<span class="string">"]-----"</span>+constructors[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            //获取类中声明的字段数组，包括公有和私有字段&lt;br&gt;  </span><br><span class="line">            Field[] fields = clazz.getDeclaredFields();  </span><br><span class="line">            <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; fields.length; j++) &#123;  </span><br><span class="line">                String head = fields[j].getName().toUpperCase().substring(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">                //获取属性的get方法名称</span><br><span class="line">                String getName = <span class="string">"get"</span> + head+ fields[j].getName().substring(<span class="number">1</span>);  </span><br><span class="line">                //获取属性的<span class="built_in">set</span>方法名称</span><br><span class="line">                String <span class="built_in">set</span>Name = <span class="string">"set"</span> + head+ fields[j].getName().substring(<span class="number">1</span>);  </span><br><span class="line">                //获取类中声明的方法数组，包括公有和私有方法</span><br><span class="line">                Method[] methods=clazz.getDeclaredMethods();  </span><br><span class="line">                <span class="keyword">for</span>(int m=<span class="number">0</span>;m&lt;methods.length;m++)&#123;</span><br><span class="line">                    System.out.println(<span class="string">"----method["</span>+m+<span class="string">"]------"</span>+methods[m].getName()); </span><br><span class="line">                 &#125;</span><br><span class="line">                //根据方法名称和参数，获取Method对象，第一个参数是方法名称，后边是一个Class数组，里边是方法参数类型</span><br><span class="line">                Method getMethod= clazz.getMethod(getName, new Class[] &#123;&#125;); </span><br><span class="line">                Method <span class="built_in">set</span>Method= clazz.getMethod(<span class="built_in">set</span>Name,new Class[]&#123; fields[j].getType() &#125;);</span><br><span class="line">                //obj -从中调用底层方法的对象,后边是用于方法调用的参数</span><br><span class="line">                Object result2=<span class="built_in">set</span>Method.invoke(obj, new Object[]&#123;new String(<span class="string">"hello  "</span>+fields[j].getName())&#125;);</span><br><span class="line">                Object result = getMethod.invoke(obj, new Object[] &#123;&#125;);</span><br><span class="line">                System.out.println(<span class="string">"----result------"</span> + result);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; catch (SecurityException e) &#123;            </span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; catch (NoSuchMethodException e) &#123;</span><br><span class="line">                    e.printStackTrace();  </span><br><span class="line">                &#125; catch (IllegalArgumentException e) &#123; </span><br><span class="line">                    e.printStackTrace();  </span><br><span class="line">                &#125; catch (IllegalAccessException e) &#123;  </span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; catch (InvocationTargetException e) &#123;</span><br><span class="line">                    e.printStackTrace();  </span><br><span class="line">                &#125; catch (InstantiationException e) &#123;</span><br><span class="line">                    e.printStackTrace(); </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="Java类反射中的主要方法">Java类反射中的主要方法</h3><p>对于以下三类组件中的任何一类来说 — 构造函数、字段和方法 — java.lang.Class 提供四种独立的反射调用，以不同的方式来获得信息。调用都遵循一种标准格式。以下是用于查找构造函数的一组反射调用：<br>Constructor getConstructor(Class[] params) — 获得使用特殊的参数类型的公共构造函数，<br>Constructor[] getConstructors() — 获得类的所有公共构造函数<br>Constructor getDeclaredConstructor(Class[] params) — 获得使用特定参数类型的构造函数(与接入级别无关)<br>Constructor[] getDeclaredConstructors() — 获得类的所有构造函数(与接入级别无关)<br>获得字段信息的Class 反射调用不同于那些用于接入构造函数的调用，在参数类型数组中使用了字段名：<br>Field getField(String name) — 获得命名的公共字段<br>Field[] getFields() — 获得类的所有公共字段<br>Field getDeclaredField(String name) — 获得类声明的命名的字段<br>Field[] getDeclaredFields() — 获得类声明的所有字段<br>用于获得方法信息函数：<br>Method getMethod(String name, Class[] params) — 使用特定的参数类型，获得命名的公共方法<br>Method[] getMethods() — 获得类的所有公共方法<br>Method getDeclaredMethod(String name, Class[] params) — 使用特写的参数类型，获得类声明的命名的方法<br>Method[] getDeclaredMethods() — 获得类声明的所有方法 </p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>在Java运行时环境中，对于任意一个类，能否知道这个类有哪些属性和方法？对于任意一个对象，能否调用他的方法？这些答案是肯定的，这种动态获取类的信息，以及动态调用类的方法的功能来源于JAVA的反射。它使您能够创建灵活的代码，这些代码可以在运行时装配，无需在组件之间进行源代表链接。反射允许我们在编写与 执行时，使我们的程序代码能够接入装载到JVM中的类的内部信息，而不是源代码中选定的类协作的代码。这使反射成为构建灵活的应用的主要工具。</p>]]>
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     
   </entry>
   

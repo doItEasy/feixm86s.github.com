@@ -83,6 +83,71 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/03/04/JAVA多线程第九篇-Condition/" title="JAVA多线程第九篇(条件变量Condition)" itemprop="url">JAVA多线程第九篇(条件变量Condition)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-03-04T12:30:27.000Z" itemprop="datePublished"> 发表于 2015-03-04</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>条件变量是Java5线程中很重要的一个概念，顾名思义，条件变量就是表示条件的一种变量。但是必须说明，这里的条件是没有实际含义的，仅仅是个标记而已，并且条件的含义往往通过代码来赋予其含义。</p>
+<p>条件变量都实现了java.util.concurrent.locks.Condition接口，条件变量的实例化是通过一个Lock对象上调用newCondition()方法来获取的，这样，条件就和一个锁对象绑定起来了。因此，Java中的条件变量只能和锁配合使用，来控制并发程序访问竞争资源的安全。</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/03/04/JAVA多线程第九篇-Condition/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/03/04/JAVA多线程第九篇-Condition/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/04/JAVA多线程第九篇-Condition/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/03/03/JAVA多线程第八篇-锁对象Lock/" title="JAVA多线程第八篇(锁对象Lock)" itemprop="url">JAVA多线程第八篇(锁对象Lock)</a>
   </h1>
   <p class="article-author">By
@@ -461,65 +526,6 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/02/17/IntelliJ-Idea操作技巧/" title="IntelliJ Idea操作技巧" itemprop="url">IntelliJ Idea操作技巧</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-02-17T06:55:49.000Z" itemprop="datePublished"> 发表于 2015-02-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/02/17/IntelliJ-Idea操作技巧/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/记录分享/">记录分享</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/02/17/IntelliJ-Idea操作技巧/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -537,7 +543,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>21</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>22</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -568,23 +574,25 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
 		
 			<li><a href="/tags/netty/" title="netty">netty<sup>4</sup></a></li>
 		
-			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
-		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
 		
-			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
-		
-			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
-		
-			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 		
 			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
 		
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+		
+			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
+		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		
-			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			<li><a href="/tags/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+		
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -593,7 +601,7 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

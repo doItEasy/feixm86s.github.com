@@ -4,23 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>IntelliJ Idea操作技巧 | FlyFish&#39;s Blog</title>
+    <title>JVM-体系结构 内存模型 | FlyFish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider">
+    <meta name="description" content="一：Java技术体系模块图">
     
     
-    <meta name="description" content="用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有">
+    <meta name="description" content="一：Java技术体系模块图">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IntelliJ Idea操作技巧">
-<meta property="og:url" content="http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/index.html">
+<meta property="og:title" content="JVM-体系结构 内存模型">
+<meta property="og:url" content="http://www.52ff.cc/2015/04/02/JVM-体系结构-内存模型/index.html">
 <meta property="og:site_name" content="FlyFish's Blog">
-<meta property="og:description" content="用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有">
+<meta property="og:description" content="一：Java技术体系模块图">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/jvm1.jpg">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/jvm2.jpg">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/jvm3.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IntelliJ Idea操作技巧">
-<meta name="twitter:description" content="用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有">
+<meta name="twitter:title" content="JVM-体系结构 内存模型">
+<meta name="twitter:description" content="一：Java技术体系模块图">
 
     
     <link rel="alternative" href="/atom.xml" title="FlyFish&#39;s Blog" type="application/atom+xml">
@@ -81,14 +84,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/02/17/IntelliJ-Idea操作技巧/" title="IntelliJ Idea操作技巧" itemprop="url">IntelliJ Idea操作技巧</a>
+      <a href="/2015/04/02/JVM-体系结构-内存模型/" title="JVM-体系结构 内存模型" itemprop="url">JVM-体系结构 内存模型</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-02-17T06:55:49.000Z" itemprop="datePublished"> 发表于 2015-02-17</time>
+    <time datetime="2015-04-02T13:01:39.000Z" itemprop="datePublished"> 发表于 2015-04-02</time>
     
   </p>
 </header>
@@ -97,18 +100,16 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索"><span class="toc-number">1.</span> <span class="toc-text">搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑"><span class="toc-number">2.</span> <span class="toc-text">编辑</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一：Java技术体系模块图"><span class="toc-number">1.</span> <span class="toc-text">一：Java技术体系模块图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二：JVM内存区域模型"><span class="toc-number">2.</span> <span class="toc-text">二：JVM内存区域模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三：直接内存"><span class="toc-number">3.</span> <span class="toc-text">三：直接内存</span></a></li></ol>
 		
 		</div>
 		
-		<p>用了多年的eclipse,现在终于决定抛弃它了，转向了JetBrains公司的IntelliJ IDEA.原因是eclipse让我碰到了以下几个痛苦的事：<br>1:安装gradle,ivy构建工具麻烦且慢，myeclipse将近1G的大小svn、反编译这种功能还要新安装插件<br>2: myeclipse太耗内存了，两个myelipse一启动，电脑必来慢慢变卡，另外启动和build workspace的速度也有点不爽<br>3:代码助手的功能缺失，idea有live template这个神器，另外前端的js,css,html我已经转向另一个牛逼的工具HBulider</p>
-<a id="more"></a>
-<p>写这篇文章的主要目的是记录idea工具磨合期掌握的最实用技巧，因为网上的快捷键列举比较杂乱而且应用在mac上不靠谱，自己记下来可以备忘，回顾也方便，帮助自己精通这个工具。</p>
-<p>ps:可使用ctrl+`切换keyMap，建议keyMap使用mac os x 10.5 +，使用default的在mac系统和其他快捷键冲突多些<br><br></p>
-<hr>
-<h3 id="搜索">搜索</h3><p>cmd+shift+f 当前项目下递归查找，相当于eclipse的ctrl+h<br>cmd+g       当前文件中往后搜索一样的字符，相当于eclipse的ctrl+ k<br>cmd+shift+g 当前文件中往前搜索一样的字符<br>cmd+p            查询某方法的参数信息<br>cmd+b            跳到调用方法的定义处<br>cmd+shift+b      跳到方法的实现处<br>cmd+u            跳到方法在父类或接口的定义处<br>cmd+alt+left/right 跳到上/下一次光标查看处<br>cmd+o        查找类<br>cmd+shift+o  查找文件<br><br></p>
-<hr>
-<h3 id="编辑">编辑</h3><p>cmd+j        调出IDEA的神器live template<br>cmd+n        各种自动生成代码<br>alt+enter    调出IDEA对出错点的提示处理方法，相当于eclipse的ctrl+1<br>cmd+D        复制粘贴当前行到下一行<br>shift+cmd+v  调出IDEA寄存器中保存的最近复制的N份内容，可选择性粘贴<br>ctrl+shift+/      注释/取消注释<br>shift+cmd+enter   补全当前行，最常用的场景时补全当前行后的；号，并将光标定位到下一行</p>
+		<h2 id="一：Java技术体系模块图">一：Java技术体系模块图</h2><p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/jvm1.jpg" alt=""><br><a id="more"></a></p>
+<h2 id="二：JVM内存区域模型">二：JVM内存区域模型</h2><p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/jvm2.jpg" alt=""></p>
+<p>1.方法区<br>也称”永久代” 、“非堆”，  它用于存储虚拟机加载的类信息、常量、静态变量、是各个线程共享的内存区域。默认最小值为16MB，最大值为64MB，可以通过-XX:PermSize 和 -XX:MaxPermSize 参数限制方法区的大小。<br>运行时常量池：是方法区的一部分，Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放编译器生成的各种符号引用，这部分内容将在类加载后放到方法区的运行时常量池中。<br>2.虚拟机栈<br>描述的是java 方法执行的内存模型：每个方法被执行的时候 都会创建一个“栈帧”用于存储局部变量表(包括参数)、操作栈、方法出口等信息。每个方法被调用到执行完的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。声明周期与线程相同，是线程私有的。<br> 局部变量表存放了编译器可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用(引用指针，并非对象本身)，其中64位长度的long和double类型的数据会占用2个局部变量的空间，其余数据类型只占1个。局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在栈帧中分配多大的局部变量是完全确定的，在运行期间栈帧不会改变局部变量表的大小空间。<br>3.本地方法栈<br> 与虚拟机栈基本类似，区别在于虚拟机栈为虚拟机执行的java方法服务，而本地方法栈则是为Native方法服务。<br>4.堆<br>也叫做java 堆、GC堆是java虚拟机所管理的内存中最大的一块内存区域，也是被各个线程共享的内存区域，在JVM启动时创建。该内存区域存放了对象实例及数组(所有new的对象)。其大小通过-Xms(最小值)和-Xmx(最大值)参数设置，-Xms为JVM启动时申请的最小内存，默认为操作系统物理内存的1/64但小于1G，-Xmx为JVM可申请的最大内存，默认为物理内存的1/4但小于1G，默认当空余堆内存小于40%时，JVM会增大Heap到-Xmx指定的大小，可通过-XX:MinHeapFreeRation=来指定这个比列；当空余堆内存大于70%时，JVM会减小heap的大小到-Xms指定的大小，可通过XX:MaxHeapFreeRation=来指定这个比列，对于运行系统，为避免在运行时频繁调整Heap的大小，通常-Xms与-Xmx的值设成一样。<br>由于现在收集器都是采用分代收集算法，堆被划分为新生代和老年代。新生代主要存储新创建的对象和尚未进入老年代的对象。老年代存储经过多次新生代GC(Minor GC)任然存活的对象。<br>新生代：<br> 程序新创建的对象都是从新生代分配内存，新生代由Eden Space和两块相同大小的Survivor Space(通常又称S0和S1或From和To)构成，可通过-Xmn参数来指定新生代的大小，也可以通过-XX:SurvivorRation来调整Eden Space及Survivor Space的大小。<br>老年代：<br>用于存放经过多次新生代GC任然存活的对象，例如缓存对象，新建的对象也有可能直接进入老年代，主要有两种情况：①.大对象，可通过启动参数设置-XX:PretenureSizeThreshold=1024(单位为字节，默认为0)来代表超过多大时就不在新生代分配，而是直接在老年代分配。②.大的数组对象，切数组中无引用外部对象。<br>老年代所占的内存大小为-Xmx对应的值减去-Xmn对应的值。</p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/jvm3.jpg" alt=""></p>
+<p>5.程序计数器<br>是最小的一块内存区域，它的作用是当前线程所执行的字节码的行号指示器，在虚拟机的模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、异常处理、线程恢复等基础功能都需要依赖计数器完成。</p>
+<h2 id="三：直接内存">三：直接内存</h2><p>直接内存并不是虚拟机内存的一部分，也不是Java虚拟机规范中定义的内存区域。jdk1.4中新加入的NIO，引入了通道与缓冲区的IO方式，它可以调用Native方法直接分配堆外内存，这个堆外内存就是本机内存，不会影响到堆内存的大小。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -116,9 +117,14 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/记录分享/">记录分享</a>
+  <a class="article-category-link" href="/categories/java/">java</a>
 </div>
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/jvm/">jvm</a>
+  </div>
 
 </div>
 
@@ -126,7 +132,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/" data-title="IntelliJ Idea操作技巧 | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/04/02/JVM-体系结构-内存模型/" data-title="JVM-体系结构 内存模型 | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -139,19 +145,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/02/17/java反射机制简单整理/" title="java反射简述一二">
-  <strong>上一篇：</strong><br/>
-  <span>
-  java反射简述一二</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/02/13/JAVA多线程第七篇-Callable和Future/"  title="JAVA多线程第七篇(Callable和Future)">
+<a href="/2015/03/30/Netty学习笔记-线程模型/"  title="Netty学习笔记-线程模型">
  <strong>下一篇：</strong><br/> 
- <span>JAVA多线程第七篇(Callable和Future)
+ <span>Netty学习笔记-线程模型
 </span>
 </a>
 </div>
@@ -160,7 +158,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/02/17/IntelliJ-Idea操作技巧/" data-title="IntelliJ Idea操作技巧" data-url="http://www.52ff.cc/2015/02/17/IntelliJ-Idea操作技巧/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/02/JVM-体系结构-内存模型/" data-title="JVM-体系结构 内存模型" data-url="http://www.52ff.cc/2015/04/02/JVM-体系结构-内存模型/"></div>
 </section>
 
 
@@ -170,7 +168,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索"><span class="toc-number">1.</span> <span class="toc-text">搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑"><span class="toc-number">2.</span> <span class="toc-text">编辑</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一：Java技术体系模块图"><span class="toc-number">1.</span> <span class="toc-text">一：Java技术体系模块图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二：JVM内存区域模型"><span class="toc-number">2.</span> <span class="toc-text">二：JVM内存区域模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三：直接内存"><span class="toc-number">3.</span> <span class="toc-text">三：直接内存</span></a></li></ol>
  
   </div>
 
