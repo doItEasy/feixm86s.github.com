@@ -4,23 +4,24 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>hello Blog | FlyFish&#39;s Blog</title>
+    <title>Netty异步事件驱动模型 | FlyFish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="学习领悟一个知识，较长一段时间未接触，是否感觉忘了大半，一时间想不出所以然？学完的知识如果不使用或者不常常回顾，那么还不是自己的知识。自己写的代码，6个月不看就是别人的代码。所以要记下来自己学习过的东西方便自己查看和总结.">
+    <meta name="description" content="Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。">
     
     
-    <meta name="description" content="学习领悟一个知识，较长一段时间未接触，是否感觉忘了大半，一时间想不出所以然？学完的知识如果不使用或者不常常回顾，那么还不是自己的知识。自己写的代码，6个月不看就是别人的代码。所以要记下来自己学习过的东西方便自己查看和总结.">
+    <meta name="description" content="Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hello Blog">
-<meta property="og:url" content="http://www.52ff.cc/2015/01/18/hello-blog/index.html">
+<meta property="og:title" content="Netty异步事件驱动模型">
+<meta property="og:url" content="http://www.52ff.cc/2015/04/03/netty异步事件驱动模型/index.html">
 <meta property="og:site_name" content="FlyFish's Blog">
-<meta property="og:description" content="学习领悟一个知识，较长一段时间未接触，是否感觉忘了大半，一时间想不出所以然？学完的知识如果不使用或者不常常回顾，那么还不是自己的知识。自己写的代码，6个月不看就是别人的代码。所以要记下来自己学习过的东西方便自己查看和总结.">
+<meta property="og:description" content="Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/netty6.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hello Blog">
-<meta name="twitter:description" content="学习领悟一个知识，较长一段时间未接触，是否感觉忘了大半，一时间想不出所以然？学完的知识如果不使用或者不常常回顾，那么还不是自己的知识。自己写的代码，6个月不看就是别人的代码。所以要记下来自己学习过的东西方便自己查看和总结.">
+<meta name="twitter:title" content="Netty异步事件驱动模型">
+<meta name="twitter:description" content="Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。">
 
     
     <link rel="alternative" href="/atom.xml" title="FlyFish&#39;s Blog" type="application/atom+xml">
@@ -81,14 +82,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/18/hello-blog/" title="hello Blog" itemprop="url">hello Blog</a>
+      <a href="/2015/04/03/netty异步事件驱动模型/" title="Netty异步事件驱动模型" itemprop="url">Netty异步事件驱动模型</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-01-17T16:14:01.000Z" itemprop="datePublished"> 发表于 2015-01-18</time>
+    <time datetime="2015-04-02T16:18:29.000Z" itemprop="datePublished"> 发表于 2015-04-03</time>
     
   </p>
 </header>
@@ -97,14 +98,24 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么是独立博客"><span class="toc-number">1.</span> <span class="toc-text">为什么是独立博客</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>学习领悟一个知识，较长一段时间未接触，是否感觉忘了大半，一时间想不出所以然？<br>学完的知识如果不使用或者不常常回顾，那么还不是自己的知识。<br>自己写的代码，6个月不看就是别人的代码。<br>所以要记下来自己学习过的东西方便自己查看和总结.<br><br>                </p>
-<hr>
+		<p> Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。</p>
 <a id="more"></a>
-<h3 id="为什么是独立博客">为什么是独立博客</h3><p>早就有弄一个独立博客的想法，但是这是一件很花时间和精力的事情，平时忙于琐碎的工作，很难抽出时间玩这个。去年发现有朋友基于bootstrap给自己做了个人站点，发现也有些其他朋友使用markdown写内容再生成静态页面。看到朋友的站点后一下子就想行动起来了，一开始玩了jekyll,后来因为一个主题和node.js选择了hexo。<br>驱使我弄独立博客主要是这几个原因：<br>1.够酷，自己的域名，门面是自己的<br>2.独立，自由，可自定义成自己喜欢的个性的样式<br>3.不会像平台博客那样，平台一变差，博客也跟着变差，更不会有广告飞<br>4.更好的记录</p>
+<p>Netty的异步事件驱动模型主要涉及到下面几个核心的概念：</p>
+<ul>
+<li>Channel：表示一个与socket关联的通道</li>
+<li>ChannelPipeline： 管道，一个Channel拥有一个ChannelPipeline，ChannelPipeline维护着一个处理链（严格的说是两 个：upstream、downstream），处理链是由很多处理句柄ChannelHandler所构成，每个ChannelHandler处理完以 后会传递给链中的下一个处理句柄继续处理。</li>
+<li>ChannelHandler：处理句柄，用户可以定义自己的处理句柄来处理每个请求，或发出请求前进行预处理，典型的有编码/解码器：decoder、encoder。</li>
+<li>ChannelEvent：事件，是整个模型的处理对象，当产生或触发（fire）一个事件时，该事件会沿着ChannelPipeline处理链依次被处理。</li>
+<li>ChannelFuture： 异步结果，这个是异步事件处理的关键，当一个事件被处理时，可以直接以ChannelFuture的形式直接返回，不用在当前操作中被阻塞。可以通过 ChannelFuture得到最终的执行结果，具体的做法是在ChannelFuture添加监听器listener，当操作最终被执行完 后，listener会被触发，我们可以在listener的回调函数中预定义我们的业务代码。</li>
+</ul>
+<p>模型的结构图如下： </p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/netty6.jpg" alt=""></p>
+<p>ChannelPipeline实际上维持了两个处理链：upstream、downstream。 Upstream一般处理来自Channel的读事件，而downstream一般处理向Channel的写事件。需要注意的是，这两个处理链是相互独立 的，在upstream链中传递到最后一个ChannelHandler处理后，不会再传递到downstream链中继续处理。</p>
+<p>在downstream链的末端会有个ChannelSink处理，用户可以自定义这个ChannelSink的实现，系统也有个默认的实现，当downstream链中最后一个ChannelHandler处理完后会被传递给这个ChannelSink进行最后的处理。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -112,9 +123,14 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/随笔生活/">随笔生活</a>
+  <a class="article-category-link" href="/categories/java/">java</a>
 </div>
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/netty/">netty</a><a href="/tags/nio/">nio</a>
+  </div>
 
 </div>
 
@@ -122,7 +138,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/01/18/hello-blog/" data-title="hello Blog | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/04/03/netty异步事件驱动模型/" data-title="Netty异步事件驱动模型 | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -135,19 +151,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/19/JAVA多线程第三篇/" title="JAVA多线程第三篇(线程同步synchronized和volatile)">
-  <strong>上一篇：</strong><br/>
-  <span>
-  JAVA多线程第三篇(线程同步synchronized和volatile)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/01/12/JAVA多线程第二篇（状态转换）/"  title="JAVA多线程第二篇(状态转换)">
+<a href="/2015/04/02/JVM-体系结构-内存模型/"  title="JVM-体系结构 内存模型">
  <strong>下一篇：</strong><br/> 
- <span>JAVA多线程第二篇(状态转换)
+ <span>JVM-体系结构 内存模型
 </span>
 </a>
 </div>
@@ -156,7 +164,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/01/18/hello-blog/" data-title="hello Blog" data-url="http://www.52ff.cc/2015/01/18/hello-blog/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/03/netty异步事件驱动模型/" data-title="Netty异步事件驱动模型" data-url="http://www.52ff.cc/2015/04/03/netty异步事件驱动模型/"></div>
 </section>
 
 
@@ -166,7 +174,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么是独立博客"><span class="toc-number">1.</span> <span class="toc-text">为什么是独立博客</span></a></li></ol>
+ 
  
   </div>
 

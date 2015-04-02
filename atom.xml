@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-04-02T13:06:19.000Z</updated>
+  <updated>2015-04-02T16:24:45.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -13,6 +13,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Netty异步事件驱动模型]]></title>
+    <link href="http://www.52ff.cc/2015/04/03/netty%E5%BC%82%E6%AD%A5%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://www.52ff.cc/2015/04/03/netty异步事件驱动模型/</id>
+    <published>2015-04-02T16:18:29.000Z</published>
+    <updated>2015-04-02T16:24:45.000Z</updated>
+    <content type="html"><![CDATA[<p> Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。</p>
+<a id="more"></a>
+<p>Netty的异步事件驱动模型主要涉及到下面几个核心的概念：</p>
+<ul>
+<li>Channel：表示一个与socket关联的通道</li>
+<li>ChannelPipeline： 管道，一个Channel拥有一个ChannelPipeline，ChannelPipeline维护着一个处理链（严格的说是两 个：upstream、downstream），处理链是由很多处理句柄ChannelHandler所构成，每个ChannelHandler处理完以 后会传递给链中的下一个处理句柄继续处理。</li>
+<li>ChannelHandler：处理句柄，用户可以定义自己的处理句柄来处理每个请求，或发出请求前进行预处理，典型的有编码/解码器：decoder、encoder。</li>
+<li>ChannelEvent：事件，是整个模型的处理对象，当产生或触发（fire）一个事件时，该事件会沿着ChannelPipeline处理链依次被处理。</li>
+<li>ChannelFuture： 异步结果，这个是异步事件处理的关键，当一个事件被处理时，可以直接以ChannelFuture的形式直接返回，不用在当前操作中被阻塞。可以通过 ChannelFuture得到最终的执行结果，具体的做法是在ChannelFuture添加监听器listener，当操作最终被执行完 后，listener会被触发，我们可以在listener的回调函数中预定义我们的业务代码。</li>
+</ul>
+<p>模型的结构图如下： </p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/netty6.jpg" alt=""></p>
+<p>ChannelPipeline实际上维持了两个处理链：upstream、downstream。 Upstream一般处理来自Channel的读事件，而downstream一般处理向Channel的写事件。需要注意的是，这两个处理链是相互独立 的，在upstream链中传递到最后一个ChannelHandler处理后，不会再传递到downstream链中继续处理。</p>
+<p>在downstream链的末端会有个ChannelSink处理，用户可以自定义这个ChannelSink的实现，系统也有个默认的实现，当downstream链中最后一个ChannelHandler处理完后会被传递给这个ChannelSink进行最后的处理。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p> Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。</p>]]>
+    
+    </summary>
+    
+      <category term="netty" scheme="http://www.52ff.cc/tags/netty/"/>
+    
+      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[JVM-体系结构 内存模型]]></title>
@@ -869,137 +903,6 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
       <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
     
       <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[SQL优化的几条建议]]></title>
-    <link href="http://www.52ff.cc/2015/02/19/SQL%E4%BC%98%E5%8C%96%E7%9A%84%E8%8B%A5%E5%B9%B2%E6%9D%A1%E6%8A%80%E5%B7%A7/"/>
-    <id>http://www.52ff.cc/2015/02/19/SQL优化的若干条技巧/</id>
-    <published>2015-02-19T06:50:55.000Z</published>
-    <updated>2015-03-23T06:25:56.000Z</updated>
-    <content type="html"><![CDATA[<p>在工作的前两年，做的电信行业，开发主要是和oracle打交道的管理模块，特分享几条同事们整理的文档中的sql优化建议，主要是where条件怎么写和如何不破坏索引之类的小知识点。</p>
-<a id="more"></a>
-<h3 id="选择最有效率的表名顺序_(只在基于规则的优化器中有效)_：">选择最有效率的表名顺序 (只在基于规则的优化器中有效) ：</h3><pre><code>ORACLE 的解析器按照从右到左的顺序处理 <span class="keyword">FROM</span> 子句中的表名， <span class="keyword">FROM</span> 子句中写在最右的表将被最先处理，所以我们需要把记录最少的表写在最右边。如果有<span class="number">3</span>个以上的表连接查询，那就需要选择交叉表写在最右，交叉表是指那个被其他表所引用的表。
-简而言之：大表在前，小表在后
-</code></pre><h3 id="WHERE子句中的连接顺序：">WHERE子句中的连接顺序：</h3><pre><code>ORACLE采用自下而上的顺序解析 <span class="keyword">WHERE</span> 子句,根据这个原理 , 表之间的连接必须写在其他 <span class="keyword">WHERE</span> 条件之前 , 那些可以过滤掉最大数量记录的条件必须写在 <span class="keyword">WHERE</span> 子句的末尾<span class="built_in">.</span>
-</code></pre><h3 id="SELECT子句中避免使用’*’_：">SELECT子句中避免使用’*’ ：</h3><pre><code>ORACLE在解析的过程中,会将 <span class="string">'*'</span>  依次转换成所有的列名 ,  这个工作是通过查询数据字典完成的 , 这意味着将耗费更多的时间
-</code></pre><h3 id="使用_DECODE_函数来减少处理时间：">使用 DECODE 函数来减少处理时间：</h3><pre><code>使用<span class="variable">DECODE</span> 函数可以避免重复扫描相同记录或重复连接相同的表 .
-</code></pre><h3 id="删除重复记录：">删除重复记录：</h3><pre><code>最高效的删除重复记录方法 (因为使用了 ROWID) 例子：
-<span class="operator"><span class="keyword">DELETE</span>  <span class="keyword">FROM</span>  EMP E  <span class="keyword">WHERE</span>  E.ROWID &gt; (<span class="keyword">SELECT</span> <span class="keyword">MIN</span>(X.ROWID) <span class="keyword">FROM</span>  EMP X  <span class="keyword">WHERE</span>  X.EMP_NO = E.EMP_NO);</span>
-</code></pre><h3 id="用_TRUNCATE_替代_DELETE_：">用 TRUNCATE 替代 DELETE ：</h3><pre><code>当删除表中的记录时, 在通常情况下 ,  回滚段 (<span class="operator"><span class="keyword">rollback</span> segments)  用来存放可以被恢复的信息 .  如果你没有 <span class="keyword">COMMIT</span> 事务 ,ORACLE 会将数据恢复到删除之前的状态 (准确地说是恢复到执行删除命令之前的状况)  而当运用 <span class="keyword">TRUNCATE</span> 时 ,  回滚段不再存放任何可被恢复的信息 . 当命令运行后 , 数据不能被恢复 . 因此很少的资源被调用,执行时间也会很短.</span>
-</code></pre><h3 id="尽量多使用_COMMIT_：">尽量多使用 COMMIT ：</h3><pre><code>只要有可能, 在程序中尽量多使用 <span class="operator"><span class="keyword">COMMIT</span>,  这样程序的性能得到提高 , 需求也会因为 <span class="keyword">COMMIT</span> 所释放的资源而减少 :
-<span class="keyword">COMMIT</span>所释放的资源 :
-a. 回滚段上用于恢复数据的信息
-b. 被程序语句获得的锁
-c. redo <span class="keyword">log</span> buffer 中的空间
-d. ORACLE为管理上述 <span class="number">3</span> 种资源中的内部花费</span>
-</code></pre><h3 id="用_Where_子句替换_HAVING_子句：">用 Where 子句替换 HAVING 子句：</h3><pre><code>避免使用HAVING 子句 , HAVING  只会在检索出所有记录之后才对结果集进行过滤 .  这个处理需要排序 , 总计等操作 . 如果能通过 WHERE 子句限制记录的数目 , 那就能减少这方面的开销.<span class="keyword">on</span> 、 <span class="keyword">where</span> 、 having 这三个都可以加条件的子句中， <span class="function_start"><span class="keyword">on</span></span> 是最先执行， <span class="keyword">where</span> 次之， having 最后
-</code></pre><h3 id="用_EXISTS_替代_IN_、用_NOT_EXISTS_替代_NOT_IN_：">用 EXISTS 替代 IN 、用 NOT EXISTS 替代 NOT IN ：</h3><pre><code>在许多基于基础表的查询中, 为了满足一个条件 , 往往需要对另一个表进行联接 . 在这种情况下 ,  使用 EXISTS(或 <span class="keyword">NOT</span> EXISTS) 通常将提高查询的效率 . 在子查询中 ,<span class="keyword">NOT</span> <span class="keyword">IN</span> 子句将执行一个内部的排序和合并 .  无论在哪种情况下 ,<span class="keyword">NOT</span> <span class="keyword">IN</span> 都是最低效的  (因为它对子查询中的表执行了一个全表遍历 ).  为了避免使用 <span class="keyword">NOT</span> <span class="keyword">IN</span> , 我们可以把它改写成外连接 (Outer Joins) 或 <span class="keyword">NOT</span> EXISTS.
-
-(高效)<span class="keyword">SELECT</span> * <span class="keyword">FROM</span>  EMP (基础表)  <span class="keyword">WHERE</span>  EMPNO &gt; <span class="number">0</span>  <span class="keyword">AND</span>  EXISTS (<span class="keyword">SELECT</span>  ‘ X<span class="comment">'  FROM DEPT  WHERE  DEPT.DEPTNO = EMP.DEPTNO  AND  LOC =  ‘ MELB')</span>
-
-(低效)<span class="keyword">SELECT</span>  * <span class="keyword">FROM</span>  EMP (基础表)  <span class="keyword">WHERE</span>  EMPNO &gt; <span class="number">0</span>  <span class="keyword">AND</span>  DEPTNO <span class="keyword">IN</span>(<span class="keyword">SELECT</span> DEPTNO  <span class="keyword">FROM</span>  DEPT  <span class="keyword">WHERE</span>  LOC =  ‘ MELB<span class="comment">')</span>
-</code></pre><h3 id="使用表的别名_(Alias)_：">使用表的别名 (Alias) ：</h3><pre><code>当在SQL 语句中连接多个表时 ,  请使用表的别名并把别名前缀于每个 <span class="keyword">Column</span> 上 . 这样一来 , 就可以减少解析的时间并减少那些由 <span class="keyword">Column</span> 歧义引起的语法错误 .
-</code></pre><h3 id="避免在索引列上使用计算．">避免在索引列上使用计算．</h3><pre><code>WHERE子句中，如果索引列是函数的一部分．优化器将不使用索引而使用全表扫描．
-低效：
-<span class="operator"><span class="keyword">SELECT</span> …  <span class="keyword">FROM</span>  DEPT  <span class="keyword">WHERE</span> SAL * <span class="number">12</span> &gt; <span class="number">25000</span>;</span>
-高效:
-<span class="operator"><span class="keyword">SELECT</span> …  <span class="keyword">FROM</span> DEPT <span class="keyword">WHERE</span> SAL &gt; <span class="number">25000</span>/<span class="number">12</span>;</span>
-</code></pre><h3 id="用_&gt;=_替代_&gt;">用 &gt;= 替代 &gt;</h3><pre><code>高效:
-<span class="keyword">SELECT</span> * <span class="keyword">FROM</span>  EMP  <span class="keyword">WHERE</span>  DEPTNO &gt;=<span class="number">4</span>
-低效:
-<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> EMP <span class="keyword">WHERE</span> DEPTNO &gt;<span class="number">3</span>
-
-两者的区别在于,  前者 DBMS 将直接跳到第一个 DEPT 等于 <span class="number">4</span> 的记录而后者将首先定位到 DEPTNO=<span class="number">3</span> 的记录并且向前扫描到第一个 DEPT 大于 <span class="number">3</span> 的记录 .
-</code></pre><h3 id="减少对表的查询：">减少对表的查询：</h3><pre><code>在含有子查询的SQL 语句中 , 要特别注意减少对表的查询 . 例子：
-    <span class="operator"><span class="keyword">SELECT</span>  TAB_NAME <span class="keyword">FROM</span> <span class="keyword">TABLES</span> <span class="keyword">WHERE</span> (TAB_NAME,DB_VER) = ( <span class="keyword">SELECT</span> TAB_NAME,DB_VER <span class="keyword">FROM</span>  TAB_COLUMNS  <span class="keyword">WHERE</span>  <span class="keyword">VERSION</span> = <span class="number">604</span>)</span>
-</code></pre><h3 id="sql语句用大写的：">sql语句用大写的：</h3><pre><code>因为oracle 总是先解析 sql 语句，把小写的字母转换成大写的再执行
-</code></pre><h3 id="在_java_代码中尽量少用连接符_“_＋_”_连接字符串！">在 java 代码中尽量少用连接符 “ ＋ ” 连接字符串！</h3><h3 id="避免在索引列上使用_NOT_：">避免在索引列上使用 NOT ：</h3><pre><code>我们要避免在索引列上使用<span class="literal">NOT</span>, <span class="literal">NOT</span> 会产生在和在索引列上使用函数相同的影响 .  当 ORACLE ” 遇到 ” <span class="literal">NOT</span>, 他就会停止使用索引转而执行全表扫描 .
-</code></pre><h3 id="通过内部函数提高_SQL_效率：">通过内部函数提高 SQL 效率：</h3><pre><code>复杂的SQL 往往牺牲了执行效率 . 能够掌握上面的运用函数解决问题的方法在实际工作中是非常有意义的
-</code></pre><h3 id="识别_‘_低效执行_‘_的_SQL_语句：">识别 ‘ 低效执行 ‘ 的 SQL 语句：</h3><pre><code>虽然目前各种关于SQL 优化的图形化工具层出不穷 , 但是写出自己的 SQL 工具来解决问题始终是一个最好的方法：
-<span class="operator"><span class="keyword">SELECT</span>  EXECUTIONS , DISK_READS, BUFFER_GETS,
-<span class="keyword">ROUND</span>((BUFFER_GETS-DISK_READS)/BUFFER_GETS,<span class="number">2</span>) Hit_radio,
-<span class="keyword">ROUND</span>(DISK_READS/EXECUTIONS,<span class="number">2</span>) Reads_per_run,
-SQL_TEXT
-<span class="keyword">FROM</span>  V$SQLAREA
-<span class="keyword">WHERE</span>  EXECUTIONS&gt;<span class="number">0</span>
-<span class="keyword">AND</span>  BUFFER_GETS &gt; <span class="number">0</span>
-<span class="keyword">AND</span>  (BUFFER_GETS-DISK_READS)/BUFFER_GETS &lt; <span class="number">0.8</span>
-<span class="keyword">ORDER</span> <span class="keyword">BY</span>  <span class="number">4</span> <span class="keyword">DESC</span>;</span>
-</code></pre><h3 id="用索引提高效率：">用索引提高效率：</h3><pre><code>索引是表的一个概念部分, 用来提高检索数据的效率， ORACLE 使用了一个复杂的自平衡 B-tree 结构 .  通常 , 通过索引查询数据比全表扫描要快 .  当 ORACLE 找出执行查询和 <span class="operator"><span class="keyword">Update</span> 语句的最佳路径时 , ORACLE 优化器将使用索引 .  同样在联结多个表时使用索引也可以提高效率 .  另一个使用索引的好处是 , 它提供了主键 (<span class="keyword">primary</span> <span class="keyword">key</span>) 的唯一性验证 . 。那些 LONG 或 LONG RAW 数据类型 ,  你可以索引几乎所有的列 .  通常 ,  在大型表中使用索引特别有效 .  当然 , 你也会发现 ,  在扫描小表时 , 使用索引同样能提高效率 .  虽然使用索引能得到查询效率的提高 , 但是我们也必须注意到它的代价 .  索引需要空间来存储 , 也需要定期维护 ,  每当有记录在表中增减或索引列被修改时 ,  索引本身也会被修改 .  这意味着每条记录的 <span class="keyword">INSERT</span> , <span class="keyword">DELETE</span> , <span class="keyword">UPDATE</span> 将为此多付出 <span class="number">4</span> , <span class="number">5</span>  次的磁盘 I/O .  因为索引需要额外的存储空间和处理 , 那些不必要的索引反而会使查询反应时间变慢 . 。定期的重构索引是有必要的 . <span class="keyword">ALTER</span>  <span class="keyword">INDEX</span> &lt;INDEXNAME&gt; REBUILD &lt;TABLESPACENAME&gt;</span>
-</code></pre><h3 id="用_UNION_替换_OR_(_适用于索引列_)">用 UNION 替换 OR ( 适用于索引列 )</h3><pre><code>通常情况下,  用 <span class="keyword">UNION</span> 替换 <span class="keyword">WHERE</span> 子句中的 <span class="keyword">OR</span> 将会起到较好的效果 .  对索引列使用 <span class="keyword">OR</span> 将造成全表扫描 .  注意 ,  以上规则只针对多个索引列有效 .  如果有 column 没有被索引 ,  查询效率可能会因为你没有选择 <span class="keyword">OR</span> 而降低 .  在下面的例子中 , LOC_ID  和 REGION 上都建有索引 .
-
-高效:
-<span class="keyword">SELECT</span> LOC_ID , LOC_DESC , REGION
-<span class="keyword">FROM</span> LOCATION
-<span class="keyword">WHERE</span> LOC_ID = <span class="number">10</span>
-<span class="keyword">UNION</span>
-<span class="keyword">SELECT</span> LOC_ID , LOC_DESC , REGION
-<span class="keyword">FROM</span> LOCATION
-<span class="keyword">WHERE</span> REGION = “ MELBOURNE ”
-低效:
-<span class="keyword">SELECT</span> LOC_ID , LOC_DESC , REGION
-<span class="keyword">FROM</span> LOCATION
-<span class="keyword">WHERE</span> LOC_ID = <span class="number">10</span> <span class="keyword">OR</span> REGION = “ MELBOURNE ”
-如果你坚持要用<span class="keyword">OR</span>,  那就需要返回记录最少的索引列写在最前面 .
-</code></pre><h3 id="用_IN_来替换_OR">用 IN 来替换 OR</h3><pre><code>低效:
-<span class="operator"><span class="keyword">SELECT</span>… . <span class="keyword">FROM</span> LOCATION <span class="keyword">WHERE</span> LOC_ID = <span class="number">10</span> <span class="keyword">OR</span> LOC_ID = <span class="number">20</span> <span class="keyword">OR</span> LOC_ID = <span class="number">30</span>
-
-高效
-<span class="keyword">SELECT</span>…  <span class="keyword">FROM</span> LOCATION <span class="keyword">WHERE</span> LOC_IN  <span class="keyword">IN</span> (<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>);</span>
-</code></pre><h3 id="避免在索引列上使用_IS_NULL_和_IS_NOT_NULL">避免在索引列上使用 IS NULL 和 IS NOT NULL</h3><pre><code>避免在索引中使用任何可以为空的列，ORACLE 将无法使用该索引．对于单列索引，如果列包含空值，索引中将不存在此记录 .  对于复合索引，如果每个列都为空，索引中同样不存在此记录 . 　如果至少有一个列不为空，则记录存在于索引中．举例 :  如果唯一性索引建立在表的 A 列和 B 列上 ,  并且表中存在一条记录的 A,B 值为 (123,null) , ORACLE 将不接受下一条具有相同 A,B 值 (123,null) 的记录 ( 插入 ).  然而如果所有的索引列都为空， ORACLE 将认为整个键值为空而空不等于空 .  因此你可以插入 1000  条具有相同键值的记录 , 当然它们都是空 !  因为空值不存在于索引列中 , 所以 WHERE 子句中对索引列进行空值比较将使 ORACLE 停用该索引 .
-
-索引失效
-<span class="operator"><span class="keyword">SELECT</span> …  <span class="keyword">FROM</span>  DEPARTMENT  <span class="keyword">WHERE</span>  DEPT_CODE <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span>
-索引有效
-<span class="operator"><span class="keyword">SELECT</span> …  <span class="keyword">FROM</span>  DEPARTMENT  <span class="keyword">WHERE</span>  DEPT_CODE &gt;=<span class="number">0</span>;</span>
-</code></pre><h3 id="总是使用索引的第一个列：">总是使用索引的第一个列：</h3><pre><code>如果索引是建立在多个列上,  只有在它的第一个列 (leading column) 被 <span class="keyword">where</span> 子句引用时 , 优化器才会选择使用该索引 .  这也是一条简单而重要的规则，当仅引用索引的第二个列时 , 优化器使用了全表扫描而忽略了索引
-</code></pre><h3 id="用_UNION-ALL_替换_UNION_(如果业务允许)_：">用 UNION-ALL  替换 UNION (如果业务允许) ：</h3><pre><code>当SQL  语句需要 <span class="keyword">UNION</span> 两个查询结果集合时 , 这两个结果集合会以 <span class="keyword">UNION</span>-ALL 的方式被合并 ,  然后在输出最终结果前进行排序 .  如果用 <span class="keyword">UNION</span> ALL 替代 <span class="keyword">UNION</span>,  这样排序就不是必要了 .  效率就会因此得到提高 .  需要注意的是， <span class="keyword">UNION</span> ALL  将重复输出两个结果集合中相同记录 .  因此各位还是要从业务需求分析使用 <span class="keyword">UNION</span> ALL 的可行性 . <span class="keyword">UNION</span>  将对结果集合排序 , 这个操作会使用到 SORT_AREA_SIZE 这块内存 .  对于这块内存的优化也是相当重要的 .  下面的 SQL 可以用来查询排序的消耗量
-</code></pre><h3 id="用_WHERE_替代_ORDER_BY_：">用 WHERE 替代 ORDER BY ：</h3><pre><code><span class="keyword">ORDER</span> <span class="keyword">BY</span> 子句只在两种严格的条件下使用索引
-<span class="keyword">ORDER</span> <span class="keyword">BY</span>中所有的列必须包含在相同的索引中并保持在索引中的排列顺序 <span class="built_in">.
-</span><span class="keyword">ORDER</span> <span class="keyword">BY</span>中所有的列必须定义为非空 <span class="built_in">.
-</span><span class="keyword">WHERE</span>子句使用的索引和 <span class="keyword">ORDER</span> <span class="keyword">BY</span> 子句中所使用的索引不能并列 <span class="built_in">.
-
-</span>例如:
-表DEPT 包含以下列 :
-DEPT_CODE PK <span class="literal">NOT</span> <span class="built_in">NULL</span>
-DEPT_DESC <span class="literal">NOT</span> <span class="built_in">NULL</span>
-DEPT_TYPE <span class="built_in">NULL</span>
-
-低效: ( 索引不被使用 
-<span class="keyword">SELECT</span> DEPT_CODE FROM  DEPT  <span class="keyword">ORDER</span> <span class="keyword">BY</span>  DEPT_TYPE
-高效: ( 使用索引 )
-<span class="keyword">SELECT</span> DEPT_CODE  FROM  DEPT  <span class="keyword">WHERE</span>  DEPT_TYPE <span class="subst">&gt;</span> <span class="number">0</span>
-</code></pre><h3 id="避免改变索引列的类型_:">避免改变索引列的类型 :</h3><pre><code>当比较不同数据类型的数据时, ORACLE 自动对列进行简单的类型转换 .
-假设 EMPNO 是一个数值类型的索引列 .
-<span class="keyword">SELECT</span> …   <span class="keyword">FROM</span> EMP  <span class="keyword">WHERE</span>  EMPNO = ‘<span class="number">123</span><span class="comment">'</span>
-实际上, 经过 ORACLE 类型转换 ,  语句转化为 :
-<span class="keyword">SELECT</span> …   <span class="keyword">FROM</span> EMP  <span class="keyword">WHERE</span>  EMPNO = TO_NUMBER(‘<span class="number">123</span><span class="comment">')</span>
-幸运的是, 类型转换没有发生在索引列上 , 索引的用途没有被改变 .
-现在, 假设 EMP_TYPE 是一个字符类型的索引列 .
-<span class="keyword">SELECT</span> …   <span class="keyword">FROM</span> EMP  <span class="keyword">WHERE</span> EMP_TYPE = <span class="number">123</span>
-这个语句被ORACLE 转换为 :
-<span class="keyword">SELECT</span> …   <span class="keyword">FROM</span> EMP  WHERETO_NUMBER(EMP_TYPE)=<span class="number">12</span>    
-因为内部发生的类型转换,  这个索引将不会被用到 !  为了避免 ORACLE 对你的 SQL 进行隐式的类型转换 ,  最好把类型转换用显式表现出来 .  注意当字符和数值比较时 , ORACLE 会优先转换数值类型到字符类型
-</code></pre><h3 id="需要当心的_WHERE_子句_:">需要当心的 WHERE 子句 :</h3><pre><code>某些<span class="keyword">SELECT</span> 语句中的 <span class="keyword">WHERE</span> 子句不使用索引 . 这里有一些例子 .
-在下面的例子里,
-(<span class="number">1</span>)‘ !=<span class="comment">'  将不使用索引 .  记住 ,  索引只能告诉你什么存在于表中 ,  而不能告诉你什么不存在于表中 .</span>
-(<span class="number">2</span>) ‘ ||<span class="comment">' 是字符连接函数 .  就象其他函数那样 ,  停用了索引 .</span>
-(<span class="number">3</span>) ‘ +<span class="comment">' 是数学函数 .  就象其他数学函数那样 ,  停用了索引 .</span>
-</code></pre><h3 id="使用索引">使用索引</h3><pre><code><span class="tag">a</span>. 如果检索数据量超过 <span class="number">30%</span> 的表中记录数 . 使用索引将没有显著的效率提高 . 
-<span class="tag">b</span>. 在特定情况下, 使用索引也许会比全表扫描慢 ,  但这是同一个数量级上的区别 . 而通常情况下, 使用索引比全表扫描要块几倍乃至几千倍 ! 
-</code></pre><h3 id="避免使用耗费资源的操作_:">避免使用耗费资源的操作 :</h3><pre><code>带有DISTINCT,UNION,<span class="keyword">MINUS</span>,<span class="keyword">INTERSECT</span>,ORDER BY 的SQL 语句会启动 SQL引擎 
-执行耗费资源的排序(<span class="keyword">SORT</span>)功能 . DISTINCT 需要一次排序操作,而其他的至少需要执行两次排序.通常,带有 UNION, <span class="keyword">MINUS</span>,<span class="keyword">INTERSECT</span> 的 SQL 语句都可以用其他方式重写.如果你的数据库的 SORT_AREA_SIZE调配得好,使用 UNION,<span class="keyword">MINUS</span>,<span class="keyword">INTERSECT</span> 也是可以考虑的,毕竟它们的可读性很强 
-</code></pre>]]></content>
-    <summary type="html">
-    <![CDATA[<p>在工作的前两年，做的电信行业，开发主要是和oracle打交道的管理模块，特分享几条同事们整理的文档中的sql优化建议，主要是where条件怎么写和如何不破坏索引之类的小知识点。</p>]]>
-    
-    </summary>
-    
-      <category term="sql" scheme="http://www.52ff.cc/tags/sql/"/>
-    
-      <category term="sql数据库" scheme="http://www.52ff.cc/categories/sql%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
