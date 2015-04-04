@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>JAVA多线程第二篇(状态转换) | FlyFish&#39;s Blog</title>
+    <title>JAVA多线程第二篇(线程状态) | FlyFish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
@@ -14,12 +14,12 @@
     
     <meta name="description" content="线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JAVA多线程第二篇(状态转换)">
+<meta property="og:title" content="JAVA多线程第二篇(线程状态)">
 <meta property="og:url" content="http://www.52ff.cc/2015/01/12/JAVA多线程第二篇（状态转换）/index.html">
 <meta property="og:site_name" content="FlyFish's Blog">
 <meta property="og:description" content="线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JAVA多线程第二篇(状态转换)">
+<meta name="twitter:title" content="JAVA多线程第二篇(线程状态)">
 <meta name="twitter:description" content="线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。">
 
     
@@ -81,7 +81,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/12/JAVA多线程第二篇（状态转换）/" title="JAVA多线程第二篇(状态转换)" itemprop="url">JAVA多线程第二篇(状态转换)</a>
+      <a href="/2015/01/12/JAVA多线程第二篇（状态转换）/" title="JAVA多线程第二篇(线程状态)" itemprop="url">JAVA多线程第二篇(线程状态)</a>
   </h1>
   <p class="article-author">By
        
@@ -102,11 +102,14 @@
 		</div>
 		
 		<p>线程的状态转换是线程控制的基础。线程状态总的可分为五大状态：分别是生、死、可运行、运行、等待/阻塞。<br><a id="more"></a></p>
-<h2 id="线程状态">线程状态</h2><p>1、新状态：线程对象已经创建，还没有在其上调用start()方法。</p>
-<p>2、可运行状态：当线程有资格运行，但调度程序还没有把它选定为运行线程时线程所处的状态。当start()方法调用时，线程首先进入可运行状态。在线程运行之后或者从阻塞、等待或睡眠状态回来后，也返回到可运行状态。</p>
-<p>3、运行状态：线程调度程序从可运行池中选择一个线程作为当前线程时线程所处的状态。这也是线程进入运行状态的唯一一种方式。</p>
-<p>4、等待/阻塞/睡眠状态：这是线程有资格运行时它所处的状态。实际上这个三状态组合为一种，其共同点是：线程仍旧是活的，但是当前没有条件运行。换句话说，它是可运行的，但是如果某件事件出现，他可能返回到可运行状态。</p>
-<p>5、死亡态：当线程的run()方法完成时就认为它死去。这个线程对象也许是活的，但是，它已经不是一个单独执行的线程。线程一旦死亡，就不能复生。 如果在一个死去的线程上调用start()方法，会抛出java.lang.IllegalThreadStateException异常</p>
+<h2 id="线程状态">线程状态</h2><p>①NEW：这种情况指的是，通过New关键字创建了Thread类（或其子类）的对象</p>
+<p>②RUNNABLE：这种情况指的是Thread类的对象调用了start()方法，这时的线程就等待时间片轮转到自己这，以便获得CPU；第二种情况是线程在处于RUNNABLE状态时并没有运行完自己的run方法，时间片用完之后回到RUNNABLE状态；还有种情况就是处于BLOCKED状态的线程结束了当前的BLOCKED状态之后重新回到RUNNABLE状态。</p>
+<p>③RUNNING：这时的线程指的是获得CPU的RUNNABLE线程，RUNNING状态是所有线程都希望获得的状态。</p>
+<p>④DEAD：处于RUNNING状态的线程，在执行完run方法之后，就变成了DEAD状态了。</p>
+<p>⑤BLOCKED：这种状态指的是处于RUNNING状态的线程，出于某种原因，比如调用了sleep方法、等待用户输入等而让出当前的CPU给其他的线程。</p>
+<p>处于RUNNABLE状态的线程变为BLOCKED状态的原因，除了该线程调用了sleep方法、等待输入原因外，还有就是在当前线程中调用了其他线程的join方法、当访问一个对象的方法时，该方法被锁定等。</p>
+<p>相应的，当处于BLocked状态的线程在满足以下条件时就会由该状态转到RUNNABLE状态，这些条件是：sleep的线程醒来（sleep的时间到了）、获得了用户的输入、调用了join的其他线程结束、获得了对象锁。</p>
+<p>一般情况下，都是处于RUNNABLE的线程和处于RUNNING状态的线程，互相切换，直到运行完run方法，线程结束，进入DEAD状态。</p>
 <h2 id="阻止线程执行">阻止线程执行</h2><p>对于线程的阻止，考虑以下三个方面，不考虑IO阻塞的情况：<br>睡眠；<br>等待；<br>因为需要一个对象的锁定而被阻塞。</p>
 <h3 id="睡眠">睡眠</h3><hr>
 <p>Thread.sleep(long millis)和Thread.sleep(long millis, int nanos)静态方法强制当前正在执行的线程休眠（暂停执行），以“减慢线程”。当线程睡眠时，它入睡在某个地方，在苏醒之前不会返回到可运行状态。当睡眠时间到期，则返回到可运行状态。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class MyThread extends Thread &#123; </span><br><span class="line"></span><br><span class="line">    public void <span class="function"><span class="title">run</span></span>() &#123; </span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> ((i) % <span class="number">10</span> == <span class="number">0</span>) &#123; </span><br><span class="line">                System.out.println(<span class="string">"-------"</span> + i); </span><br><span class="line">            &#125; </span><br><span class="line">            System.out.print(i); </span><br><span class="line">            try &#123; </span><br><span class="line">                Thread.sleep(<span class="number">1</span>); </span><br><span class="line">                System.out.print(<span class="string">"    线程睡眠1毫秒！\n"</span>); </span><br><span class="line">            &#125; catch (InterruptedException e) &#123; </span><br><span class="line">                e.printStackTrace(); </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123; </span><br><span class="line">        new MyThread().start(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -144,7 +147,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/01/12/JAVA多线程第二篇（状态转换）/" data-title="JAVA多线程第二篇(状态转换) | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/01/12/JAVA多线程第二篇（状态转换）/" data-title="JAVA多线程第二篇(线程状态) | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -178,7 +181,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/01/12/JAVA多线程第二篇（状态转换）/" data-title="JAVA多线程第二篇(状态转换)" data-url="http://www.52ff.cc/2015/01/12/JAVA多线程第二篇（状态转换）/"></div>
+	<div class="ds-thread" data-thread-key="2015/01/12/JAVA多线程第二篇（状态转换）/" data-title="JAVA多线程第二篇(线程状态)" data-url="http://www.52ff.cc/2015/01/12/JAVA多线程第二篇（状态转换）/"></div>
 </section>
 
 
@@ -201,7 +204,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>23</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>24</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -228,29 +231,29 @@
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
 		
-			<li><a href="/tags/nio/" title="nio">nio<sup>6</sup></a></li>
+			<li><a href="/tags/nio/" title="nio">nio<sup>7</sup></a></li>
 		
 			<li><a href="/tags/netty/" title="netty">netty<sup>5</sup></a></li>
 		
-			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
-		
 			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 		
-			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
 		
 			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
 		
-			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
 		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
 		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		
 			<li><a href="/tags/jvm/" title="jvm">jvm<sup>1</sup></a></li>
 		
-			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -259,7 +262,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

@@ -4,23 +4,29 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>JAVA多线程第七篇(Callable和Future) | FlyFish&#39;s Blog</title>
+    <title>阻塞和非阻塞IO | FlyFish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一个简单的例子：">
+    <meta name="description" content="首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成
+java传统阻塞IO当进行文件操作File IO时是一个字节一个字节或一行一行的读；当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，cpu要等待读取完通道中的数">
     
     
-    <meta name="description" content="接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一">
+    <meta name="description" content="首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成
+java传统阻塞IO当进行文件操作File IO时是一个字节一个字节或一行一行的读；当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，cpu要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，cpu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JAVA多线程第七篇(Callable和Future)">
-<meta property="og:url" content="http://www.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/index.html">
+<meta property="og:title" content="阻塞和非阻塞IO">
+<meta property="og:url" content="http://www.52ff.cc/2015/04/04/阻塞和非阻塞IO/index.html">
 <meta property="og:site_name" content="FlyFish's Blog">
-<meta property="og:description" content="接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一">
+<meta property="og:description" content="首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成
+java传统阻塞IO当进行文件操作File IO时是一个字节一个字节或一行一行的读；当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，cpu要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，cpu">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/nio1.jpeg">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/nio2.jpeg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JAVA多线程第七篇(Callable和Future)">
-<meta name="twitter:description" content="接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一">
+<meta name="twitter:title" content="阻塞和非阻塞IO">
+<meta name="twitter:description" content="首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成
+java传统阻塞IO当进行文件操作File IO时是一个字节一个字节或一行一行的读；当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，cpu要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，cpu">
 
     
     <link rel="alternative" href="/atom.xml" title="FlyFish&#39;s Blog" type="application/atom+xml">
@@ -81,14 +87,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/02/13/JAVA多线程第七篇-Callable和Future/" title="JAVA多线程第七篇(Callable和Future)" itemprop="url">JAVA多线程第七篇(Callable和Future)</a>
+      <a href="/2015/04/04/阻塞和非阻塞IO/" title="阻塞和非阻塞IO" itemprop="url">阻塞和非阻塞IO</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-02-13T13:36:49.000Z" itemprop="datePublished"> 发表于 2015-02-13</time>
+    <time datetime="2015-04-04T12:56:19.000Z" itemprop="datePublished"> 发表于 2015-04-04</time>
     
   </p>
 </header>
@@ -97,15 +103,20 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#java传统阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">java传统阻塞IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非阻塞NIO"><span class="toc-number">2.</span> <span class="toc-text">非阻塞NIO</span></a></li></ol>
 		
 		</div>
 		
-		<p>接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一个简单的例子：<br><a id="more"></a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class CallableAndFuture &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        Callable&lt;Integer&gt; callable = new Callable&lt;Integer&gt;() &#123;  </span><br><span class="line">            public Integer call() throws Exception &#123;  </span><br><span class="line">                <span class="built_in">return</span> new Random().nextInt(<span class="number">100</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;;  </span><br><span class="line">        FutureTask&lt;Integer&gt; future = new FutureTask&lt;Integer&gt;(callable);  </span><br><span class="line">        new Thread(future).start();  </span><br><span class="line">        try &#123;  </span><br><span class="line">            Thread.sleep(<span class="number">5000</span>);// 可能做一些事情  </span><br><span class="line">            System.out.println(future.get());  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; catch (ExecutionException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>FutureTask实现了两个接口，Runnable和Future，所以它既可以作为Runnable被线程执行，又可以作为Future得到Callable的返回值，那么这个组合的使用有什么好处呢？假设有一个很耗时的返回值需要计算，并且这个返回值不是立刻需要的话，那么就可以使用这个组合，用另一个线程去计算返回值，而当前线程在使用这个返回值之前可以做其它的操作，等到需要这个返回值时，再通过Future得到，岂不美哉！这里有一个Future模式的介绍：<a href="http://openhome.cc/Gossip/DesignPattern/FuturePattern.htm。" target="_blank" rel="external">http://openhome.cc/Gossip/DesignPattern/FuturePattern.htm。</a><br>下面来看另一种方式使用Callable和Future，通过ExecutorService的submit方法执行Callable，并返回Future，代码如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class CallableAndFuture &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        ExecutorService threadPool = Executors.newSingleThreadExecutor();  </span><br><span class="line">        Future&lt;Integer&gt; future = threadPool.submit(new Callable&lt;Integer&gt;() &#123;  </span><br><span class="line">            public Integer call() throws Exception &#123;  </span><br><span class="line">                <span class="built_in">return</span> new Random().nextInt(<span class="number">100</span>);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;);  </span><br><span class="line">        try &#123;  </span><br><span class="line">            Thread.sleep(<span class="number">5000</span>);// 可能做一些事情  </span><br><span class="line">            System.out.println(future.get());  </span><br><span class="line">        &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; catch (ExecutionException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>代码是不是简化了很多，ExecutorService继承自Executor，它的目的是为我们管理Thread对象，从而简化并发编程，Executor使我们无需显示的去管理线程的生命周期，是JDK 5之后启动任务的首选方式。<br>执行多个带返回值的任务，并取得多个返回值，代码如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class CallableAndFuture &#123;  </span><br><span class="line">    public static void main(String[] args) &#123;  </span><br><span class="line">        ExecutorService threadPool = Executors.newCachedThreadPool();  </span><br><span class="line">        CompletionService&lt;Integer&gt; cs = new ExecutorCompletionService&lt;Integer&gt;(threadPool);  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt; <span class="number">5</span>; i++) &#123;  </span><br><span class="line">            final int taskID = i;  </span><br><span class="line">            cs.submit(new Callable&lt;Integer&gt;() &#123;  </span><br><span class="line">                public Integer call() throws Exception &#123;  </span><br><span class="line">                    <span class="built_in">return</span> taskID;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;);  </span><br><span class="line">        &#125;  </span><br><span class="line">        // 可能做一些事情  </span><br><span class="line">        <span class="keyword">for</span>(int i = <span class="number">1</span>; i &lt; <span class="number">5</span>; i++) &#123;  </span><br><span class="line">            try &#123;  </span><br><span class="line">                System.out.println(cs.take().get());  </span><br><span class="line">            &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">            &#125; catch (ExecutionException e) &#123;  </span><br><span class="line">                e.printStackTrace();  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其实也可以不使用CompletionService，可以先创建一个装Future类型的集合，用Executor提交的任务返回值添加到集合中，最后遍历集合取出数据，代码略。</p>
+		<p>首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成</p>
+<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；<br>这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，cpu要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，cpu等待IO的时间，可是会有小部分客户端过来的通道网络很慢，cpu执行时依然阻塞在等待IO上面。而且这样的系统开销和资源浪费都太大，不是合理选择。</p>
+<h2 id="非阻塞NIO">非阻塞NIO</h2><p>而NIO对Socket IO可以实现非阻塞，可以用单线程管理多个通道，并且NIO有了缓冲区的概念，不管是File IO还是Socket IO都是在和Buffer相互读取。<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nio1.jpeg" alt=""></p>
+<p>NIO有三个核心模块：Selector(选择器)、Channel(通道)、Buffer(缓冲区)</p>
+<p>Selector允许单个线程处理多个Channel，相比旧的IO为防止阻塞而为每一个Channel创建一个Thread来说，性能高出非常多；只用SelectableChannel才能注册到Selector，单线程处理多个Channel如下图</p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nio2.jpeg" alt=""></p>
+<p>将Channel注册到Selector中，轮询调用select()，这个方法会阻塞，当注册的某个通道准备好要进行IO操作时，这个便返回已选择键的个数，此时通过selectedKeys获得已选择的键，就可以进行相关的IO操作了；选择键(SelectionKey)是用来连接Selector和Channel。</p>
+<p>这也就是通过Reactor模式的事件驱动机制来达到的Non blocking，那么什么是Reactor模式呢？Reactor翻译成中文是“反应器”，就是我们将事件注册到Reactor中，当有相应的事件发生时，Reactor便会告知我们有哪些事件发生了，我们再根据具体的事件去做相应的处理。</p>
+<p>注：<br>Channel主要有：FileChannel、ServerSocketChannel、SocketChannel、DatagramChannel，这四种通道涵盖了文件IO、TCP套接字IO、UDP数据报IO。</p>
+<p>Buffer主要有：ByteBuffer、CharBuffer、DoubleBuffer、FloatBuffer、IntBuffer、LongBuffer、ShortBuffer，涵盖了IO操作的基本数据类型。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -119,7 +130,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  <span></span> <a href="/tags/nio/">nio</a>
   </div>
 
 </div>
@@ -128,7 +139,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/" data-title="JAVA多线程第七篇(Callable和Future) | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/04/04/阻塞和非阻塞IO/" data-title="阻塞和非阻塞IO | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -142,18 +153,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/02/17/IntelliJ-Idea操作技巧/" title="IntelliJ Idea操作技巧">
+ <a href="/2015/04/04/高并发大吞吐量服务端的思考/" title="高并发大吞吐量服务端的思考">
   <strong>上一篇：</strong><br/>
   <span>
-  IntelliJ Idea操作技巧</span>
+  高并发大吞吐量服务端的思考</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/02/12/重写hashcode()与equals()/"  title="重写hashcode()与equals()">
+<a href="/2015/04/03/netty异步事件驱动模型/"  title="Netty异步事件驱动模型">
  <strong>下一篇：</strong><br/> 
- <span>重写hashcode()与equals()
+ <span>Netty异步事件驱动模型
 </span>
 </a>
 </div>
@@ -162,7 +173,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/02/13/JAVA多线程第七篇-Callable和Future/" data-title="JAVA多线程第七篇(Callable和Future)" data-url="http://www.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/04/阻塞和非阻塞IO/" data-title="阻塞和非阻塞IO" data-url="http://www.52ff.cc/2015/04/04/阻塞和非阻塞IO/"></div>
 </section>
 
 
@@ -172,7 +183,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#java传统阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">java传统阻塞IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非阻塞NIO"><span class="toc-number">2.</span> <span class="toc-text">非阻塞NIO</span></a></li></ol>
  
   </div>
 

@@ -83,6 +83,130 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/04/04/高并发大吞吐量服务端的思考/" title="高并发大吞吐量服务端的思考" itemprop="url">高并发大吞吐量服务端的思考</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-04T14:11:41.000Z" itemprop="datePublished"> 发表于 2015-04-04</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/04/04/高并发大吞吐量服务端的思考/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/04/高并发大吞吐量服务端的思考/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/04/04/阻塞和非阻塞IO/" title="阻塞和非阻塞IO" itemprop="url">阻塞和非阻塞IO</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-04T12:56:19.000Z" itemprop="datePublished"> 发表于 2015-04-04</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成</p>
+<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；<br>这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，cpu要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，cpu等待IO的时间，可是会有小部分客户端过来的通道网络很慢，cpu执行时依然阻塞在等待IO上面。而且这样的系统开销和资源浪费都太大，不是合理选择。</p>
+<h2 id="非阻塞NIO">非阻塞NIO</h2><p>而NIO对Socket IO可以实现非阻塞，可以用单线程管理多个通道，并且NIO有了缓冲区的概念，不管是File IO还是Socket IO都是在和Buffer相互读取。<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nio1.jpeg" alt=""></p>
+<p>NIO有三个核心模块：Selector(选择器)、Channel(通道)、Buffer(缓冲区)</p>
+<p>Selector允许单个线程处理多个Channel，相比旧的IO为防止阻塞而为每一个Channel创建一个Thread来说，性能高出非常多；只用SelectableChannel才能注册到Selector，单线程处理多个Channel如下图</p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nio2.jpeg" alt=""></p>
+<p>将Channel注册到Selector中，轮询调用select()，这个方法会阻塞，当注册的某个通道准备好要进行IO操作时，这个便返回已选择键的个数，此时通过selectedKeys获得已选择的键，就可以进行相关的IO操作了；选择键(SelectionKey)是用来连接Selector和Channel。</p>
+<p>这也就是通过Reactor模式的事件驱动机制来达到的Non blocking，那么什么是Reactor模式呢？Reactor翻译成中文是“反应器”，就是我们将事件注册到Reactor中，当有相应的事件发生时，Reactor便会告知我们有哪些事件发生了，我们再根据具体的事件去做相应的处理。</p>
+<p>注：<br>Channel主要有：FileChannel、ServerSocketChannel、SocketChannel、DatagramChannel，这四种通道涵盖了文件IO、TCP套接字IO、UDP数据报IO。</p>
+<p>Buffer主要有：ByteBuffer、CharBuffer、DoubleBuffer、FloatBuffer、IntBuffer、LongBuffer、ShortBuffer，涵盖了IO操作的基本数据类型。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/nio/">nio</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/04/04/阻塞和非阻塞IO/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/04/阻塞和非阻塞IO/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/04/03/netty异步事件驱动模型/" title="Netty异步事件驱动模型" itemprop="url">Netty异步事件驱动模型</a>
   </h1>
   <p class="article-author">By
@@ -411,129 +535,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/22/Redis的Master-Slave模式/" title="Redis的Master-Slave模式" itemprop="url">Redis的Master-Slave模式</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-22T13:51:48.000Z" itemprop="datePublished"> 发表于 2015-03-22</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/22/Redis的Master-Slave模式/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/no-sql/">no-sql</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/redis/">redis</a><a href="/tags/缓存/">缓存</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/22/Redis的Master-Slave模式/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand photo" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/13/毛毛/" title="毛毛" itemprop="url">毛毛</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-12T16:49:36.000Z" itemprop="datePublished"> 发表于 2015-03-13</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>多图预警，晒晒咱家宝贝的照片，😄😄,目的是测试下七牛云图床的速度</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/13/毛毛/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/随笔生活/">随笔生活</a>
-</div>
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/13/毛毛/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/13/毛毛/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -551,7 +552,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>23</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>24</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -578,29 +579,29 @@
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>10</sup></a></li>
 		
-			<li><a href="/tags/nio/" title="nio">nio<sup>6</sup></a></li>
+			<li><a href="/tags/nio/" title="nio">nio<sup>7</sup></a></li>
 		
 			<li><a href="/tags/netty/" title="netty">netty<sup>5</sup></a></li>
 		
-			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
-		
 			<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 		
-			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
+			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
 		
 			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
 		
-			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
+			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+		
+			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
 		
 			<li><a href="/tags/RPC远程调用/" title="RPC远程调用">RPC远程调用<sup>1</sup></a></li>
 		
-			<li><a href="/tags/linux/" title="linux">linux<sup>1</sup></a></li>
+			<li><a href="/tags/css/" title="css">css<sup>1</sup></a></li>
 		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		
 			<li><a href="/tags/jvm/" title="jvm">jvm<sup>1</sup></a></li>
 		
-			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
+			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -609,7 +610,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

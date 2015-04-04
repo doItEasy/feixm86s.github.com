@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-04-02T16:24:45.000Z</updated>
+  <updated>2015-04-04T14:11:41.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -13,6 +13,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[高并发大吞吐量服务端的思考]]></title>
+    <link href="http://www.52ff.cc/2015/04/04/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%A4%A7%E5%90%9E%E5%90%90%E9%87%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E6%80%9D%E8%80%83/"/>
+    <id>http://www.52ff.cc/2015/04/04/高并发大吞吐量服务端的思考/</id>
+    <published>2015-04-04T14:11:41.000Z</published>
+    <updated>2015-04-04T14:11:41.000Z</updated>
+    <content type="html"></content>
+    <summary type="html">
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[阻塞和非阻塞IO]]></title>
+    <link href="http://www.52ff.cc/2015/04/04/%E9%98%BB%E5%A1%9E%E5%92%8C%E9%9D%9E%E9%98%BB%E5%A1%9EIO/"/>
+    <id>http://www.52ff.cc/2015/04/04/阻塞和非阻塞IO/</id>
+    <published>2015-04-04T12:56:19.000Z</published>
+    <updated>2015-04-04T14:10:19.000Z</updated>
+    <content type="html"><![CDATA[<p>首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成</p>
+<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；<br>这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，cpu要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，cpu等待IO的时间，可是会有小部分客户端过来的通道网络很慢，cpu执行时依然阻塞在等待IO上面。而且这样的系统开销和资源浪费都太大，不是合理选择。</p>
+<h2 id="非阻塞NIO">非阻塞NIO</h2><p>而NIO对Socket IO可以实现非阻塞，可以用单线程管理多个通道，并且NIO有了缓冲区的概念，不管是File IO还是Socket IO都是在和Buffer相互读取。<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nio1.jpeg" alt=""></p>
+<p>NIO有三个核心模块：Selector(选择器)、Channel(通道)、Buffer(缓冲区)</p>
+<p>Selector允许单个线程处理多个Channel，相比旧的IO为防止阻塞而为每一个Channel创建一个Thread来说，性能高出非常多；只用SelectableChannel才能注册到Selector，单线程处理多个Channel如下图</p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nio2.jpeg" alt=""></p>
+<p>将Channel注册到Selector中，轮询调用select()，这个方法会阻塞，当注册的某个通道准备好要进行IO操作时，这个便返回已选择键的个数，此时通过selectedKeys获得已选择的键，就可以进行相关的IO操作了；选择键(SelectionKey)是用来连接Selector和Channel。</p>
+<p>这也就是通过Reactor模式的事件驱动机制来达到的Non blocking，那么什么是Reactor模式呢？Reactor翻译成中文是“反应器”，就是我们将事件注册到Reactor中，当有相应的事件发生时，Reactor便会告知我们有哪些事件发生了，我们再根据具体的事件去做相应的处理。</p>
+<p>注：<br>Channel主要有：FileChannel、ServerSocketChannel、SocketChannel、DatagramChannel，这四种通道涵盖了文件IO、TCP套接字IO、UDP数据报IO。</p>
+<p>Buffer主要有：ByteBuffer、CharBuffer、DoubleBuffer、FloatBuffer、IntBuffer、LongBuffer、ShortBuffer，涵盖了IO操作的基本数据类型。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成</p>
+<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行]]>
+    </summary>
+    
+      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Netty异步事件驱动模型]]></title>
@@ -824,83 +865,6 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
     </summary>
     
       <category term="spring" scheme="http://www.52ff.cc/tags/spring/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[开发需掌握的linux命令小记]]></title>
-    <link href="http://www.52ff.cc/2015/02/23/%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E9%9C%80%E6%8E%8C%E6%8F%A1%E7%9A%84linux%E5%91%BD%E4%BB%A4/"/>
-    <id>http://www.52ff.cc/2015/02/23/开发人员需掌握的linux命令/</id>
-    <published>2015-02-23T02:13:12.000Z</published>
-    <updated>2015-03-23T08:16:21.000Z</updated>
-    <content type="html"><![CDATA[<p>抽空将之前记录的工作几年来使用的linux命令重新温习整理下<br><a id="more"></a></p>
-<h2 id="文件相关">文件相关</h2><ul>
-<li>文件拷贝</li>
-</ul>
-<p>参数：<br>cp -l file1 file2 创建硬链接<br>cp -s file1 file2 创建软链接<br>cp -r d1 d2 递归持续复制，用于目录的复制行为；<br>mv test.log test1.txt 文件改名<br>mv test1.txt test3 将test1.txt文件移到目录test3中<br>mv <em> ../移动当前文件夹下的所有文件到上一级目录<br>mv test3/</em>.txt test5 把当前目录的一个子目录里的文件移动到另一个子目录里<br>mv dir1 dir2 目录的移动<br>rz 上传文件<br>sz 下载文件</p>
-<ul>
-<li>远程文件拷贝</li>
-</ul>
-<p>rcp通过rsh方式远端复制文件或目录。<br>scp通过ssh方式远端复制文件或目录</p>
-<p>语法：rcp [-pr][源文件或目录][目标文件或目录] 或 scp [-pr][源文件或目录…][目标文件] </p>
-<p>例如：<br>scp /home/user/hosts.list  user@ip:/home/user/<br>scp user@ip:/home/user/hosts.list  /home/user/</p>
-<ul>
-<li>内容查看</li>
-</ul>
-<p>cat -n file1 查看整个文件，同时显示行号<br>grep 进行匹配输出<br>tail -100f file1 显示文件file1最后100行<br>sort 对文本文件进行行排序</p>
-<ul>
-<li>文件解压缩<br>zip -r test.zip test 递归压缩目录<br>unzip test.zip 解压<br>tar -tf test.tar 列出test.tar 内容，不解压<br>tar -xvf test.tar 解压<br>tar -zxvf test.tgz 解压gzip压缩过的tar文件</li>
-</ul>
-<h2 id="网络相关">网络相关</h2><ul>
-<li><p>Netstat</p>
-<p>用于显示各种网络相关信息，如网络连接，路由表，接口状态 (Interface Statistics)</p>
-<p>  常见参数<br>  -a (all)显示所有选项，默认不显示LISTEN相关<br>  -t (tcp)仅显示tcp相关选项<br>  -u (udp)仅显示udp相关选项<br>  -n 拒绝显示别名，能显示数字的全部转化成数字。<br>  -l 仅列出有在 Listen (监听) 的服務状态<br>  -p 显示建立相关链接的程序名<br>  -r 显示路由信息，路由表<br>  -e 显示扩展信息，例如uid等<br>  -s 按各个协议进行统计<br>  -c 每隔一个固定时间，执行该netstat命令。<br>  提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到</p>
-</li>
-</ul>
-<pre><code>列出所有端口 netstat -a
-列出所有 tcp 端口 netstat -at
-列出所有 udp 端口 netstat -au
-只显示监听端口 netstat -<span class="keyword">l</span>
-只列出所有监听 UNIX 端口 netstat -lx
-显示TCP或UDP 端口的统计信息 netstat -<span class="keyword">st</span> 或 -<span class="keyword">su</span>
-显示核心路由信息 netstat -<span class="literal">r</span>
-找出运行在指定端口的进程 netstat -<span class="keyword">an</span>|grep 8080 或 netstat -anpt|grep 8080
-</code></pre><ul>
-<li>tcpdump</li>
-</ul>
-<p>用简单的话来定义tcpdump，就是：dump the traffic on a network，根据使用者的定义对网络上的数据包进行截获的包分析工具。 tcpdump可以将网络中传送的数据包的“头”完全截获下来提供分析。它支持针对网络层、协议、主机、网络或端口的过滤，并提供and、or、not等逻辑语句来帮助你去掉无用的信息。</p>
-<p>截获所有210.27.48.1 的主机收到的和发出的所有的数据包<br>tcpdump host 210.27.48.1</p>
-<p>截获主机210.27.48.1 和主机210.27.48.2 的通信<br>tcpdump host 210.27.48.1 and 210.27.48.2 </p>
-<p>详见：<a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html" target="_blank" rel="external">http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>抽空将之前记录的工作几年来使用的linux命令重新温习整理下<br>]]>
-    
-    </summary>
-    
-      <category term="linux" scheme="http://www.52ff.cc/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[写了个异或加密小程序]]></title>
-    <link href="http://www.52ff.cc/2015/02/22/%E5%86%99%E4%BA%86%E4%B8%AA%E5%BC%82%E6%88%96%E5%8A%A0%E5%AF%86%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
-    <id>http://www.52ff.cc/2015/02/22/写了个异或加密小程序/</id>
-    <published>2015-02-22T13:40:50.000Z</published>
-    <updated>2015-03-15T14:01:46.000Z</updated>
-    <content type="html"><![CDATA[<p>之前做有你短信服务端时因客户端是delphi写的，网上找的加密算法在某些字符在java和delphi的运行结果不一致，所以就干脆花了大半天时间写了一个异或加密类XORCodec,写完后对字节处理，以及16进制，二进制和十进制的转化增进了了解</p>
-<a id="more"></a>
-<p>代码如下，记录下以后review用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line">public class XORCodec &#123;</span><br><span class="line">	private final static String key = <span class="string">"unisms"</span>;  //密钥</span><br><span class="line">	private static String EncodeType =<span class="string">"utf-8"</span>;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @Title: 加密(字节版)，字节异或后转<span class="number">16</span>进制</span><br><span class="line">	 * @param @throws UnsupportedEncodingException</span><br><span class="line">	 * @<span class="built_in">return</span> String</span><br><span class="line">	 * @date <span class="number">2012</span>-<span class="number">4</span>-<span class="number">24</span> 上午<span class="number">12</span>:<span class="number">53</span>:<span class="number">55</span></span><br><span class="line">	 */</span><br><span class="line">	public static String encrypt(String <span class="keyword">in</span>Str) throws UnsupportedEncodingException &#123;</span><br><span class="line"></span><br><span class="line">		byte[] b=<span class="keyword">in</span>Str.getBytes(EncodeType);</span><br><span class="line">		byte[] snNum = new byte[b.length];</span><br><span class="line">		byte[] c=key.getBytes();</span><br><span class="line">		<span class="keyword">for</span> (int i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; b.length; i++, j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (j == c.length)</span><br><span class="line">				j = <span class="number">0</span>;</span><br><span class="line">			snNum[i] = (byte)(b[i] ^ c[j]);</span><br><span class="line">		&#125;</span><br><span class="line">		String result=<span class="string">""</span>;</span><br><span class="line">		try &#123;</span><br><span class="line">			result= byte2HexStr(snNum);</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @Title: 解密(字节版)，将<span class="number">16</span>进制字符串每<span class="number">2</span>位转成INT，再转成byte</span><br><span class="line">	 * @<span class="built_in">return</span> String</span><br><span class="line">	 * @date <span class="number">2012</span>-<span class="number">4</span>-<span class="number">24</span> 上午<span class="number">12</span>:<span class="number">54</span>:<span class="number">34</span></span><br><span class="line">	 */</span><br><span class="line">	public static String decrypt(String instr)&#123;</span><br><span class="line">		byte[] snNum=null;</span><br><span class="line">		byte[] c=null;</span><br><span class="line">		int len;</span><br><span class="line">		String result=<span class="string">""</span>;</span><br><span class="line">		try &#123;</span><br><span class="line">			len = instr.length()/<span class="number">2</span>;</span><br><span class="line">			snNum = new byte[len];</span><br><span class="line">			c=key.getBytes();</span><br><span class="line">			<span class="keyword">for</span> (int i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; len; i++, j++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (j == c.length)</span><br><span class="line">					j = <span class="number">0</span>;</span><br><span class="line">				snNum[i] = (byte) ((byte)(Integer.parseInt(instr.substring(i*<span class="number">2</span>,i*<span class="number">2</span>+<span class="number">2</span>),<span class="number">16</span>)) ^ c[j]);</span><br><span class="line">			&#125;</span><br><span class="line">			result=new String(snNum,EncodeType);</span><br><span class="line">		&#125; catch (Exception e) &#123;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * bytes转换成十六进制字符</span><br><span class="line">	 */</span><br><span class="line">	public static String byte2HexStr(byte[] b)</span><br><span class="line">	&#123;</span><br><span class="line">		String stmp=<span class="string">""</span>;</span><br><span class="line">		StringBuilder sb = new StringBuilder(<span class="string">""</span>);</span><br><span class="line">		<span class="keyword">for</span> (int n=<span class="number">0</span>;n&lt;b.length;n++)</span><br><span class="line">		&#123;</span><br><span class="line">			stmp = Integer.toHexString(b[n] &amp; <span class="number">0</span>xFF);//<span class="number">0</span>xFF即<span class="number">256</span>相当于<span class="number">11111111</span></span><br><span class="line">			sb.append((stmp.length()==<span class="number">1</span>)? <span class="string">"0"</span>+stmp : stmp);</span><br><span class="line">			sb.append(<span class="string">""</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span> sb.toString().toUpperCase().trim();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @Description: 加密(字符版)</span><br><span class="line">	 */</span><br><span class="line"></span><br><span class="line">	public static String encrypt2(String data)&#123;</span><br><span class="line">		int[] temp = new int[data.length()];</span><br><span class="line">		StringBuffer result =new StringBuffer();</span><br><span class="line">		String str = <span class="string">""</span>;</span><br><span class="line">		//循环需加密的字符串和密钥，分别从需加密字符串和密钥中获取一个字符进行异或</span><br><span class="line">		<span class="keyword">for</span>(int i=<span class="number">0</span>,j=<span class="number">0</span>;i&lt;data.length();i++,j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(j==key.length())&#123;</span><br><span class="line">				j=<span class="number">0</span>;//重新循环取密钥中的字符</span><br><span class="line">			&#125;</span><br><span class="line">			temp[i] = data.charAt(i)^key.charAt(j);//需加密的字符串中一个字符和密钥中一个字符异或得到十进制的整数</span><br><span class="line">			str = Integer.toHexString(temp[i]);//将十进制转化成<span class="number">16</span>进制</span><br><span class="line">			<span class="keyword">if</span>(str.length()==<span class="number">1</span>)&#123;//不足<span class="number">4</span>位的进行补零</span><br><span class="line">				str = <span class="string">"000"</span>+str;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(str.length()==<span class="number">2</span>)&#123;</span><br><span class="line">				str = <span class="string">"00"</span>+str;</span><br><span class="line">			&#125;<span class="keyword">else</span> <span class="keyword">if</span>(str.length()==<span class="number">3</span>)&#123;</span><br><span class="line">				str = <span class="string">"0"</span>+str;</span><br><span class="line">			&#125;</span><br><span class="line">			result.append(str);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span>  result.toString();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * @Description: 解密(字符版)</span><br><span class="line">	 * @throws</span><br><span class="line">	 */</span><br><span class="line"></span><br><span class="line">	public static String decrypt2(String data)&#123;</span><br><span class="line">		char[] c=new char[data.length()/<span class="number">4</span>];//加密后的长度是原先的<span class="number">4</span>倍</span><br><span class="line">		StringBuffer result =new StringBuffer();</span><br><span class="line">		<span class="keyword">for</span>(int i=<span class="number">0</span>,j=<span class="number">0</span>;i&lt;c.length;i++,j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(j==key.length())&#123;</span><br><span class="line">				j=<span class="number">0</span>;//重新循环取密钥中的字符</span><br><span class="line">			&#125;</span><br><span class="line">			int n = Integer.parseInt(data.substring(i*<span class="number">4</span>,i*<span class="number">4</span>+<span class="number">4</span>),<span class="number">16</span>);//将<span class="number">16</span>进制的字符串解析为整数，因为加密时不足<span class="number">4</span>位补到<span class="number">4</span>位，所以每四个进行一次转化</span><br><span class="line">			c[i]=(char)((char)n^key.charAt(j));//重新和密钥中字符异或还原成原先的字符</span><br><span class="line">			result.append(c[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">return</span> result.toString();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>}</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>之前做有你短信服务端时因客户端是delphi写的，网上找的加密算法在某些字符在java和delphi的运行结果不一致，所以就干脆花了大半天时间写了一个异或加密类XORCodec,写完后对字节处理，以及16进制，二进制和十进制的转化增进了了解</p>]]>
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
     
       <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     
