@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-04-04T14:11:41.000Z</updated>
+  <updated>2015-04-04T14:31:23.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -19,11 +19,17 @@
     <link href="http://www.52ff.cc/2015/04/04/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%A4%A7%E5%90%9E%E5%90%90%E9%87%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E6%80%9D%E8%80%83/"/>
     <id>http://www.52ff.cc/2015/04/04/高并发大吞吐量服务端的思考/</id>
     <published>2015-04-04T14:11:41.000Z</published>
-    <updated>2015-04-04T14:11:41.000Z</updated>
-    <content type="html"></content>
+    <updated>2015-04-04T14:31:23.000Z</updated>
+    <content type="html"><![CDATA[<p>目前大家开发的应用程序基本上是IO密集型，而非计算密集型。</p>
+<p>这里就IO密集型的应用程序探讨下服务端的建设。</p>
+]]></content>
     <summary type="html">
-    
+    <![CDATA[<p>目前大家开发的应用程序基本上是IO密集型，而非计算密集型。</p>
+<p>这里就IO密集型的应用程序探讨下服务端的建设。</p>
+]]>
     </summary>
+    
+      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
@@ -32,9 +38,10 @@
     <link href="http://www.52ff.cc/2015/04/04/%E9%98%BB%E5%A1%9E%E5%92%8C%E9%9D%9E%E9%98%BB%E5%A1%9EIO/"/>
     <id>http://www.52ff.cc/2015/04/04/阻塞和非阻塞IO/</id>
     <published>2015-04-04T12:56:19.000Z</published>
-    <updated>2015-04-04T14:10:19.000Z</updated>
-    <content type="html"><![CDATA[<p>首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成</p>
-<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；<br>这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，cpu要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，cpu等待IO的时间，可是会有小部分客户端过来的通道网络很慢，cpu执行时依然阻塞在等待IO上面。而且这样的系统开销和资源浪费都太大，不是合理选择。</p>
+    <updated>2015-04-04T14:20:18.000Z</updated>
+    <content type="html"><![CDATA[<p>首先讲下个人理解的阻塞是：CPU执行时等待其他条件的完成</p>
+<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；<br>这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，CPU要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，CPU等待IO的时间，可是会有小部分客户端过来的通道网络很慢，CPU还是要花大把时间等待在IO上面，真正计算执行的时间很短，而且这样的系统开销和资源浪费都太大，不是合理选择。</p>
+<a id="more"></a>
 <h2 id="非阻塞NIO">非阻塞NIO</h2><p>而NIO对Socket IO可以实现非阻塞，可以用单线程管理多个通道，并且NIO有了缓冲区的概念，不管是File IO还是Socket IO都是在和Buffer相互读取。<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nio1.jpeg" alt=""></p>
 <p>NIO有三个核心模块：Selector(选择器)、Channel(通道)、Buffer(缓冲区)</p>
 <p>Selector允许单个线程处理多个Channel，相比旧的IO为防止阻塞而为每一个Channel创建一个Thread来说，性能高出非常多；只用SelectableChannel才能注册到Selector，单线程处理多个Channel如下图</p>
@@ -45,13 +52,14 @@
 <p>Buffer主要有：ByteBuffer、CharBuffer、DoubleBuffer、FloatBuffer、IntBuffer、LongBuffer、ShortBuffer，涵盖了IO操作的基本数据类型。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成</p>
-<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行]]>
+    <![CDATA[<p>首先讲下个人理解的阻塞是：CPU执行时等待其他条件的完成</p>
+<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；<br>这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，CPU要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，CPU等待IO的时间，可是会有小部分客户端过来的通道网络很慢，CPU还是要花大把时间等待在IO上面，真正计算执行的时间很短，而且这样的系统开销和资源浪费都太大，不是合理选择。</p>]]>
+    
     </summary>
     
       <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
@@ -60,8 +68,9 @@
     <link href="http://www.52ff.cc/2015/04/03/netty%E5%BC%82%E6%AD%A5%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B/"/>
     <id>http://www.52ff.cc/2015/04/03/netty异步事件驱动模型/</id>
     <published>2015-04-02T16:18:29.000Z</published>
-    <updated>2015-04-02T16:24:45.000Z</updated>
-    <content type="html"><![CDATA[<p> Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。</p>
+    <updated>2015-04-06T03:07:32.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"></p>
+<p> Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。</p>
 <a id="more"></a>
 <p>Netty的异步事件驱动模型主要涉及到下面几个核心的概念：</p>
 <ul>
@@ -77,7 +86,8 @@
 <p>在downstream链的末端会有个ChannelSink处理，用户可以自定义这个ChannelSink的实现，系统也有个默认的实现，当downstream链中最后一个ChannelHandler处理完后会被传递给这个ChannelSink进行最后的处理。</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p> Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。</p>]]>
+    <![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"/></p>
+<p> Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。</p>]]>
     
     </summary>
     
@@ -85,7 +95,7 @@
     
       <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
@@ -114,19 +124,58 @@
   </entry>
   
   <entry>
+    <title><![CDATA[JVM学习-GC]]></title>
+    <link href="http://www.52ff.cc/2015/04/01/JVM%E5%AD%A6%E4%B9%A0-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/"/>
+    <id>http://www.52ff.cc/2015/04/01/JVM学习-垃圾回收/</id>
+    <published>2015-04-01T02:32:53.000Z</published>
+    <updated>2015-04-06T03:12:57.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="基本回收算法">基本回收算法</h2><p>引用计数（Reference Counting）<br>比较古老的回收算法。原理是此对象有一个引用，即增加一个计数，删除一个引用则减少一个计数。垃圾回收时，只用收集计数为0的对象。此算法最致命的是无法处理循环引用的问题。<br><a id="more"></a></p>
+<hr>
+<p>标记-清除（Mark-Sweep）<br>此算法执行分两阶段。第一阶段从引用根节点开始标记所有被引用的对象，第二阶段遍历整个堆，把未标记的对象清除。此算法需要暂停整个应用，同时，会产生内存碎片。</p>
+<hr>
+<p>复制（Copying）<br>此算法把内存空间划为两个相等的区域，每次只使用其中一个区域。垃圾回收时，遍历当前使用区域，把正在使用中的对象复制到另外 一个区域中。次算法每次只处理正在使用中的对象，因此复制成本比较小，同时复制过去以后还能进行相应的内存整理，不过出现“碎片”问题。当然，此算法的缺 点也是很明显的，就是需要两倍内存空间。</p>
+<hr>
+<p>标记-整理（Mark-Compact）<br>此算法结合了“标记-清除”和“复制”两个算法的优点。也是分两阶段，第一阶段从根节点开始标记所有被引用对象，第二阶段遍历 整个堆，把清除未标记对象并且把存活对象“压缩”到堆的其中一块，按顺序排放。此算法避免了“标记-清除”的碎片问题，同时也避免了“复制”算法的空间问题。</p>
+<hr>
+<p>增量收集（Incremental Collecting）<br>实施垃圾回收算法，即：在应用进行的同时进行垃圾回收。不知道什么原因JDK5.0中的收集器没有使用这种算法的。</p>
+<hr>
+<p>分代（Generational Collecting）<br>基于对对象生命周期分析后得出的垃圾回收算法。把对象分为年青代、年老代、持久代，对不同生命周期的对象使用不同的算法（上述方式中的一个）进行回收。现在的垃圾回收器（从J2SE1.2开始）都是使用此算法的。</p>
+<h2 id="垃圾回收器">垃圾回收器</h2><ul>
+<li>Serial：串行收集器，当进行垃圾收集时，会暂停所有线程</li>
+<li>Parallel：并行收集器，是串行收集器的多线程版本，多CPU下</li>
+<li>ParallelOld：老年代的Parallel版本</li>
+<li>ConcMarkSweep：简称CMS，是并发收集器，将部分操作与用户线程并发执行</li>
+<li>CMSIncrementalMode：CMS收集器变种，属增量式垃圾收集器，在并发标记和并发清理时交替运行垃圾收集器和用户线程</li>
+<li>G1：面向服务器端应用的垃圾收集器，计划未来替代CMS收集器</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="基本回收算法">基本回收算法</h2><p>引用计数（Reference Counting）<br>比较古老的回收算法。原理是此对象有一个引用，即增加一个计数，删除一个引用则减少一个计数。垃圾回收时，只用收集计数为0的对象。此算法最致命的是无法处理循环引用的问题。<br>]]>
+    
+    </summary>
+    
+      <category term="jvm" scheme="http://www.52ff.cc/tags/jvm/"/>
+    
+      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Netty学习笔记-线程模型]]></title>
     <link href="http://www.52ff.cc/2015/03/30/Netty%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/"/>
     <id>http://www.52ff.cc/2015/03/30/Netty学习笔记-线程模型/</id>
     <published>2015-03-30T15:05:34.000Z</published>
-    <updated>2015-03-30T15:39:36.000Z</updated>
-    <content type="html"><![CDATA[<p>常见并发服务器方案比较:<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/20131104212306625.png" alt=""></p>
+    <updated>2015-04-06T03:11:34.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"></p>
+<p>常见并发服务器方案比较:<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/20131104212306625.png" alt=""></p>
 <p>具体可参照:<a href="http://blog.csdn.net/yusiguyuan/article/details/17591613" target="_blank" rel="external">常见多线程并发服务器编程模型</a></p>
 <a id="more"></a>
 <p>下面看下Netty的线程模型。Netty采用了Reactor模式，Reactor模式有多个变种，Netty基于Multiple Reactors模式（如下图）做了一定的修改，Mutilple Reactors模式有多个reactor：mainReactor和subReactor，其中mainReactor负责客户端的连接请求，并将请求转交给subReactor，后由subReactor负责相应通道的IO请求，非IO请求（具体逻辑处理）的任务则会直接写入队列，等待worker threads进行处理。</p>
 <p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/netty.png" alt=""></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>常见并发服务器方案比较:<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/20131104212306625.png" alt=""></p>
+    <![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"/></p>
+<p>常见并发服务器方案比较:<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/20131104212306625.png" alt=""></p>
 <p>具体可参照:<a href="http://blog.csdn.net/yusiguyuan/article/details/17591613">常见多线程并发服务器编程模型</a></p>]]>
     
     </summary>
@@ -135,7 +184,7 @@
     
       <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
@@ -144,8 +193,9 @@
     <link href="http://www.52ff.cc/2015/03/24/Netty%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%93ByteBuf/"/>
     <id>http://www.52ff.cc/2015/03/24/Netty学习笔记–ByteBuf/</id>
     <published>2015-03-24T12:54:25.000Z</published>
-    <updated>2015-03-29T14:01:03.000Z</updated>
-    <content type="html"><![CDATA[<p>Netty的ByteBuf是Java NIO Buffer的优化，比JDK自带的缓冲区实现更优秀。</p>
+    <updated>2015-04-06T03:11:58.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"></p>
+<p>Netty的ByteBuf是Java NIO Buffer的优化，比JDK自带的缓冲区实现更优秀。</p>
 <p>Netty缓冲API提供了几个优势:</p>
 <ul>
 <li>可以自定义缓冲类型 </li>
@@ -196,7 +246,8 @@
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>Netty的ByteBuf是Java NIO Buffer的优化，比JDK自带的缓冲区实现更优秀。</p>
+    <![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"/></p>
+<p>Netty的ByteBuf是Java NIO Buffer的优化，比JDK自带的缓冲区实现更优秀。</p>
 <p>Netty缓冲API提供了几个优势:</p>
 <ul>
 <li>可以自定义缓冲类型 </li>
@@ -215,7 +266,7 @@
     
       <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
@@ -224,7 +275,7 @@
     <link href="http://www.52ff.cc/2015/03/23/java.nio.Buffer%E7%A0%94%E7%A9%B6%E7%AC%94%E8%AE%B0/"/>
     <id>http://www.52ff.cc/2015/03/23/java.nio.Buffer研究笔记/</id>
     <published>2015-03-23T06:22:26.000Z</published>
-    <updated>2015-03-23T07:58:43.000Z</updated>
+    <updated>2015-04-04T14:24:07.000Z</updated>
     <content type="html"><![CDATA[<p>每当你需要传输数据时,一个缓冲区是必要的。Java NIO API中缓冲区的类主要是Buffer。Buffer是一个包装了基本数据元素数组的对象，它以及它的子类定义了一系列API用于处理数据缓存。其中最重要的子类是ByteBuffer。</p>
 <p>Netty的ByteBuf对jdk自带的缓冲区进行了重新设计和优化，Mina的IoBuffer对ByteBuffer进行了封装优化,它们比JDK自带的缓冲区实现更优秀。</p>
 <p>本文用于记录java.nio.Buffer的概念结构，也是为了备忘。<br>最后的目的还是为了更好的学习理解Netty的ByteBuf。</p>
@@ -258,7 +309,7 @@
     
       <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
@@ -267,8 +318,9 @@
     <link href="http://www.52ff.cc/2015/03/22/Redis%E7%9A%84Master-Slave%E6%A8%A1%E5%BC%8F/"/>
     <id>http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/</id>
     <published>2015-03-22T13:51:48.000Z</published>
-    <updated>2015-03-22T14:03:26.000Z</updated>
-    <content type="html"><![CDATA[<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
+    <updated>2015-04-06T03:34:08.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/redis.jpg" class="img-logo"></p>
+<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
 <a id="more"></a>
 <p>一、Redis的Replication：</p>
 <p>下面的列表清楚的解释了Redis Replication的特点和优势。<br>同一个Master可以同步多个Slaves。<br>Slave同样可以接受其它Slaves的连接和同步请求，这样可以有效的分载Master的同步压力。因此我们可以将Redis的Replication架构视为图结构。<br>Master Server是以非阻塞的方式为Slaves提供服务。所以在Master-Slave同步期间，客户端仍然可以提交查询或修改请求。<br>Slave Server同样是以非阻塞的方式完成数据同步。在同步期间，如果有客户端提交查询请求，Redis则返回同步之前的数据。<br>为了分载Master的读操作压力，Slave服务器可以为客户端提供只读操作的服务，写服务仍然必须由Master来完成。即便如此，系统的伸缩性还是得到了很大的提高。<br>Master可以将数据保存操作交给Slaves完成，从而避免了在Master中要有独立的进程来完成此操作。</p>
@@ -302,7 +354,8 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
 <span class="number">1</span>) <span class="string">"mykey"</span>
 </code></pre>]]></content>
     <summary type="html">
-    <![CDATA[<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>]]>
+    <![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/redis.jpg" class="img-logo"/></p>
+<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>]]>
     
     </summary>
     
@@ -319,8 +372,8 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
     <link href="http://www.52ff.cc/2015/03/13/%E6%AF%9B%E6%AF%9B/"/>
     <id>http://www.52ff.cc/2015/03/13/毛毛/</id>
     <published>2015-03-12T16:49:36.000Z</published>
-    <updated>2015-03-24T05:06:32.000Z</updated>
-    <content type="html"><![CDATA[<p>多图预警，晒晒咱家宝贝的照片，😄😄,目的是测试下七牛云图床的速度</p>
+    <updated>2015-04-06T03:10:41.000Z</updated>
+    <content type="html"><![CDATA[<p>多图预警，晒晒咱家宝贝的照片，😄😄,顺便测试下七牛云图床的速度<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/ffpsb.jpeg" class="img-topic"></p>
 <a id="more"></a>
 <p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/ffpsb.jpeg" alt=""></p>
 <p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/ff2.jpeg" alt=""></p>
@@ -328,7 +381,7 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
 <p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/ff1.jpeg" alt=""></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>多图预警，晒晒咱家宝贝的照片，😄😄,目的是测试下七牛云图床的速度</p>]]>
+    <![CDATA[<p>多图预警，晒晒咱家宝贝的照片，😄😄,顺便测试下七牛云图床的速度<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/ffpsb.jpeg" class="img-topic" /></p>]]>
     
     </summary>
     
@@ -522,8 +575,9 @@ Obj=null;
     <link href="http://www.52ff.cc/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
     <id>http://www.52ff.cc/2015/03/11/redis基础命令/</id>
     <published>2015-03-11T03:51:08.000Z</published>
-    <updated>2015-03-19T17:05:26.000Z</updated>
-    <content type="html"><![CDATA[<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
+    <updated>2015-04-06T03:18:04.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/redis.jpg" class="img-logo"></p>
+<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
 <p>它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令</p>
 <a id="more"></a>
 <h3 id="持久化">持久化</h3><pre><code><span class="built_in">save</span>：将数据同步保存到磁盘
@@ -601,7 +655,8 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
 <span class="function"><span class="title">hgetall</span><span class="params">(key)</span></span>：返回名称为key的hash中所有的键（field）及其对应的value
 </code></pre>]]></content>
     <summary type="html">
-    <![CDATA[<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
+    <![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/redis.jpg" class="img-logo"/></p>
+<p>Redis 是一个高性能的key-value数据库。 redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部分场合可以对关系数据库起到很好的补充作用，Redis已逐步取代memcached。</p>
 <p>它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set —有序集合)和hashs（哈希类型）,下面我来分享一下redis的常用命令</p>]]>
     
     </summary>
@@ -643,8 +698,9 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
     <link href="http://www.52ff.cc/2015/03/05/netty%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AF%87/"/>
     <id>http://www.52ff.cc/2015/03/05/netty笔记第一篇/</id>
     <published>2015-03-05T13:37:48.000Z</published>
-    <updated>2015-03-24T07:50:42.000Z</updated>
-    <content type="html"><![CDATA[<p>本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来。</p>
+    <updated>2015-04-06T03:12:13.000Z</updated>
+    <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"></p>
+<p>本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来。</p>
 <a id="more"></a>
 <h2 id="Bootstrap_or_ServerBootstrap">Bootstrap or ServerBootstrap</h2><p>  一个Netty程序开始于Bootstrap类,Bootstrap类是Netty提供的一个可以通过简单配置来设置或”引导”程序的一个很重要的类。当你需要连接客户端或服务器绑定指定端口时需要使用bootstrap.</p>
 <ul>
@@ -664,7 +720,8 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来。</p>]]>
+    <![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"/></p>
+<p>本篇文章整理下Netty的10个核心类，列举这些类的概念以及他们的用法，以便更加熟悉的netty的结构，帮助自己和他人学习netty,日后新的理解也会不时补充进来。</p>]]>
     
     </summary>
     
@@ -672,7 +729,7 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
     
       <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
@@ -827,44 +884,6 @@ ReadWriteLock 维护了一对相关的锁定，一个用于只读操作，另一
       <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
     
       <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[spring动态数据源和事务配置详解]]></title>
-    <link href="http://www.52ff.cc/2015/02/28/spring%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE%E6%BA%90%E5%92%8C%E4%BA%8B%E5%8A%A1%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/"/>
-    <id>http://www.52ff.cc/2015/02/28/spring动态数据源和事务配置详解/</id>
-    <published>2015-02-28T12:53:21.000Z</published>
-    <updated>2015-03-26T08:24:29.000Z</updated>
-    <content type="html"><![CDATA[<p>最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。</p>
-<p>动态数据源具体实现的思路就是采用Proxy模式，弄一个虚拟的数据源，并且用它来封装数据源选择逻辑，由虚拟的数据源根据Client提供的上下文来实现数据源的选择。</p>
-<a id="more"></a>
-<h2 id="动态数据源dynamicDataSource配置">动态数据源dynamicDataSource配置</h2><p>具体的实现请在org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource</p>
-<p>下面具体演示下：<br>重写determineCurrentLookupKey方法<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class DynamicDataSource extends AbstractRoutingDataSource &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected Object <span class="function"><span class="title">determineCurrentLookupKey</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> DataSourceContextHolder.getDataSourceType();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当前线程里取出对应的数据源名<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class DataSourceContextHolder&#123;</span><br><span class="line"></span><br><span class="line">    public static final String ONE=<span class="string">"one"</span>;</span><br><span class="line">    public static final String TWO = <span class="string">"two"</span>;</span><br><span class="line">    private static final ThreadLocal contextHolder =</span><br><span class="line">            new ThreadLocal();</span><br><span class="line"></span><br><span class="line">    public static void <span class="built_in">set</span>DataSourceType(String dataSourceType) &#123;</span><br><span class="line">        contextHolder.set(dataSourceType);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static String <span class="function"><span class="title">getDataSourceType</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> (String) contextHolder.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void <span class="function"><span class="title">clearDataSourceType</span></span>() &#123;</span><br><span class="line">        contextHolder.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>配置下xml文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 数据源定义,使用Apache DBCP 连接池 --&gt;</span><br><span class="line">	&lt;bean id=<span class="string">"dataSource0"</span> class=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span> destroy-method=<span class="string">"close"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"maxIdle"</span> value=<span class="string">"60"</span> /&gt;</span><br><span class="line">		&lt;property name=<span class="string">"maxActive"</span> value=<span class="string">"60"</span> /&gt;</span><br><span class="line">		&lt;property name=<span class="string">"timeBetweenEvictionRunsMillis"</span> value=<span class="string">"3600000"</span> /&gt;</span><br><span class="line">		&lt;property name=<span class="string">"minEvictableIdleTimeMillis"</span> value=<span class="string">"3600000"</span> /&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">	&lt;bean id=<span class="string">"dataSource1"</span> parent=<span class="string">"dataSource0"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"driverClassName"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.driver&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"url"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.url&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"username"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.username&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"password"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.password&#125;</span>"</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;bean id=<span class="string">"dataSource2"</span> parent=<span class="string">"dataSource0"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"driverClassName"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.driver2&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"url"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.url2&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"username"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.username2&#125;</span>"</span>/&gt;</span><br><span class="line">		&lt;property name=<span class="string">"password"</span> value=<span class="string">"<span class="variable">$&#123;jdbc.password2&#125;</span>"</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">	&lt;bean id=<span class="string">"dynamicDataSource"</span> class=<span class="string">"com.skymobi.webframework.utils.DynamicDataSource"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"targetDataSources"</span>&gt;</span><br><span class="line">			&lt;map key-type=<span class="string">"java.lang.String"</span>&gt;</span><br><span class="line">				&lt;entry key=<span class="string">"two"</span> value-ref=<span class="string">"dataSource2"</span>/&gt;</span><br><span class="line">			&lt;/map&gt;</span><br><span class="line">		&lt;/property&gt;</span><br><span class="line">		&lt;property name=<span class="string">"defaultTargetDataSource"</span> ref=<span class="string">"dataSource1"</span>/&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;bean id=<span class="string">"sessionFactory"</span> class=<span class="string">"org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"dataSource"</span> ref=<span class="string">"dynamicDataSource"</span> /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 事务管理器配置 --&gt;</span><br><span class="line">	&lt;bean id=<span class="string">"transactionManager"</span> class=<span class="string">"org.springframework.orm.hibernate3.HibernateTransactionManager"</span>&gt;</span><br><span class="line">		&lt;property name=<span class="string">"sessionFactory"</span> ref=<span class="string">"sessionFactory"</span> /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- 使用annotation定义事务 --&gt;</span><br><span class="line">	&lt;tx:annotation-driven transaction-manager=<span class="string">"transactionManager"</span> proxy-target-class=<span class="string">"true"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>最后在代码中使用DataSourceContextHolder.setDataSourceType(DataSourceContextHolder.ONE)就可以切换数据源了</p>
-<p>注意：切换数据源必须在一个事务结束后切换，在一个事务内是无法切换数据源的<br>所以建议切换数据源的代码要写在service层而非dao层</p>
-<h2 id="事务管理器配置的两种方式">事务管理器配置的两种方式</h2><p>上面动态数据源也涉及到了事务，顺便回顾下spring事务管理的两种最常见配置</p>
-<ul>
-<li>现在最常用的annotation方式<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"myBatisTransaction"</span> class=<span class="string">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;</span><br><span class="line">	&lt;property name=<span class="string">"dataSource"</span> ref=<span class="string">"dataSource"</span> /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 使用annotation定义事务 --&gt;</span><br><span class="line">&lt;tx:annotation-driven transaction-manager=<span class="string">"myBatisTransaction"</span> proxy-target-class=<span class="string">"true"</span> /&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>需要在方法前加上@Transactional</p>
-<ul>
-<li>aop配置切面<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;tx:advice id=<span class="string">"txAdvice"</span> transaction-manager=<span class="string">"myBatisTransaction"</span>&gt;</span><br><span class="line">		&lt;tx:attributes&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"*"</span> propagation=<span class="string">"REQUIRED"</span> rollback-for=<span class="string">"java.lang.RuntimeException"</span> /&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"get*"</span> <span class="built_in">read</span>-only=<span class="string">"true"</span> /&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"query*"</span> <span class="built_in">read</span>-only=<span class="string">"true"</span> /&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"find*"</span> <span class="built_in">read</span>-only=<span class="string">"true"</span> /&gt;</span><br><span class="line">			&lt;tx:method name=<span class="string">"isNot*"</span> <span class="built_in">read</span>-only=<span class="string">"true"</span> /&gt;</span><br><span class="line">		&lt;/tx:attributes&gt;</span><br><span class="line">	&lt;/tx:advice&gt;</span><br><span class="line"></span><br><span class="line">	&lt;aop:config&gt;</span><br><span class="line">		&lt;aop:pointcut id=<span class="string">"services"</span></span><br><span class="line">					  expression=<span class="string">"execution(* flydev.*.service.*.*(..))"</span> /&gt;</span><br><span class="line">		&lt;aop:advisor advice-ref=<span class="string">"txAdvice"</span> pointcut-ref=<span class="string">"services"</span> /&gt;</span><br><span class="line">	&lt;/aop:config&gt;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。</p>
-<p>动态数据源具体实现的思路就是采用Proxy模式，弄一个虚拟的数据源，并且用它来封装数据源选择逻辑，由虚拟的数据源根据Client提供的上下文来实现数据源的选择。</p>]]>
-    
-    </summary>
-    
-      <category term="spring" scheme="http://www.52ff.cc/tags/spring/"/>
     
       <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
     

@@ -18,6 +18,7 @@
 <meta property="og:url" content="http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/index.html">
 <meta property="og:site_name" content="FlyFish's Blog">
 <meta property="og:description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/redis.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis的Master-Slave模式">
 <meta name="twitter:description" content="Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。">
@@ -101,7 +102,8 @@
 		
 		</div>
 		
-		<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
+		<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/redis.jpg" class="img-logo"></p>
+<p> Redis的主从复制功能非常强大，一个master可以拥有多个slave，而一个slave又可以拥有多个slave，如此下去，形成了强大的多级服务器集群架构。在Redis中配置Master-Slave模式是一件简单的事。</p>
 <a id="more"></a>
 <p>一、Redis的Replication：</p>
 <p>下面的列表清楚的解释了Redis Replication的特点和优势。<br>同一个Master可以同步多个Slaves。<br>Slave同样可以接受其它Slaves的连接和同步请求，这样可以有效的分载Master的同步压力。因此我们可以将Redis的Replication架构视为图结构。<br>Master Server是以非阻塞的方式为Slaves提供服务。所以在Master-Slave同步期间，客户端仍然可以提交查询或修改请求。<br>Slave Server同样是以非阻塞的方式完成数据同步。在同步期间，如果有客户端提交查询请求，Redis则返回同步之前的数据。<br>为了分载Master的读操作压力，Slave服务器可以为客户端提供只读操作的服务，写服务仍然必须由Master来完成。即便如此，系统的伸缩性还是得到了很大的提高。<br>Master可以将数据保存操作交给Slaves完成，从而避免了在Master中要有独立的进程来完成此操作。</p>
@@ -212,7 +214,7 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>24</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>19</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -221,6 +223,8 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
 			<li><a href="/categories/分布式文件存储/" title="分布式文件存储">分布式文件存储<sup>1</sup></a></li>
 		
 			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		
+			<li><a href="/categories/网络编程/" title="网络编程">网络编程<sup>7</sup></a></li>
 		
 			<li><a href="/categories/记录分享/" title="记录分享">记录分享<sup>2</sup></a></li>
 		
@@ -247,7 +251,7 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
 		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
 		
-			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
+			<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
 		
 			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
@@ -259,7 +263,7 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
 		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		
-			<li><a href="/tags/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
 		
 			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 		
@@ -270,7 +274,7 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 

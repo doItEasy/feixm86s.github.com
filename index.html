@@ -96,7 +96,9 @@
 </header>
     <div class="article-content">
         
-        
+        <p>目前大家开发的应用程序基本上是IO密集型，而非计算密集型。</p>
+<p>这里就IO密集型的应用程序探讨下服务端的建设。</p>
+
         
         
         <p class="article-more-link">
@@ -105,6 +107,11 @@
     </div>
     <footer class="article-footer clearfix">
 <div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/网络编程/">网络编程</a>
+</div>
 
 
 </div>
@@ -148,20 +155,13 @@
 </header>
     <div class="article-content">
         
-        <p>首先讲下个人理解的阻塞是：cpu执行时等待其他条件的完成</p>
-<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；<br>这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，cpu要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，cpu等待IO的时间，可是会有小部分客户端过来的通道网络很慢，cpu执行时依然阻塞在等待IO上面。而且这样的系统开销和资源浪费都太大，不是合理选择。</p>
-<h2 id="非阻塞NIO">非阻塞NIO</h2><p>而NIO对Socket IO可以实现非阻塞，可以用单线程管理多个通道，并且NIO有了缓冲区的概念，不管是File IO还是Socket IO都是在和Buffer相互读取。<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nio1.jpeg" alt=""></p>
-<p>NIO有三个核心模块：Selector(选择器)、Channel(通道)、Buffer(缓冲区)</p>
-<p>Selector允许单个线程处理多个Channel，相比旧的IO为防止阻塞而为每一个Channel创建一个Thread来说，性能高出非常多；只用SelectableChannel才能注册到Selector，单线程处理多个Channel如下图</p>
-<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nio2.jpeg" alt=""></p>
-<p>将Channel注册到Selector中，轮询调用select()，这个方法会阻塞，当注册的某个通道准备好要进行IO操作时，这个便返回已选择键的个数，此时通过selectedKeys获得已选择的键，就可以进行相关的IO操作了；选择键(SelectionKey)是用来连接Selector和Channel。</p>
-<p>这也就是通过Reactor模式的事件驱动机制来达到的Non blocking，那么什么是Reactor模式呢？Reactor翻译成中文是“反应器”，就是我们将事件注册到Reactor中，当有相应的事件发生时，Reactor便会告知我们有哪些事件发生了，我们再根据具体的事件去做相应的处理。</p>
-<p>注：<br>Channel主要有：FileChannel、ServerSocketChannel、SocketChannel、DatagramChannel，这四种通道涵盖了文件IO、TCP套接字IO、UDP数据报IO。</p>
-<p>Buffer主要有：ByteBuffer、CharBuffer、DoubleBuffer、FloatBuffer、IntBuffer、LongBuffer、ShortBuffer，涵盖了IO操作的基本数据类型。</p>
-
+        <p>首先讲下个人理解的阻塞是：CPU执行时等待其他条件的完成</p>
+<h2 id="java传统阻塞IO">java传统阻塞IO</h2><p>当进行文件操作File IO时是一个字节一个字节或一行一行的读；<br>当进行网络通信Socket IO时一般是对通道中的字节流进行逐个字节读取；<br>这个时候就会发生阻塞，具体体现就是当获取到CPU执行时，CPU要等待读取完通道中的数据流。 可以为每一个Socket创建一个Thread，虽然这样能大大减少线程获取CPU执行时，CPU等待IO的时间，可是会有小部分客户端过来的通道网络很慢，CPU还是要花大把时间等待在IO上面，真正计算执行的时间很短，而且这样的系统开销和资源浪费都太大，不是合理选择。</p>
         
         
         <p class="article-more-link">
+          
+            <a href="/2015/04/04/阻塞和非阻塞IO/#more">阅读更多</a>
           
        </p>
     </div>
@@ -170,7 +170,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
+  <a class="article-category-link" href="/categories/网络编程/">网络编程</a>
 </div>
 
 
@@ -220,7 +220,8 @@
 </header>
     <div class="article-content">
         
-        <p> Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。</p>
+        <p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"/></p>
+<p> Netty使用了异步的事件驱动模型，来触发网络I/O的各种操作，其在socket层上面封装一层异步事件驱动模型，使得业务代码不需要关心网络底层，就可以编写异步的无网络I/O阻塞的代码。</p>
         
         
         <p class="article-more-link">
@@ -234,7 +235,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
+  <a class="article-category-link" href="/categories/网络编程/">网络编程</a>
 </div>
 
 
@@ -335,6 +336,70 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/04/01/JVM学习-垃圾回收/" title="JVM学习-GC" itemprop="url">JVM学习-GC</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-01T02:32:53.000Z" itemprop="datePublished"> 发表于 2015-04-01</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="基本回收算法">基本回收算法</h2><p>引用计数（Reference Counting）<br>比较古老的回收算法。原理是此对象有一个引用，即增加一个计数，删除一个引用则减少一个计数。垃圾回收时，只用收集计数为0的对象。此算法最致命的是无法处理循环引用的问题。<br>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/04/01/JVM学习-垃圾回收/#more">阅读更多</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/jvm/">jvm</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="http://www.52ff.cc/2015/04/01/JVM学习-垃圾回收/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/04/01/JVM学习-垃圾回收/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/03/30/Netty学习笔记-线程模型/" title="Netty学习笔记-线程模型" itemprop="url">Netty学习笔记-线程模型</a>
   </h1>
   <p class="article-author">By
@@ -348,7 +413,8 @@
 </header>
     <div class="article-content">
         
-        <p>常见并发服务器方案比较:<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/20131104212306625.png" alt=""></p>
+        <p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"/></p>
+<p>常见并发服务器方案比较:<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/20131104212306625.png" alt=""></p>
 <p>具体可参照:<a href="http://blog.csdn.net/yusiguyuan/article/details/17591613">常见多线程并发服务器编程模型</a></p>
         
         
@@ -363,7 +429,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
+  <a class="article-category-link" href="/categories/网络编程/">网络编程</a>
 </div>
 
 
@@ -413,7 +479,8 @@
 </header>
     <div class="article-content">
         
-        <p>Netty的ByteBuf是Java NIO Buffer的优化，比JDK自带的缓冲区实现更优秀。</p>
+        <p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"/></p>
+<p>Netty的ByteBuf是Java NIO Buffer的优化，比JDK自带的缓冲区实现更优秀。</p>
 <p>Netty缓冲API提供了几个优势:</p>
 <ul>
 <li>可以自定义缓冲类型 </li>
@@ -438,7 +505,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
+  <a class="article-category-link" href="/categories/网络编程/">网络编程</a>
 </div>
 
 
@@ -469,75 +536,9 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/03/23/java.nio.Buffer研究笔记/" title="java.nio.Buffer研究笔记" itemprop="url">java.nio.Buffer研究笔记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
-		
-  <p class="article-time">
-    <time datetime="2015-03-23T06:22:26.000Z" itemprop="datePublished"> 发表于 2015-03-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>每当你需要传输数据时,一个缓冲区是必要的。Java NIO API中缓冲区的类主要是Buffer。Buffer是一个包装了基本数据元素数组的对象，它以及它的子类定义了一系列API用于处理数据缓存。其中最重要的子类是ByteBuffer。</p>
-<p>Netty的ByteBuf对jdk自带的缓冲区进行了重新设计和优化，Mina的IoBuffer对ByteBuffer进行了封装优化,它们比JDK自带的缓冲区实现更优秀。</p>
-<p>本文用于记录java.nio.Buffer的概念结构，也是为了备忘。<br>最后的目的还是为了更好的学习理解Netty的ByteBuf。</p>
-        
-        
-        <p class="article-more-link">
-          
-            <a href="/2015/03/23/java.nio.Buffer研究笔记/#more">阅读更多</a>
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/java/">java</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/netty/">netty</a><a href="/tags/nio/">nio</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="http://www.52ff.cc/2015/03/23/java.nio.Buffer研究笔记/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/03/23/java.nio.Buffer研究笔记/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
   </nav>
 
 </div>
@@ -552,7 +553,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>24</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>19</sup></a></li>
 		
 			<li><a href="/categories/no-sql/" title="no-sql">no-sql<sup>2</sup></a></li>
 		
@@ -561,6 +562,8 @@
 			<li><a href="/categories/分布式文件存储/" title="分布式文件存储">分布式文件存储<sup>1</sup></a></li>
 		
 			<li><a href="/categories/前端技术/" title="前端技术">前端技术<sup>1</sup></a></li>
+		
+			<li><a href="/categories/网络编程/" title="网络编程">网络编程<sup>7</sup></a></li>
 		
 			<li><a href="/categories/记录分享/" title="记录分享">记录分享<sup>2</sup></a></li>
 		
@@ -587,7 +590,7 @@
 		
 			<li><a href="/tags/缓存/" title="缓存">缓存<sup>2</sup></a></li>
 		
-			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
+			<li><a href="/tags/jvm/" title="jvm">jvm<sup>2</sup></a></li>
 		
 			<li><a href="/tags/fastdfs/" title="fastdfs">fastdfs<sup>1</sup></a></li>
 		
@@ -599,7 +602,7 @@
 		
 			<li><a href="/tags/sql/" title="sql">sql<sup>1</sup></a></li>
 		
-			<li><a href="/tags/jvm/" title="jvm">jvm<sup>1</sup></a></li>
+			<li><a href="/tags/html5/" title="html5">html5<sup>1</sup></a></li>
 		
 			<li><a href="/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 		
@@ -610,7 +613,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">二月 2012</a><span class="archive-list-count">1</span></li></ul>
   </div>
 
 
