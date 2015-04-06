@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.52ff.cc/2015/02/28/spring%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE%E6%BA%90%E5%92%8C%E4%BA%8B%E5%8A%A1%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/</loc>
+    <lastmod>2015-04-06T07:49:34.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.52ff.cc/2015/03/22/Redis%E7%9A%84Master-Slave%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2015-04-06T03:34:08.000Z</lastmod>
   </url>
@@ -69,11 +74,6 @@
   <url>
     <loc>http://www.52ff.cc/2015/03/11/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84RPC%E6%A1%86%E6%9E%B6/</loc>
     <lastmod>2015-03-26T09:37:19.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.52ff.cc/2015/02/28/spring%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE%E6%BA%90%E5%92%8C%E4%BA%8B%E5%8A%A1%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/</loc>
-    <lastmod>2015-03-26T08:24:29.000Z</lastmod>
   </url>
   
   <url>

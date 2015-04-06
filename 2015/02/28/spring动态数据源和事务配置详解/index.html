@@ -21,6 +21,7 @@
 <meta property="og:site_name" content="FlyFish's Blog">
 <meta property="og:description" content="最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。
 动态数据源具体实现的思路就是采用Proxy模式，弄一">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/spring.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring动态数据源和事务配置详解">
 <meta name="twitter:description" content="最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。
@@ -105,7 +106,8 @@
 		
 		</div>
 		
-		<p>最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。</p>
+		<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/spring.jpg" class="img-logo"></p>
+<p>最近在工作中碰到了保存数据时需要跨IDC写多个数据库的需求，记得多年前的做法是在java代码里面lookup需要的数据源,但是这样的做法明显耦合度太高了。现在我们大多java项目已经离不开spring了,spring也提供各种强大的功能，所以就特地看了下spring对于动态数据源的配置，顺便将spring对于事务配置的两种常见的方式也整理一下。</p>
 <p>动态数据源具体实现的思路就是采用Proxy模式，弄一个虚拟的数据源，并且用它来封装数据源选择逻辑，由虚拟的数据源根据Client提供的上下文来实现数据源的选择。</p>
 <a id="more"></a>
 <h2 id="动态数据源dynamicDataSource配置">动态数据源dynamicDataSource配置</h2><p>具体的实现请在org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource</p>
