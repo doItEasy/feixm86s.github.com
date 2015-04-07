@@ -4,7 +4,7 @@
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://www.52ff.cc/"/>
-  <updated>2015-04-04T14:31:23.000Z</updated>
+  <updated>2015-04-07T14:45:08.000Z</updated>
   <id>http://www.52ff.cc/</id>
   
   <author>
@@ -19,14 +19,44 @@
     <link href="http://www.52ff.cc/2015/04/04/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%A4%A7%E5%90%9E%E5%90%90%E9%87%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E6%80%9D%E8%80%83/"/>
     <id>http://www.52ff.cc/2015/04/04/高并发大吞吐量服务端的思考/</id>
     <published>2015-04-04T14:11:41.000Z</published>
-    <updated>2015-04-04T14:31:23.000Z</updated>
-    <content type="html"><![CDATA[<p>目前大家开发的应用程序基本上是IO密集型，而非计算密集型。</p>
-<p>这里就IO密集型的应用程序探讨下服务端的建设。</p>
+    <updated>2015-04-07T14:45:08.000Z</updated>
+    <content type="html"><![CDATA[<p>开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。</p>
+<p>目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。<br>所以在这里就IO密集型的系统整理下自己的思考。</p>
+<a id="more"></a>
+<p>现在移动互联网时代已经来临，我们开发的app很多需要和服务端频繁交互，这类IO密集型的系统的瓶颈和影响体验的地方基本是网络IO或者一小部分的磁盘IO，而CPU相对空闲，尤其现在的服务器至少是8核16g 64位的linux服务器，CPU不是问题。<br>所以我们需要提高对于线程的利用率，不让线程处于BLOCKED状态，减少线程的切换，也就是让CPU忙碌些，提高CPU利率用。</p>
+<h2 id="同步调用和传统的阻塞IO">同步调用和传统的阻塞IO</h2><p>假设客户端向服务端发送一个请求，服务端接收后进行逻辑运算然后响应，这个过程耗时100ms。那么事务的时间是100ms，也就是线程的时间是100ms。</p>
+<p>假设单核CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/100ms</span>=<span class="string">10TPS</span>
+</code></pre><p>假设8核16线程CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/100ms*16</span>=<span class="string">160TPS</span>
+</code></pre><p>这个TPS明显不够，为了加大吞吐量，我们需要服务端开更多的线程，</p>
+<p>再进一步探讨之前先补充个知识：</p>
+<p>线程在CPU时间片轮转到自己这，在cpu上执行时，如果需要等待网络IO或者其他资源的到位，那么这个时候线程会让出CPU，进入BLOCKED状态，等资源到位了就会进入RUNNABLE状态，CPU时间片再次轮转到时进入RUNNING状态运行。<br>所以线程的等待时间一般远大于线程CPU时间，也就是线程的总时间远大于线程CPU时间。</p>
+<p>有一个流传的公式：</p>
+<pre><code>服务器端最佳线程数量=(线程总时间/线程<span class="built_in">cpu</span>时间) * <span class="built_in">cpu</span>数量
+（但是一台服务器不可能只跑你一个程序，所以对这个公式也别太认真）
+</code></pre><p>从上面到公式可以看出线程总时间越长需要开的线程数越多,同步调用和传统的阻塞IO，线程的总时间明显是远大于线程的cpu时间，那么在高并发端情况下需要满足需求的话，就需要更多的线程。</p>
+<p>按照上面假设的100ms的事务，为了达到3000TPS的吞吐量，理论上我们需要开超过300个线程。</p>
+<p>假设事务使用线程的时间是100ms,线程的CPU时间是5ms,那么我们需要<br>100ms/5ms*16=320线程</p>
+<p>但是服务器能开的线程是有限的，线程开多了非常耗资源，这样就无法进一步提高服务端的吞吐量了。<br>传统的阻塞IO在客户端少的情况下才有优势。</p>
+<h2 id="异步调用和非阻塞NIO">异步调用和非阻塞NIO</h2><p>事务的时间还是和上面一样是100ms,但是这里使用异步调用，当发生网络IO时，线程不进入阻塞状态等待IO完成，而是插入其他的任务。这样这个事务占用的线程时间就远小于100ms，线程在运行过程中插入了多个事务。</p>
+<p>这里假设事务占用的线程时间是10ms,线程的CPU时间不会变还是5ms。</p>
+<p>那么</p>
+<p>假设单核CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/10ms</span>=<span class="string">100TPS</span>
+</code></pre><p>假设8核16线程CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/10ms*16</span>=<span class="string">1600TPS</span>
+</code></pre><p>根据公式<br>服务器端最佳线程数量=(线程总时间/线程cpu时间) * cpu数量</p>
+<p>开的线程数只需要同步方式的十分之一，就能达到差不多的吞吐量</p>
+<p>这样子异步调用和非阻塞NIO就能大大加大服务端的吞吐量，当服务端吃紧的时候，NIO比IO响应速度明显也更快。</p>
+<p>这里不具体讨论的异步调用释放掉线程，或者NIO的一个线程负责多个通道的事件驱动模型，再以后的文章中再具体展开。</p>
+<hr>
+<p>转载请注明出处：52ff.cc</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>目前大家开发的应用程序基本上是IO密集型，而非计算密集型。</p>
-<p>这里就IO密集型的应用程序探讨下服务端的建设。</p>
-]]>
+    <![CDATA[<p>开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。</p>
+<p>目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。<br>所以在这里就IO密集型的系统整理下自己的思考。</p>]]>
+    
     </summary>
     
       <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
@@ -128,7 +158,7 @@
     <link href="http://www.52ff.cc/2015/04/01/JVM%E5%AD%A6%E4%B9%A0-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/"/>
     <id>http://www.52ff.cc/2015/04/01/JVM学习-垃圾回收/</id>
     <published>2015-04-01T02:32:53.000Z</published>
-    <updated>2015-04-06T03:12:57.000Z</updated>
+    <updated>2015-04-06T09:13:47.000Z</updated>
     <content type="html"><![CDATA[<h2 id="基本回收算法">基本回收算法</h2><p>引用计数（Reference Counting）<br>比较古老的回收算法。原理是此对象有一个引用，即增加一个计数，删除一个引用则减少一个计数。垃圾回收时，只用收集计数为0的对象。此算法最致命的是无法处理循环引用的问题。<br><a id="more"></a></p>
 <hr>
 <p>标记-清除（Mark-Sweep）<br>此算法执行分两阶段。第一阶段从引用根节点开始标记所有被引用的对象，第二阶段遍历整个堆，把未标记的对象清除。此算法需要暂停整个应用，同时，会产生内存碎片。</p>
@@ -148,6 +178,7 @@
 <li>CMSIncrementalMode：CMS收集器变种，属增量式垃圾收集器，在并发标记和并发清理时交替运行垃圾收集器和用户线程</li>
 <li>G1：面向服务器端应用的垃圾收集器，计划未来替代CMS收集器</li>
 </ul>
+<h2 id="基本异常">基本异常</h2><p>年老代堆空间被占满：<br>java.lang.OutOfMemoryError: Java heap space<br>持久代被占满：<br>java.lang.OutOfMemoryError: PermGen space<br>堆栈溢出：<br>java.lang.StackOverflowError<br>线程堆栈满：<br>Fatal: Stack size too small<br>系统内存被占满<br>java.lang.OutOfMemoryError: unable to create new native thread</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="基本回收算法">基本回收算法</h2><p>引用计数（Reference Counting）<br>比较古老的回收算法。原理是此对象有一个引用，即增加一个计数，删除一个引用则减少一个计数。垃圾回收时，只用收集计数为0的对象。此算法最致命的是无法处理循环引用的问题。<br>]]>

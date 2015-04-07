@@ -9,22 +9,22 @@
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="目前大家开发的应用程序基本上是IO密集型，而非计算密集型。
-这里就IO密集型的应用程序探讨下服务端的建设。">
+    <meta name="description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。
+目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
     
     
-    <meta name="description" content="目前大家开发的应用程序基本上是IO密集型，而非计算密集型。
-这里就IO密集型的应用程序探讨下服务端的建设。">
+    <meta name="description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。
+目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高并发大吞吐量服务端的思考">
 <meta property="og:url" content="http://www.52ff.cc/2015/04/04/高并发大吞吐量服务端的思考/index.html">
 <meta property="og:site_name" content="FlyFish's Blog">
-<meta property="og:description" content="目前大家开发的应用程序基本上是IO密集型，而非计算密集型。
-这里就IO密集型的应用程序探讨下服务端的建设。">
+<meta property="og:description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。
+目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高并发大吞吐量服务端的思考">
-<meta name="twitter:description" content="目前大家开发的应用程序基本上是IO密集型，而非计算密集型。
-这里就IO密集型的应用程序探讨下服务端的建设。">
+<meta name="twitter:description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。
+目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
 
     
     <link rel="alternative" href="/atom.xml" title="FlyFish&#39;s Blog" type="application/atom+xml">
@@ -101,12 +101,42 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#同步调用和传统的阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">同步调用和传统的阻塞IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步调用和非阻塞NIO"><span class="toc-number">2.</span> <span class="toc-text">异步调用和非阻塞NIO</span></a></li></ol>
 		
 		</div>
 		
-		<p>目前大家开发的应用程序基本上是IO密集型，而非计算密集型。</p>
-<p>这里就IO密集型的应用程序探讨下服务端的建设。</p>
+		<p>开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。</p>
+<p>目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。<br>所以在这里就IO密集型的系统整理下自己的思考。</p>
+<a id="more"></a>
+<p>现在移动互联网时代已经来临，我们开发的app很多需要和服务端频繁交互，这类IO密集型的系统的瓶颈和影响体验的地方基本是网络IO或者一小部分的磁盘IO，而CPU相对空闲，尤其现在的服务器至少是8核16g 64位的linux服务器，CPU不是问题。<br>所以我们需要提高对于线程的利用率，不让线程处于BLOCKED状态，减少线程的切换，也就是让CPU忙碌些，提高CPU利率用。</p>
+<h2 id="同步调用和传统的阻塞IO">同步调用和传统的阻塞IO</h2><p>假设客户端向服务端发送一个请求，服务端接收后进行逻辑运算然后响应，这个过程耗时100ms。那么事务的时间是100ms，也就是线程的时间是100ms。</p>
+<p>假设单核CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/100ms</span>=<span class="string">10TPS</span>
+</code></pre><p>假设8核16线程CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/100ms*16</span>=<span class="string">160TPS</span>
+</code></pre><p>这个TPS明显不够，为了加大吞吐量，我们需要服务端开更多的线程，</p>
+<p>再进一步探讨之前先补充个知识：</p>
+<p>线程在CPU时间片轮转到自己这，在cpu上执行时，如果需要等待网络IO或者其他资源的到位，那么这个时候线程会让出CPU，进入BLOCKED状态，等资源到位了就会进入RUNNABLE状态，CPU时间片再次轮转到时进入RUNNING状态运行。<br>所以线程的等待时间一般远大于线程CPU时间，也就是线程的总时间远大于线程CPU时间。</p>
+<p>有一个流传的公式：</p>
+<pre><code>服务器端最佳线程数量=(线程总时间/线程<span class="built_in">cpu</span>时间) * <span class="built_in">cpu</span>数量
+（但是一台服务器不可能只跑你一个程序，所以对这个公式也别太认真）
+</code></pre><p>从上面到公式可以看出线程总时间越长需要开的线程数越多,同步调用和传统的阻塞IO，线程的总时间明显是远大于线程的cpu时间，那么在高并发端情况下需要满足需求的话，就需要更多的线程。</p>
+<p>按照上面假设的100ms的事务，为了达到3000TPS的吞吐量，理论上我们需要开超过300个线程。</p>
+<p>假设事务使用线程的时间是100ms,线程的CPU时间是5ms,那么我们需要<br>100ms/5ms*16=320线程</p>
+<p>但是服务器能开的线程是有限的，线程开多了非常耗资源，这样就无法进一步提高服务端的吞吐量了。<br>传统的阻塞IO在客户端少的情况下才有优势。</p>
+<h2 id="异步调用和非阻塞NIO">异步调用和非阻塞NIO</h2><p>事务的时间还是和上面一样是100ms,但是这里使用异步调用，当发生网络IO时，线程不进入阻塞状态等待IO完成，而是插入其他的任务。这样这个事务占用的线程时间就远小于100ms，线程在运行过程中插入了多个事务。</p>
+<p>这里假设事务占用的线程时间是10ms,线程的CPU时间不会变还是5ms。</p>
+<p>那么</p>
+<p>假设单核CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/10ms</span>=<span class="string">100TPS</span>
+</code></pre><p>假设8核16线程CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/10ms*16</span>=<span class="string">1600TPS</span>
+</code></pre><p>根据公式<br>服务器端最佳线程数量=(线程总时间/线程cpu时间) * cpu数量</p>
+<p>开的线程数只需要同步方式的十分之一，就能达到差不多的吞吐量</p>
+<p>这样子异步调用和非阻塞NIO就能大大加大服务端的吞吐量，当服务端吃紧的时候，NIO比IO响应速度明显也更快。</p>
+<p>这里不具体讨论的异步调用释放掉线程，或者NIO的一个线程负责多个通道的事件驱动模型，再以后的文章中再具体展开。</p>
+<hr>
+<p>转载请注明出处：52ff.cc</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -160,7 +190,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#同步调用和传统的阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">同步调用和传统的阻塞IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步调用和非阻塞NIO"><span class="toc-number">2.</span> <span class="toc-text">异步调用和非阻塞NIO</span></a></li></ol>
  
   </div>
 

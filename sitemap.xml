@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.52ff.cc/2015/04/04/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%A4%A7%E5%90%9E%E5%90%90%E9%87%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E6%80%9D%E8%80%83/</loc>
+    <lastmod>2015-04-07T14:45:08.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.52ff.cc/2015/04/01/JVM%E5%AD%A6%E4%B9%A0-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/</loc>
+    <lastmod>2015-04-06T09:13:47.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.52ff.cc/2015/02/28/spring%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE%E6%BA%90%E5%92%8C%E4%BA%8B%E5%8A%A1%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/</loc>
     <lastmod>2015-04-06T07:49:34.000Z</lastmod>
   </url>
@@ -14,11 +24,6 @@
   <url>
     <loc>http://www.52ff.cc/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/</loc>
     <lastmod>2015-04-06T03:18:04.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.52ff.cc/2015/04/01/JVM%E5%AD%A6%E4%B9%A0-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/</loc>
-    <lastmod>2015-04-06T03:12:57.000Z</lastmod>
   </url>
   
   <url>
@@ -44,11 +49,6 @@
   <url>
     <loc>http://www.52ff.cc/2015/04/03/netty%E5%BC%82%E6%AD%A5%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B/</loc>
     <lastmod>2015-04-06T03:07:32.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://www.52ff.cc/2015/04/04/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%A4%A7%E5%90%9E%E5%90%90%E9%87%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E6%80%9D%E8%80%83/</loc>
-    <lastmod>2015-04-04T14:31:23.000Z</lastmod>
   </url>
   
   <url>
