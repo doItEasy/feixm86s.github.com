@@ -9,21 +9,22 @@
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。
+    <meta name="description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。
 目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
     
     
-    <meta name="description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。
+    <meta name="description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。
 目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高并发大吞吐量服务端的思考">
 <meta property="og:url" content="http://www.52ff.cc/2015/04/04/高并发大吞吐量服务端的思考/index.html">
 <meta property="og:site_name" content="FlyFish's Blog">
-<meta property="og:description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。
+<meta property="og:description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。
 目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/yun1.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高并发大吞吐量服务端的思考">
-<meta name="twitter:description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。
+<meta name="twitter:description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。
 目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
 
     
@@ -105,7 +106,9 @@
 		
 		</div>
 		
-		<p>开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接吐槽。</p>
+		<p><img scr="http://7xi8lq.com1.z0.glb.clouddn.com/yun1.png" class="img-logo"></p>
+<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/yun1.png" alt=""></p>
+<p>开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。</p>
 <p>目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。<br>所以在这里就IO密集型的系统整理下自己的思考。</p>
 <a id="more"></a>
 <p>现在移动互联网时代已经来临，我们开发的app很多需要和服务端频繁交互，这类IO密集型的系统的瓶颈和影响体验的地方基本是网络IO或者一小部分的磁盘IO，而CPU相对空闲，尤其现在的服务器至少是8核16g 64位的linux服务器，CPU不是问题。<br>所以我们需要提高对于线程的利用率，不让线程处于BLOCKED状态，减少线程的切换，也就是让CPU忙碌些，提高CPU利率用。</p>
