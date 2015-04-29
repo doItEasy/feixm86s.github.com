@@ -277,13 +277,6 @@ DEPT_TYPE <span class="built_in">NULL</span>
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#选择最有效率的表名顺序_(只在基于规则的优化器中有效)_："><span class="toc-number">1.</span> <span class="toc-text">选择最有效率的表名顺序 (只在基于规则的优化器中有效) ：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WHERE子句中的连接顺序："><span class="toc-number">2.</span> <span class="toc-text">WHERE子句中的连接顺序：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SELECT子句中避免使用’*’_："><span class="toc-number">3.</span> <span class="toc-text">SELECT子句中避免使用’*’ ：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用_DECODE_函数来减少处理时间："><span class="toc-number">4.</span> <span class="toc-text">使用 DECODE 函数来减少处理时间：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除重复记录："><span class="toc-number">5.</span> <span class="toc-text">删除重复记录：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用_TRUNCATE_替代_DELETE_："><span class="toc-number">6.</span> <span class="toc-text">用 TRUNCATE 替代 DELETE ：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#尽量多使用_COMMIT_："><span class="toc-number">7.</span> <span class="toc-text">尽量多使用 COMMIT ：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用_Where_子句替换_HAVING_子句："><span class="toc-number">8.</span> <span class="toc-text">用 Where 子句替换 HAVING 子句：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用_EXISTS_替代_IN_、用_NOT_EXISTS_替代_NOT_IN_："><span class="toc-number">9.</span> <span class="toc-text">用 EXISTS 替代 IN 、用 NOT EXISTS 替代 NOT IN ：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用表的别名_(Alias)_："><span class="toc-number">10.</span> <span class="toc-text">使用表的别名 (Alias) ：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免在索引列上使用计算．"><span class="toc-number">11.</span> <span class="toc-text">避免在索引列上使用计算．</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用_>=_替代_>"><span class="toc-number">12.</span> <span class="toc-text">用 >= 替代 ></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减少对表的查询："><span class="toc-number">13.</span> <span class="toc-text">减少对表的查询：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sql语句用大写的："><span class="toc-number">14.</span> <span class="toc-text">sql语句用大写的：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在_java_代码中尽量少用连接符_“_＋_”_连接字符串！"><span class="toc-number">15.</span> <span class="toc-text">在 java 代码中尽量少用连接符 “ ＋ ” 连接字符串！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免在索引列上使用_NOT_："><span class="toc-number">16.</span> <span class="toc-text">避免在索引列上使用 NOT ：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通过内部函数提高_SQL_效率："><span class="toc-number">17.</span> <span class="toc-text">通过内部函数提高 SQL 效率：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#识别_‘_低效执行_‘_的_SQL_语句："><span class="toc-number">18.</span> <span class="toc-text">识别 ‘ 低效执行 ‘ 的 SQL 语句：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用索引提高效率："><span class="toc-number">19.</span> <span class="toc-text">用索引提高效率：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用_UNION_替换_OR_(_适用于索引列_)"><span class="toc-number">20.</span> <span class="toc-text">用 UNION 替换 OR ( 适用于索引列 )</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用_IN_来替换_OR"><span class="toc-number">21.</span> <span class="toc-text">用 IN 来替换 OR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免在索引列上使用_IS_NULL_和_IS_NOT_NULL"><span class="toc-number">22.</span> <span class="toc-text">避免在索引列上使用 IS NULL 和 IS NOT NULL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总是使用索引的第一个列："><span class="toc-number">23.</span> <span class="toc-text">总是使用索引的第一个列：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用_UNION-ALL_替换_UNION_(如果业务允许)_："><span class="toc-number">24.</span> <span class="toc-text">用 UNION-ALL  替换 UNION (如果业务允许) ：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用_WHERE_替代_ORDER_BY_："><span class="toc-number">25.</span> <span class="toc-text">用 WHERE 替代 ORDER BY ：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免改变索引列的类型_:"><span class="toc-number">26.</span> <span class="toc-text">避免改变索引列的类型 :</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需要当心的_WHERE_子句_:"><span class="toc-number">27.</span> <span class="toc-text">需要当心的 WHERE 子句 :</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用索引"><span class="toc-number">28.</span> <span class="toc-text">使用索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免使用耗费资源的操作_:"><span class="toc-number">29.</span> <span class="toc-text">避免使用耗费资源的操作 :</span></a></li></ol>
- 
-  </div>
-
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
@@ -488,8 +481,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -506,6 +497,9 @@ $(document).ready(function(){
   $(window).scroll(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
+  
+    c.click();
+    
 });
 </script>
 

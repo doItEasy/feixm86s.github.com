@@ -190,13 +190,6 @@ Netty的ByteBuf对jdk自带的缓冲区进行了重新设计和优化，Mina的I
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer有四个基本属性："><span class="toc-number">1.</span> <span class="toc-text">Buffer有四个基本属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BufferAPI"><span class="toc-number">2.</span> <span class="toc-text">BufferAPI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作说明"><span class="toc-number">3.</span> <span class="toc-text">操作说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建Buffer"><span class="toc-number">4.</span> <span class="toc-text">创建Buffer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复制Buffer"><span class="toc-number">5.</span> <span class="toc-text">复制Buffer</span></a></li></ol>
- 
-  </div>
-
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
@@ -401,8 +394,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -419,6 +410,9 @@ $(document).ready(function(){
   $(window).scroll(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
+  
+    c.click();
+    
 });
 </script>
 

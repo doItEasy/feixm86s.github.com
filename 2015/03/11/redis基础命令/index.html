@@ -246,13 +246,6 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#持久化"><span class="toc-number">1.</span> <span class="toc-text">持久化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程服务控制"><span class="toc-number">2.</span> <span class="toc-text">远程服务控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对value操作的命令"><span class="toc-number">3.</span> <span class="toc-text">对value操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对String操作的命令"><span class="toc-number">4.</span> <span class="toc-text">对String操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对List操作的命令"><span class="toc-number">5.</span> <span class="toc-text">对List操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对Set操作的命令"><span class="toc-number">6.</span> <span class="toc-text">对Set操作的命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对Hash操作的命令"><span class="toc-number">7.</span> <span class="toc-text">对Hash操作的命令</span></a></li></ol>
- 
-  </div>
-
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
@@ -457,8 +450,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -475,6 +466,9 @@ $(document).ready(function(){
   $(window).scroll(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
+  
+    c.click();
+    
 });
 </script>
 

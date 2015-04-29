@@ -174,13 +174,6 @@
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用百分比"><span class="toc-number">1.</span> <span class="toc-text">使用百分比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#元素的高度和宽度按比例设置"><span class="toc-number">1.1.</span> <span class="toc-text">元素的高度和宽度按比例设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片背景"><span class="toc-number">2.</span> <span class="toc-text">图片背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#div设置图片背景"><span class="toc-number">2.1.</span> <span class="toc-text">div设置图片背景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#样式优先级"><span class="toc-number">3.</span> <span class="toc-text">样式优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS样式优先级"><span class="toc-number">3.1.</span> <span class="toc-text">CSS样式优先级</span></a></li></ol></li></ol>
- 
-  </div>
-
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
@@ -385,8 +378,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -403,6 +394,9 @@ $(document).ready(function(){
   $(window).scroll(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
+  
+    c.click();
+    
 });
 </script>
 

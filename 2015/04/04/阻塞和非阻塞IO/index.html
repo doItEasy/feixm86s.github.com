@@ -181,13 +181,6 @@ java传统阻塞IO当进行文件操作File IO时是一个字节一个字节或�
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#java传统阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">java传统阻塞IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非阻塞NIO"><span class="toc-number">2.</span> <span class="toc-text">非阻塞NIO</span></a></li></ol>
- 
-  </div>
-
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
@@ -392,8 +385,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -410,6 +401,9 @@ $(document).ready(function(){
   $(window).scroll(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
+  
+    c.click();
+    
 });
 </script>
 

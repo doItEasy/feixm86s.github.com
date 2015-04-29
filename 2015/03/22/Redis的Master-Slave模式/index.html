@@ -198,13 +198,6 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
 </div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#slaveof"><span class="toc-number">1.</span> <span class="toc-text">slaveof  </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动master服务器。"><span class="toc-number">2.</span> <span class="toc-text">启动master服务器。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#情况Master当前数据库中的所有Keys。"><span class="toc-number">3.</span> <span class="toc-text">情况Master当前数据库中的所有Keys。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在Master中创建新的Keys作为测试数据。"><span class="toc-number">4.</span> <span class="toc-text">在Master中创建新的Keys作为测试数据。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看Master中存在哪些Keys。"><span class="toc-number">5.</span> <span class="toc-text">查看Master中存在哪些Keys。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动slave服务器。"><span class="toc-number">6.</span> <span class="toc-text">启动slave服务器。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。"><span class="toc-number">7.</span> <span class="toc-text">查看Slave中的Keys是否和Master中一致，从结果看，他们是相等的。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在Master中删除其中一个测试Key，并查看删除后的结果。"><span class="toc-number">8.</span> <span class="toc-text">在Master中删除其中一个测试Key，并查看删除后的结果。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在Slave中查看是否mykey2也已经在Slave中被删除。"><span class="toc-number">9.</span> <span class="toc-text">在Slave中查看是否mykey2也已经在Slave中被删除。</span></a></li></ol>
- 
-  </div>
-
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
@@ -409,8 +402,6 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -427,6 +418,9 @@ $(document).ready(function(){
   $(window).scroll(function(){
     o.css("top",Math.max(80,260-$(this).scrollTop()));
   });
+  
+    c.click();
+    
 });
 </script>
 
