@@ -4,27 +4,28 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>FAST基础命令安装配置 | FlyFish&#39;s Blog</title>
+    <title>高并发大吞吐量服务端的思考 | FlyFish&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="xiangming">
     
-    <meta name="description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
-它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。">
+    <meta name="description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。
+目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
     
     
-    <meta name="description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
-它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google F">
+    <meta name="description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。
+目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FAST基础命令安装配置">
-<meta property="og:url" content="http://www.52ff.cc/2015/03/11/FastDFS常见命令/index.html">
+<meta property="og:title" content="高并发大吞吐量服务端的思考">
+<meta property="og:url" content="http://www.52ff.cc/2015/04/05/高并发大吞吐量服务端的思考/index.html">
 <meta property="og:site_name" content="FlyFish's Blog">
-<meta property="og:description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
-它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google F">
+<meta property="og:description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。
+目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
+<meta property="og:image" content="http://7xi8lq.com1.z0.glb.clouddn.com/yun2.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FAST基础命令安装配置">
-<meta name="twitter:description" content="FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。
-它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google F">
+<meta name="twitter:title" content="高并发大吞吐量服务端的思考">
+<meta name="twitter:description" content="开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。
+目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。所以在这里就IO密集型的系统整理下自己的思考。">
 
     
     <link rel="alternative" href="/atom.xml" title="FlyFish&#39;s Blog" type="application/atom+xml">
@@ -85,14 +86,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/11/FastDFS常见命令/" title="FAST基础命令安装配置" itemprop="url">FAST基础命令安装配置</a>
+      <a href="/2015/04/05/高并发大吞吐量服务端的思考/" title="高并发大吞吐量服务端的思考" itemprop="url">高并发大吞吐量服务端的思考</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
-    <time datetime="2015-03-11T06:20:08.000Z" itemprop="datePublished"> 发表于 2015-03-11</time>
+    <time datetime="2015-04-05T14:11:41.000Z" itemprop="datePublished"> 发表于 2015-04-05</time>
     
   </p>
 </header>
@@ -101,33 +102,44 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动FastDFS"><span class="toc-number">1.</span> <span class="toc-text">启动FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭FastDFS"><span class="toc-number">2.</span> <span class="toc-text">关闭FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启FastDFS"><span class="toc-number">3.</span> <span class="toc-text">重启FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看集群情况"><span class="toc-number">4.</span> <span class="toc-text">查看集群情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除一个storage"><span class="toc-number">5.</span> <span class="toc-text">删除一个storage</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#同步调用和传统的阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">同步调用和传统的阻塞IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步调用和非阻塞NIO"><span class="toc-number">2.</span> <span class="toc-text">异步调用和非阻塞NIO</span></a></li></ol>
 		
 		</div>
 		
-		<p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。</p>
-<p>它只能通过专有API对文件进行存取访问，不支持POSIX接口方式，不能mount使用。准确地讲，Google FS以及FastDFS、mogileFS、 HDFS、TFS等类Google FS都不是系统级的分布式文件系统，而是应用级的分布式文件存储服务。</p>
+		<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/yun2.png" class="img-topic"></p>
+<p>开发手机APP的服务端有一段时间了，最近抽空回顾和学习了一下关于多线程的知识，特地总结下自己对于高并发大吞吐量服务端的思考，有不对的地方欢迎直接使用文章下面的多说评论来吐槽。</p>
+<p>目前大家开发的应用程序基本上都是IO密集型，而非计算密集型。<br>所以在这里就IO密集型的系统整理下自己的思考。</p>
 <a id="more"></a>
-<h3 id="启动FastDFS">启动FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker: /usr/<span class="built_in">local</span>/bin/fdfs_trackered /etc/fdfs/tracker.conf</span><br><span class="line">storage: /usr/<span class="built_in">local</span>/bin/fdfs_storaged /etc/fdfs/storage.conf</span><br></pre></td></tr></table></figure>
-<h3 id="关闭FastDFS">关闭FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_tracker</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/stop.sh /usr/<span class="built_in">local</span>/bin/fdfs_storage</span><br></pre></td></tr></table></figure>
-<p>或者 killall fdfs_trackered(storaged)  ——-注意，千万不要使用-9强行杀死进程。</p>
-<h3 id="重启FastDFS">重启FastDFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tracker:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_trackered</span><br><span class="line">storage:/usr/<span class="built_in">local</span>/bin/restart.sh /usr/<span class="built_in">local</span>/bin/fdfs_storaged</span><br></pre></td></tr></table></figure>
-<h3 id="查看集群情况">查看集群情况</h3><p>在任意一台storage(tracker也可以) </p>
-<pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf
-</code></pre>
-<h3 id="删除一个storage">删除一个storage</h3><p>在任意一台storage(tracker也可以) </p>
-<pre><code class="bash">/usr/<span class="built_in">local</span>/bin/fdfs_monitor /etc/fdfs/storage.conf delete group2 <span class="number">20.12</span>.<span class="number">1.73</span>
-</code></pre>
-<p>[CentOS 6.2下fastDFS的完整安装和配置步骤]<br>(<a href="http://www.linuxidc.com/Linux/2012-12/75989.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-12/75989.htm</a>)</p>
-<p>[FastDFS在Ubuntu下的安装，PHP客户端]<br>(<a href="http://www.linuxidc.com/Linux/2012-09/71459.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71459.htm</a>)</p>
-<p>[FastDFS分布式文件服务器安装，及配置，测试]<br>(<a href="http://www.linuxidc.com/Linux/2012-09/71458.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71458.htm</a>)</p>
-<p>[FastDFS 整合Nginx问题整理]<br>(<a href="http://www.linuxidc.com/Linux/2012-09/71232.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/71232.htm</a>)</p>
-<p>[CentOS下搭建FastDFS]<br>(<a href="http://www.linuxidc.com/Linux/2012-09/70995.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-09/70995.htm</a>)</p>
-<p>[Ubuntu安装FastDFS全程记录]<br>(<a href="http://www.linuxidc.com/Linux/2012-03/56377.htm" target="_blank" rel="external">http://www.linuxidc.com/Linux/2012-03/56377.htm</a>)</p>
-<p>同事小伍哥对于FastDFS性能的测试结果如下:</p>
-<p>场景1：FastDFS+自带HttpServer<br>FastDFS内置了一个Http服务器，可以提供文件下载服务,使用100个线程，下载一个60M的文件，内存消耗6G左右，估计是把文件都放内存里面去了,线程数增加到500，内存占用提高到12G，剩余空闲内存几乎没有，几分钟后，服务器彻底失去响应，只有进行硬件重启.<br>FastDFS开发者表示，老早就不推荐使用内置的Http服务了</p>
-<p>场景2：FastDFS+Nginx<br>编译FastDFS的Nginx支持模块，使用Nginx进行文件下载,使用1000个线程并发，下载60M大小的文件，Nginx服务器内存占用20M左右，完全没有压力</p>
-<p>场景3：FastDFS+TCPClient<br>FastDFS支持TCP协议，使用其自带的客户端进行下载,使用1000个线程并发，下载60M大小的文件，FastDFS storage内存占用在120M左右，虽然表现没有Nginx那么优秀，但是性能上也足以满足需求了需要注意的是，FastDFS自带的客户端下载文件，内存占用和磁盘IO没有做较好的优化，大并发下载大文件时，会有性能问题</p>
+<p>现在移动互联网时代已经来临，我们开发的app很多需要和服务端频繁交互，这类IO密集型的系统的瓶颈和影响体验的地方基本是网络IO或者一小部分的磁盘IO，而CPU相对空闲，尤其现在的服务器至少是8核16g 64位的linux服务器，CPU不是问题。<br>所以我们需要提高对于线程的利用率，尽量让线程处于RUNNING状态，减少线程处于BLOCKED状态，大量线程导致的线程切换开销，也就是让CPU忙碌些，提高CPU利率用。</p>
+<h2 id="同步调用和传统的阻塞IO">同步调用和传统的阻塞IO</h2><p>假设客户端向服务端发送一个请求，服务端接收后进行逻辑运算然后响应，这个过程耗时100ms。那么事务的时间是100ms，也就是线程的时间是100ms。</p>
+<p>假设单核CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/100ms</span>=<span class="string">10TPS</span>
+</code></pre><p>假设8核16线程CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/100ms*16</span>=<span class="string">160TPS</span>
+</code></pre><p>这个TPS明显不够，为了加大吞吐量，我们需要服务端开更多的线程，</p>
+<p>再进一步探讨之前先补充个知识：</p>
+<p>线程在CPU时间片轮转到自己这，在cpu上执行时，如果需要等待网络IO或者其他资源的到位，那么这个时候线程会让出CPU，进入BLOCKED状态，等资源到位了就会进入RUNNABLE状态，CPU时间片再次轮转到时进入RUNNING状态运行。<br>所以线程的等待时间一般远大于线程CPU时间，也就是线程的总时间远大于线程CPU时间。</p>
+<p>有一个流传的公式：</p>
+<pre><code>服务器端最佳线程数量=(线程总时间/线程<span class="built_in">cpu</span>时间) * <span class="built_in">cpu</span>数量
+（但是一台服务器不可能只跑你一个程序，所以对这个公式也别太认真）
+</code></pre><p>从上面到公式可以看出线程总时间越长需要开的线程数越多,同步调用和传统的阻塞IO，线程的总时间明显是远大于线程的cpu时间，那么在高并发端情况下需要满足需求的话，就需要更多的线程。</p>
+<p>按照上面假设的100ms的事务，为了达到3000TPS的吞吐量，理论上我们需要开超过300个线程。</p>
+<p>假设事务使用线程的时间是100ms,线程的CPU时间是5ms,那么我们需要<br>100ms/5ms*16=320线程</p>
+<p>但是服务器能开的线程是有限的，线程开多了非常耗资源，大量线程的切换开销就是服务端编程的性能杀手，这样就无法通过加线程来进一步提高服务端的吞吐量了。</p>
+<p>ps:传统的阻塞IO在客户端很少的情况下才有优势。</p>
+<h2 id="异步调用和非阻塞NIO">异步调用和非阻塞NIO</h2><p>事务的时间还是和上面一样是100ms,但是这里使用异步调用，当发生网络IO时，线程不进入阻塞状态去等待IO完成，而是插入其他的任务。这样这个事务占用的线程时间就远小于100ms，线程在运行过程中插入了多个事务。</p>
+<p>这里假设事务占用的线程时间是10ms（事实还要少）,线程的CPU时间不变还是5ms。</p>
+<p>那么</p>
+<p>假设单核CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/10ms</span>=<span class="string">100TPS</span>
+</code></pre><p>假设8核16线程CPU</p>
+<pre><code><span class="attribute">吞吐量＝1秒/10ms*16</span>=<span class="string">1600TPS</span>
+</code></pre><p>根据公式<br>服务器端最佳线程数量=(线程总时间/线程cpu时间) * cpu数量</p>
+<p>开的线程数只需要同步方式的十分之一（事实还要少），就能达到差不多的吞吐量</p>
+<p>这样子异步调用和非阻塞NIO就能大大加大服务端的吞吐量，当服务端吃紧的时候，NIO比IO响应速度明显快很多。</p>
+<p>这里不具体讨论的异步调用释放掉线程，或者NIO的基于事件驱动模型多IO多路复用，在以后的文章中再具体展开。</p>
+<hr>
+<p>转载请注明出处：52ff.cc</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -135,14 +147,9 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/分布式文件存储/">分布式文件存储</a>
+  <a class="article-category-link" href="/categories/网络编程/">网络编程</a>
 </div>
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/fastdfs/">fastdfs</a>
-  </div>
 
 </div>
 
@@ -150,7 +157,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/03/11/FastDFS常见命令/" data-title="FAST基础命令安装配置 | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.52ff.cc/2015/04/05/高并发大吞吐量服务端的思考/" data-title="高并发大吞吐量服务端的思考 | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -164,18 +171,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/03/11/一个简陋的RPC框架/" title="一个简易的RPC框架">
+ <a href="/2015/04/08/单线程有时候比多线程快/" title="单线程有时候比多线程快">
   <strong>上一篇：</strong><br/>
   <span>
-  一个简易的RPC框架</span>
+  单线程有时候比多线程快</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/03/11/redis基础命令/"  title="redis基础命令">
+<a href="/2015/04/04/阻塞和非阻塞IO/"  title="阻塞和非阻塞IO">
  <strong>下一篇：</strong><br/> 
- <span>redis基础命令
+ <span>阻塞和非阻塞IO
 </span>
 </a>
 </div>
@@ -184,7 +191,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/03/11/FastDFS常见命令/" data-title="FAST基础命令安装配置" data-url="http://www.52ff.cc/2015/03/11/FastDFS常见命令/"></div>
+	<div class="ds-thread" data-thread-key="2015/04/05/高并发大吞吐量服务端的思考/" data-title="高并发大吞吐量服务端的思考" data-url="http://www.52ff.cc/2015/04/05/高并发大吞吐量服务端的思考/"></div>
 </section>
 
 
@@ -194,7 +201,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动FastDFS"><span class="toc-number">1.</span> <span class="toc-text">启动FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关闭FastDFS"><span class="toc-number">2.</span> <span class="toc-text">关闭FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重启FastDFS"><span class="toc-number">3.</span> <span class="toc-text">重启FastDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看集群情况"><span class="toc-number">4.</span> <span class="toc-text">查看集群情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除一个storage"><span class="toc-number">5.</span> <span class="toc-text">删除一个storage</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#同步调用和传统的阻塞IO"><span class="toc-number">1.</span> <span class="toc-text">同步调用和传统的阻塞IO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步调用和非阻塞NIO"><span class="toc-number">2.</span> <span class="toc-text">异步调用和非阻塞NIO</span></a></li></ol>
  
   </div>
 
