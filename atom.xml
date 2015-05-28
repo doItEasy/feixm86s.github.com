@@ -3,9 +3,9 @@
   <title><![CDATA[FlyFish's Blog]]></title>
   <subtitle><![CDATA[才华配不上梦想就是所谓的迷茫]]></subtitle>
   <link href="/atom.xml" rel="self"/>
-  <link href="http://www.52ff.cc/"/>
+  <link href="http://cdn.52ff.cc/"/>
   <updated>2015-04-08T13:30:28.000Z</updated>
-  <id>http://www.52ff.cc/</id>
+  <id>http://cdn.52ff.cc/</id>
   
   <author>
     <name><![CDATA[xiangming]]></name>
@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[单线程有时候比多线程快]]></title>
-    <link href="http://www.52ff.cc/2015/04/08/%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%9C%89%E6%97%B6%E5%80%99%E6%AF%94%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BF%AB/"/>
-    <id>http://www.52ff.cc/2015/04/08/单线程有时候比多线程快/</id>
+    <link href="http://cdn.52ff.cc/2015/04/08/%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%9C%89%E6%97%B6%E5%80%99%E6%AF%94%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BF%AB/"/>
+    <id>http://cdn.52ff.cc/2015/04/08/单线程有时候比多线程快/</id>
     <published>2015-04-08T13:30:28.000Z</published>
     <updated>2015-04-08T13:30:28.000Z</updated>
     <content type="html"></content>
@@ -29,8 +29,8 @@
   
   <entry>
     <title><![CDATA[高并发大吞吐量服务端的思考]]></title>
-    <link href="http://www.52ff.cc/2015/04/05/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%A4%A7%E5%90%9E%E5%90%90%E9%87%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E6%80%9D%E8%80%83/"/>
-    <id>http://www.52ff.cc/2015/04/05/高并发大吞吐量服务端的思考/</id>
+    <link href="http://cdn.52ff.cc/2015/04/05/%E9%AB%98%E5%B9%B6%E5%8F%91%E5%A4%A7%E5%90%9E%E5%90%90%E9%87%8F%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E6%80%9D%E8%80%83/"/>
+    <id>http://cdn.52ff.cc/2015/04/05/高并发大吞吐量服务端的思考/</id>
     <published>2015-04-05T14:11:41.000Z</published>
     <updated>2015-04-08T13:40:33.000Z</updated>
     <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/yun2.png" class="img-topic"></p>
@@ -75,14 +75,14 @@
     
     </summary>
     
-      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
+      <category term="网络编程" scheme="http://cdn.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[阻塞和非阻塞IO]]></title>
-    <link href="http://www.52ff.cc/2015/04/04/%E9%98%BB%E5%A1%9E%E5%92%8C%E9%9D%9E%E9%98%BB%E5%A1%9EIO/"/>
-    <id>http://www.52ff.cc/2015/04/04/阻塞和非阻塞IO/</id>
+    <link href="http://cdn.52ff.cc/2015/04/04/%E9%98%BB%E5%A1%9E%E5%92%8C%E9%9D%9E%E9%98%BB%E5%A1%9EIO/"/>
+    <id>http://cdn.52ff.cc/2015/04/04/阻塞和非阻塞IO/</id>
     <published>2015-04-04T12:56:19.000Z</published>
     <updated>2015-04-04T14:20:18.000Z</updated>
     <content type="html"><![CDATA[<p>首先讲下个人理解的阻塞是：CPU执行时等待其他条件的完成</p>
@@ -103,16 +103,16 @@
     
     </summary>
     
-      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+      <category term="nio" scheme="http://cdn.52ff.cc/tags/nio/"/>
     
-      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
+      <category term="网络编程" scheme="http://cdn.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Netty异步事件驱动模型]]></title>
-    <link href="http://www.52ff.cc/2015/04/03/netty%E5%BC%82%E6%AD%A5%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B/"/>
-    <id>http://www.52ff.cc/2015/04/03/netty异步事件驱动模型/</id>
+    <link href="http://cdn.52ff.cc/2015/04/03/netty%E5%BC%82%E6%AD%A5%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://cdn.52ff.cc/2015/04/03/netty异步事件驱动模型/</id>
     <published>2015-04-02T16:18:29.000Z</published>
     <updated>2015-04-06T03:07:32.000Z</updated>
     <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"></p>
@@ -137,18 +137,18 @@
     
     </summary>
     
-      <category term="netty" scheme="http://www.52ff.cc/tags/netty/"/>
+      <category term="netty" scheme="http://cdn.52ff.cc/tags/netty/"/>
     
-      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+      <category term="nio" scheme="http://cdn.52ff.cc/tags/nio/"/>
     
-      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
+      <category term="网络编程" scheme="http://cdn.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[JVM-体系结构 内存模型]]></title>
-    <link href="http://www.52ff.cc/2015/04/02/JVM-%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
-    <id>http://www.52ff.cc/2015/04/02/JVM-体系结构-内存模型/</id>
+    <link href="http://cdn.52ff.cc/2015/04/02/JVM-%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://cdn.52ff.cc/2015/04/02/JVM-体系结构-内存模型/</id>
     <published>2015-04-02T13:01:39.000Z</published>
     <updated>2015-04-02T13:06:19.000Z</updated>
     <content type="html"><![CDATA[<h2 id="一：Java技术体系模块图">一：Java技术体系模块图</h2><p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/jvm1.jpg" alt=""><br><a id="more"></a></p>
@@ -163,16 +163,16 @@
     
     </summary>
     
-      <category term="jvm" scheme="http://www.52ff.cc/tags/jvm/"/>
+      <category term="jvm" scheme="http://cdn.52ff.cc/tags/jvm/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="java" scheme="http://cdn.52ff.cc/categories/java/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[JVM学习-GC]]></title>
-    <link href="http://www.52ff.cc/2015/04/01/JVM%E5%AD%A6%E4%B9%A0-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/"/>
-    <id>http://www.52ff.cc/2015/04/01/JVM学习-垃圾回收/</id>
+    <link href="http://cdn.52ff.cc/2015/04/01/JVM%E5%AD%A6%E4%B9%A0-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/"/>
+    <id>http://cdn.52ff.cc/2015/04/01/JVM学习-垃圾回收/</id>
     <published>2015-04-01T02:32:53.000Z</published>
     <updated>2015-04-06T09:13:47.000Z</updated>
     <content type="html"><![CDATA[<h2 id="基本回收算法">基本回收算法</h2><p>引用计数（Reference Counting）<br>比较古老的回收算法。原理是此对象有一个引用，即增加一个计数，删除一个引用则减少一个计数。垃圾回收时，只用收集计数为0的对象。此算法最致命的是无法处理循环引用的问题。<br><a id="more"></a></p>
@@ -201,16 +201,16 @@
     
     </summary>
     
-      <category term="jvm" scheme="http://www.52ff.cc/tags/jvm/"/>
+      <category term="jvm" scheme="http://cdn.52ff.cc/tags/jvm/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="java" scheme="http://cdn.52ff.cc/categories/java/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Netty学习笔记-线程模型]]></title>
-    <link href="http://www.52ff.cc/2015/03/30/Netty%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/"/>
-    <id>http://www.52ff.cc/2015/03/30/Netty学习笔记-线程模型/</id>
+    <link href="http://cdn.52ff.cc/2015/03/30/Netty%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://cdn.52ff.cc/2015/03/30/Netty学习笔记-线程模型/</id>
     <published>2015-03-30T15:05:34.000Z</published>
     <updated>2015-04-06T03:11:34.000Z</updated>
     <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"></p>
@@ -227,18 +227,18 @@
     
     </summary>
     
-      <category term="netty" scheme="http://www.52ff.cc/tags/netty/"/>
+      <category term="netty" scheme="http://cdn.52ff.cc/tags/netty/"/>
     
-      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+      <category term="nio" scheme="http://cdn.52ff.cc/tags/nio/"/>
     
-      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
+      <category term="网络编程" scheme="http://cdn.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Netty学习笔记–ByteBuf]]></title>
-    <link href="http://www.52ff.cc/2015/03/24/Netty%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%93ByteBuf/"/>
-    <id>http://www.52ff.cc/2015/03/24/Netty学习笔记–ByteBuf/</id>
+    <link href="http://cdn.52ff.cc/2015/03/24/Netty%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%93ByteBuf/"/>
+    <id>http://cdn.52ff.cc/2015/03/24/Netty学习笔记–ByteBuf/</id>
     <published>2015-03-24T12:54:25.000Z</published>
     <updated>2015-04-06T03:11:58.000Z</updated>
     <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"></p>
@@ -309,18 +309,18 @@
     
     </summary>
     
-      <category term="netty" scheme="http://www.52ff.cc/tags/netty/"/>
+      <category term="netty" scheme="http://cdn.52ff.cc/tags/netty/"/>
     
-      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+      <category term="nio" scheme="http://cdn.52ff.cc/tags/nio/"/>
     
-      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
+      <category term="网络编程" scheme="http://cdn.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[java.nio.Buffer研究笔记]]></title>
-    <link href="http://www.52ff.cc/2015/03/23/java.nio.Buffer%E7%A0%94%E7%A9%B6%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.52ff.cc/2015/03/23/java.nio.Buffer研究笔记/</id>
+    <link href="http://cdn.52ff.cc/2015/03/23/java.nio.Buffer%E7%A0%94%E7%A9%B6%E7%AC%94%E8%AE%B0/"/>
+    <id>http://cdn.52ff.cc/2015/03/23/java.nio.Buffer研究笔记/</id>
     <published>2015-03-23T06:22:26.000Z</published>
     <updated>2015-04-04T14:24:07.000Z</updated>
     <content type="html"><![CDATA[<p>每当你需要传输数据时,一个缓冲区是必要的。Java NIO API中缓冲区的类主要是Buffer。Buffer是一个包装了基本数据元素数组的对象，它以及它的子类定义了一系列API用于处理数据缓存。其中最重要的子类是ByteBuffer。</p>
@@ -352,18 +352,18 @@
     
     </summary>
     
-      <category term="netty" scheme="http://www.52ff.cc/tags/netty/"/>
+      <category term="netty" scheme="http://cdn.52ff.cc/tags/netty/"/>
     
-      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+      <category term="nio" scheme="http://cdn.52ff.cc/tags/nio/"/>
     
-      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
+      <category term="网络编程" scheme="http://cdn.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Redis的Master-Slave模式]]></title>
-    <link href="http://www.52ff.cc/2015/03/22/Redis%E7%9A%84Master-Slave%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://www.52ff.cc/2015/03/22/Redis的Master-Slave模式/</id>
+    <link href="http://cdn.52ff.cc/2015/03/22/Redis%E7%9A%84Master-Slave%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://cdn.52ff.cc/2015/03/22/Redis的Master-Slave模式/</id>
     <published>2015-03-22T13:51:48.000Z</published>
     <updated>2015-04-06T03:34:08.000Z</updated>
     <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/redis.jpg" class="img-logo"></p>
@@ -406,18 +406,18 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
     
     </summary>
     
-      <category term="redis" scheme="http://www.52ff.cc/tags/redis/"/>
+      <category term="redis" scheme="http://cdn.52ff.cc/tags/redis/"/>
     
-      <category term="缓存" scheme="http://www.52ff.cc/tags/%E7%BC%93%E5%AD%98/"/>
+      <category term="缓存" scheme="http://cdn.52ff.cc/tags/%E7%BC%93%E5%AD%98/"/>
     
-      <category term="no-sql" scheme="http://www.52ff.cc/categories/no-sql/"/>
+      <category term="no-sql" scheme="http://cdn.52ff.cc/categories/no-sql/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[毛毛]]></title>
-    <link href="http://www.52ff.cc/2015/03/13/%E6%AF%9B%E6%AF%9B/"/>
-    <id>http://www.52ff.cc/2015/03/13/毛毛/</id>
+    <link href="http://cdn.52ff.cc/2015/03/13/%E6%AF%9B%E6%AF%9B/"/>
+    <id>http://cdn.52ff.cc/2015/03/13/毛毛/</id>
     <published>2015-03-12T16:49:36.000Z</published>
     <updated>2015-04-06T03:10:41.000Z</updated>
     <content type="html"><![CDATA[<p>多图预警，晒晒咱家宝贝的照片，😄😄,顺便测试下七牛云图床的速度<br><img src="http://7xi8lq.com1.z0.glb.clouddn.com/ffpsb.jpeg" class="img-topic"></p>
@@ -432,14 +432,14 @@ redis <span class="number">127.0.0.1:6379</span>&gt; keys *
     
     </summary>
     
-      <category term="随笔生活" scheme="http://www.52ff.cc/categories/%E9%9A%8F%E7%AC%94%E7%94%9F%E6%B4%BB/"/>
+      <category term="随笔生活" scheme="http://cdn.52ff.cc/categories/%E9%9A%8F%E7%AC%94%E7%94%9F%E6%B4%BB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Java编程中为性能注意的地方]]></title>
-    <link href="http://www.52ff.cc/2015/03/12/Java%E7%BC%96%E7%A8%8B%E4%B8%AD%E4%B8%BA%E4%BA%86%E6%80%A7%E8%83%BD%E5%B0%BD%E9%87%8F%E8%A6%81%E5%81%9A%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9C%B0%E6%96%B9/"/>
-    <id>http://www.52ff.cc/2015/03/12/Java编程中为了性能尽量要做到的一些地方/</id>
+    <link href="http://cdn.52ff.cc/2015/03/12/Java%E7%BC%96%E7%A8%8B%E4%B8%AD%E4%B8%BA%E4%BA%86%E6%80%A7%E8%83%BD%E5%B0%BD%E9%87%8F%E8%A6%81%E5%81%9A%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9C%B0%E6%96%B9/"/>
+    <id>http://cdn.52ff.cc/2015/03/12/Java编程中为了性能尽量要做到的一些地方/</id>
     <published>2015-03-12T09:32:47.000Z</published>
     <updated>2015-03-17T16:13:27.000Z</updated>
     <content type="html"><![CDATA[<p>系统运行一段时间老是内存溢出，除了增加启动内存外，还应该好好review一下我们的代码，有很多代码编写过于随意化，这些不好的习惯或对程序语言的不了解是应该好好打压打压了。</p>
@@ -511,16 +511,16 @@ Obj=null;
     
     </summary>
     
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+      <category term="java" scheme="http://cdn.52ff.cc/tags/java/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="java" scheme="http://cdn.52ff.cc/categories/java/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[wap网页css技巧篇1]]></title>
-    <link href="http://www.52ff.cc/2015/03/12/wap%E7%BD%91%E9%A1%B5css%E6%8A%80%E5%B7%A7%E7%AF%871/"/>
-    <id>http://www.52ff.cc/2015/03/12/wap网页css技巧篇1/</id>
+    <link href="http://cdn.52ff.cc/2015/03/12/wap%E7%BD%91%E9%A1%B5css%E6%8A%80%E5%B7%A7%E7%AF%871/"/>
+    <id>http://cdn.52ff.cc/2015/03/12/wap网页css技巧篇1/</id>
     <published>2015-03-12T03:51:08.000Z</published>
     <updated>2015-03-19T04:46:23.000Z</updated>
     <content type="html"><![CDATA[<p>前端时间负责公司冒泡市场的活动开发工作，需要在不同的机型上面做好适配，几天的开发下来，学习掌握了几个css的理念和技巧，下面总结分享下手机上开发网页的几个小技巧</p>
@@ -539,18 +539,18 @@ Obj=null;
     
     </summary>
     
-      <category term="css" scheme="http://www.52ff.cc/tags/css/"/>
+      <category term="css" scheme="http://cdn.52ff.cc/tags/css/"/>
     
-      <category term="html5" scheme="http://www.52ff.cc/tags/html5/"/>
+      <category term="html5" scheme="http://cdn.52ff.cc/tags/html5/"/>
     
-      <category term="前端技术" scheme="http://www.52ff.cc/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+      <category term="前端技术" scheme="http://cdn.52ff.cc/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[一个简易的RPC框架]]></title>
-    <link href="http://www.52ff.cc/2015/03/11/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84RPC%E6%A1%86%E6%9E%B6/"/>
-    <id>http://www.52ff.cc/2015/03/11/一个简陋的RPC框架/</id>
+    <link href="http://cdn.52ff.cc/2015/03/11/%E4%B8%80%E4%B8%AA%E7%AE%80%E9%99%8B%E7%9A%84RPC%E6%A1%86%E6%9E%B6/"/>
+    <id>http://cdn.52ff.cc/2015/03/11/一个简陋的RPC框架/</id>
     <published>2015-03-11T07:03:28.000Z</published>
     <updated>2015-03-26T09:37:19.000Z</updated>
     <content type="html"><![CDATA[<p>简易描述RPC的基本工作原理：服务器启动了一个线程监听 Socket 端口, 有Socket访问了, 反序列化解析出<br>调用的Service 和method, 以及传入的参数,再用Socket 写回去。</p>
@@ -569,16 +569,16 @@ Obj=null;
     
     </summary>
     
-      <category term="RPC远程调用" scheme="http://www.52ff.cc/tags/RPC%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
+      <category term="RPC远程调用" scheme="http://cdn.52ff.cc/tags/RPC%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="java" scheme="http://cdn.52ff.cc/categories/java/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[FAST基础命令安装配置]]></title>
-    <link href="http://www.52ff.cc/2015/03/11/FastDFS%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/"/>
-    <id>http://www.52ff.cc/2015/03/11/FastDFS常见命令/</id>
+    <link href="http://cdn.52ff.cc/2015/03/11/FastDFS%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4/"/>
+    <id>http://cdn.52ff.cc/2015/03/11/FastDFS常见命令/</id>
     <published>2015-03-11T06:20:08.000Z</published>
     <updated>2015-03-20T03:35:36.000Z</updated>
     <content type="html"><![CDATA[<p>FastDFS是一个开源的轻量级分布式文件系统，它对文件进行管理，功能包括：文件存储、文件同步、文件访问（文件上传、文件下载）等，解决了大容量存储和负载均衡的问题。特别适合以文件为载体的在线服务，如相册网站、视频网站等等。我们部门的应用商店产用FastDFS作为应用安装包和图片的存储。</p>
@@ -611,16 +611,16 @@ Obj=null;
     
     </summary>
     
-      <category term="fastdfs" scheme="http://www.52ff.cc/tags/fastdfs/"/>
+      <category term="fastdfs" scheme="http://cdn.52ff.cc/tags/fastdfs/"/>
     
-      <category term="分布式文件存储" scheme="http://www.52ff.cc/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/"/>
+      <category term="分布式文件存储" scheme="http://cdn.52ff.cc/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[redis基础命令]]></title>
-    <link href="http://www.52ff.cc/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
-    <id>http://www.52ff.cc/2015/03/11/redis基础命令/</id>
+    <link href="http://cdn.52ff.cc/2015/03/11/redis%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/"/>
+    <id>http://cdn.52ff.cc/2015/03/11/redis基础命令/</id>
     <published>2015-03-11T03:51:08.000Z</published>
     <updated>2015-04-06T03:18:04.000Z</updated>
     <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/redis.jpg" class="img-logo"></p>
@@ -708,18 +708,18 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
     
     </summary>
     
-      <category term="redis" scheme="http://www.52ff.cc/tags/redis/"/>
+      <category term="redis" scheme="http://cdn.52ff.cc/tags/redis/"/>
     
-      <category term="缓存" scheme="http://www.52ff.cc/tags/%E7%BC%93%E5%AD%98/"/>
+      <category term="缓存" scheme="http://cdn.52ff.cc/tags/%E7%BC%93%E5%AD%98/"/>
     
-      <category term="no-sql" scheme="http://www.52ff.cc/categories/no-sql/"/>
+      <category term="no-sql" scheme="http://cdn.52ff.cc/categories/no-sql/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[优秀技术博文分享]]></title>
-    <link href="http://www.52ff.cc/2015/03/10/%E4%BC%98%E7%A7%80%E6%8A%80%E6%9C%AF%E5%8D%9A%E6%96%87%E5%88%86%E4%BA%AB/"/>
-    <id>http://www.52ff.cc/2015/03/10/优秀技术博文分享/</id>
+    <link href="http://cdn.52ff.cc/2015/03/10/%E4%BC%98%E7%A7%80%E6%8A%80%E6%9C%AF%E5%8D%9A%E6%96%87%E5%88%86%E4%BA%AB/"/>
+    <id>http://cdn.52ff.cc/2015/03/10/优秀技术博文分享/</id>
     <published>2015-03-10T02:58:18.000Z</published>
     <updated>2015-03-23T01:37:03.000Z</updated>
     <content type="html"><![CDATA[<p>本文意在记录曾经阅读过的不错的博文，方便日后查找回顾：</p>
@@ -736,14 +736,14 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
     
     </summary>
     
-      <category term="记录分享" scheme="http://www.52ff.cc/categories/%E8%AE%B0%E5%BD%95%E5%88%86%E4%BA%AB/"/>
+      <category term="记录分享" scheme="http://cdn.52ff.cc/categories/%E8%AE%B0%E5%BD%95%E5%88%86%E4%BA%AB/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[netty几个核心类的概念和用法]]></title>
-    <link href="http://www.52ff.cc/2015/03/05/netty%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AF%87/"/>
-    <id>http://www.52ff.cc/2015/03/05/netty笔记第一篇/</id>
+    <link href="http://cdn.52ff.cc/2015/03/05/netty%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%80%E7%AF%87/"/>
+    <id>http://cdn.52ff.cc/2015/03/05/netty笔记第一篇/</id>
     <published>2015-03-05T13:37:48.000Z</published>
     <updated>2015-04-06T03:12:13.000Z</updated>
     <content type="html"><![CDATA[<p><img src="http://7xi8lq.com1.z0.glb.clouddn.com/nettylog.png" class="img-logo"></p>
@@ -772,18 +772,18 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
     
     </summary>
     
-      <category term="netty" scheme="http://www.52ff.cc/tags/netty/"/>
+      <category term="netty" scheme="http://cdn.52ff.cc/tags/netty/"/>
     
-      <category term="nio" scheme="http://www.52ff.cc/tags/nio/"/>
+      <category term="nio" scheme="http://cdn.52ff.cc/tags/nio/"/>
     
-      <category term="网络编程" scheme="http://www.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
+      <category term="网络编程" scheme="http://cdn.52ff.cc/categories/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[JAVA多线程第十篇(阻塞队列和栈)]]></title>
-    <link href="http://www.52ff.cc/2015/03/05/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E5%8D%81%E7%AF%87-%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%92%8C%E6%A0%88/"/>
-    <id>http://www.52ff.cc/2015/03/05/JAVA多线程第十篇-阻塞队列和栈/</id>
+    <link href="http://cdn.52ff.cc/2015/03/05/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E5%8D%81%E7%AF%87-%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E5%92%8C%E6%A0%88/"/>
+    <id>http://cdn.52ff.cc/2015/03/05/JAVA多线程第十篇-阻塞队列和栈/</id>
     <published>2015-03-05T12:53:09.000Z</published>
     <updated>2015-03-23T06:29:54.000Z</updated>
     <content type="html"><![CDATA[<p>Java定义了阻塞队列的接口java.util.concurrent.BlockingQueue，阻塞队列的概念是，一个指定长度的队列，如果队列满了，添加新元素的操作会被阻塞等待，直到有空位为止。同样，当队列为空时候，请求队列元素的操作同样会阻塞等待，直到有可用元素为止。<br>BlockingQueue最终会有四种状况，抛出异常、返回特殊值、阻塞、超时<br>BlockingQueue是个接口，有如下实现类：</p>
@@ -827,18 +827,18 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
     
     </summary>
     
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+      <category term="java" scheme="http://cdn.52ff.cc/tags/java/"/>
     
-      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+      <category term="多线程" scheme="http://cdn.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="java" scheme="http://cdn.52ff.cc/categories/java/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[JAVA多线程第九篇(条件变量Condition)]]></title>
-    <link href="http://www.52ff.cc/2015/03/04/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B9%9D%E7%AF%87-Condition/"/>
-    <id>http://www.52ff.cc/2015/03/04/JAVA多线程第九篇-Condition/</id>
+    <link href="http://cdn.52ff.cc/2015/03/04/JAVA%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%AC%E4%B9%9D%E7%AF%87-Condition/"/>
+    <id>http://cdn.52ff.cc/2015/03/04/JAVA多线程第九篇-Condition/</id>
     <published>2015-03-04T12:30:27.000Z</published>
     <updated>2015-03-23T06:29:26.000Z</updated>
     <content type="html"><![CDATA[<p>条件变量是Java5线程中很重要的一个概念，顾名思义，条件变量就是表示条件的一种变量。但是必须说明，这里的条件是没有实际含义的，仅仅是个标记而已，并且条件的含义往往通过代码来赋予其含义。</p>
@@ -875,11 +875,11 @@ rpoplpush(srckey, dstkey)：返回并删除名称为srckey的<span class="keywor
     
     </summary>
     
-      <category term="java" scheme="http://www.52ff.cc/tags/java/"/>
+      <category term="java" scheme="http://cdn.52ff.cc/tags/java/"/>
     
-      <category term="多线程" scheme="http://www.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+      <category term="多线程" scheme="http://cdn.52ff.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
-      <category term="java" scheme="http://www.52ff.cc/categories/java/"/>
+      <category term="java" scheme="http://cdn.52ff.cc/categories/java/"/>
     
   </entry>
   

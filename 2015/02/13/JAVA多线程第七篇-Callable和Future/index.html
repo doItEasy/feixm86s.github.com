@@ -15,7 +15,7 @@
     <meta name="description" content="接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA多线程第七篇(Callable和Future)">
-<meta property="og:url" content="http://www.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/index.html">
+<meta property="og:url" content="http://cdn.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/index.html">
 <meta property="og:site_name" content="FlyFish's Blog">
 <meta property="og:description" content="接着上一篇继续并发包的学习，本篇说明的是Callable和Future，它俩很有意思的，一个产生结果，一个拿到结果。Callable接口类似于Runnable，从名字就可以看出来了，但是Runnable不会返回结果，并且无法抛出返回结果的异常，而Callable功能更强大一些，被线程执行后，可以返回值，这个返回值可以被Future拿到，也就是说，Future可以拿到异步执行任务的返回值，下面来看一">
 <meta name="twitter:card" content="summary">
@@ -57,8 +57,6 @@
 					
 						<li><a href="/archives">归档</a></li>
 					
-						<li><a href="https://github.com/feixm86s">github</a></li>
-					
 						<li><a href="/about">关于</a></li>
 					
 					<li>
@@ -66,7 +64,7 @@
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:www.52ff.cc">
+						<input type="hidden" name="q" value="site:cdn.52ff.cc">
 					</form>
 					
 					</li>
@@ -85,7 +83,7 @@
   </h1>
   <p class="article-author">By
        
-		<a href="http://www.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
+		<a href="http://cdn.52ff.cc/about" title="xiangming" target="_blank" itemprop="author">xiangming</a>
 		
   <p class="article-time">
     <time datetime="2015-02-13T13:36:49.000Z" itemprop="datePublished"> 发表于 2015-02-13</time>
@@ -128,7 +126,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/" data-title="JAVA多线程第七篇(Callable和Future) | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://cdn.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/" data-title="JAVA多线程第七篇(Callable和Future) | FlyFish&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -162,7 +160,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/02/13/JAVA多线程第七篇-Callable和Future/" data-title="JAVA多线程第七篇(Callable和Future)" data-url="http://www.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/"></div>
+	<div class="ds-thread" data-thread-key="2015/02/13/JAVA多线程第七篇-Callable和Future/" data-title="JAVA多线程第七篇(Callable和Future)" data-url="http://cdn.52ff.cc/2015/02/13/JAVA多线程第七篇-Callable和Future/"></div>
 </section>
 
 
@@ -350,7 +348,7 @@
 	</div>
 		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by modify Jacman © 2015
 		
-		<a href="http://www.52ff.cc/about" target="_blank" title="xiangming">xiangming</a>
+		<a href="http://cdn.52ff.cc/about" target="_blank" title="xiangming">xiangming</a>
 		
 		</p>
 </div>
@@ -515,11 +513,6 @@ $(document).ready(function(){
 <!-- Analytics Begin -->
 
 
-
-<script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F60d4b1ddeb623022666b3054d653ecbe' type='text/javascript'%3E%3C/script%3E"));
-</script>
 
 
 
